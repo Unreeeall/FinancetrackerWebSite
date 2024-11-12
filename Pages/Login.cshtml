@@ -1,0 +1,54 @@
+﻿@page
+@model LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy: Login</title>
+    <link rel="stylesheet" href="/css/loginStyles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logoHeader">
+            <img src="../images/BudgedBuddyTransp.png" alt="logo.png">
+        </div>
+        <form id="LoginForm" method="post">
+            <div class="name-form">
+                <input type="email" class="name-field" placeholder="Username or Email"  id="nameInp" name="Email" required />
+                <label for="nameInp" class="name-label">Email</label>
+            </div>
+            <div class="pswrd-form">
+                <input type="password" class="pswrd-field" placeholder="Password"  id="pswrdInp" name="Password" required />
+                <label for="pswrdInp" class="pswrd-label">Password</label>
+            </div>
+            <input type="checkbox" name="SaveData" id="DSCB1">
+            <p>Save login data for 30 days</p>
+
+            <button type="submit">Login</button>
+        </form>
+
+        <input type="button" value="Register" onclick='location.href = "/register"'>
+    </div>
+
+    @section Scripts {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var WrongLogin = @Json.Serialize(TempData["WrongLogin"]);
+                if (WrongLogin) {
+                    alert('Wrong Password');
+                    // You can also execute other JavaScript functions here
+                }
+            });
+        </script>
+    }
+</body>
+
+</html>
