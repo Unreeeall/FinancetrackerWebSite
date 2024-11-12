@@ -1,0 +1,288 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Homepage";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Finance Tracker</title>
+    <link rel="stylesheet" href="/css/homeStyles.css">
+</head>
+
+<script>
+    // JavaScript to handle login state (mockup)
+
+    document.addEventListener('DOMContentLoaded', () => {
+        const settings = document.getElementById('settings');
+        const dropdownContent = document.querySelector('.dropdown-content');
+
+        settings.addEventListener('click', () => {
+            dropdownContent.style.display = dropdownContent.style.display === 'block' ? 'none' : 'block';
+            dropdownContent.onclick = function (event) {
+                if (event.target.matches('#logout') && isLoggedIn) {
+                    isLoggedIn = false;
+                }
+            }
+            document.getElementById('#logout').onclick = function () {
+                if (isLoggedIn) {
+                    isLoggedIn = false;
+                }
+            }
+        });
+
+
+
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('#settings')) {
+                if (dropdownContent.style.display === 'block') {
+                    dropdownContent.style.display = 'none';
+                }
+            }
+        };
+    });
+</script>
+
+<body>
+    <header>
+        <nav>
+            <div class="logoHeader">
+                <a href="/Index">
+                <img src="../images/BudgedBuddyTransp.png" alt="logo not found" width="220px">
+                </a>
+            </div>
+            <ul class="nav-links">
+                <li>
+                    <a href="#income-analysis">
+                        <img src="../images/ExppenseAnalysisTranspCutCut.png" alt="ExppenseAnalysisTransp.png"
+                            width="48px">
+                        <p>Income Analysis</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#investment-analysis">
+                        <img src="../images/InvAnalysisTranspCutCut.png" alt="income-analysis.png" width="80px">
+                        <p>Investment Analysis</p>
+                    </a>
+                </li>
+                <li>
+                    <a href="#contact">
+                        <img src="../images/contact.png" alt="contact.png" width="75px">
+                        <p>Contact</p>
+                    </a>
+                </li>
+            </ul>
+            <div class="user-options">
+                <div class="login-button">
+                    @if (Model.user == null)
+                    {
+                        <span onclick='location.href = "/login"'>Login</span> 
+                        @* <button onclick='onclick=location.href = "/login"'>Login</button> *@
+                    }
+                    else
+                    {
+                        @* <span onclick='location.href = "/UserSettings"'> @Model.user.Name </span> *@
+                        <span onclick='onclick=location.href = "/UserSettings"'>@Model.user.Name</span>
+                    }
+                </div>
+
+                <!-- <span id="account-options">Account</span> -->
+                <div class="register-button">
+                    
+                    @if (Model.user == null)
+                        {
+                            <span onclick='onclick=location.href = "/Register"'>Register</span>
+                        }
+                        else
+                        {
+                            
+                            <span href="/Logout">Logout</span>
+                        }
+                </div>
+                
+                
+            </div>
+        </nav>
+    </header>
+
+    <div class="mainpage">
+
+        <section id="home">
+            <div class="hero">
+                <h1>Welcome to Budget Buddy</h1>
+                <p>Your ultimate tool for managing your finances.</p>
+                <button class="btn" id="scrollBtn"> Get Started </button>
+                <script src="script.js"></script>
+            </div>
+        </section>
+
+        <section id="income-analysis">
+            <h2>Income Analysis</h2>
+            <p>Analyze your income sources and trends over time.</p>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <div class="example-piechart">
+                <canvas id="myPieChart"></canvas>
+            </div>
+            <script>
+                var ctx = document.getElementById('myPieChart').getContext('2d');
+                var myPieChart = new Chart(ctx, {
+                    type: 'doughnut',
+                    data: {
+                        labels: ['Savings', 'Shopping', 'Food & Drinks', 'Car', 'Purple', 'Orange'],
+                        datasets: [{
+                            label: 'Spendings in %',
+                            data: [12, 19, 3, 5, 2, 3],
+                            backgroundColor: [
+                                'rgba(255, 99, 132, 1)',
+                                '#7D5091',
+                                'rgba(255, 206, 86, 0.2)',
+                                'rgba(75, 192, 192, 0.2)',
+                                'rgba(153, 102, 255, 0.2)',
+                                'rgba(255, 159, 64, 0.2)'
+                            ],
+                            borderColor: [
+                                'rgba(255, 99, 132, 1)',
+                                'rgba(54, 162, 235, 1)',
+                                'rgba(255, 206, 86, 1)',
+                                'rgba(75, 192, 192, 1)',
+                                'rgba(153, 102, 255, 1)',
+                                'rgba(255, 159, 64, 1)'
+                            ],
+                            borderWidth: [2],
+                            hoverOffset: [16],
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true
+                            },
+                            customCanvasBackgroundColor: {
+                                color: 'white',
+                            }
+                        }
+                    }
+                });
+            </script>
+        </section>
+
+        <section id="investment-analysis">
+            <h2>Investment Analysis</h2>
+            <p>Monitor your investments and their performance.</p>
+            <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+            <div class="example-linechart">
+                <canvas id="myLineChart"></canvas>
+            </div>
+            <script>
+                const data = [];
+                const data2 = [];
+                let prev = 100;
+                let prev2 = 80;
+                for (let i = 0; i < 1000; i++) {
+                    prev += 5 - Math.random() * 10;
+                    data.push({ x: i, y: prev });
+                    prev2 += 5 - Math.random() * 10;
+                    data2.push({ x: i, y: prev2 });
+                }
+
+                const totalDuration = 7000;
+                const delayBetweenPoints = totalDuration / data.length;
+                const previousY = (ctx) => ctx.index === 0 ? ctx.chart.scales.y.getPixelForValue(100) : ctx.chart.getDatasetMeta(ctx.datasetIndex).data[ctx.index - 1].getProps(['y'], true).y;
+
+                const animation = {
+                    x: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: NaN, // the point is initially skipped
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.xStarted) {
+                                return 0;
+                            }
+                            ctx.xStarted = true;
+                            return ctx.index * delayBetweenPoints;
+                        }
+                    },
+                    y: {
+                        type: 'number',
+                        easing: 'linear',
+                        duration: delayBetweenPoints,
+                        from: previousY,
+                        delay(ctx) {
+                            if (ctx.type !== 'data' || ctx.yStarted) {
+                                return 0;
+                            }
+                            ctx.yStarted = true;
+                            return ctx.index * delayBetweenPoints;
+                        }
+
+                    }
+                };
+
+                const ctxLine = document.getElementById('myLineChart').getContext('2d');
+                const myLineChart = new Chart(ctxLine, {
+                    type: 'line',
+                    data: {
+                        labels: ['jan', 'Feb', 'Mar', 'Apr', 'May', 'jun', 'jul', 'Aug', 'Sep', 'Okt', 'Nov', 'Dec'],
+                        datasets: [{
+                            borderColor: 'rgba(255, 99, 132, 1)', // Replace with a specific color
+                            borderWidth: 1,
+                            radius: 0,
+                            data: data,
+                        },
+                        {
+                            borderColor: 'rgba(54, 162, 235, 1)', // Replace with a specific color
+                            borderWidth: 1,
+                            radius: 0,
+                            data: data2,
+                        }]
+                    },
+                    options: {
+                        animation: animation,
+                        interaction: {
+                            intersect: false
+                        },
+                        plugins: {
+                            legend: {
+                                display: false
+                            }
+                        },
+                        scales: {
+                            x: {
+                                type: 'linear'
+                            },
+                            y: {
+                                beginAtZero: true
+                            }
+                        },
+                        responsive: true,
+                        maintainAspectRatio: false,
+                    }
+                });
+            </script>
+        </section>
+
+        <section id="contact">
+            <h2>Contact Us</h2>
+            <form>
+                <input type="text" placeholder="Name" required>
+                <input type="email" placeholder="Email" required>
+                <textarea placeholder="Message" required></textarea>
+                <button type="submit">Send</button>
+            </form>
+        </section>
+    </div>
+    <footer>
+        <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
+    </footer>
+
+</body>
+
+</html>

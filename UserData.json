@@ -1,0 +1,53 @@
+[
+  {
+    "Email": "peini@haha",
+    "Name": "eier",
+    "Phonenumber": "42069",
+    "Password": "LEckEIr1234",
+    "Sessions": []
+  },
+  {
+    "Email": "tgtg@aaa",
+    "Name": "wef",
+    "Phonenumber": "5543",
+    "Password": "mhmhmhm",
+    "Sessions": []
+  },
+  {
+    "Email": "aaa@aaa",
+    "Name": "test",
+    "Phonenumber": "76767",
+    "Password": "jjjjj",
+    "Sessions": []
+  },
+  {
+    "Email": "gaga@gugu",
+    "Name": "ooohaaa",
+    "Phonenumber": "909090",
+    "Password": "Auaa",
+    "Sessions": []
+  },
+  {
+    "Email": "test@test",
+    "Name": "aaaa",
+    "Phonenumber": "664545",
+    "Password": "kaka",
+    "Sessions": [
+      {
+        "Id": "0Ag7\u002BwBsdwkNXKGIDL3xzDuwMG\u002BAjdfdvQNqSKhtU9U=",
+        "ExpireDate": "2024-11-13T06:30:02.1967665+01:00"
+      },
+      {
+        "Id": "INcOQ2VH/ewQCmuNFE195N19E2xLN/hb\u002B7r0/UJ0rFk=",
+        "ExpireDate": "2024-11-13T13:22:07.5679602+01:00"
+      }
+    ]
+  },
+  {
+    "Email": "gargar@gurgur",
+    "Name": "haha",
+    "Phonenumber": "09876",
+    "Password": "hihi",
+    "Sessions": []
+  }
+]

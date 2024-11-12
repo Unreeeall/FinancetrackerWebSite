@@ -1,0 +1,207 @@
+/* Global Styles */
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to bottom, #000000, #15025E);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+/* Container Styles */
+.container {
+    background-color: #d9def3;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    width: 100%;
+    box-sizing: border-box;
+    position: absolute;
+    
+}
+
+.logoHeader {
+    margin-left: 50px;
+
+}
+
+.name-form, .pswrd-form {
+    position: relative;
+    padding: 15px 0 0;
+    margin-top: 10px;
+    width: 100%;
+}
+
+.name-field, .pswrd-field {
+    font-family: inherit;
+    width: 100%;
+    border: 0;
+    border-bottom: 2px solid gray;
+    outline: 0;
+    font-size: 1.3rem;
+    color: rgb(49, 49, 49);
+    padding: 7px 0;
+    background: transparent;
+    transition: border-color 0.2s;
+
+    &::placeholder {
+        color: transparent;
+    }
+
+    &:placeholder-shown~.name-label, &:placeholder-shown~.pswrd-label {
+        font-size: 1.3rem;
+        cursor: text;
+        top: 20px;
+    }
+}
+
+.name-label, .pswrd-label {
+    position: absolute;
+    top: 0;
+    display: block;
+    transition: 0.2s;
+    font-size: 1rem;
+    color: gray;
+}
+
+.name-field:focus, .pswrd-field:focus {
+    ~.name-label, ~.pswrd-label {
+        position: absolute;
+        top: 0;
+        display: block;
+        transition: 0.2s;
+        font-size: 1rem;
+        color: primary;
+        font-weight: 700;
+    }
+
+    padding-bottom: 6px;
+    font-weight: 700;
+    border-width: 3px;
+    border-image: linear-gradient(to right, primary, secondary);
+    border-image-slice: 1;
+}
+
+.name-field, .pswrd-field {
+
+    &:required,
+    &:invalid {
+        box-shadow: none;
+    }
+}
+
+
+/* Heading Styles */
+h1 {
+    color: #333;
+    text-align: center;
+    font-size: 2.5em;
+    margin-bottom: 20px;
+    font-weight: 300;
+    letter-spacing: 1px;
+}
+
+h2 {
+    color: #555;
+    text-align: left;
+    font-size: 1.5em;
+    margin-bottom: 15px;
+    font-weight: 400;
+}
+
+/* Paragraph Styles */
+p {
+    color: #666;
+    font-size: 1em;
+    line-height: 1.6;
+    margin-bottom: 30px;
+}
+
+/* Input Styles */
+/* input[type="text"], */
+input[type="button"],
+/* input[type="password"], */
+button[type="submit"] {
+    display: block;
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    box-sizing: border-box;
+    font-size: 1em;
+    transition: all 0.3s ease;
+}
+
+/* Text Input Specific Styles */
+/*
+input[type="text"] {
+    background-color: #fafafa;
+}
+
+input[type="text"]:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+input[type="password"] {
+    background-color: #fafafa;
+}
+
+input[type="password"]:focus {
+    border-color: #333;
+    outline: none;
+    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+*/
+/* Button Specific Styles */
+input[type="button"] {
+    background-color: #15025E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+input[type="button"]:hover {
+    background-color: #0056b3;
+}
+
+input[type="button"]:active {
+    background-color: #004494;
+}
+
+button[type="submit"] {
+    background-color: #15025E;
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-weight: 500;
+}
+
+button[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+button[type="submit"]:active {
+    background-color: #004494;
+}
+
+img {
+    width: 80%;
+
+}
+
+.savedata {
+    display: flex;
+    vertical-align: middle;
+
+}
+
+.savedata#p {
+    background-color: #004494;
+}

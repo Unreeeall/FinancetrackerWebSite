@@ -1,0 +1,60 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Budget Buddy: Register</title>
+    <link rel="stylesheet" href="css/registerStyles.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="logoHeader">
+            <img src="../images/BudgedBuddyTransp.png" alt="logo.png">
+        </div>
+        <form id="registerForm" method="post">
+            <div class="email-form">
+                <input type="email" class="email-field" placeholder="Email" id="emailInp" name="email" required />
+                <label for="emailInp" class="email-label">Email *</label>
+            </div>
+            <div class="name-form">
+                <input type="text" class="name-field" placeholder="Name" id="nameInp" minlength="3" name="name"
+                    required />
+                <label for="nameInp" class="name-label">Name (min. 3 characters long) *</label>
+            </div>
+            <div class="tel-form">
+                <input type="tel" class="tel-field" placeholder="Phonenumber" id="telInp" name="phonenumber" />
+                <label for="telInp" class="tel-label">Phonenumber</label>
+            </div>
+            <div class="pswrd-form">
+                <input type="password" class="pswrd-field" placeholder="Password" id="pswrdInp" minlength="4"
+                    name="password" required>
+                <label for="pswrdInp" class="pswrd-label">Password *</label>
+            </div>
+            <div class="submit-button">
+                <button type="submit">Register</button>
+                <p>* = required</p>
+            </div>
+        </form>
+    </div>
+    @section Scripts {
+        <script>
+            document.addEventListener('DOMContentLoaded', function () {
+                var emailExists = @Json.Serialize(TempData["EmailExists"]);
+                if (emailExists) {
+                    alert('An account with this email already exists!');
+                    // You can also execute other JavaScript functions here
+                }
+            });
+        </script>
+    }
+
+</body>
+
+</html>

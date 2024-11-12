@@ -1,0 +1,222 @@
+@page
+@model DashboardModel
+@{
+    ViewData["Title"] = "Dashboard";
+}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard</title>
+    <link rel="stylesheet" href="/css/DashboardStyles.css">
+    <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="/js/site.js"></script>
+</head>
+
+<body>
+    <header class="header">
+        <div class="menu-icon" onclick="toggleMenu()">
+            <div class="bar bar1"></div>
+            <div class="bar bar2"></div>
+            <div class="bar bar3"></div>
+        </div>
+
+        <!-- Popout Menu -->
+        <div class="menu" id="menu">
+            <a href="Dashboard">Dashboard</a>
+            <a href="Investments">Investments</a>
+            <a href="Budget">Budget</a>
+            <a href="Transactions">Transactions</a>
+            <a href="#Contact">Contact</a>
+            <div class="Copyright-ham-footer">
+                <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
+            </div>
+        </div>
+
+        <div class="user-options">
+            <div class="login-button">
+                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>
+            </div>
+            <div class="dropdown">
+                <span id="settings">Options</span>
+                <div class="dropdown-content">
+                    <a href="#profile">Profile</a>
+                    <a href="#settings">Settings</a>
+                    <a href="/Logout">Logout</a>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    div class="Dashboard">
+        <div class="Chart-Container">
+            <div class="Budget-Chart">
+                <canvas id="budgetPieChart"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        var ctx = document.getElementById('budgetPieChart').getContext('2d');
+        var budgetPieChart = new Chart(ctx, {
+            type: 'doughnut',
+            data: {
+                labels: ['Savings', 'Shopping', 'Food & Drinks', 'Car', 'Entertainment', 'Miscellaneous'],
+                datasets: [{
+                    label: 'Spendings in %',
+                    data: [12, 19, 3, 5, 2, 3],
+                    backgroundColor: [
+                        'rgba(255, 99, 132, 1)',
+                        '#7D5091',
+                        'rgba(255, 206, 86, 0.2)',
+                        'rgba(75, 192, 192, 0.2)',
+                        'rgba(153, 102, 255, 0.2)',
+                        'rgba(255, 159, 64, 0.2)'
+                    ],
+                    borderColor: [
+                        'rgba(255, 99, 132, 1)',
+                        'rgba(54, 162, 235, 1)',
+                        'rgba(255, 206, 86, 1)',
+                        'rgba(75, 192, 192, 1)',
+                        'rgba(153, 102, 255, 1)',
+                        'rgba(255, 159, 64, 1)'
+                    ],
+                    borderWidth: 2,
+                    hoverOffset: 16
+                }]
+            },
+            options: {
+                responsive: true,
+                maintainAspectRatio: true,
+                plugins: {
+                    legend: {
+                        display: true,
+                        position: 'bottom',
+                        labels: {
+                            color: '#ffffff'
+                        }
+                    }
+                }
+            }
+        });
+    </script>
+
+
+        <!-- Investment Chart -->
+        <div class="Investment-Chart">
+            <canvas id="investmentLineChart"></canvas>
+            <script>
+                var ctx = document.getElementById('investmentLineChart').getContext('2d');
+                var investmentLineChart = new Chart(ctx, {
+                    type: 'line',
+                    data: {
+                        labels: ['January', 'February', 'March', 'April', 'May', 'June', 'July'],
+                        datasets: [{
+                            label: 'Investments',
+                            data: [10, 20, 30, 40, 50, 60, 70],
+                            borderColor: 'rgba(75, 192, 192, 1)',
+                            backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                            fill: true
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        plugins: {
+                            legend: {
+                                display: true,
+                                position: 'bottom',
+                                labels: {
+                                    color: '#ffffff'
+                                }
+                            }
+                        },
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#ffffff'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#ffffff'
+                                }
+                            }
+                        }
+                    }
+                });
+            </script>
+        </div>
+    </div>
+
+    <!-- Transaction History Chart -->
+    <div class="Transaction-History-Chart">
+        <canvas id="transactionBarChart"></canvas>
+        <script>
+            var ctx = document.getElementById('transactionBarChart').getContext('2d');
+            var transactionBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
+                    datasets: [{
+                        label: 'Transactions',
+                        data: [300, 500, 100, 200, 150, 80],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
+                                color: '#ffffff'
+                            }
+                        }
+                    },
+                    scales: {
+                        x: {
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        },
+                        y: {
+                            ticks: {
+                                color: '#ffffff'
+                            }
+                        }
+                    }
+                }
+            });
+        </script>
+    </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
+    </footer>
+</body>
+
+</html>
