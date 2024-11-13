@@ -13,7 +13,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/DashboardStyles.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
-<script src="/js/site.js"></script>
+    <script src="/js/site.js"></script>
 </head>
 
 <body>
@@ -42,7 +42,7 @@
             <div class="dropdown">
                 <span id="settings">Options</span>
                 <div class="dropdown-content">
-                    <a href="#profile">Profile</a>
+                    <a href="/UserSettings">Profile</a>
                     <a href="#settings">Settings</a>
                     <a href="/Logout">Logout</a>
                 </div>
@@ -52,7 +52,68 @@
     <div>
 
     </div>
+    <div class="Transaction-list">
+        <table>
+            <thead>
+                <tr>
+                    <th>Category</th>
+                    <th>UseCase</th>
+                    <th>Amount</th>
+                    <th>Origin</th>
+                    <th>Destination</th>
+                    <th>Date</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <form>
+                            <select id="category-Dropdown" class="category-drop">
+                                <option value="">--</option>
+                                <option value="Groceries">Groceries</option>
+                                <option value="Investments">Investments</option>
+                                <option value="Tech">Tech</option>
+                                <option value="Savings">Savings</option>
+                                <option value="Traveling">Traveling</option>
+                                <option value="Incurance">Incurance</option>
+                                <option value="Gas">Gas</option>
+                                <option value="Car">Car</option>
+                                <option value="Houshold">Houshold</option>
+                                <option value="Fun & Freetime">Fun & Freetime</option>
+                                <option value="Other">Other</option>
+                            </select>
+                        </form>
 
+                        <script>
+                            const firstDropdown = document.getElementById('firstDropdown');
+                    
+                            firstDropdown.addEventListener('change', function () {
+                                const selectedOption = this.value;
+                                
+                            /*
+                                if (options[selectedOption]) {
+                                    options[selectedOption].forEach(function (item) {
+                                        const optionElement = document.createElement('option');
+                                        optionElement.value = item.toLowerCase();
+                                        optionElement.textContent = item;
+                                        
+                                    });
+                                }
+                                */
+                            });
+                            
+                        </script>
+                    </td>
+                    <td><input type="text" name="UseCase" class="usecase-field"></td>
+                    <td><input type="text" name="Amount" class="Amount-field"></td>
+                    <td><input type="text" name="Origin" class="Origin-field"></td>
+                    <td><input type="text" name="Destination" class="Destination-field"></td>
+                    <td><input type="text" name="Date" class="Date-field"></td>
+                </tr>
+            </tbody>
+
+        </table>
+    </div>
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
     </footer>

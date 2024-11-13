@@ -14,8 +14,8 @@ public class TransactionController : ControllerBase
         user = WebUser.GetUserBySession(sessionId);
         if(user == null) return BadRequest();
 
+        
 
-
-        return Content(JsonSerializer.Serialize(user.Transactions, new JsonSerializerOptions { WriteIndented = true }));
+        return Content(JsonSerializer.Serialize(user.Transactions));
     }
 }
