@@ -9,6 +9,7 @@ using System.Security.Cryptography;
 
 
 
+
 public class WebUser
 {
     public string Email { get; set; }
@@ -19,6 +20,8 @@ public class WebUser
     public List<Session> Sessions { get; set; } = [];
 
     static Dictionary<string, SessionUser> IdDict { get; set; } = [];
+
+    public List<Transaction> Transactions { get; set; } = [];
 
     private static string filePath = Path.Combine(Directory.GetCurrentDirectory(), "UserData.json");
 
@@ -156,4 +159,17 @@ public class SessionUser(Session session, WebUser user)
 
 }
 
+
+public class Transaction
+{
+    public DateTime? Date { get; set; }
+    public double? Amount { get; set; }
+    
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
+    public string? UseCase { get; set; }
+    public string? Category { get; set; }
+
+    
+}
 

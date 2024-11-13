@@ -160,29 +160,38 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding-top: 100px;
-    box-sizing: border-box;
-    width: 100%;
+    gap: 20px;
+    padding: 20px;
 }
 
 .Chart-Container {
+    margin-top: 90px;
     display: flex;
-    justify-content: space-around; /* or space-between, or any other alignment you prefer */
-    width: 100%;
+    gap: 20px;
+    justify-content: center;
 }
 
-.Budget-Chart, .Investment-Chart, .Transaction-History-Chart {
-    color: #ffffff;
-    position: relative;
-    box-sizing: border-box;
-    width: 45%; /* Adjust as needed */
-    margin: 20px;
+.Budget-Chart,
+.Investment-Chart,
+.Transaction-History-Chart {
+    padding: 20px;
+    border-radius: 10px;
+}
+
+.Budget-Chart,
+.Investment-Chart {
+    width: 45%;
+    max-width: 600px;
+}
+
+.Transaction-History-Chart {
+    width: 90%;
+    max-width: 1200px;
 }
 
 canvas {
-    color: #ffffff;
     width: 100% !important;
-    height: 100% !important;
+    height: auto !important;
 }
 
 footer {
@@ -191,3 +200,16 @@ footer {
     text-align: center;
     padding: 1rem;
 }
+/*
+@media (max-width: 768px) {
+    .Chart-Container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    .Budget-Chart, .Investment-Chart, .Transaction-History-Chart {
+        width: 90%;
+        margin: 20px 0;
+    }
+}
+    */
