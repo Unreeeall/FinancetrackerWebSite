@@ -13,13 +13,10 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/DashboardStyles.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
+    <script src="/js/site.js"></script>
 </head>
 
 <body>
-
-
-
-
     <header class="header">
         <div class="menu-icon" onclick="toggleMenu()">
             <div class="bar bar1"></div>
@@ -27,39 +24,17 @@
             <div class="bar bar3"></div>
         </div>
 
-        <!-- Popout Menu -->
         <div class="menu" id="menu">
             <a href="Dashboard">Dashboard</a>
             <a href="Investments">Investments</a>
             <a href="Budget">Budget</a>
             <a href="Transactions">Transactions</a>
             <a href="#Contact">Contact</a>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
-            <p></p>
             <div class="Copyright-ham-footer">
                 <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
             </div>
         </div>
 
-        <script>
-            function toggleMenu() {
-                const menuIcon = document.querySelector('.menu-icon');
-                const menu = document.getElementById('menu');
-
-                // Toggle active class for animation
-                menuIcon.classList.toggle('active');
-
-                // Show/hide menu
-                if (menu.style.display === "block") {
-                    menu.style.display = "none";
-                } else {
-                    menu.style.display = "block";
-                }
-            }
-        </script>
         <div class="user-options">
             <div class="login-button">
                 <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>

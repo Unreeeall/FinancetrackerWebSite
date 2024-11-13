@@ -4,28 +4,32 @@
     "Name": "eier",
     "Phonenumber": "42069",
     "Password": "LEckEIr1234",
-    "Sessions": []
+    "Sessions": [],
+    "Transactions": []
   },
   {
     "Email": "tgtg@aaa",
     "Name": "wef",
     "Phonenumber": "5543",
     "Password": "mhmhmhm",
-    "Sessions": []
+    "Sessions": [],
+    "Transactions": []
   },
   {
     "Email": "aaa@aaa",
     "Name": "test",
     "Phonenumber": "76767",
     "Password": "jjjjj",
-    "Sessions": []
+    "Sessions": [],
+    "Transactions": []
   },
   {
     "Email": "gaga@gugu",
     "Name": "ooohaaa",
     "Phonenumber": "909090",
     "Password": "Auaa",
-    "Sessions": []
+    "Sessions": [],
+    "Transactions": []
   },
   {
     "Email": "test@test",
@@ -34,20 +38,22 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "0Ag7\u002BwBsdwkNXKGIDL3xzDuwMG\u002BAjdfdvQNqSKhtU9U=",
-        "ExpireDate": "2024-11-13T06:30:02.1967665+01:00"
+        "Id": "IXwm/CDu1W2sWUBLetMzbZya8FCByzt6wHnr\u002BPIBYyA=",
+        "ExpireDate": "2024-11-14T07:04:36.1166543+01:00"
       },
       {
-        "Id": "INcOQ2VH/ewQCmuNFE195N19E2xLN/hb\u002B7r0/UJ0rFk=",
-        "ExpireDate": "2024-11-13T13:22:07.5679602+01:00"
+        "Id": "INcit4RcemZ3sdoQGoBFqugUhbW7WaIpehVGcJADBP0=",
+        "ExpireDate": "2024-11-14T09:32:02.5395017+01:00"
       }
-    ]
+    ],
+    "Transactions": []
   },
   {
     "Email": "gargar@gurgur",
     "Name": "haha",
     "Phonenumber": "09876",
     "Password": "hihi",
-    "Sessions": []
+    "Sessions": [],
+    "Transactions": []
   }
 ]
