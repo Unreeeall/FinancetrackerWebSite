@@ -49,70 +49,58 @@
             </div>
         </div>
     </header>
-    <div>
+    <div class="Dashboard">
 
-    </div>
-    <div class="Transaction-list">
-        <table>
-            <thead>
-                <tr>
-                    <th>Category</th>
-                    <th>UseCase</th>
-                    <th>Amount</th>
-                    <th>Origin</th>
-                    <th>Destination</th>
-                    <th>Date</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>
-                        <form>
-                            <select id="category-Dropdown" class="category-drop">
-                                <option value="">--</option>
-                                <option value="Groceries">Groceries</option>
-                                <option value="Investments">Investments</option>
-                                <option value="Tech">Tech</option>
-                                <option value="Savings">Savings</option>
-                                <option value="Traveling">Traveling</option>
-                                <option value="Incurance">Incurance</option>
-                                <option value="Gas">Gas</option>
-                                <option value="Car">Car</option>
-                                <option value="Houshold">Houshold</option>
-                                <option value="Fun & Freetime">Fun & Freetime</option>
-                                <option value="Other">Other</option>
-                            </select>
-                        </form>
 
-                        <script>
-                            const firstDropdown = document.getElementById('firstDropdown');
-                    
-                            firstDropdown.addEventListener('change', function () {
-                                const selectedOption = this.value;
-                                
-                            /*
-                                if (options[selectedOption]) {
-                                    options[selectedOption].forEach(function (item) {
-                                        const optionElement = document.createElement('option');
-                                        optionElement.value = item.toLowerCase();
-                                        optionElement.textContent = item;
-                                        
-                                    });
-                                }
-                                */
-                            });
-                            
-                        </script>
-                    </td>
-                    <td><input type="text" name="UseCase" class="usecase-field"></td>
-                    <td><input type="text" name="Amount" class="Amount-field"></td>
-                    <td><input type="text" name="Origin" class="Origin-field"></td>
-                    <td><input type="text" name="Destination" class="Destination-field"></td>
-                    <td><input type="text" name="Date" class="Date-field"></td>
-                </tr>
-            </tbody>
-
-        </table>
+        <div class="Transaction-list">
+            <form id="Transaction-Form" method="post">
+                <select name="Type" id="type-select" class="type-select" required>
+                    <option value="" disabled selected></option>
+                    <option value="Expense">Expense</option>
+                    <option value="Transfer">Transfer</option>
+                    <option value="Income">Income</option>
+                </select>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Category</th>
+                            <th>UseCase</th>
+                            <th>Amount</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Date</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <select id="category-Dropdown" class="category-drop" name="Category" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="Groceries">Groceries</option>
+                                    <option value="Investments">Investments</option>
+                                    <option value="Tech">Tech</option>
+                                    <option value="Savings">Savings</option>
+                                    <option value="Traveling">Traveling</option>
+                                    <option value="Incurance">Incurance</option>
+                                    <option value="Gas">Gas</option>
+                                    <option value="Car">Car</option>
+                                    <option value="Houshold">Houshold</option>
+                                    <option value="Fun & Freetime">Fun & Freetime</option>
+                                    <option value="Other">Other</option>
+                                </select>
+                            </td>
+                            <td><input type="text" name="UseCase" class="usecase-field" required></td>
+                            <td><input type="number" name="Amount" class="Amount-field" required min="0" value="0"
+                                    step="any"></td>
+                            <td><input type="text" name="Origin" class="Origin-field" required></td>
+                            <td><input type="text" name="Destination" class="Destination-field" required></td>
+                            <td><input type="date" name="Date" class="Date-field" required></td>
+                        </tr>
+                    </tbody>
+                </table>
+                <input type="submit" value="✅"></input>
+            </form>
+        </div>
     </div>
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>

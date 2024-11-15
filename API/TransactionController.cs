@@ -18,4 +18,10 @@ public class TransactionController : ControllerBase
 
         return Content(JsonSerializer.Serialize(user.Transactions));
     }
+    [HttpPost]
+    public IActionResult OnPost()
+    {
+        
+        return null;
+    }
 }
