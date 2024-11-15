@@ -3,9 +3,11 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 65vh;
+    height: 2000px;
     background: linear-gradient(to bottom, #000000, #15025E);
     background-position: fixed;
+    display: flex;
+    flex-direction: column;
 }
 
 header {
@@ -14,10 +16,7 @@ header {
     padding: 1rem 2rem;
     position: fixed;
     width: 100%;
-    top: 0;
-    left: 0;
     box-sizing: border-box;
-    z-index: 1000;
 }
 
 .user-options {
@@ -29,15 +28,7 @@ header {
     width: 10%;
 }
 
-.login-button {
-    padding: 0.5rem 1rem;
-    cursor: pointer;
-    background-color: #000000;
-    text-decoration: none;
-    border-radius: 4px;
-    font-size: 25px;
-}
-
+.login-button,
 .dropdown {
     padding: 0.5rem 1rem;
     cursor: pointer;
@@ -162,6 +153,7 @@ header {
     align-items: center;
     gap: 20px;
     padding: 20px;
+    flex-grow: 1;
 }
 
 .Chart-Container {
@@ -169,6 +161,7 @@ header {
     display: flex;
     gap: 20px;
     justify-content: center;
+    flex-wrap: wrap;
 }
 
 .Budget-Chart,
@@ -189,21 +182,17 @@ header {
     max-width: 1200px;
 }
 
-
-
 .Transaction-list {
     color: #ffff;
     margin-top: 200px;
-    /* margin-left: 200px; */
     display: flex;
-    box-shadow: none;
     align-content: center;
     justify-content: center;
 }
 
-.category-drop {
+.category-drop, .type-select {
     width: 180px;
-    height: 55px; 
+    height: 55px;
     font-size: 1rem;
     background-color: #221f1f;
     color: #fff;
@@ -216,8 +205,8 @@ header {
 .Destination-field,
 .Date-field {
     width: 180px;
-    height: 50px; 
-    font-size: 2rem;
+    height: 50px;
+    font-size: 1.3rem;
     background-color: #221f1f;
     box-shadow: none;
     border: none;
@@ -233,12 +222,18 @@ footer {
     background: #04163E;
     color: #c7c7c7;
     text-align: center;
-    padding: 1rem;
+    padding: 0rem;
     width: 100%;
-    position: absolute;
-    bottom: 0;
 }
-/*
+
+input[type="submit"] {
+    border: none;
+    font-size: 2rem;
+    background-color: #000000;
+    margin-left: auto;
+    display: block;
+}
+
 @media (max-width: 768px) {
     .Chart-Container {
         flex-direction: column;
@@ -249,5 +244,41 @@ footer {
         width: 90%;
         margin: 20px 0;
     }
+    
+    .user-options {
+        width: auto;
+        flex-direction: column;
+        align-items: flex-end;
+    }
 }
-    */
+
+@media (max-width: 480px) {
+    header {
+        padding: 1rem;
+    }
+
+    .login-button, .dropdown {
+        font-size: 20px;
+        padding: 0.4rem 0.8rem;
+    }
+
+    .menu {
+        width: 200px;
+    }
+
+    .Dashboard {
+        padding: 10px;
+    }
+
+    .category-drop, .type-select, 
+    .usecase-field, .Amount-field, 
+    .Origin-field, .Destination-field, 
+    .Date-field {
+        width: 100%;
+        font-size: 1rem;
+    }
+
+    input[type="submit"] {
+        font-size: 1.5rem;
+    }
+}
