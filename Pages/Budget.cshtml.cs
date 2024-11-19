@@ -14,6 +14,7 @@ public class BudgetModel : PageModel
         if(sessionId == null) return RedirectToPage("/Index");
         WebUser = WebUser.GetUserBySession(sessionId);
         if(WebUser == null) return RedirectToPage("/Index");
+        Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Budget");
         return Page();
     }
 }

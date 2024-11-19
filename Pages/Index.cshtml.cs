@@ -6,14 +6,16 @@ namespace FinanceTracker.Pages;
 
 public class IndexModel : PageModel
 {
-    public WebUser? user {get; set; }
+    public WebUser? WebUser {get; set; }
     public IActionResult OnGet()
     {
-        user = null;
+        WebUser = null;
         if(!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return Page();
         if(sessionId == null) return Page();
-        user = WebUser.GetUserBySession(sessionId);
-        if(user == null) return Page();
+        WebUser = WebUser.GetUserBySession(sessionId);
+        if(WebUser == null) {Console.WriteLine("Unkown user Loaded page: /Index ");  return Page(); } 
+        Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Index");
+
         return RedirectToPage("/Dashboard");
         
     }

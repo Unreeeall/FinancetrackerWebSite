@@ -162,6 +162,17 @@ public class SessionUser(Session session, WebUser user)
 
 public class Transaction
 {
+    public Transaction() 
+    {
+        Type = "EMPTY";
+        Category = "EMPTY";
+        UseCase = "EMPTY";
+        Amount = 0;
+        Origin = "EMPTY";
+        Destination = "EMPTY";
+        Date = DateTime.Now;
+    }
+
     public Transaction(string type, string category, string useCase, int amount, string origin, string destination, DateTime date)
     {
         Type = type;

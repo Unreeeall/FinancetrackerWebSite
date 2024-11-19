@@ -1,6 +1,6 @@
 @page
 @using FinanceTracker.Pages
-@model BudgetModel
+@model TransactionsModel
 @{
     ViewData["Title"] = "Dashboard";
 }
@@ -54,15 +54,11 @@
 
         <div class="Transaction-list">
             <form id="Transaction-Form" method="post">
-                <select name="Type" id="type-select" class="type-select" required>
-                    <option value="" disabled selected></option>
-                    <option value="Expense">Expense</option>
-                    <option value="Transfer">Transfer</option>
-                    <option value="Income">Income</option>
-                </select>
+
                 <table>
                     <thead>
                         <tr>
+                            <th>Type</th>
                             <th>Category</th>
                             <th>UseCase</th>
                             <th>Amount</th>
@@ -74,18 +70,28 @@
                     <tbody>
                         <tr>
                             <td>
+                                <select name="Type" id="type-select" class="type-select" required>
+                                    <option value="" disabled selected></option>
+                                    <option value="Expense">Expense</option>
+                                    <option value="Transfer">Transfer</option>
+                                    <option value="Income">Income</option>
+                                </select>
+                            </td>
+                            <td>
                                 <select id="category-Dropdown" class="category-drop" name="Category" required>
                                     <option value="" disabled selected></option>
-                                    <option value="Groceries">Groceries</option>
-                                    <option value="Investments">Investments</option>
-                                    <option value="Tech">Tech</option>
-                                    <option value="Savings">Savings</option>
-                                    <option value="Traveling">Traveling</option>
-                                    <option value="Incurance">Incurance</option>
-                                    <option value="Gas">Gas</option>
-                                    <option value="Car">Car</option>
-                                    <option value="Houshold">Houshold</option>
-                                    <option value="Fun & Freetime">Fun & Freetime</option>
+                                    <option value="Groceries" data-type="Expense">Groceries</option>
+                                    <option value="Investments" data-type="Expense">Investments</option>
+                                    <option value="Tech" data-type="Expense">Tech</option>
+                                    <option value="Savings" data-type="Expense">Savings</option>
+                                    <option value="Traveling" data-type="Expense">Traveling</option>
+                                    <option value="Incurance" data-type="Expense">Incurance</option>
+                                    <option value="Gas" data-type="Expense">Gas</option>
+                                    <option value="Car" data-type="Expense">Car</option>
+                                    <option value="Houshold" data-type="Expense">Houshold</option>
+                                    <option value="Fun & Freetime" data-type="Expense">Fun & Freetime</option>
+                                    <option value="Salary" data-type="Income">Salary</option>
+                                    <option value="Burrrrrr" data-type="Transfer">Burrrrrr</option>
                                     <option value="Other">Other</option>
                                 </select>
                             </td>
@@ -96,15 +102,57 @@
                             <td><input type="text" name="Destination" class="Destination-field" required></td>
                             <td><input type="date" name="Date" class="Date-field" required></td>
                         </tr>
+                        @foreach (var transaction in Model.WebUser.Transactions)
+                        {
+                            <tr>
+                                <td>@transaction.Type</td>
+                                <td>@transaction.Category</td>
+                                <td>@transaction.UseCase</td>
+                                <td>@transaction.Amount</td>
+                                <td>@transaction.Origin</td>
+                                <td>@transaction.Destination</td>
+                                <td>@transaction.Date</td>
+
+                            </tr>
+                        }
                     </tbody>
                 </table>
                 <input type="submit" value="✅"></input>
             </form>
         </div>
     </div>
+
+
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
     </footer>
+
+
+    <script>
+        document.getElementById('type-select').addEventListener('change', function () {
+            const selectedType = this.value;
+            const categoryDropdown = document.getElementById('category-Dropdown');
+            const useCaseField = document.getElementById('usecase-field');
+            const options = categoryDropdown.querySelectorAll('option');
+
+            options.forEach(option => {
+                option.style.display = 'none';
+                if (option.getAttribute('data-type') && option.getAttribute('data-type').includes(selectedType)) {
+                    option.style.display = 'block';
+                }
+            });
+
+            // Reset the category dropdown to its default value
+            categoryDropdown.value = '';
+
+            if (selectedType === 'Income') {
+                useCaseField.closest('td').style.display = 'none';
+            } else {
+                useCaseField.closest('td').style.display = 'table-cell';
+            }
+        });
+    </script>
+
 
 </body>
 

@@ -38,11 +38,75 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "cxcjcygJF8\u002BpS6biN/fPow6CIPqOaiuqznvNXv3WCOE=",
-        "ExpireDate": "2024-11-15T08:16:30.6653619+01:00"
+        "Id": "63FSeudsUkfmhKz7ojhiZMTSuU\u002BOPpaRWE1JLSofuHc=",
+        "ExpireDate": "2024-11-20T06:25:05.7351768+01:00"
       }
     ],
-    "Transactions": []
+    "Transactions": [
+      {
+        "Type": "Expense",
+        "Date": "2024-11-14T00:00:00",
+        "Amount": 1,
+        "Origin": "hhuhuhu",
+        "Destination": "esseses",
+        "UseCase": "jjjk",
+        "Category": "Groceries"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-16T00:00:00",
+        "Amount": 5,
+        "Origin": "safads",
+        "Destination": "sdfsdfsd",
+        "UseCase": "dfhgfdg",
+        "Category": "Groceries"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-16T00:00:00",
+        "Amount": 5,
+        "Origin": "safads",
+        "Destination": "sdfsdfsd",
+        "UseCase": "dfhgfdg",
+        "Category": "Groceries"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-14T00:00:00",
+        "Amount": 200,
+        "Origin": "gdg",
+        "Destination": "fgfgfg",
+        "UseCase": "gagag",
+        "Category": "Investments"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-14T00:00:00",
+        "Amount": 200,
+        "Origin": "gdg",
+        "Destination": "fgfgfg",
+        "UseCase": "gagag",
+        "Category": "Investments"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-14T00:00:00",
+        "Amount": 200,
+        "Origin": "gdg",
+        "Destination": "fgfgfg",
+        "UseCase": "gagag",
+        "Category": "Investments"
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-11-20T00:00:00",
+        "Amount": 120,
+        "Origin": "dfdfdf",
+        "Destination": "fddfdf",
+        "UseCase": "jjjk",
+        "Category": "Salary"
+      }
+    ]
   },
   {
     "Email": "gargar@gurgur",

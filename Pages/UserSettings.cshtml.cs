@@ -6,13 +6,14 @@ namespace FinanceTracker.Pages;
 
 public class UserSettingsModel : PageModel
 {
-    public WebUser? user {get; set; }
+    public WebUser? WebUser {get; set; }
     public void OnGet()
     {
-        user = null;
+        WebUser = null;
         if(!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return;
         if(sessionId == null) return;
-        user = WebUser.GetUserBySession(sessionId);
-        if(user == null) return;
+        WebUser = WebUser.GetUserBySession(sessionId);
+        Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /UserSettings");
+        if(WebUser == null) return;
     }
 }
