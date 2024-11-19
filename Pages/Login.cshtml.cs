@@ -52,7 +52,7 @@ public class LoginModel : PageModel
                             string sessionString = user.CreateSession(DateTime.Now + expiretime);
                             Response.Cookies.Append("SessionCookie", sessionString, new CookieOptions{ HttpOnly = true, Expires = DateTime.UtcNow.Add(expiretime)});
                         
-                        Console.WriteLine("Logged IN!!!!");
+                        Console.WriteLine($"Login from user: {user.Name} {user.Email}");
                         return RedirectToPage("Index");
                     }
                     else

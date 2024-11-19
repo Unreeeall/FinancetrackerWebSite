@@ -19,6 +19,7 @@ namespace FinanceTracker.Pages
 
         public void OnGet()
         {
+            
         }
 
         public IActionResult OnPost()

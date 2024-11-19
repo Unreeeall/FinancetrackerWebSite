@@ -79,7 +79,7 @@
             </ul>
             <div class="user-options">
                 <div class="login-button">
-                    @if (Model.user == null)
+                    @if (Model.WebUser == null)
                     {
                         <span onclick='location.href = "/login"'>Login</span> 
                         @* <button onclick='onclick=location.href = "/login"'>Login</button> *@
@@ -87,14 +87,14 @@
                     else
                     {
                         @* <span onclick='location.href = "/UserSettings"'> @Model.user.Name </span> *@
-                        <span onclick='onclick=location.href = "/UserSettings"'>@Model.user.Name</span>
+                        <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>
                     }
                 </div>
 
                 <!-- <span id="account-options">Account</span> -->
                 <div class="register-button">
                     
-                    @if (Model.user == null)
+                    @if (Model.WebUser == null)
                         {
                             <span onclick='onclick=location.href = "/Register"'>Register</span>
                         }
