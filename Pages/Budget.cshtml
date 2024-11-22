@@ -13,7 +13,9 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/DashboardStyles.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
-<script src="/js/site.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chartjs-adapter-date-fns"></script>
+    <script src="/js/site.js"></script>
 </head>
 
 <body>
@@ -49,9 +51,15 @@
             </div>
         </div>
     </header>
-    <div>
 
+    <div class="Budget-income-Chart">
+        <canvas id="mixedChart"></canvas>
+        <script>
+            budgetChart();
+        </script>
+     
     </div>
+
 
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>

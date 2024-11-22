@@ -153,8 +153,6 @@ async function expenseChart() {
                 categoryAmount[category] = amount;
             }
         }
-
-
     });
 
     // Prepare data for doughnut chart
@@ -186,8 +184,8 @@ async function expenseChart() {
         }]
     };
 
-    var ctx = document.getElementById('budgetPieChart').getContext('2d');
-    var budgetPieChart = new Chart(ctx, {
+    var ctx = document.getElementById('expensePieChart').getContext('2d');
+    var expensePieChart = new Chart(ctx, {
         type: 'doughnut',
         data: expenseDataDoughnutChart,
         options: {
@@ -262,10 +260,117 @@ function investmentChart() {
     });
 }
 
+async function budgetChart() {
+    var response = await fetch("/api/Transaction");
+    if (!response.ok) {
+        console.error('Failed to fetch transactions');
+        return;
+    }
+    var transactions = await response.json();
+
+    function formatDate(dateString) {
+        const date = new Date(dateString);
+        return date.toISOString().split('T')[0];
+    }
+
+    function aggregateData(transactions) {
+        const result = {
+            Expense: {},
+            Income: {}
+        };
+
+        transactions.forEach(transaction => {
+            const date = formatDate(transaction.Date); // Ensure the correct property name
+            const type = transaction.Type; // Ensure the correct property name
+            const amount = parseFloat(transaction.Amount); // Ensure amount is parsed correctly
+
+            if (!result[type][date]) {
+                result[type][date] = 0;
+            }
+            result[type][date] += amount;
+        });
+
+        return result;
+    }
+
+    const aggregatedData = aggregateData(transactions);
+
+    function convertToChartData(aggregatedData) {
+        const expenseData = [];
+        const incomeData = [];
+
+        for (const date in aggregatedData.Expense) {
+            expenseData.push({ x: date, y: aggregatedData.Expense[date] });
+        }
+
+        for (const date in aggregatedData.Income) {
+            incomeData.push({ x: date, y: aggregatedData.Income[date] });
+        }
+
+        return { expenseData, incomeData };
+    }
+
+    const chartData = convertToChartData(aggregatedData);
+
+    const hasExpenseData = chartData.expenseData.length > 0;
+    const hasIncomeData = chartData.incomeData.length > 0;
+
+    const expenseData = hasExpenseData ? chartData.expenseData : [{ x: new Date(), y: 0 }];
+    const incomeData = hasIncomeData ? chartData.incomeData : [{ x: new Date(), y: 0 }];
+
+    // Debugging logs
+    console.log('Aggregated Data:', aggregatedData);
+    console.log('Chart Data:', chartData);
+
+    var ctx = document.getElementById('mixedChart').getContext('2d');
+    var mixedChart = new Chart(ctx, {
+        type: 'bar', // base type for the chart
+        data: {
+            datasets: [{
+                label: 'Expenses',
+                data: expenseData,
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderColor: 'rgba(75, 192, 192, 1)',
+                borderWidth: 1
+            }, {
+                label: 'Income',
+                data: incomeData,
+                type: 'line', // specify the dataset type as line
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                fill: false
+            }]
+        },
+        options: {
+            scales: {
+                x: {
+                    type: 'time',
+                    time: {
+                        unit: 'day'
+                    },
+                    title: {
+                        display: true,
+                        text: 'Date'
+                    }
+                },
+                y: {
+                    beginAtZero: true,
+                    title: {
+                        display: true,
+                        text: 'Amount'
+                    }
+                }
+            }
+        }
+    });
+}
+
+
 // Call the function to fetch data and create the chart after DOM is fully loaded
 document.addEventListener('DOMContentLoaded', () => {
     expenseChart();
     investmentChart();
+    budgetChart();
 });
 
 

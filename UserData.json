@@ -38,8 +38,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "63FSeudsUkfmhKz7ojhiZMTSuU\u002BOPpaRWE1JLSofuHc=",
-        "ExpireDate": "2024-11-20T06:25:05.7351768+01:00"
+        "Id": "ZnBn6IN6Vr6eZswfzwES\u002BnurGPZrcnQCQfprp2hU5WU=",
+        "ExpireDate": "2024-11-22T08:53:43.2450918+01:00"
       }
     ],
     "Transactions": [
@@ -50,7 +50,8 @@
         "Origin": "hhuhuhu",
         "Destination": "esseses",
         "UseCase": "jjjk",
-        "Category": "Groceries"
+        "Category": "Groceries",
+        "ID": null
       },
       {
         "Type": "Expense",
@@ -59,7 +60,8 @@
         "Origin": "safads",
         "Destination": "sdfsdfsd",
         "UseCase": "dfhgfdg",
-        "Category": "Groceries"
+        "Category": "Groceries",
+        "ID": null
       },
       {
         "Type": "Expense",
@@ -68,7 +70,8 @@
         "Origin": "safads",
         "Destination": "sdfsdfsd",
         "UseCase": "dfhgfdg",
-        "Category": "Groceries"
+        "Category": "Groceries",
+        "ID": null
       },
       {
         "Type": "Expense",
@@ -77,7 +80,8 @@
         "Origin": "gdg",
         "Destination": "fgfgfg",
         "UseCase": "gagag",
-        "Category": "Investments"
+        "Category": "Investments",
+        "ID": null
       },
       {
         "Type": "Expense",
@@ -86,7 +90,8 @@
         "Origin": "gdg",
         "Destination": "fgfgfg",
         "UseCase": "gagag",
-        "Category": "Investments"
+        "Category": "Investments",
+        "ID": null
       },
       {
         "Type": "Expense",
@@ -95,7 +100,8 @@
         "Origin": "gdg",
         "Destination": "fgfgfg",
         "UseCase": "gagag",
-        "Category": "Investments"
+        "Category": "Investments",
+        "ID": null
       },
       {
         "Type": "Income",
@@ -104,7 +110,48 @@
         "Origin": "dfdfdf",
         "Destination": "fddfdf",
         "UseCase": "jjjk",
-        "Category": "Salary"
+        "Category": "Salary",
+        "ID": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-11-18T09:59:00",
+        "Amount": 10000,
+        "Origin": "hhuhuhu",
+        "Destination": "sasda",
+        "UseCase": "xgzkhnmgmjhg",
+        "Category": "Salary",
+        "ID": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-18T10:04:00",
+        "Amount": 550,
+        "Origin": "Konto",
+        "Destination": "Amazon",
+        "UseCase": "Balastaition faaaiiiff",
+        "Category": "Tech",
+        "ID": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-20T10:08:00",
+        "Amount": 69000,
+        "Origin": "kredit",
+        "Destination": "Autohaus",
+        "UseCase": "Auto",
+        "Category": "Car",
+        "ID": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-20T08:54:00",
+        "Amount": 20,
+        "Origin": "asdas",
+        "Destination": "dssad",
+        "UseCase": "jjjk",
+        "Category": "Groceries",
+        "ID": null
       }
     ]
   },
@@ -113,6 +160,25 @@
     "Name": "haha",
     "Phonenumber": "09876",
     "Password": "hihi",
+    "Sessions": [],
+    "Transactions": [
+      {
+        "Type": "Income",
+        "Date": "2024-11-17T00:10:00",
+        "Amount": 1000000,
+        "Origin": "EIER",
+        "Destination": "EIER2",
+        "UseCase": "GEIL",
+        "Category": "Salary",
+        "ID": null
+      }
+    ]
+  },
+  {
+    "Email": "eier@ei",
+    "Name": "Egg",
+    "Phonenumber": "0909090909",
+    "Password": "Eier",
     "Sessions": [],
     "Transactions": []
   }

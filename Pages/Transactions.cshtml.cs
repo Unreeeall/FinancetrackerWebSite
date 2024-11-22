@@ -24,6 +24,8 @@ public class TransactionsModel : PageModel
     [BindProperty]
     public required DateTime Date { get; set; }
 
+    public string? ID { get; set; }
+
 
 
 
@@ -60,10 +62,12 @@ public class TransactionsModel : PageModel
             Amount,
             Origin,
             Destination,
-            Date
+            Date,
+            ID
+
         );
 
-
+        newTransaction.ID = Stuff.GenerateRandomBase64String(16);
         // Assuming WebUser is initialized somewhere and has a Transactions property
         WebUser.Transactions.Add(newTransaction);
 
