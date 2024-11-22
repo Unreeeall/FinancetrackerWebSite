@@ -53,8 +53,8 @@
 
     <div class="Dashboard">
         <div class="Chart-Container">
-            <div class="Budget-Chart">
-                <canvas id="budgetPieChart"></canvas>
+            <div class="expense-Chart">
+                <canvas id="expensePieChart"></canvas>
             </div>
             <div class="Investment-Chart">
                 <canvas id="investmentLineChart"></canvas>
@@ -72,6 +72,7 @@
         expenseChart();
 
         investmentChart();
+
 
         var ctx = document.getElementById('transactionBarChart').getContext('2d');
         var transactionBarChart = new Chart(ctx, {

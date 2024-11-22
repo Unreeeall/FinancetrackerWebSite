@@ -53,6 +53,7 @@
 
 
         <div class="Transaction-list">
+            <button id="toggleEditMode" class="edit-mode-button" onclick="toggleEditMode()">Enable Edit Mode</button>
             <form id="Transaction-Form" method="post">
 
                 <table>
@@ -65,6 +66,7 @@
                             <th>Origin</th>
                             <th>Destination</th>
                             <th>Date</th>
+                            <th class="edit-buttons">Actions</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -100,9 +102,10 @@
                                     step="any"></td>
                             <td><input type="text" name="Origin" class="Origin-field" required></td>
                             <td><input type="text" name="Destination" class="Destination-field" required></td>
-                            <td><input type="date" name="Date" class="Date-field" required></td>
+                            <td><input type="datetime-local" name="Date" class="Date-field" required></td>
+
                         </tr>
-                        @foreach (var transaction in Model.WebUser.Transactions)
+                        @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
                         {
                             <tr>
                                 <td>@transaction.Type</td>
@@ -112,7 +115,10 @@
                                 <td>@transaction.Origin</td>
                                 <td>@transaction.Destination</td>
                                 <td>@transaction.Date</td>
-
+                                <td class="edit-buttons">
+                                    <button type="button" onclick="editTransaction(@transaction.ID)">🖊️</button>
+                                    <button type="button" onclick="deleteTransaction(@transaction.ID)">❌</button>
+                                </td>
                             </tr>
                         }
                     </tbody>
@@ -129,6 +135,31 @@
 
 
     <script>
+
+        function toggleEditMode() {
+            const table = document.querySelector('.Transaction-list table');
+            table.classList.toggle('edit-mode');
+            const button = document.getElementById('toggleEditMode');
+            if (table.classList.contains('edit-mode')) {
+                button.textContent = 'Disable Edit Mode';
+                button.style.backgroundColor = 'yellow';
+            } else {
+                button.textContent = 'Enable Edit Mode';
+                button.style.backgroundColor = '';
+            }
+        }
+
+        function editTransaction(transactionId) {
+            // Add your edit logic here
+            console.log('Edit transaction:', transactionId);
+        }
+
+        function deleteTransaction(transactionId) {
+            // Add your delete logic here
+            console.log('Delete transaction:', transactionId);
+        }
+
+
         document.getElementById('type-select').addEventListener('change', function () {
             const selectedType = this.value;
             const categoryDropdown = document.getElementById('category-Dropdown');

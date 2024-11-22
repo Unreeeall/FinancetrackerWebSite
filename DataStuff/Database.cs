@@ -173,7 +173,7 @@ public class Transaction
         Date = DateTime.Now;
     }
 
-    public Transaction(string type, string category, string useCase, int amount, string origin, string destination, DateTime date)
+    public Transaction(string type, string category, string useCase, int amount, string origin, string destination, DateTime date, string id)
     {
         Type = type;
         Category = category;
@@ -182,6 +182,7 @@ public class Transaction
         Origin = origin;
         Destination = destination;
         Date = date;
+        ID = id;
     }
 
     public string? Type { get; set; }
@@ -192,6 +193,7 @@ public class Transaction
     public string? Destination { get; set; }
     public string? UseCase { get; set; }
     public string? Category { get; set; }
+    public string? ID { get; set; }
 
     
 }
