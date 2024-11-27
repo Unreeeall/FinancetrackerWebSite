@@ -123,7 +123,7 @@ public class WebUser
 
     public static WebUser? GetUserBySession(string session)
     {
-        if(!IdDict.ContainsKey(session)) return null;
+        if (!IdDict.ContainsKey(session)) return null;
         SessionUser sessionuser = IdDict[session];
         if (sessionuser.Session.ExpireDate < DateTime.Now) return null;
         return sessionuser.User;
@@ -132,15 +132,27 @@ public class WebUser
 
     public static void DeleteSession(string session)
     {
-        if(!IdDict.ContainsKey(session)) return;
+        if (!IdDict.ContainsKey(session)) return;
         SessionUser sessionuser = IdDict[session];
         sessionuser.User.Sessions.Remove(sessionuser.Session);
         IdDict.Remove(session);
     }
 
+    public Transaction? GetTransactionByID(string transactionID)
+    {
+        foreach (var transaction in Transactions)
+        {
+            if(transaction.ID == transactionID)
+            {
+                Console.WriteLine($"Transaction found: {transaction}");
+                return transaction;
+            }
+        }
+        Console.WriteLine($"No transaction found with ID: {transactionID}");
+        return null;
+    }
 
-
-
+    
 }
 
 
@@ -162,7 +174,7 @@ public class SessionUser(Session session, WebUser user)
 
 public class Transaction
 {
-    public Transaction() 
+    public Transaction()
     {
         Type = "EMPTY";
         Category = "EMPTY";
@@ -171,6 +183,7 @@ public class Transaction
         Origin = "EMPTY";
         Destination = "EMPTY";
         Date = DateTime.Now;
+        ID = "EMPTY";
     }
 
     public Transaction(string type, string category, string useCase, int amount, string origin, string destination, DateTime date, string id)
@@ -188,13 +201,13 @@ public class Transaction
     public string? Type { get; set; }
     public DateTime? Date { get; set; }
     public double? Amount { get; set; }
-    
+
     public string? Origin { get; set; }
     public string? Destination { get; set; }
     public string? UseCase { get; set; }
     public string? Category { get; set; }
     public string? ID { get; set; }
 
-    
+
 }
 

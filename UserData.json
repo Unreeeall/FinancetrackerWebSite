@@ -38,120 +38,20 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "ZnBn6IN6Vr6eZswfzwES\u002BnurGPZrcnQCQfprp2hU5WU=",
-        "ExpireDate": "2024-11-22T08:53:43.2450918+01:00"
+        "Id": "DeaRbLWnnEG9QcJjer\u002BuYBxRYL6Lssh7B9HSNlX9GcM=",
+        "ExpireDate": "2024-11-28T08:28:52.0480276+01:00"
       }
     ],
     "Transactions": [
       {
-        "Type": "Expense",
-        "Date": "2024-11-14T00:00:00",
-        "Amount": 1,
-        "Origin": "hhuhuhu",
-        "Destination": "esseses",
-        "UseCase": "jjjk",
-        "Category": "Groceries",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-16T00:00:00",
-        "Amount": 5,
-        "Origin": "safads",
-        "Destination": "sdfsdfsd",
-        "UseCase": "dfhgfdg",
-        "Category": "Groceries",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-16T00:00:00",
-        "Amount": 5,
-        "Origin": "safads",
-        "Destination": "sdfsdfsd",
-        "UseCase": "dfhgfdg",
-        "Category": "Groceries",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-14T00:00:00",
-        "Amount": 200,
-        "Origin": "gdg",
-        "Destination": "fgfgfg",
-        "UseCase": "gagag",
-        "Category": "Investments",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-14T00:00:00",
-        "Amount": 200,
-        "Origin": "gdg",
-        "Destination": "fgfgfg",
-        "UseCase": "gagag",
-        "Category": "Investments",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-14T00:00:00",
-        "Amount": 200,
-        "Origin": "gdg",
-        "Destination": "fgfgfg",
-        "UseCase": "gagag",
-        "Category": "Investments",
-        "ID": null
-      },
-      {
         "Type": "Income",
-        "Date": "2024-11-20T00:00:00",
-        "Amount": 120,
-        "Origin": "dfdfdf",
-        "Destination": "fddfdf",
-        "UseCase": "jjjk",
+        "Date": "2024-12-17T07:06:00",
+        "Amount": 4000,
+        "Origin": "EIER",
+        "Destination": "asdadas",
+        "UseCase": "adadsa",
         "Category": "Salary",
-        "ID": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2024-11-18T09:59:00",
-        "Amount": 10000,
-        "Origin": "hhuhuhu",
-        "Destination": "sasda",
-        "UseCase": "xgzkhnmgmjhg",
-        "Category": "Salary",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-18T10:04:00",
-        "Amount": 550,
-        "Origin": "Konto",
-        "Destination": "Amazon",
-        "UseCase": "Balastaition faaaiiiff",
-        "Category": "Tech",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-20T10:08:00",
-        "Amount": 69000,
-        "Origin": "kredit",
-        "Destination": "Autohaus",
-        "UseCase": "Auto",
-        "Category": "Car",
-        "ID": null
-      },
-      {
-        "Type": "Expense",
-        "Date": "2024-11-20T08:54:00",
-        "Amount": 20,
-        "Origin": "asdas",
-        "Destination": "dssad",
-        "UseCase": "jjjk",
-        "Category": "Groceries",
-        "ID": null
+        "ID": "f9f321ba-e2e2-4a0d-b2c2-b9d3286e1d71"
       }
     ]
   },

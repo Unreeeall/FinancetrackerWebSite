@@ -199,8 +199,8 @@ header {
 }
 
 .Transaction-list th, .Transaction-list td {
-    padding: 10px;
-    text-align: left;
+    
+    text-align: center;
     border-bottom: 1px solid #ddd;
 }
 
@@ -211,11 +211,14 @@ header {
 .category-drop,
 .type-select {
     width: 180px;
-    height: 55px;
+    height: 75px;
     font-size: 1rem;
     background-color: #221f1f;
     color: #fff;
-    border: none;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.3rem;
 }
 
 .usecase-field,
@@ -235,32 +238,43 @@ header {
 .Budget-income-Chart {
     display: grid;
     justify-content: center;
-    /* centers horizontally */
     align-items: center;
-    
     height: 100vh;
     width: 60%;
 }
 
-.edit-mode-button {
-    padding: 10px 20px;
-    background-color: #007bff;
-    color: white;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-}
 
-.edit-mode-button:hover {
-    background-color: #0056b3;
-}
-
-.category-drop, .type-select, .usecase-field, .Amount-field, .Origin-field, .Destination-field, .Date-field {
+.usecase-field, .Amount-field, .Origin-field, .Destination-field, .Date-field {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
     border: 1px solid #ddd;
     border-radius: 5px;
+}
+
+.submit-button {
+    background-color: transparent !important;
+    border: none;
+}
+
+.submit-button:hover {
+    cursor: pointer;
+}
+
+    
+
+
+.edit-buttons button {
+    background-color: transparent !important;
+    border: none;  
+    display: inline-block;
+    width: 50px;
+    height: 50px;
+}
+
+.edit-buttons button:hover {
+    cursor: pointer;
+    border: 1px solid #ddd;
 }
 
 

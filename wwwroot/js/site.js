@@ -270,7 +270,7 @@ async function budgetChart() {
 
     function formatDate(dateString) {
         const date = new Date(dateString);
-        return date.toISOString().split('T')[0];
+        return `${date.getFullYear()}-${(date.getMonth() + 1).toString().padStart(2, '0')}`;
     }
 
     function aggregateData(transactions) {
@@ -280,14 +280,14 @@ async function budgetChart() {
         };
 
         transactions.forEach(transaction => {
-            const date = formatDate(transaction.Date); // Ensure the correct property name
+            const month = formatDate(transaction.Date); // Ensure the correct property name
             const type = transaction.Type; // Ensure the correct property name
             const amount = parseFloat(transaction.Amount); // Ensure amount is parsed correctly
 
-            if (!result[type][date]) {
-                result[type][date] = 0;
+            if (!result[type][month]) {
+                result[type][month] = 0;
             }
-            result[type][date] += amount;
+            result[type][month] += amount;
         });
 
         return result;
@@ -298,14 +298,24 @@ async function budgetChart() {
     function convertToChartData(aggregatedData) {
         const expenseData = [];
         const incomeData = [];
+        const allMonths = new Set();
 
-        for (const date in aggregatedData.Expense) {
-            expenseData.push({ x: date, y: aggregatedData.Expense[date] });
+        // Collect all the months present in either expense or income data
+        for (const month in aggregatedData.Expense) {
+            allMonths.add(month);
+        }
+        for (const month in aggregatedData.Income) {
+            allMonths.add(month);
         }
 
-        for (const date in aggregatedData.Income) {
-            incomeData.push({ x: date, y: aggregatedData.Income[date] });
-        }
+        // Sort the months
+        const sortedMonths = Array.from(allMonths).sort();
+
+        // Populate expenseData and incomeData
+        sortedMonths.forEach(month => {
+            expenseData.push({ x: month, y: aggregatedData.Expense[month] || 0 });
+            incomeData.push({ x: month, y: aggregatedData.Income[month] || 0 });
+        });
 
         return { expenseData, incomeData };
     }
@@ -338,7 +348,8 @@ async function budgetChart() {
                 type: 'line', // specify the dataset type as line
                 borderColor: 'rgba(255, 99, 132, 1)',
                 backgroundColor: 'rgba(255, 99, 132, 0.2)',
-                fill: false
+                fill: false,
+                stepped: true // ensures the line is constant between points
             }]
         },
         options: {
@@ -346,11 +357,11 @@ async function budgetChart() {
                 x: {
                     type: 'time',
                     time: {
-                        unit: 'day'
+                        unit: 'month'
                     },
                     title: {
                         display: true,
-                        text: 'Date'
+                        text: 'Month'
                     }
                 },
                 y: {

@@ -24,7 +24,10 @@ public class TransactionsModel : PageModel
     [BindProperty]
     public required DateTime Date { get; set; }
 
-    public string? ID { get; set; }
+    public required string ID { get; set; }
+
+    [BindProperty]
+    public required string TableTransactionId { get; set; }
 
 
 
@@ -33,7 +36,7 @@ public class TransactionsModel : PageModel
     public IActionResult OnGet()
     {
 
-        
+
         WebUser = null;
         if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
         if (sessionId == null) return RedirectToPage("/Index");
@@ -43,10 +46,10 @@ public class TransactionsModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPost()
+    public IActionResult OnPostSubmit()
     {
 
-        
+
 
         WebUser = null;
         if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
@@ -67,14 +70,34 @@ public class TransactionsModel : PageModel
 
         );
 
-        newTransaction.ID = Stuff.GenerateRandomBase64String(16);
+        newTransaction.ID = System.Guid.NewGuid().ToString();
         // Assuming WebUser is initialized somewhere and has a Transactions property
         WebUser.Transactions.Add(newTransaction);
 
-        
+
         Console.WriteLine("User: " + WebUser.Name + "   Email: " + WebUser.Email + " Add Transaction Post");
         // Return JSON response of the transactions
         return RedirectToPage("Transactions");
-      
+
     }
+
+
+    public IActionResult OnPostDeleteTransaction(string TableTransactionId)
+    {
+        WebUser = null;
+        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
+        if (sessionId == null) return RedirectToPage("/Index");
+        WebUser = WebUser.GetUserBySession(sessionId);
+        if (WebUser == null) return RedirectToPage("/Index");
+
+        if (TableTransactionId != null)
+        {
+            WebUser.Transactions.Remove(WebUser.GetTransactionByID(TableTransactionId));
+            Console.WriteLine($"Transaction with ID: {TableTransactionId} deleted!");
+        }
+
+        return Page();
+    }
+
 }
+
