@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using System.Text.Json;
+using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
 namespace FinanceTracker.Pages;
 
@@ -27,7 +28,7 @@ public class TransactionsModel : PageModel
     public required string ID { get; set; }
 
     [BindProperty]
-    public required string TableTransactionId { get; set; }
+    public required string Trans_ID { get; set; }
 
 
 
@@ -46,43 +47,47 @@ public class TransactionsModel : PageModel
         return Page();
     }
 
-    public IActionResult OnPostSubmit()
+    public IActionResult OnPostAddTransaction()
     {
 
+        try
+        {
+            WebUser = null;
+            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
+            if (sessionId == null) return RedirectToPage("/Index");
+            WebUser = WebUser.GetUserBySession(sessionId);
+            if (WebUser == null) return RedirectToPage("/Index");
+
+            var newTransaction = new Transaction
+            (
+                Type,
+                Category,
+                UseCase,
+                Amount,
+                Origin,
+                Destination,
+                Date,
+                ID
+
+            );
+
+            newTransaction.ID = System.Guid.NewGuid().ToString();
+            // Assuming WebUser is initialized somewhere and has a Transactions property
+            WebUser.Transactions.Add(newTransaction);
 
 
-        WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
-        WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
-
-        var newTransaction = new Transaction
-        (
-            Type,
-            Category,
-            UseCase,
-            Amount,
-            Origin,
-            Destination,
-            Date,
-            ID
-
-        );
-
-        newTransaction.ID = System.Guid.NewGuid().ToString();
-        // Assuming WebUser is initialized somewhere and has a Transactions property
-        WebUser.Transactions.Add(newTransaction);
-
-
-        Console.WriteLine("User: " + WebUser.Name + "   Email: " + WebUser.Email + " Add Transaction Post");
-        // Return JSON response of the transactions
-        return RedirectToPage("Transactions");
-
+            Console.WriteLine("User: " + WebUser.Name + "   Email: " + WebUser.Email + " Add Transaction Post");
+            // Return JSON response of the transactions
+            return RedirectToPage("Transactions");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error adding transaction: {ex.Message}");
+            return RedirectToPage("/Error"); // Handle error appropriately
+        }
     }
 
-
-    public IActionResult OnPostDeleteTransaction(string TableTransactionId)
+    public IActionResult OnPostEditTransaction(string Trans_ID)
     {
         WebUser = null;
         if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
@@ -90,13 +95,48 @@ public class TransactionsModel : PageModel
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
 
-        if (TableTransactionId != null)
+        if (Trans_ID != null)
         {
-            WebUser.Transactions.Remove(WebUser.GetTransactionByID(TableTransactionId));
-            Console.WriteLine($"Transaction with ID: {TableTransactionId} deleted!");
+
+            var currentTransaction = WebUser.GetTransactionByID(Trans_ID);
+
+            currentTransaction.Type = Type;
+            currentTransaction.Category = Category;
+            currentTransaction.UseCase = UseCase;
+            currentTransaction.Amount = Amount;
+            currentTransaction.Origin = Origin;
+            currentTransaction.Destination = Destination;
+            currentTransaction.Date = Date;
+            currentTransaction.ID = Trans_ID;
         }
 
         return Page();
+    }
+
+
+    public IActionResult OnPostDeleteTransaction(string Trans_ID)
+    {
+        try
+        {
+            WebUser = null;
+            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
+            if (sessionId == null) return RedirectToPage("/Index");
+            WebUser = WebUser.GetUserBySession(sessionId);
+            if (WebUser == null) return RedirectToPage("/Index");
+
+            if (Trans_ID != null)
+            {
+                WebUser.Transactions.Remove(WebUser.GetTransactionByID(Trans_ID));
+                Console.WriteLine($"Transaction with ID: {Trans_ID} deleted!");
+            }
+
+            return Page();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting transaction: {ex.Message}");
+            return RedirectToPage("/Error");
+        }
     }
 
 }
