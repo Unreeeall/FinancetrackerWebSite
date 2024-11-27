@@ -40,18 +40,22 @@
       {
         "Id": "DeaRbLWnnEG9QcJjer\u002BuYBxRYL6Lssh7B9HSNlX9GcM=",
         "ExpireDate": "2024-11-28T08:28:52.0480276+01:00"
+      },
+      {
+        "Id": "kBJC7U7NVAH1pE9EVZj9syOyr78Dqnq6A5th\u002BeUEBGo=",
+        "ExpireDate": "2024-11-28T16:01:36.3298108+01:00"
       }
     ],
     "Transactions": [
       {
-        "Type": "Income",
-        "Date": "2024-12-17T07:06:00",
-        "Amount": 4000,
+        "Type": "Expense",
+        "Date": "2024-11-27T14:56:00",
+        "Amount": 6,
         "Origin": "EIER",
-        "Destination": "asdadas",
-        "UseCase": "adadsa",
-        "Category": "Salary",
-        "ID": "f9f321ba-e2e2-4a0d-b2c2-b9d3286e1d71"
+        "Destination": "sdfsdfsd",
+        "UseCase": "GEIL",
+        "Category": "Investments",
+        "ID": "25befbd1-7303-4d5c-ae11-9782cbc1a368"
       }
     ]
   },

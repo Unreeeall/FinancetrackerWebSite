@@ -59,21 +59,22 @@
         <div class="Transaction-list">
 
 
-            <form id="Transaction-Form" method="post">
 
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Type</th>
-                            <th>Category</th>
-                            <th>UseCase</th>
-                            <th>Amount</th>
-                            <th>Origin</th>
-                            <th>Destination</th>
-                            <th>Date</th>
-                            <th class="edit-buttons">Actions</th>
-                        </tr>
-                    </thead>
+
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Category</th>
+                        <th>UseCase</th>
+                        <th>Amount</th>
+                        <th>Origin</th>
+                        <th>Destination</th>
+                        <th>Date</th>
+                        <th class="edit-buttons">Actions</th>
+                    </tr>
+                </thead>
+                <form id="Transaction-Form" method="post">
                     <tbody>
                         <tr>
                             <td>
@@ -109,35 +110,44 @@
                             <td><input type="text" name="Destination" class="Destination-field" required></td>
                             <td><input type="datetime-local" name="Date" class="Date-field" required></td>
                             <td>
-                                <input class="submit-button" type="submit" asp-page-handler="Submit" value="✅"></input>
+                                <input class="submit-button" type="submit" asp-page-handler="AddTransaction"
+                                    value="✅"></input>
                             </td>
+                </form>
 
-                        </tr>
-                        @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
-                        {
-                            <tr>
-                                <td>@transaction.Type</td>
-                                <td>@transaction.Category</td>
-                                <td>@transaction.UseCase</td>
-                                <td>@transaction.Amount</td>
-                                <td>@transaction.Origin</td>
-                                <td>@transaction.Destination</td>
-                                <td>@transaction.Date</td>
-                                <td class="edit-buttons">
-                                    <button type="button" onclick="editTransaction(event, '@transaction.ID')">🖊️</button>
-                                    <form method="post" >
-                                        <input type="hidden" name="TableTransactionId" value="@transaction.ID" />
-                                        <button type="submit" asp-page-handler="DeleteTransaction">❌</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-                </table>
+                </tr>
+                @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
+                {
+                    <tr id="row-@transaction.ID">
+                        <td>@transaction.Type</td>
+                        <td>@transaction.Category</td>
+                        <td>@transaction.UseCase</td>
+                        <td>@transaction.Amount</td>
+                        <td>@transaction.Origin</td>
+                        <td>@transaction.Destination</td>
+                        <td>@transaction.Date</td>
+                        <td class="edit-buttons">
+                            <button type="button" onclick="editTransactionWindow(event, '@transaction.ID')">🖊️</button>
+                            <form method="post">
+                                <input type="hidden" name="Trans_ID" value="@transaction.ID" />
+                                <button type="submit" class="delete-button" asp-page-handler="DeleteTransaction">❌</button>
+                            </form>
+                        </td>
+                    </tr>
+                }
+                </tbody>
+            </table>
 
-            </form>
+
+        </div>
+        <div class="edit-menu-background" id="edit-popup">
+            <div class=""></div>
+            <p> eier</p>
+            <button class="exit-edit-btn" onclick="closeEditMenu()">X</button>
         </div>
     </div>
+
+
 
 
     <footer>
@@ -147,42 +157,16 @@
 
     <script>
 
-        function editTransaction(event, transactionID) {
-            // Add your edit logic here
 
-
-            const row = event.target.closest('tr');
-            const transactionId = event.target.getAttribute('ID');
-            console.log('Edit transaction:', transactionId);
-
-
+        function editTransactionWindow(event, Trans_ID)
+        {
+            document.getElementById('edit-popup').classList.toggle("visible");
         }
 
-        function predeleteTransaction(event, transactionID) {
-            // Add your delete logic here
-            console.log('deleteTransaction function called');
-            console.log('Event:', event);
-            console.log('Transaction ID:', transactionID);
-
-
-            const userConfirmed = confirm("Are you sure you want to delete this transaction?");
-
-            if (userConfirmed) {
-                // Add your delete logic here
-                const row = event.target.closest('tr');
-                console.log('Delete transaction:', transactionID);
-
-
-
-                // Add your AJAX call or form submission logic to delete the transaction from the server
-            } else {
-                // User clicked cancel, do nothing
-                console.log('Deletion cancelled');
-            }
-
-
+        function closeEditMenu()
+        {
+            document.getElementById('edit-popup').classList.toggle("visible");
         }
-
 
         document.getElementById('type-select').addEventListener('change', function () {
             const selectedType = this.value;
