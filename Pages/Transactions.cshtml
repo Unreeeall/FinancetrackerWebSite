@@ -51,9 +51,14 @@
     </header>
     <div class="Dashboard">
 
+        @* <div class="editbutton">
+        <button id="toggleEditMode" class="edit-mode-button" onclick="toggleEditMode()"><img
+        src="./images/edit-pen-svgrepo-com.svg" alt=""></button>
+        </div> *@
 
         <div class="Transaction-list">
-            <button id="toggleEditMode" class="edit-mode-button" onclick="toggleEditMode()">Enable Edit Mode</button>
+
+
             <form id="Transaction-Form" method="post">
 
                 <table>
@@ -103,6 +108,9 @@
                             <td><input type="text" name="Origin" class="Origin-field" required></td>
                             <td><input type="text" name="Destination" class="Destination-field" required></td>
                             <td><input type="datetime-local" name="Date" class="Date-field" required></td>
+                            <td>
+                                <input class="submit-button" type="submit" asp-page-handler="Submit" value="✅"></input>
+                            </td>
 
                         </tr>
                         @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
@@ -116,14 +124,17 @@
                                 <td>@transaction.Destination</td>
                                 <td>@transaction.Date</td>
                                 <td class="edit-buttons">
-                                    <button type="button" onclick="editTransaction(@transaction.ID)">🖊️</button>
-                                    <button type="button" onclick="deleteTransaction(@transaction.ID)">❌</button>
+                                    <button type="button" onclick="editTransaction(event, '@transaction.ID')">🖊️</button>
+                                    <form method="post" >
+                                        <input type="hidden" name="TableTransactionId" value="@transaction.ID" />
+                                        <button type="submit" asp-page-handler="DeleteTransaction">❌</button>
+                                    </form>
                                 </td>
                             </tr>
                         }
                     </tbody>
                 </table>
-                <input type="submit" value="✅"></input>
+
             </form>
         </div>
     </div>
@@ -136,27 +147,40 @@
 
     <script>
 
-        function toggleEditMode() {
-            const table = document.querySelector('.Transaction-list table');
-            table.classList.toggle('edit-mode');
-            const button = document.getElementById('toggleEditMode');
-            if (table.classList.contains('edit-mode')) {
-                button.textContent = 'Disable Edit Mode';
-                button.style.backgroundColor = 'yellow';
-            } else {
-                button.textContent = 'Enable Edit Mode';
-                button.style.backgroundColor = '';
-            }
-        }
-
-        function editTransaction(transactionId) {
+        function editTransaction(event, transactionID) {
             // Add your edit logic here
+
+
+            const row = event.target.closest('tr');
+            const transactionId = event.target.getAttribute('ID');
             console.log('Edit transaction:', transactionId);
+
+
         }
 
-        function deleteTransaction(transactionId) {
+        function predeleteTransaction(event, transactionID) {
             // Add your delete logic here
-            console.log('Delete transaction:', transactionId);
+            console.log('deleteTransaction function called');
+            console.log('Event:', event);
+            console.log('Transaction ID:', transactionID);
+
+
+            const userConfirmed = confirm("Are you sure you want to delete this transaction?");
+
+            if (userConfirmed) {
+                // Add your delete logic here
+                const row = event.target.closest('tr');
+                console.log('Delete transaction:', transactionID);
+
+
+
+                // Add your AJAX call or form submission logic to delete the transaction from the server
+            } else {
+                // User clicked cancel, do nothing
+                console.log('Deletion cancelled');
+            }
+
+
         }
 
 
