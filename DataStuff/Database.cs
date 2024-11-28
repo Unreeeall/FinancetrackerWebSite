@@ -6,6 +6,8 @@ using System.Text.Json;
 using System.Web;
 using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
+using System.ComponentModel;
+using FinanceTracker.Pages;
 
 
 
@@ -23,9 +25,40 @@ public class WebUser
 
     public List<Transaction> Transactions { get; set; } = [];
 
+    public List<BankAccount> BankAccounts { get; set; } = [];
+    public List<PortfolioAccount> PortfolioAccounts { get; set; } = [];
+    public List<CryptoWallet> CryptoWallets { get; set; } = [];
+
     private static string filePath = Path.Combine(Directory.GetCurrentDirectory(), "UserData.json");
 
     private static List<WebUser> userList = new List<WebUser>();
+
+
+    // public void AddBankAccount(BankAccount account)
+    // {
+    //     BankAccounts.Add(account);
+    // }
+
+    // public void AddPortfolioAccount(PortfolioAccount account)
+    // {
+    //     PortfolioAccounts.Add(account);
+    // }
+
+    // public void AddCryptoWallet(CryptoWallet wallet)
+    // {
+    //     CryptoWallets.Add(wallet);
+    // }
+
+    // public List<IFinancialAccount> GetAllFinancialAccounts()
+    // {
+    //     List<IFinancialAccount> accounts = new List<IFinancialAccount>();
+    //     accounts.AddRange(BankAccounts);
+    //     accounts.AddRange(PortfolioAccounts);
+    //     accounts.AddRange(CryptoWallets);
+    //     return accounts;
+    // }
+
+
 
     public WebUser() { Email = ""; Name = ""; Phonenumber = ""; Password = ""; userList.Add(this); }
     public WebUser(string email, string name, string? phonenumber, string password)
@@ -142,7 +175,7 @@ public class WebUser
     {
         foreach (var transaction in Transactions)
         {
-            if(transaction.ID == transactionID)
+            if (transaction.ID == transactionID)
             {
                 Console.WriteLine($"Transaction found: {transaction}");
                 return transaction;
@@ -152,7 +185,18 @@ public class WebUser
         return null;
     }
 
-    
+
+
+    public bool HasFinancialAccounts()
+    {
+        if(BankAccounts.Count == 0 && PortfolioAccounts.Count == 0 && CryptoWallets.Count == 0)
+        {
+            return false;
+        }
+        else return true;
+    }
+
+
 }
 
 
@@ -172,21 +216,145 @@ public class SessionUser(Session session, WebUser user)
 }
 
 
+
+
+// public interface IFinancialAccount
+// {
+//     string AccountName { get; set; }
+//     decimal Balance { get; set; }
+// }
+
+public abstract class FinancialAccount 
+{
+    public string AccountName { get; set; }
+    public decimal Balance { get; set; }
+
+}
+
+public class BankAccount : FinancialAccount
+{
+    public CurrencyType Currency { get; set; }
+}
+
+public enum CurrencyType
+{
+    [Description("US Dollar")]
+    USD,
+    [Description("EURO")]
+    EUR,
+    [Description("British Pound")]
+    GBP,
+    [Description("Australian Dollar")]
+    AUD,
+    [Description("Canadian Dollar")]
+    CAD,
+    [Description("Danish Krone")]
+    DKK,
+    [Description("Swedish Krona")]
+    SEK,
+    [Description("Singapore Dollar")]
+    SGD,
+    [Description("Russian Ruble")]
+    RUB,
+    [Description("Zloty")]
+    PLN,
+    [Description("New Zealand Dollar")]
+    NZD,
+    [Description("Swiss Franc")]
+    CHF,
+    [Description("Southkorean Won")]
+    KRW,
+    [Description("Yen")]
+    JPY,
+    [Description("Dong")]
+    VND,
+    [Description("Yuan Renminbi")]
+    CNY
+
+
+}
+
+
+public class PortfolioAccount : FinancialAccount
+{
+    public List<Investment> Investments { get; set; }
+}
+
+public class Investment
+{
+    public string Ticker { get; set; }
+    public int Quantity { get; set; }
+    public decimal PurchasePrice { get; set; }
+}
+
+public class CryptoWallet : FinancialAccount
+{
+    public List<CryptoHolding> CryptoHoldings { get; set; } = [];
+}
+
+public class CryptoHolding
+{
+    public CryptoCoin Coin { get; set; }
+    public decimal Amount { get; set; }
+}
+
+
+public enum CryptoCoin
+{
+    [Description("Bitcoin")]
+    BTC,
+    [Description("Etherium")]
+    ETH,
+    [Description("Solana")]
+    SOL,
+    [Description("Dodge Coin")]
+    DOGE,
+    [Description("Pepe")]
+    PEPE,
+    [Description("XRP")]
+    XRP
+}
+
+
+
+
+
 public class Transaction
 {
+
+    public string? Type { get; set; }
+    public DateTime Date { get; set; }
+    public decimal? Amount { get; set; }
+
+    public FinancialAccount? Origin { get; set; }
+    public FinancialAccount? Destination { get; set; }
+    public string? Description { get; set; }
+    public string? UseCase { get; set; }
+    public string? Category { get; set; }
+    public string? SenderName { get; set; }
+    public string? SenderAccount { get; set; }
+    public bool IsIncoming { get; set; }
+    public string? ID { get; set; }
+
+    
     public Transaction()
     {
         Type = "EMPTY";
         Category = "EMPTY";
         UseCase = "EMPTY";
         Amount = 0;
-        Origin = "EMPTY";
-        Destination = "EMPTY";
+        Origin = null;
+        Destination = null;
+        SenderName = "EMPTY";
+        SenderAccount ="EMTPY";
+        Description = "EMPTY";
         Date = DateTime.Now;
         ID = "EMPTY";
+        IsIncoming = false;
+        
     }
 
-    public Transaction(string type, string category, string useCase, int amount, string origin, string destination, DateTime date, string id)
+    public Transaction(string type, DateTime date, decimal amount, FinancialAccount origin, FinancialAccount destination, string description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
     {
         Type = type;
         Category = category;
@@ -194,19 +362,20 @@ public class Transaction
         Amount = amount;
         Origin = origin;
         Destination = destination;
+        SenderName = senderName;
+        SenderAccount = senderAccount;
+        Description = description;
         Date = date;
+        IsIncoming = isincoming;
         ID = id;
     }
+    /*
+    public string GetDate() {
+        return Date.ToString("s");
+    }
+    */
 
-    public string? Type { get; set; }
-    public DateTime? Date { get; set; }
-    public double? Amount { get; set; }
-
-    public string? Origin { get; set; }
-    public string? Destination { get; set; }
-    public string? UseCase { get; set; }
-    public string? Category { get; set; }
-    public string? ID { get; set; }
+    
 
 
 }

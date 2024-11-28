@@ -1,0 +1,120 @@
+[
+  {
+    "Email": "peini@haha",
+    "Name": "eier",
+    "Phonenumber": "42069",
+    "Password": "LEckEIr1234",
+    "Sessions": [],
+    "Transactions": [],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "tgtg@aaa",
+    "Name": "wef",
+    "Phonenumber": "5543",
+    "Password": "mhmhmhm",
+    "Sessions": [],
+    "Transactions": [],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "aaa@aaa",
+    "Name": "test",
+    "Phonenumber": "76767",
+    "Password": "jjjjj",
+    "Sessions": [],
+    "Transactions": [],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "gaga@gugu",
+    "Name": "ooohaaa",
+    "Phonenumber": "909090",
+    "Password": "Auaa",
+    "Sessions": [],
+    "Transactions": [],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "test@test",
+    "Name": "aaaa",
+    "Phonenumber": "664545",
+    "Password": "kaka",
+    "Sessions": [
+      {
+        "Id": "kBJC7U7NVAH1pE9EVZj9syOyr78Dqnq6A5th\u002BeUEBGo=",
+        "ExpireDate": "2024-11-28T16:01:36.3298108+01:00"
+      },
+      {
+        "Id": "Z5gYjSJGE5i\u002B7/cXO/BcdqPjxK61J6Thyb7QWhtPWv0=",
+        "ExpireDate": "2024-11-29T11:22:48.8836711+01:00"
+      }
+    ],
+    "Transactions": [
+      {
+        "Type": "Expense",
+        "Date": "2024-11-27T14:56:00",
+        "Amount": 6,
+        "Origin": "EIER",
+        "Destination": "sdfsdfsd",
+        "UseCase": "GEIL",
+        "Category": "Investments",
+        "ID": "25befbd1-7303-4d5c-ae11-9782cbc1a368"
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-11-28T11:24:00",
+        "Amount": 28,
+        "Origin": "asdasas",
+        "Destination": "fdfsdf",
+        "UseCase": "bdbdbd",
+        "Category": "Incurance",
+        "ID": "9a49d065-bd1a-4653-ae56-e28fd06d85bf"
+      }
+    ],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "gargar@gurgur",
+    "Name": "haha",
+    "Phonenumber": "09876",
+    "Password": "hihi",
+    "Sessions": [],
+    "Transactions": [
+      {
+        "Type": "Income",
+        "Date": "2024-11-17T00:10:00",
+        "Amount": 1000000,
+        "Origin": "EIER",
+        "Destination": "EIER2",
+        "UseCase": "GEIL",
+        "Category": "Salary",
+        "ID": null
+      }
+    ],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  },
+  {
+    "Email": "eier@ei",
+    "Name": "Egg",
+    "Phonenumber": "0909090909",
+    "Password": "Eier",
+    "Sessions": [],
+    "Transactions": [],
+    "BankAccounts": null,
+    "PortfolioAccounts": null,
+    "CryptoWallets": null
+  }
+]

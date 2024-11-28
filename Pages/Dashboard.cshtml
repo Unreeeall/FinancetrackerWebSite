@@ -51,84 +51,101 @@
         </div>
     </header>
 
-    <div class="Dashboard">
-        <div class="Chart-Container">
-            <div class="expense-Chart">
-                <canvas id="expensePieChart"></canvas>
-            </div>
-            <div class="Investment-Chart">
-                <canvas id="investmentLineChart"></canvas>
-            </div>
+    @if (!Model.WebUser.HasFinancialAccounts())
+    {
+        <div class="nothing-here-text">
+            <p>Nothing Here yet...</p>
+            <p>Try adding a Bank account, Wallet, cash etc.</p>
         </div>
-        <div class="Transaction-History-Chart">
-            <canvas id="transactionBarChart"></canvas>
-        </div>
-    </div>
-
-    <script>
-
-
         
-        expenseChart();
+        <div class="add-new-financialAccount-field">
+            <button class="add-new-fin-acc-plus">+</button>
+        </div>
 
-        investmentChart();
+    }
+    else
+    {
+        <div class="Dashboard">
+            <div class="Chart-Container">
+                <div class="expense-Chart">
+                    <canvas id="expensePieChart"></canvas>
+                </div>
+                <div class="Investment-Chart">
+                    <canvas id="investmentLineChart"></canvas>
+                </div>
+            </div>
+            <div class="Transaction-History-Chart">
+                <canvas id="transactionBarChart"></canvas>
+            </div>
+        </div>
+
+        <script>
 
 
-        var ctx = document.getElementById('transactionBarChart').getContext('2d');
-        var transactionBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
-                datasets: [{
-                    label: 'Transactions',
-                    data: [300, 500, 100, 200, 150, 80],
-                    backgroundColor: [
-                        'rgba(255, 99, 132, 0.2)',
-                        'rgba(54, 162, 235, 0.2)',
-                        'rgba(255, 206, 86, 0.2)',
-                        'rgba(75, 192, 192, 0.2)',
-                        'rgba(153, 102, 255, 0.2)',
-                        'rgba(255, 159, 64, 0.2)'
-                    ],
-                    borderColor: [
-                        'rgba(255, 99, 132, 1)',
-                        'rgba(54, 162, 235, 1)',
-                        'rgba(255, 206, 86, 1)',
-                        'rgba(75, 192, 192, 1)',
-                        'rgba(153, 102, 255, 1)',
-                        'rgba(255, 159, 64, 1)'
-                    ],
-                    borderWidth: 1
-                }]
-            },
-            options: {
-                responsive: true,
-                maintainAspectRatio: false,
-                plugins: {
-                    legend: {
-                        display: true,
-                        position: 'bottom',
-                        labels: {
-                            color: '#ffffff'
-                        }
-                    },
-                    scales: {
-                        x: {
-                            ticks: {
+
+            expenseChart();
+
+            investmentChart();
+
+
+            var ctx = document.getElementById('transactionBarChart').getContext('2d');
+            var transactionBarChart = new Chart(ctx, {
+                type: 'bar',
+                data: {
+                    labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
+                    datasets: [{
+                        label: 'Transactions',
+                        data: [300, 500, 100, 200, 150, 80],
+                        backgroundColor: [
+                            'rgba(255, 99, 132, 0.2)',
+                            'rgba(54, 162, 235, 0.2)',
+                            'rgba(255, 206, 86, 0.2)',
+                            'rgba(75, 192, 192, 0.2)',
+                            'rgba(153, 102, 255, 0.2)',
+                            'rgba(255, 159, 64, 0.2)'
+                        ],
+                        borderColor: [
+                            'rgba(255, 99, 132, 1)',
+                            'rgba(54, 162, 235, 1)',
+                            'rgba(255, 206, 86, 1)',
+                            'rgba(75, 192, 192, 1)',
+                            'rgba(153, 102, 255, 1)',
+                            'rgba(255, 159, 64, 1)'
+                        ],
+                        borderWidth: 1
+                    }]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    plugins: {
+                        legend: {
+                            display: true,
+                            position: 'bottom',
+                            labels: {
                                 color: '#ffffff'
                             }
                         },
-                        y: {
-                            ticks: {
-                                color: '#ffffff'
+                        scales: {
+                            x: {
+                                ticks: {
+                                    color: '#ffffff'
+                                }
+                            },
+                            y: {
+                                ticks: {
+                                    color: '#ffffff'
+                                }
                             }
                         }
                     }
                 }
-            }
-        });
+            });
 
-    </script>
+        </script>
+    }
+
+
 
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>

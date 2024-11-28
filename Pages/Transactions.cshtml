@@ -1,5 +1,6 @@
 @page
 @using FinanceTracker.Pages
+@using System.Globalization
 @model TransactionsModel
 @{
     ViewData["Title"] = "Dashboard";
@@ -127,7 +128,16 @@
                         <td>@transaction.Destination</td>
                         <td>@transaction.Date</td>
                         <td class="edit-buttons">
-                            <button type="button" onclick="editTransactionWindow(event, '@transaction.ID')">🖊️</button>
+                            
+                            <button type="button" onclick="editTransactionWindow(event, this)"
+                            data-id="@transaction.ID"
+                            data-type="@transaction.Type"
+                            data-category="@transaction.Category"
+                            data-usecase="@transaction.UseCase"
+                            data-amount="@transaction.Amount"
+                            data-origin="@transaction.Origin"
+                            data-destination="@transaction.Destination"
+                            data-date="@transaction.Date.ToString("s")">🖊️</button>
                             <form method="post">
                                 <input type="hidden" name="Trans_ID" value="@transaction.ID" />
                                 <button type="submit" class="delete-button" asp-page-handler="DeleteTransaction">❌</button>
@@ -141,9 +151,42 @@
 
         </div>
         <div class="edit-menu-background" id="edit-popup">
-            <div class=""></div>
+            <div class="edit-menu">
+                <button class="exit-edit-btn" onclick="closeEditMenu()">X</button>
+                <form method="post" asp-page-handler="EditTransaction">
+                    <input type="hidden" name="Trans_ID" id="edit-Trans-ID" />
+                    <select name="Type" id="edit-type-select" class="edit-type-select" required>
+                        <option value="" disabled selected></option>
+                        <option value="Expense">Expense</option>
+                        <option value="Transfer">Transfer</option>
+                        <option value="Income">Income</option>
+                    </select>
+
+                    <select id="edit-category-Dropdown" class="edit-category-drop" name="Category" required>
+                        <option value="" disabled selected></option>
+                        <option value="Groceries" data-type="Expense">Groceries</option>
+                        <option value="Investments" data-type="Expense">Investments</option>
+                        <option value="Tech" data-type="Expense">Tech</option>
+                        <option value="Savings" data-type="Expense">Savings</option>
+                        <option value="Traveling" data-type="Expense">Traveling</option>
+                        <option value="Incurance" data-type="Expense">Incurance</option>
+                        <option value="Gas" data-type="Expense">Gas</option>
+                        <option value="Car" data-type="Expense">Car</option>
+                        <option value="Houshold" data-type="Expense">Houshold</option>
+                        <option value="Fun & Freetime" data-type="Expense">Fun & Freetime</option>
+                        <option value="Salary" data-type="Income">Salary</option>
+                        <option value="Burrrrrr" data-type="Transfer">Burrrrrr</option>
+                        <option value="Other">Other</option>
+                    </select>
+                    <input type="text" name="UseCase" class="edit-usecase-field" required>
+                    <input type="number" name="Amount" class="edit-Amount-field" required min="0" value="0" step="any">
+                    <input type="text" name="Origin" class="edit-Origin-field" required>
+                    <input type="text" name="Destination" class="edit-Destination-field" required>
+                    <input type="datetime-local" name="Date" class="edit-Date-field" required>
+                    <button type="submit">Save</button>
+                </form>
+            </div>
             <p> eier</p>
-            <button class="exit-edit-btn" onclick="closeEditMenu()">X</button>
         </div>
     </div>
 
@@ -158,13 +201,30 @@
     <script>
 
 
-        function editTransactionWindow(event, Trans_ID)
-        {
+        function editTransactionWindow(event, button) {
             document.getElementById('edit-popup').classList.toggle("visible");
+            const transactionID = button.getAttribute('data-id');
+            const transactionType = button.getAttribute('data-type');
+            const transactionCategory = button.getAttribute('data-category');
+            const transactionUseCase = button.getAttribute('data-usecase');
+            const transactionAmount = button.getAttribute('data-amount');
+            const transactionOrigin = button.getAttribute('data-origin');
+            const transactionDestination = button.getAttribute('data-destination');
+            const transactionDate = button.getAttribute('data-date');
+
+
+            document.getElementById('edit-Trans-ID').value = transactionID;
+            document.getElementById('edit-type-select').value = transactionType;
+            document.getElementById('edit-category-Dropdown').value = transactionCategory;
+            document.querySelector('.edit-usecase-field').value = transactionUseCase;
+            document.querySelector('.edit-Amount-field').value = transactionAmount;
+            document.querySelector('.edit-Origin-field').value = transactionOrigin;
+            document.querySelector('.edit-Destination-field').value = transactionDestination;
+            document.querySelector('.edit-Date-field').value = transactionDate;
+            
         }
 
-        function closeEditMenu()
-        {
+        function closeEditMenu() {
             document.getElementById('edit-popup').classList.toggle("visible");
         }
 
