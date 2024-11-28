@@ -11,19 +11,48 @@ public class TransactionsModel : PageModel
 
     [BindProperty]
     public required string Type { get; set; }
+
+
     [BindProperty]
-    public required string Category { get; set; }
+    public required DateTime Date { get; set; }
+
+
+    [BindProperty]
+    public required decimal Amount { get; set; }
+
+
+    [BindProperty]
+    public required FinancialAccount Origin { get; set; }
+
+
+    [BindProperty]
+    public required FinancialAccount Destination { get; set; }
+
+
+    [BindProperty]
+    public string? Description { get; set; }
+
 
     [BindProperty]
     public required string UseCase { get; set; }
+
+
+
     [BindProperty]
-    public required int Amount { get; set; }
+    public required string Category { get; set; }
+
+
     [BindProperty]
-    public required string Origin { get; set; }
+    public string? SenderName { get; set; }
+
+
     [BindProperty]
-    public required string Destination { get; set; }
+    public string? SenderAccount { get; set; }
+
+
     [BindProperty]
-    public required DateTime Date { get; set; }
+    public bool IsIncoming { get; set; }
+
 
     public required string ID { get; set; }
 
@@ -58,22 +87,53 @@ public class TransactionsModel : PageModel
             WebUser = WebUser.GetUserBySession(sessionId);
             if (WebUser == null) return RedirectToPage("/Index");
 
-            var newTransaction = new Transaction
-            (
+
+            if (IsIncoming)
+            {
+                var newIncomingTransaction = new Transaction
+                (
+                    Type,
+                    Date,
+                    Amount,
+                    Origin,
+                    Destination,
+                    Description,
+                    UseCase,
+                    Category,
+                    SenderName,
+                    SenderAccount,
+                    IsIncoming,
+                    ID = System.Guid.NewGuid().ToString()
+                );
+
+                WebUser.Transactions.Add(newIncomingTransaction);
+            }
+            else
+            {
+                var newOutgoingTransaction = new Transaction
+                (
                 Type,
-                Category,
-                UseCase,
-                Amount,
-                Origin,
-                Destination,
-                Date,
-                ID
+                    Date,
+                    Amount,
+                    Origin,
+                    Destination,
+                    Description,
+                    UseCase,
+                    Category,
+                    SenderName,
+                    SenderAccount,
+                    IsIncoming,
+                    ID = System.Guid.NewGuid().ToString()
+                );
+                WebUser.Transactions.Add(newOutgoingTransaction);
 
-            );
+            }
 
-            newTransaction.ID = System.Guid.NewGuid().ToString();
+
+
+
             // Assuming WebUser is initialized somewhere and has a Transactions property
-            WebUser.Transactions.Add(newTransaction);
+
 
 
             Console.WriteLine("User: " + WebUser.Name + "   Email: " + WebUser.Email + " Add Transaction Post");
@@ -108,8 +168,10 @@ public class TransactionsModel : PageModel
             currentTransaction.Destination = Destination;
             currentTransaction.Date = Date;
             currentTransaction.ID = Trans_ID;
-        }
 
+            OnPostDeleteTransaction(Trans_ID);
+            WebUser.Transactions.Add(currentTransaction);
+        }
         return Page();
     }
 

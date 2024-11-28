@@ -6,7 +6,7 @@ namespace FinanceTracker.Pages;
 
 public class DashboardModel : PageModel
 {
-    public WebUser? WebUser {get; set; }
+    public WebUser? WebUser { get; set; }
     public IActionResult OnGet()
     {
         WebUser = null;

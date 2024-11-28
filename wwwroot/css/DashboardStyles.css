@@ -159,6 +159,52 @@ header {
     flex-grow: 1;
 }
 
+.nothing-here-text {
+    top: 25%;
+    width: 100%;
+    color: #ddd;
+    
+}
+
+
+.add-new-financialAccount-field {
+    background:#ffffff18;
+    position: absolute;
+    top: 30%;
+    left: 50%;
+    right: 50%;
+    width: 30%;
+    height: 60%;
+    justify-self: center;
+    border-radius: 10px;
+    border-style: dotted;
+    border-color: #c7c7c7;
+}
+
+.add-new-financialAccount-field:hover {
+    cursor: pointer;
+    border-color: #fff;
+}
+
+.add-new-fin-acc-plus {
+    background-color: #4A2759;
+    border: none;
+    border-radius: 6px;
+    width: 42px;
+    height: 42px;
+    font-size: 30px;
+    left: 50%;
+    top: 45%;
+    justify-self: center;
+    position: absolute;
+    transform: translate(-50%, 0);
+}
+
+.add-new-fin-acc-plus:hover {
+    cursor: pointer;
+    background-color: #67367c;
+}
+
 .Chart-Container {
     margin-top: 90px;
     display: flex;
@@ -286,7 +332,7 @@ header {
 
     position: absolute;
     width: 100%;
-    height: 100%;
+    height: 2000px;
     /* z-index: 6; */
 
     display: none;
@@ -294,6 +340,45 @@ header {
 
 .edit-menu-background.visible {
     display: block;
+}
+
+.edit-menu {
+    background-color: #4A2759;
+    top: auto;
+    width: 750px;
+    height: 550px;
+    justify-self: center;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+}
+
+
+.edit-type-select {
+    width: 20%;
+    height: 10%;
+    font-size: 1rem;
+    background-color: #221f1f;
+    color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.3rem;
+}
+
+.edit-category-drop {
+    width: 25%;
+    height: 10%;
+    font-size: 1rem;
+    background-color: #221f1f;
+    color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 10px;
+    font-size: 1.3rem;
 }
 
 .exit-edit-btn {
