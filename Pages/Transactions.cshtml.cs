@@ -72,6 +72,7 @@ public class TransactionsModel : PageModel
         if (sessionId == null) return RedirectToPage("/Index");
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
+        if(!WebUser.HasFinancialAccounts()) return RedirectToPage("/AddFinAccDash");
         Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Transactions");
         return Page();
     }

@@ -53,63 +53,110 @@
     </header>
 
     <div class="Dashboard">
+        <div class="account-wrapper">
 
-    @if (Model.WebUser != null && Model.WebUser.HasFinancialAccounts())
-    {
-        <div class="Chart-Container">
-                <div class="expense-Chart">
-                    <canvas id="expensePieChart"></canvas>
-                </div>
-                <div class="Investment-Chart">
-                    <canvas id="investmentLineChart"></canvas>
-                </div>
+
+            @* <div class="Chart-Container">
+            <div class="expense-Chart">
+            <canvas id="expensePieChart"></canvas>
+            </div>
+            <div class="Investment-Chart">
+            <canvas id="investmentLineChart"></canvas>
+            </div>
             </div>
             <div class="Transaction-History-Chart">
-                <canvas id="transactionBarChart"></canvas>
-            </div>
-    }
-    else if(Model.WebUser != null && !Model.WebUser.HasFinancialAccounts())
-    {
-        
-        @* <div class="nothing-here-text">
-            <p>Nothing Here yet...</p>
-            <p>Try adding a Bank account, Wallet, cash etc.</p>
-        </div>
-        
-        <div class="add-new-financialAccount-field"  onclick="addAccountWindow()">
-            <button class="add-new-fin-acc-plus">+</button>
-        </div>
+            <canvas id="transactionBarChart"></canvas>
+            </div> *@
 
-        <div class="add-new-acc-background" id="new-acc-menu">
-            <div class="add-new-acc-menu">
-                <button class="exit-btn" onclick="closeAccountMenu()">X</button>
-                <form method="post">
-                <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
-                    <option value="" disabled selected></option>
-                    <option value="BankAccount">Bank Account</option>
-                    <option value="Cash">Cash</option>
-                    <option value="Portfolio">Portfolio</option>
-                    <option value="CryptoWallet">Crypto Wallet</option>
-                </select>
+            @if (!Model.WebUser.HasFinancialAccounts())
+            {
+                <div class="nothing-here-text">
+                    <p>Nothing Here yet...</p>
+                    <p>Try adding a Bank account, Wallet, cash etc.</p>
+                </div>
+            }
+            else
+            {
 
-                <input type="text" name="AccountName" class="Account-Name-Input" required>
-
-                <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
-                    @foreach(CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
-                    {
-                        <option value="@currency">@currency</option>
-                    }   
-                </select>
-                <input type="submit" class="submit-Financial-Account-btn">
-                </form>
-            </div>
-        </div> *@
+                foreach (var bankAccount in Model.WebUser.BankAccounts)
+                {
+                    <div class="Bank-Acc-Container">
+                        <h3>Bankaccount: @bankAccount.AccountName</h3>
+                        <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
+                    </div>
+                }
 
 
-        
-    }
+                foreach (var cashAccount in Model.WebUser.CashAccounts)
+                {
+                    <div class="Cash-Acc-Container">
+                        <h3>Cashstash @cashAccount.AccountName</h3>
+                        <p>Balance: @cashAccount.Balance @cashAccount.Currency</p>
+                    </div>
+                }
 
-    <script>
+                foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                {
+                    <div class="Crypto-Wallet-Container">
+                        <h3>Cryptowallet: @cryptoWallet.AccountName</h3>
+                        <p>Balance: @cryptoWallet.Balance</p>
+                    </div>
+                }
+
+                foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                {
+                    <div class="Crypto-Wallet-Container">
+                        <h3>Stockportoflio: @portfolioAccount.AccountName</h3>
+                        <p>Balance: @portfolioAccount.Balance</p>
+                    </div>
+                }
+
+                <div class="spacer"></div>
+
+
+
+                <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
+                    <button class="add-new-fin-acc-plus">+</button>
+                </div>
+
+                <div class="add-new-acc-background" id="new-acc-menu">
+                    <div class="add-new-acc-menu">
+                        <button class="exit-btn" onclick="closeAccountMenu()">X</button>
+                        <form method="post">
+                            <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
+                                <option value="" disabled selected></option>
+                                <option value="BankAccount">Bank Account</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Portfolio">Portfolio</option>
+                                <option value="CryptoWallet">Crypto Wallet</option>
+                            </select>
+
+                            <input type="text" name="AccountName" class="Account-Name-Input" required>
+
+                            <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
+                                @foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+                                {
+                                    <option value="@currency">@currency</option>
+                                }
+                            </select>
+                            <input type="submit" class="submit-Financial-Account-btn">
+                        </form>
+                    </div>
+                </div>
+
+            }
+            <script>
+                function addAccountWindow() {
+                    document.getElementById('new-acc-menu').classList.toggle("visible");
+                }
+
+                function closeAccountMenu() {
+                    document.getElementById('new-acc-menu').classList.toggle("visible");
+                }
+
+            </script>
+
+            @* <script>
 
 
 
@@ -120,75 +167,73 @@
 
             var ctx = document.getElementById('transactionBarChart').getContext('2d');
             var transactionBarChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
-                    datasets: [{
-                        label: 'Transactions',
-                        data: [300, 500, 100, 200, 150, 80],
-                        backgroundColor: [
-                            'rgba(255, 99, 132, 0.2)',
-                            'rgba(54, 162, 235, 0.2)',
-                            'rgba(255, 206, 86, 0.2)',
-                            'rgba(75, 192, 192, 0.2)',
-                            'rgba(153, 102, 255, 0.2)',
-                            'rgba(255, 159, 64, 0.2)'
-                        ],
-                        borderColor: [
-                            'rgba(255, 99, 132, 1)',
-                            'rgba(54, 162, 235, 1)',
-                            'rgba(255, 206, 86, 1)',
-                            'rgba(75, 192, 192, 1)',
-                            'rgba(153, 102, 255, 1)',
-                            'rgba(255, 159, 64, 1)'
-                        ],
-                        borderWidth: 1
-                    }]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    plugins: {
-                        legend: {
-                            display: true,
-                            position: 'bottom',
-                            labels: {
-                                color: '#ffffff'
-                            }
-                        },
-                        scales: {
-                            x: {
-                                ticks: {
-                                    color: '#ffffff'
-                                }
-                            },
-                            y: {
-                                ticks: {
-                                    color: '#ffffff'
-                                }
-                            }
-                        }
-                    }
-                }
+            type: 'bar',
+            data: {
+            labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
+            datasets: [{
+            label: 'Transactions',
+            data: [300, 500, 100, 200, 150, 80],
+            backgroundColor: [
+            'rgba(255, 99, 132, 0.2)',
+            'rgba(54, 162, 235, 0.2)',
+            'rgba(255, 206, 86, 0.2)',
+            'rgba(75, 192, 192, 0.2)',
+            'rgba(153, 102, 255, 0.2)',
+            'rgba(255, 159, 64, 0.2)'
+            ],
+            borderColor: [
+            'rgba(255, 99, 132, 1)',
+            'rgba(54, 162, 235, 1)',
+            'rgba(255, 206, 86, 1)',
+            'rgba(75, 192, 192, 1)',
+            'rgba(153, 102, 255, 1)',
+            'rgba(255, 159, 64, 1)'
+            ],
+            borderWidth: 1
+            }]
+            },
+            options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            plugins: {
+            legend: {
+            display: true,
+            position: 'bottom',
+            labels: {
+            color: '#ffffff'
+            }
+            },
+            scales: {
+            x: {
+            ticks: {
+            color: '#ffffff'
+            }
+            },
+            y: {
+            ticks: {
+            color: '#ffffff'
+            }
+            }
+            }
+            }
+            }
             });
 
 
 
 
-            function addAccountWindow()
-            {
-                document.getElementById('new-acc-menu').classList.toggle("visible");
+            function addAccountWindow() {
+            document.getElementById('new-acc-menu').classList.toggle("visible");
             }
 
-            function closeAccountMenu() 
-            {
-                document.getElementById('new-acc-menu').classList.toggle("visible");
+            function closeAccountMenu() {
+            document.getElementById('new-acc-menu').classList.toggle("visible");
             }
 
-        </script>
+            </script> *@
 
-
-</div>
+        </div>
+    </div>
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
     </footer>

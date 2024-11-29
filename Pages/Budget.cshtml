@@ -39,7 +39,7 @@
 
         <div class="user-options">
             <div class="login-button">
-                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>
+                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser?.Name</span>
             </div>
             <div class="dropdown">
                 <span id="settings">Options</span>
@@ -52,13 +52,32 @@
         </div>
     </header>
 
-    <div class="Budget-income-Chart">
-        <canvas id="mixedChart"></canvas>
-        <script>
-            budgetChart();
-        </script>
-     
+    <div class="Dashboard">
+
+        @if (!Model.WebUser.HasFinancialAccounts())
+        {
+            <div class="nothing-here-text">
+                <p>Nothing Here yet...</p>
+                <p>Try adding a Bank account, Wallet, cash etc.</p>
+            </div>
+        }
+        else
+        {
+            <div class="Budget-income-Chart">
+                <canvas id="mixedChart"></canvas>
+                <script>
+                    budgetChart();
+                </script>
+
+            </div>
+        }
+
+
+
+
     </div>
+
+
 
 
     <footer>

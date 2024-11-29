@@ -14,6 +14,7 @@ public class InvestmentModel : PageModel
         if(sessionId == null) return RedirectToPage("/Index");
         WebUser = WebUser.GetUserBySession(sessionId);
         if(WebUser == null) return RedirectToPage("/Index");
+        if(!WebUser.HasFinancialAccounts()) return RedirectToPage("/AddFinAccDash");
         return Page();
     }
 }
