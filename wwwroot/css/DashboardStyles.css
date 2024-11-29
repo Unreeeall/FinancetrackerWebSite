@@ -184,6 +184,8 @@ header {
 .add-new-financialAccount-field:hover {
     cursor: pointer;
     border-color: #fff;
+    width: 31%;
+    height: 61%;
 }
 
 .add-new-fin-acc-plus {
@@ -203,6 +205,34 @@ header {
 .add-new-fin-acc-plus:hover {
     cursor: pointer;
     background-color: #67367c;
+}
+
+
+
+.add-new-acc-background {
+    background-color: #00000083 ;
+    position: absolute;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
+
+.add-new-acc-background.visible {
+    display: block;
+}
+
+
+.add-new-acc-menu {
+    width: 50%;
+    height: 65%;
+    background-color: #ff00dd;
+    justify-self: center;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
 }
 
 .Chart-Container {
@@ -381,7 +411,7 @@ header {
     font-size: 1.3rem;
 }
 
-.exit-edit-btn {
+.exit-btn {
     background: none;
     border: none;
     font-size: 40px;
@@ -390,7 +420,7 @@ header {
     position: absolute;
 }
 
-.exit-edit-btn:hover {
+.exit-btn:hover {
     cursor: pointer;
     border: 1px solid #ddd;
 }

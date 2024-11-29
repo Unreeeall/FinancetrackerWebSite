@@ -1,4 +1,5 @@
 @page
+@using FinanceTracker.Pages
 @model DashboardModel
 @{
     ViewData["Title"] = "Dashboard";
@@ -38,7 +39,7 @@
 
         <div class="user-options">
             <div class="login-button">
-                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>
+                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser?.Name</span>
             </div>
             <div class="dropdown">
                 <span id="settings">Options</span>
@@ -51,22 +52,11 @@
         </div>
     </header>
 
-    @if (!Model.WebUser.HasFinancialAccounts())
-    {
-        <div class="nothing-here-text">
-            <p>Nothing Here yet...</p>
-            <p>Try adding a Bank account, Wallet, cash etc.</p>
-        </div>
-        
-        <div class="add-new-financialAccount-field">
-            <button class="add-new-fin-acc-plus">+</button>
-        </div>
+    <div class="Dashboard">
 
-    }
-    else
+    @if (Model.WebUser != null && Model.WebUser.HasFinancialAccounts())
     {
-        <div class="Dashboard">
-            <div class="Chart-Container">
+        <div class="Chart-Container">
                 <div class="expense-Chart">
                     <canvas id="expensePieChart"></canvas>
                 </div>
@@ -77,9 +67,49 @@
             <div class="Transaction-History-Chart">
                 <canvas id="transactionBarChart"></canvas>
             </div>
+    }
+    else if(Model.WebUser != null && !Model.WebUser.HasFinancialAccounts())
+    {
+        
+        @* <div class="nothing-here-text">
+            <p>Nothing Here yet...</p>
+            <p>Try adding a Bank account, Wallet, cash etc.</p>
+        </div>
+        
+        <div class="add-new-financialAccount-field"  onclick="addAccountWindow()">
+            <button class="add-new-fin-acc-plus">+</button>
         </div>
 
-        <script>
+        <div class="add-new-acc-background" id="new-acc-menu">
+            <div class="add-new-acc-menu">
+                <button class="exit-btn" onclick="closeAccountMenu()">X</button>
+                <form method="post">
+                <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
+                    <option value="" disabled selected></option>
+                    <option value="BankAccount">Bank Account</option>
+                    <option value="Cash">Cash</option>
+                    <option value="Portfolio">Portfolio</option>
+                    <option value="CryptoWallet">Crypto Wallet</option>
+                </select>
+
+                <input type="text" name="AccountName" class="Account-Name-Input" required>
+
+                <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
+                    @foreach(CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+                    {
+                        <option value="@currency">@currency</option>
+                    }   
+                </select>
+                <input type="submit" class="submit-Financial-Account-btn">
+                </form>
+            </div>
+        </div> *@
+
+
+        
+    }
+
+    <script>
 
 
 
@@ -142,11 +172,23 @@
                 }
             });
 
+
+
+
+            function addAccountWindow()
+            {
+                document.getElementById('new-acc-menu').classList.toggle("visible");
+            }
+
+            function closeAccountMenu() 
+            {
+                document.getElementById('new-acc-menu').classList.toggle("visible");
+            }
+
         </script>
-    }
 
 
-
+</div>
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
     </footer>
