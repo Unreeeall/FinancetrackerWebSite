@@ -24,8 +24,8 @@ public class WebUser
     static Dictionary<string, SessionUser> IdDict { get; set; } = [];
 
     public List<Transaction> Transactions { get; set; } = [];
-
     public List<BankAccount> BankAccounts { get; set; } = [];
+    public List<CashAccount> CashAccounts { get; set; } = [];
     public List<PortfolioAccount> PortfolioAccounts { get; set; } = [];
     public List<CryptoWallet> CryptoWallets { get; set; } = [];
 
@@ -233,6 +233,21 @@ public abstract class FinancialAccount
 
 public class BankAccount : FinancialAccount
 {
+    public BankAccount(string accountName, CurrencyType currency)
+    {
+        AccountName = accountName;
+        Currency = currency;
+    }
+    public CurrencyType Currency { get; set; }
+}
+
+public class CashAccount : FinancialAccount
+{
+    public CashAccount(string accountName, CurrencyType curreny)
+    {
+        AccountName = accountName;
+        Currency = curreny;
+    }
     public CurrencyType Currency { get; set; }
 }
 
@@ -277,6 +292,10 @@ public enum CurrencyType
 
 public class PortfolioAccount : FinancialAccount
 {
+    public PortfolioAccount(string accountName)
+    {
+        AccountName = accountName;
+    }
     public List<Investment> Investments { get; set; }
 }
 
@@ -289,6 +308,10 @@ public class Investment
 
 public class CryptoWallet : FinancialAccount
 {
+    public CryptoWallet(string accountName)
+    {
+        AccountName = accountName;
+    }
     public List<CryptoHolding> CryptoHoldings { get; set; } = [];
 }
 

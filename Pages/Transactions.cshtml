@@ -3,7 +3,7 @@
 @using System.Globalization
 @model TransactionsModel
 @{
-    ViewData["Title"] = "Dashboard";
+    ViewData["Title"] = "Transactions";
 }
 <!DOCTYPE html>
 <html lang="en">
@@ -152,7 +152,7 @@
         </div>
         <div class="edit-menu-background" id="edit-popup">
             <div class="edit-menu">
-                <button class="exit-edit-btn" onclick="closeEditMenu()">X</button>
+                <button class="exit-btn" onclick="closeEditMenu()">X</button>
                 <form method="post" asp-page-handler="EditTransaction">
                     <input type="hidden" name="Trans_ID" id="edit-Trans-ID" />
                     <select name="Type" id="edit-type-select" class="edit-type-select" required>

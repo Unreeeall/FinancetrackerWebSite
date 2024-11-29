@@ -6,12 +6,19 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "4ok2AcqRYTEXRrBxz1U\u002BitZb1WyHwXzKoqVYAjUO/rw=",
-        "ExpireDate": "2024-11-29T14:42:12.850966+01:00"
+        "Id": "6V4A0K4LJ5hUP9z7M/HZ6tK09Raaa53i9RrMRFtuFcs=",
+        "ExpireDate": "2024-11-30T09:59:34.3206157+01:00"
       }
     ],
     "Transactions": [],
-    "BankAccounts": [],
+    "BankAccounts": [
+      {
+        "Currency": 3,
+        "AccountName": "Test1",
+        "Balance": 0
+      }
+    ],
+    "CashAccounts": [],
     "PortfolioAccounts": [],
     "CryptoWallets": []
   }
