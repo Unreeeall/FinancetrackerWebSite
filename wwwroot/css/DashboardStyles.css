@@ -157,35 +157,48 @@ header {
     gap: 20px;
     padding: 20px;
     flex-grow: 1;
+    min-height: 100vh;
 }
 
 .nothing-here-text {
     top: 25%;
     width: 100%;
     color: #ddd;
-    
+}
+
+.account-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    min-height: 100vh; /* Ensure the wrapper takes full height of the viewport */
+    padding-bottom: 100px; /* Ensure the wrapper takes full height of the viewport */
+}
+
+.spacer {
+    flex-grow: 1; /* This will push the add-new-financialAccount-field to the bottom */
 }
 
 
 .add-new-financialAccount-field {
-    background:#ffffff18;
-    position: absolute;
-    top: 30%;
-    left: 50%;
-    right: 50%;
-    width: 30%;
-    height: 60%;
-    justify-self: center;
+    background: #ffffff18;
+    width: 350px;
+    height: 850px;
     border-radius: 10px;
     border-style: dotted;
     border-color: #c7c7c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
 }
 
 .add-new-financialAccount-field:hover {
     cursor: pointer;
     border-color: #fff;
-    width: 31%;
-    height: 61%;
+    width: 370px;
+    height: 870px;
 }
 
 .add-new-fin-acc-plus {
@@ -195,11 +208,7 @@ header {
     width: 42px;
     height: 42px;
     font-size: 30px;
-    left: 50%;
-    top: 45%;
     justify-self: center;
-    position: absolute;
-    transform: translate(-50%, 0);
 }
 
 .add-new-fin-acc-plus:hover {
@@ -233,6 +242,29 @@ header {
     padding: 20px;
     transform: translate(-50%, 0);
     border-radius: 10px;
+}
+
+
+.Bank-Acc-Container,
+.Cash-Acc-Container,
+.Crypto-Wallet-Container,
+.Crypto-Wallet-Container {
+    width: 40%;
+    height: 20%;
+    padding: 20px;
+    background-color: #3c3a3d;
+    border-radius: 10px;
+    color: #c7c7c7;
+    margin-bottom: 20px;
+
+}
+
+.Bank-Acc-Container,
+.Cash-Acc-Container,
+.Crypto-Wallet-Container,
+.Crypto-Wallet-Container p {
+    top: 5%;
+    left: 10%;
 }
 
 .Chart-Container {

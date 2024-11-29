@@ -8,6 +8,7 @@ using Microsoft.AspNetCore.Http;
 using System.Security.Cryptography;
 using System.ComponentModel;
 using FinanceTracker.Pages;
+using System.Security.Cryptography.X509Certificates;
 
 
 
@@ -226,8 +227,8 @@ public class SessionUser(Session session, WebUser user)
 
 public abstract class FinancialAccount 
 {
-    public string AccountName { get; set; }
-    public decimal Balance { get; set; }
+    public string AccountName { get; set; } = "";
+    public decimal Balance { get; set; } = 0;
 
 }
 
@@ -243,6 +244,8 @@ public class BankAccount : FinancialAccount
 
 public class CashAccount : FinancialAccount
 {
+    public CashAccount() {}
+
     public CashAccount(string accountName, CurrencyType curreny)
     {
         AccountName = accountName;
@@ -296,12 +299,12 @@ public class PortfolioAccount : FinancialAccount
     {
         AccountName = accountName;
     }
-    public List<Investment> Investments { get; set; }
+    public List<Investment> Investments { get; set; } = [];
 }
 
 public class Investment
 {
-    public string Ticker { get; set; }
+    public string Ticker { get; set; } = "";
     public int Quantity { get; set; }
     public decimal PurchasePrice { get; set; }
 }
@@ -377,7 +380,7 @@ public class Transaction
         
     }
 
-    public Transaction(string type, DateTime date, decimal amount, FinancialAccount origin, FinancialAccount destination, string description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
+    public Transaction(string type, DateTime date, decimal amount, FinancialAccount origin, FinancialAccount destination, string? description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
     {
         Type = type;
         Category = category;
@@ -400,6 +403,57 @@ public class Transaction
 
     
 
+    
 
+
+}
+
+
+public class SharedServices
+{
+    public void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
+    {
+        
+
+            if (AccountType == "BankAccount")
+            {
+                var newBankAccount = new BankAccount
+                (
+                     AccountName,
+                     currency
+                );
+
+                webUser?.BankAccounts.Add(newBankAccount);
+            }
+            else if (AccountType == "Cash")
+            {
+                var newCashAccount = new CashAccount
+                (
+                    AccountName,
+                    currency
+                );
+
+                webUser?.CashAccounts.Add(newCashAccount);
+
+            }
+            else if (AccountType == "Portfolio")
+            {
+                var newPortfolio = new PortfolioAccount
+                (
+                    AccountName
+                );
+
+                webUser?.PortfolioAccounts.Add(newPortfolio);
+            }
+            else if (AccountType == "CryptoWallet")
+            {
+                var newCryptoWallet = new CryptoWallet
+                (
+                    AccountName
+                );
+
+                webUser?.CryptoWallets.Add(newCryptoWallet);
+            }
+    }
 }
 

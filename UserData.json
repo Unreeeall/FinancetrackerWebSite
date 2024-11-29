@@ -13,13 +13,56 @@
     "Transactions": [],
     "BankAccounts": [
       {
-        "Currency": 3,
-        "AccountName": "Test1",
+        "Currency": 1,
+        "AccountName": "asdas",
+        "Balance": 0
+      },
+      {
+        "Currency": 0,
+        "AccountName": "kjjkjk",
+        "Balance": 0
+      },
+      {
+        "Currency": 4,
+        "AccountName": "vbvbv",
         "Balance": 0
       }
     ],
-    "CashAccounts": [],
-    "PortfolioAccounts": [],
-    "CryptoWallets": []
+    "CashAccounts": [
+      {
+        "Currency": 13,
+        "AccountName": "gagagugu",
+        "Balance": 0
+      },
+      {
+        "Currency": 15,
+        "AccountName": "bvbv",
+        "Balance": 0
+      }
+    ],
+    "PortfolioAccounts": [
+      {
+        "Investments": [],
+        "AccountName": "dfgdfggfd",
+        "Balance": 0
+      },
+      {
+        "Investments": [],
+        "AccountName": "dfsdfds",
+        "Balance": 0
+      }
+    ],
+    "CryptoWallets": [
+      {
+        "CryptoHoldings": [],
+        "AccountName": "Eier",
+        "Balance": 0
+      },
+      {
+        "CryptoHoldings": [],
+        "AccountName": "bvbvbvb",
+        "Balance": 0
+      }
+    ]
   }
 ]
