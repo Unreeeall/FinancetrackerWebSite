@@ -119,7 +119,7 @@
                     </form>
 
                     
-                    @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
+                    @* @foreach (var transaction in Model.WebUser.Transactions.OrderByDescending(t => t.Date))
                     {
                         <tr id="row-@transaction.ID">
                             <td>@transaction.Type</td>
@@ -142,7 +142,7 @@
                                 </form>
                             </td>
                         </tr>
-                    }
+                    } *@
                 </table>
             </div>
 

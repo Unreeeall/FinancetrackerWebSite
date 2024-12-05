@@ -99,7 +99,7 @@
                                     <option value="@currency">@currency</option>
                                 }
                             </select>
-                            <input type="submit" class="submit-Financial-Account-btn">
+                            <input type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount">
                         </form>
                     </div>
                 </div>
@@ -113,7 +113,7 @@
                         <h3>Bankaccount: @bankAccount.AccountName</h3>
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
 
-                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
+                        <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID" onclick="addTransactionWindow(this)" >+</button>
                     </div>
                 }
 
@@ -176,7 +176,7 @@
                                     <option value="@currency">@currency</option>
                                 }
                             </select>
-                            <input type="submit" class="submit-Financial-Account-btn">
+                            <input type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount">
                         </form>
                     </div>
                 </div>
@@ -185,6 +185,10 @@
                     <div class="qick-add-transaction-menu">
                         <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                         <form method="post">
+                            
+                            <input type="hidden" name="AccID" id="account-id" />
+                            
+
                             <div class="trans-type-slct-container" id="trans-type-slct-container">
 
                                 <label for="trans-type-slct">Transaction Type</label>
@@ -196,13 +200,64 @@
                                 </select>
                             </div>
 
+                            <div class="trans-transf-input-container">
+                                <div class="transf-origin-container">
+                                    <label for="transf-origin-slct">From:</label>
+                                    <select name="Origin" id="transf-orgini-slct" >
+                                        
+                                        @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                                        {
+                                            <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                        {
+                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                        {
+                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                        }
+                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                        {
+                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="transf-destination-container">
+                                    <label for="transf-destination-slct">To:</label>
+                                    <select name="Destination" id="transf-destination-slct" >
+                                        <option value="" disabled selected></option>
+                                        @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                                        {
+                                            <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                        {
+                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                        {
+                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                        }
+                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                        {
+                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="trans-income-expense-inputs-container">
                                 <div class="trans-category-container">
                                     <label for="trans-category-slct">Category</label>
-                                    <select name="Category" id="trans-category-slct">
+                                    <select name="Category" id="trans-category-slct" required>
                                         <option value="" disabled selected></option>
                                         <option value="Salary" data-type="Income">Salary</option>
-                                        <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting</option>
+                                        <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
+                                        </option>
                                         <option value="Investments" data-type="Income">Investments</option>
                                         <option value="Rental Income" data-type="Income">Rental Income</option>
                                         <option value="Business Income" data-type="Income">Business Income</option>
@@ -213,25 +268,56 @@
                                         <option value="Other Income" data-type="Income">Other Income</option>
 
                                         <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
-                                        <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities (Electricity, Water, Gas)</option>
+                                        <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
+                                            (Electricity, Water, Gas)</option>
                                         <option value="Groceries" data-type="Expense">Groceries</option>
                                         <option value="Dining Out" data-type="Expense">Dining Out</option>
-                                        <option value="Transportation (Fuel, Public Transport)" data-type="Expense">Transportation (Fuel, Public Transport)</option>
-                                        <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health, Car, Home)</option>
+                                        <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
+                                            Transportation (Fuel, Public Transport)</option>
+                                        <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
+                                            Car, Home)</option>
                                         <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
-                                        <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition, Books)</option>
-                                        <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment (Movies, Events)</option>
-                                        <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions (Netflix, Gym)</option>
-                                        <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights, Hotels)</option>
+                                        <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
+                                            Books)</option>
+                                        <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
+                                            (Movies, Events)</option>
+                                        <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
+                                            (Netflix, Gym)</option>
+                                        <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
+                                            Hotels)</option>
                                         <option value="Clothing" data-type="Expense">Clothing</option>
-                                        <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care (Haircuts, Spa)</option>
+                                        <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
+                                            (Haircuts, Spa)</option>
                                         <option value="Household Supplies" data-type="Expense">Household Supplies</option>
-                                        <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments (Credit Card, Loans)</option>
+                                        <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
+                                            (Credit Card, Loans)</option>
                                         <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
-                                        <option value="Charitable Donations" data-type="Expense">Charitable Donations</option>
+                                        <option value="Charitable Donations" data-type="Expense">Charitable Donations
+                                        </option>
                                         <option value="Pet Care" data-type="Expense">Pet Care</option>
                                         <option value="Childcare" data-type="Expense">Childcare</option>
                                         <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
+
+                                        <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
+                                        <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
+                                        <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
+                                        <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
+                                        <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
+                                        <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
+                                        <option value="External Transfer" data-type="Transfer">External Transfer</option>
+                                        <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
+                                        </option>
+                                        <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
+                                        <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
+                                        </option>
+                                        <option value="Savings to Checking" data-type="Transfer">Savings to Checking
+                                        </option>
+                                        <option value="Checking to Savings" data-type="Transfer">Checking to Savings
+                                        </option>
+                                        <option value="Investment to Savings" data-type="Transfer">Investment to Savings
+                                        </option>
+                                        <option value="Savings to Investment" data-type="Transfer">Savings to Investment
+                                        </option>
                                     </select>
                                 </div>
                                 <div class="trans-description-container">
@@ -241,23 +327,30 @@
                                 </div>
                                 <div class="trans-amount-container">
                                     <label for="trans-amount-inp">Amount</label>
-                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="any" required>
+                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount"
+                                        step="any" required>
                                 </div>
 
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
-                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date">
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" required>
                                 </div>
 
                                 <div class="trans-contract-container">
                                     <label for="trans-contract-checkbox">Contract</label>
-                                    <input type="checkbox" name="Contract" id="trans-contract-checkbox">
+                                    <input type="checkbox" name="Contract" id="trans-contract-checkbox" >
                                 </div>
 
                                 <div class="trans-contract-cycle-container">
                                     <label for="contract-cycle-slct">Contract cycle</label>
-                                    <select name="ContractCycle" id="contract-cycle-slct">
-                                        <option value="730">Biannually</option>
+                                    <select name="ContractCycle" id="contract-cycle-slct" required>
+
+                                        @foreach(BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                        {   
+                                            <option value="@billingCycle">@billingCycle</option>
+                                        }
+                                        
+                                        @* <option value="730">Biannually</option>
                                         <option value="365">Annually</option>
                                         <option value="183">Semi-annually</option>
                                         <option value="91">Quarterly</option>
@@ -265,37 +358,22 @@
                                         <option value="30">Monthly</option>
                                         <option value="14">Biweekly</option>
                                         <option value="7">Weekly</option>
-                                        <option value="1">Daily</option>
+                                        <option value="1">Daily</option> *@
                                     </select>
                                 </div>
-
-                                
                             </div>
-
-
-                            <div class="trans-transf-input-container">
-                                <div class="trans-description-container">
-                                    @* <label for="trans-income-description-inp">Description</label>
-                                <input type="text" class="trans-description" id="trans-description-inp"
-                                name="Description"> *@
-                                </div>
-                            </div>
-
-
-
-
-
                             <div class="save-transaction-container">
-                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn">✅</button>
+                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn" asp-page-handler="AddTransaction">✅</button>
                             </div>
                         </form>
                     </div>
                 </div>
-
             }
             <script>
                 function addAccountWindow() {
                     document.getElementById('new-acc-menu').classList.toggle("visible");
+
+                    
                 }
 
                 function closeAccountMenu() {
@@ -303,13 +381,90 @@
                 }
 
 
-                function addTransactionWindow() {
+                function addTransactionWindow(button) {
                     document.getElementById('qick-add-transaction-container').classList.toggle("visible");
+
+                    const accountID = button.getAttribute('data-id');
+                    document.getElementById('account-id').value = accountID;
+
+
                 }
 
                 function closeTransactionWindow() {
                     document.getElementById('qick-add-transaction-container').classList.toggle("visible");
                 }
+
+
+
+                document.addEventListener("DOMContentLoaded", function () {
+                    const transactionTypeSelect = document.getElementById('trans-type-slct');
+                    const categorySelect = document.getElementById('trans-category-slct');
+                    const transferInputContainer = document.querySelector('.trans-transf-input-container');
+                    const contractCheckbox = document.getElementById('trans-contract-checkbox');
+                    const contractCycleDiv = document.querySelector('.trans-contract-cycle-container');
+                    const transferOriginSelect = document.getElementById('transf-orgini-slct');
+                    const transferDestinationSelect = document.getElementById('transf-destination-slct');
+
+                    // Function to filter categories based on transaction type
+                    function filterCategories() {
+                        const selectedType = transactionTypeSelect.value;
+                        const options = categorySelect.querySelectorAll('option');
+
+                        options.forEach(option => {
+                            if (option.value === "") {
+                                option.style.display = "block";
+                            } else {
+                                const dataType = option.getAttribute('data-type');
+                                if (selectedType === "Transfer") {
+                                    option.style.display = dataType === "Transfer" ? "block" : "none";
+                                } else {
+                                    option.style.display = dataType === selectedType ? "block" : "none";
+                                }
+                            }
+                        });
+                    }
+
+                    // Event listener for transaction type change
+                    transactionTypeSelect.addEventListener('change', function () {
+                        filterCategories();
+
+                        if (this.value === "Transfer") {
+                            transferInputContainer.style.display = "block";
+                        } else {
+                            transferInputContainer.style.display = "none";
+                        }
+                    });
+
+                    // Event listener for contract checkbox change
+                    contractCheckbox.addEventListener('change', function () {
+                        if (this.checked) {
+                            contractCycleDiv.style.display = "block";
+                        } else {
+                            contractCycleDiv.style.display = "none";
+                        }
+                    });
+
+                    // Function to unselect the same option in the other select
+                    @* function unselectSameOption(event) {
+                        const originValue = transferOriginSelect.value;
+                        const destinationValue = transferDestinationSelect.value;
+
+                        if (event.target.id === 'transf-orgini-slct' && originValue === destinationValue) {
+                            transferDestinationSelect.value = "";
+                        } else if (event.target.id === 'transf-destination-slct' && originValue === destinationValue) {
+                            transferOriginSelect.value = "";
+                        }
+                    }
+
+                    // Event listeners for transfer selects
+                    transferOriginSelect.addEventListener('change', unselectSameOption);
+                    transferDestinationSelect.addEventListener('change', unselectSameOption); *@
+
+                    // Initialize the form based on default values
+                    filterCategories();
+                    transferInputContainer.style.display = transactionTypeSelect.value === "Transfer" ? "block" : "none";
+                    contractCycleDiv.style.display = contractCheckbox.checked ? "block" : "none";
+                });
             </script>
 
             @* <script>

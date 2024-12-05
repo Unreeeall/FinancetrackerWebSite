@@ -6,15 +6,29 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "tGN5NRqw4UUAuixZ66RuSI/Nx3im/dwAbXqRVc9IRQM=",
-        "ExpireDate": "2024-12-05T14:41:41.8880828+01:00"
-      },
-      {
         "Id": "ICPNFexrlIKQVwx8T4K3aqq5cThtD3/mi2YYXFM6P28=",
         "ExpireDate": "2024-12-06T06:25:40.2907395+01:00"
       }
     ],
-    "Transactions": [],
+    "Transactions": [
+      {
+        "Type": "Income",
+        "Date": "2024-12-12T15:19:00",
+        "Amount": 1500,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "",
+        "Description": "Eier",
+        "Category": "Salary",
+        "ID": "14ff8938-7a2e-4744-8796-919b88939adc",
+        "Account": {
+          "AccountName": "Test1",
+          "Balance": 0,
+          "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
+        },
+        "IsContract": false,
+        "Cycle": 0
+      }
+    ],
     "BankAccounts": [
       {
         "Currency": 0,
@@ -29,6 +43,12 @@
         "AccountName": "asdas",
         "Balance": 0,
         "ID": "86fe583a-5d38-432b-9823-da9458c93f4d"
+      },
+      {
+        "Currency": 0,
+        "AccountName": "eieieie",
+        "Balance": 0,
+        "ID": "34a301bc-daf2-4618-8528-e46c1ebbdfad"
       }
     ],
     "PortfolioAccounts": [
