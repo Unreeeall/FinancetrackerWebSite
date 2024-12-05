@@ -35,32 +35,6 @@ public class WebUser
     private static List<WebUser> userList = new List<WebUser>();
 
 
-    // public void AddBankAccount(BankAccount account)
-    // {
-    //     BankAccounts.Add(account);
-    // }
-
-    // public void AddPortfolioAccount(PortfolioAccount account)
-    // {
-    //     PortfolioAccounts.Add(account);
-    // }
-
-    // public void AddCryptoWallet(CryptoWallet wallet)
-    // {
-    //     CryptoWallets.Add(wallet);
-    // }
-
-    // public List<IFinancialAccount> GetAllFinancialAccounts()
-    // {
-    //     List<IFinancialAccount> accounts = new List<IFinancialAccount>();
-    //     accounts.AddRange(BankAccounts);
-    //     accounts.AddRange(PortfolioAccounts);
-    //     accounts.AddRange(CryptoWallets);
-    //     return accounts;
-    // }
-
-
-
     public WebUser() { Email = ""; Name = ""; Phonenumber = ""; Password = ""; userList.Add(this); }
     public WebUser(string email, string name, string? phonenumber, string password)
     { Email = email; Name = name; Phonenumber = phonenumber; Password = password; userList.Add(this); }
@@ -186,7 +160,35 @@ public class WebUser
         return null;
     }
 
+    public void UpdateUser(string? email = null, string? name = null, string? phonenumber = null, string? password = null)
+    {
+        if (!string.IsNullOrEmpty(email)) Email = email;
+        if (!string.IsNullOrEmpty(name)) Name = name;
+        if (!string.IsNullOrEmpty(phonenumber)) Phonenumber = phonenumber;
+        if (!string.IsNullOrEmpty(password)) Password = password;
+        saveJson();
+    }
 
+    public void UpdateBankAccount(BankAccount bankAccount, string? name)
+    {
+        if (!string.IsNullOrEmpty(name)) bankAccount.AccountName = name;
+    }
+
+    public void UpdateCashAccount(CashAccount cashAccount, string? name)
+    {
+        if (!string.IsNullOrEmpty(name)) cashAccount.AccountName = name;
+    }
+
+    public void UpdatePortfolioAccount(PortfolioAccount portfolioAccount, string? name)
+    {
+        if (!string.IsNullOrEmpty(name)) portfolioAccount.AccountName = name;
+    }
+
+    public void UpdateCryptoWallet(CryptoWallet cryptoWallet, string? name)
+    {
+        if (!string.IsNullOrEmpty(name)) cryptoWallet.AccountName = name;
+    }
+  
 
     public bool HasFinancialAccounts()
     {
@@ -195,6 +197,62 @@ public class WebUser
             return false;
         }
         else return true;
+    }
+
+    public BankAccount? GetBankAccountByID(string accountID)
+    {
+        foreach (var bankAccount in BankAccounts)
+        {
+            if(bankAccount.ID == accountID)
+            {
+                Console.WriteLine($"Bankaccount found: {bankAccount}");
+                return bankAccount;
+            }
+        }
+        Console.WriteLine($"No Bankaccount found with ID {accountID}");
+        return null;
+    }
+
+    public CashAccount? GetCashAccountByID(string accountID)
+    {
+        foreach (var cashAccount in CashAccounts)
+        {
+            if(cashAccount.ID == accountID)
+            {
+                Console.WriteLine($"CashAccount found: {cashAccount}");
+                return cashAccount;
+            }
+        }
+        Console.WriteLine($"No CashAccount found with ID {accountID}");
+        return null;
+    }
+
+    public PortfolioAccount? GetPortfolioAccountByID(string accountID)
+    {
+        foreach (var portfolioAccount in PortfolioAccounts)
+        {
+            if(portfolioAccount.ID == accountID)
+            {
+                Console.WriteLine($"PortfolioAccount found: {portfolioAccount}");
+                return portfolioAccount;
+            }
+        }
+        Console.WriteLine($"No PortfolioAccount found with ID {accountID}");
+        return null;
+    }
+
+    public CryptoWallet? GetCryptoWalletByID(string accountID)
+    {
+        foreach (var cryptoWallet in CryptoWallets)
+        {
+            if(cryptoWallet.ID == accountID)
+            {
+                Console.WriteLine($"CryptoWallet found: {cryptoWallet}");
+                return cryptoWallet;
+            }
+        }
+        Console.WriteLine($"No CryptoWallet found with ID {accountID}");
+        return null;
     }
 
 
@@ -229,6 +287,8 @@ public abstract class FinancialAccount
 {
     public string AccountName { get; set; } = "";
     public decimal Balance { get; set; } = 0;
+
+    public string ID { get; set; } = "";
 
 }
 
@@ -352,8 +412,8 @@ public class Transaction
     public DateTime Date { get; set; }
     public decimal? Amount { get; set; }
 
-    public FinancialAccount? Origin { get; set; }
-    public FinancialAccount? Destination { get; set; }
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
     public string? Description { get; set; }
     public string? UseCase { get; set; }
     public string? Category { get; set; }
@@ -380,7 +440,7 @@ public class Transaction
         
     }
 
-    public Transaction(string type, DateTime date, decimal amount, FinancialAccount origin, FinancialAccount destination, string? description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
+    public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
     {
         Type = type;
         Category = category;
@@ -419,9 +479,12 @@ public class SharedServices
             {
                 var newBankAccount = new BankAccount
                 (
-                     AccountName,
-                     currency
+                    AccountName,
+                    currency
+                    
                 );
+
+                newBankAccount.ID = System.Guid.NewGuid().ToString();
 
                 webUser?.BankAccounts.Add(newBankAccount);
             }
@@ -433,6 +496,8 @@ public class SharedServices
                     currency
                 );
 
+                newCashAccount.ID = System.Guid.NewGuid().ToString();
+
                 webUser?.CashAccounts.Add(newCashAccount);
 
             }
@@ -443,6 +508,8 @@ public class SharedServices
                     AccountName
                 );
 
+                newPortfolio.ID = System.Guid.NewGuid().ToString();
+
                 webUser?.PortfolioAccounts.Add(newPortfolio);
             }
             else if (AccountType == "CryptoWallet")
@@ -451,6 +518,8 @@ public class SharedServices
                 (
                     AccountName
                 );
+
+                newCryptoWallet.ID = System.Guid.NewGuid().ToString();
 
                 webUser?.CryptoWallets.Add(newCryptoWallet);
             }

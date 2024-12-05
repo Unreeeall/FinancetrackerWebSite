@@ -44,7 +44,7 @@
             <div class="dropdown">
                 <span id="settings">Options</span>
                 <div class="dropdown-content">
-                    <a href="#profile">Profile</a>
+                    <a href="/UserSettings">Profile</a>
                     <a href="#settings">Settings</a>
                     <a href="/Logout">Logout</a>
                 </div>
@@ -68,11 +68,40 @@
             <canvas id="transactionBarChart"></canvas>
             </div> *@
 
-            @if (!Model.WebUser.HasFinancialAccounts())
+            @if (Model.WebUser == null || !Model.WebUser.HasFinancialAccounts())
             {
                 <div class="nothing-here-text">
                     <p>Nothing Here yet...</p>
                     <p>Try adding a Bank account, Wallet, cash etc.</p>
+                </div>
+
+                <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
+                    <button class="add-new-fin-acc-plus">+</button>
+                </div>
+
+                <div class="add-new-acc-background" id="new-acc-menu">
+                    <div class="add-new-acc-menu">
+                        <button class="exit-btn" onclick="closeAccountMenu()">X</button>
+                        <form method="post">
+                            <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
+                                <option value="" disabled selected></option>
+                                <option value="BankAccount">Bank Account</option>
+                                <option value="Cash">Cash</option>
+                                <option value="Portfolio">Portfolio</option>
+                                <option value="CryptoWallet">Crypto Wallet</option>
+                            </select>
+
+                            <input type="text" name="AccountName" class="Account-Name-Input" required>
+
+                            <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
+                                @foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
+                                {
+                                    <option value="@currency">@currency</option>
+                                }
+                            </select>
+                            <input type="submit" class="submit-Financial-Account-btn">
+                        </form>
+                    </div>
                 </div>
             }
             else
@@ -83,6 +112,8 @@
                     <div class="Bank-Acc-Container">
                         <h3>Bankaccount: @bankAccount.AccountName</h3>
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
+
+                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
                     </div>
                 }
 
@@ -92,6 +123,8 @@
                     <div class="Cash-Acc-Container">
                         <h3>Cashstash @cashAccount.AccountName</h3>
                         <p>Balance: @cashAccount.Balance @cashAccount.Currency</p>
+
+                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
                     </div>
                 }
 
@@ -100,6 +133,8 @@
                     <div class="Crypto-Wallet-Container">
                         <h3>Cryptowallet: @cryptoWallet.AccountName</h3>
                         <p>Balance: @cryptoWallet.Balance</p>
+
+                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
                     </div>
                 }
 
@@ -108,6 +143,8 @@
                     <div class="Crypto-Wallet-Container">
                         <h3>Stockportoflio: @portfolioAccount.AccountName</h3>
                         <p>Balance: @portfolioAccount.Balance</p>
+
+                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
                     </div>
                 }
 
@@ -144,6 +181,117 @@
                     </div>
                 </div>
 
+                <div class="qick-add-transaction-container" id="qick-add-transaction-container">
+                    <div class="qick-add-transaction-menu">
+                        <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
+                        <form method="post">
+                            <div class="trans-type-slct-container" id="trans-type-slct-container">
+
+                                <label for="trans-type-slct">Transaction Type</label>
+                                <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
+                                    <option value="" selected disabled></option>
+                                    <option value="Income">Income</option>
+                                    <option value="Expense">Expense</option>
+                                    <option value="Transfer">Transfer</option>
+                                </select>
+                            </div>
+
+                            <div class="trans-income-expense-inputs-container">
+                                <div class="trans-category-container">
+                                    <label for="trans-category-slct">Category</label>
+                                    <select name="Category" id="trans-category-slct">
+                                        <option value="" disabled selected></option>
+                                        <option value="Salary" data-type="Income">Salary</option>
+                                        <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting</option>
+                                        <option value="Investments" data-type="Income">Investments</option>
+                                        <option value="Rental Income" data-type="Income">Rental Income</option>
+                                        <option value="Business Income" data-type="Income">Business Income</option>
+                                        <option value="Bonuses" data-type="Income">Bonuses</option>
+                                        <option value="Gifts" data-type="Income">Gifts</option>
+                                        <option value="Interest Earned" data-type="Income">Interest Earned</option>
+                                        <option value="Dividends" data-type="Income">Dividends</option>
+                                        <option value="Other Income" data-type="Income">Other Income</option>
+
+                                        <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
+                                        <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities (Electricity, Water, Gas)</option>
+                                        <option value="Groceries" data-type="Expense">Groceries</option>
+                                        <option value="Dining Out" data-type="Expense">Dining Out</option>
+                                        <option value="Transportation (Fuel, Public Transport)" data-type="Expense">Transportation (Fuel, Public Transport)</option>
+                                        <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health, Car, Home)</option>
+                                        <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
+                                        <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition, Books)</option>
+                                        <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment (Movies, Events)</option>
+                                        <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions (Netflix, Gym)</option>
+                                        <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights, Hotels)</option>
+                                        <option value="Clothing" data-type="Expense">Clothing</option>
+                                        <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care (Haircuts, Spa)</option>
+                                        <option value="Household Supplies" data-type="Expense">Household Supplies</option>
+                                        <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments (Credit Card, Loans)</option>
+                                        <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
+                                        <option value="Charitable Donations" data-type="Expense">Charitable Donations</option>
+                                        <option value="Pet Care" data-type="Expense">Pet Care</option>
+                                        <option value="Childcare" data-type="Expense">Childcare</option>
+                                        <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
+                                    </select>
+                                </div>
+                                <div class="trans-description-container">
+                                    <label for="trans-income-description-inp">Description</label>
+                                    <input type="text" class="trans-description" id="trans-description-inp"
+                                        name="Description" required>
+                                </div>
+                                <div class="trans-amount-container">
+                                    <label for="trans-amount-inp">Amount</label>
+                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="any" required>
+                                </div>
+
+                                <div class="trans-date-container">
+                                    <label for="trans-date-inp">Date</label>
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date">
+                                </div>
+
+                                <div class="trans-contract-container">
+                                    <label for="trans-contract-checkbox">Contract</label>
+                                    <input type="checkbox" name="Contract" id="trans-contract-checkbox">
+                                </div>
+
+                                <div class="trans-contract-cycle-container">
+                                    <label for="contract-cycle-slct">Contract cycle</label>
+                                    <select name="ContractCycle" id="contract-cycle-slct">
+                                        <option value="730">Biannually</option>
+                                        <option value="365">Annually</option>
+                                        <option value="183">Semi-annually</option>
+                                        <option value="91">Quarterly</option>
+                                        <option value="60">Bimonthly</option>
+                                        <option value="30">Monthly</option>
+                                        <option value="14">Biweekly</option>
+                                        <option value="7">Weekly</option>
+                                        <option value="1">Daily</option>
+                                    </select>
+                                </div>
+
+                                
+                            </div>
+
+
+                            <div class="trans-transf-input-container">
+                                <div class="trans-description-container">
+                                    @* <label for="trans-income-description-inp">Description</label>
+                                <input type="text" class="trans-description" id="trans-description-inp"
+                                name="Description"> *@
+                                </div>
+                            </div>
+
+
+
+
+
+                            <div class="save-transaction-container">
+                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn">✅</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
             }
             <script>
                 function addAccountWindow() {
@@ -154,6 +302,14 @@
                     document.getElementById('new-acc-menu').classList.toggle("visible");
                 }
 
+
+                function addTransactionWindow() {
+                    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
+                }
+
+                function closeTransactionWindow() {
+                    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
+                }
             </script>
 
             @* <script>

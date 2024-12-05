@@ -6,13 +6,191 @@
 }
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/css/UserSettings.css">
     <title>User Settings</title>
 </head>
+
+<header>
+    <div class="logoHeader">
+        <a href="/Index">
+            <img src="../images/BudgedBuddyTransp.png" alt="logo not found" width="220px">
+        </a>
+    </div>
+</header>
+
 <body>
-    <h1>HAHAHHAHAHAHAHAHAHAHAHAHHAHA</h1>
+
+
+
+    <div class="user-settings-container">
+        <h1>HAHAHHAHAHAHAHAHAHAHAHAHHAHA</h1>
+
+
+        <div class="account-creditials-container">
+            <form method="post">
+                <div class="cred-group">
+                    <label for="acc-cred-email-field">Email</label>
+                    <input type="text" id="acc-cred-email-field" name="Email" value="@Model.WebUser?.Email" disabled>
+                    <button type="button" id="edit-email-btn" class="edit-btn"
+                        onclick="toggleEdit('acc-cred-email-field', 'edit-email-btn')">🖊️</button>
+                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                        asp-page-handler="ChangeAccountCredentials">✅</button>
+                </div>
+                <div class="cred-group">
+                    <label for="acc-cred-name-field">Name</label>
+                    <input type="text" id="acc-cred-name-field" name="UserName" value="@Model.WebUser?.Name" disabled>
+                    <button type="button" id="edit-name-btn" class="edit-btn"
+                        onclick="toggleEdit('acc-cred-name-field', 'edit-name-btn')">🖊️</button>
+                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                        asp-page-handler="ChangeAccountCredentials">✅</button>
+                </div>
+                <div class="cred-group">
+                    <label for="acc-cred-phone-field">Phonenumber</label>
+                    <input type="tel" id="acc-cred-phone-field" name="Phonenumber" value="@Model.WebUser?.Phonenumber"
+                        disabled>
+                    <button type="button" id="edit-phone-btn" class="edit-btn"
+                        onclick="toggleEdit('acc-cred-phone-field', 'edit-phone-btn')">🖊️</button>
+                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                        asp-page-handler="ChangeAccountCredentials">✅</button>
+                </div>
+                <div class="cred-group">
+                    <label for="acc-cred-pswrd-field">Password</label>
+                    <input type="password" id="acc-cred-pswrd-field" name="Password" value="@Model.WebUser?.Password"
+                        disabled>
+                </div>
+            </form>
+        </div>
+
+        <div class="accounts-table-container">
+            <h3>Accountmanager</h3>
+            <table>
+                <thead>
+                    <tr>
+                        <th>Type</th>
+                        <th>Name</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                    {
+                        <tr id="row-@bankAccount.ID">
+                            <td>Bankaccount</td>
+                            <td>@bankAccount.AccountName</td>
+                            <td class="edit-buttons">
+                                <button type="button" onclick="editAccountWindow(event, this)"
+                                    data-id="@bankAccount.ID">🖊️</button>
+                                <form method="post">
+                                    <input type="hidden" name="ID" value="@bankAccount.ID" />
+                                    <input type="hidden" name="AccountType" value="BankAccount">
+                                    <button type="submit" class="delete-button"
+                                        asp-page-handler="DeleteFinacialAccount">❌</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                    {
+                        <tr id="row-@cashAccount.ID">
+                            <td>Cash</td>
+                            <td>@cashAccount.AccountName</td>
+                            <td class="edit-buttons">
+                                <button type="button" onclick="editAccountWindow(event, this)"
+                                    data-id="@cashAccount.ID">🖊️</button>
+                                <form method="post">
+                                    <input type="hidden" name="ID" value="@cashAccount.ID" />
+                                    <input type="hidden" name="AccountType" value="Cash">
+                                    <button type="submit" class="delete-button"
+                                        asp-page-handler="DeleteFinacialAccount">❌</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var porfolioAccount in Model.WebUser.PortfolioAccounts)
+                    {
+                        <tr id="row-@porfolioAccount.ID">
+                            <td>Portfolio</td>
+                            <td>@porfolioAccount.AccountName</td>
+                            <td class="edit-buttons">
+                                <button type="button" onclick="editAccountWindow(event, this)"
+                                    data-id="@porfolioAccount.ID">🖊️</button>
+                                <form method="post">
+                                    <input type="hidden" name="ID" value="@porfolioAccount.ID" />
+                                    <input type="hidden" name="AccountType" value="Portfolio">
+                                    <button type="submit" class="delete-button"
+                                        asp-page-handler="DeleteFinacialAccount">❌</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                    {
+                        <tr id="row-@cryptoWallet.ID">
+                            <td>Cryptowallet</td>
+                            <td>@cryptoWallet.AccountName</td>
+                            <td class="edit-buttons">
+                                <button type="button" onclick="editAccountWindow(event, this)"
+                                    data-id="@cryptoWallet.ID">🖊️</button>
+                                <form method="post">
+                                    <input type="hidden" name="ID" value="@cryptoWallet.ID" />
+                                    <input type="hidden" name="AccountType" value="CryptoWallet">
+                                    <button type="submit" class="delete-button"
+                                        asp-page-handler="DeleteFinacialAccount">❌</button>
+                                </form>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+
+
+        <div class="edit-fin-acc-background" id="edit-container">
+            <div class="edit-fin-acc-window">
+                <button class="exit-btn" onclick="closeEditMenu()">X</button>
+
+            </div>
+
+        </div>
+    </div>
+
+    <script>
+
+        function editAccountWindow(event, button) {
+            document.getElementById('edit-container').classList.toggle("visible");
+        }
+
+        function closeEditMenu() {
+            document.getElementById('edit-container').classList.toggle("visible");
+        }
+
+
+        function toggleEdit(credFieldId, editBtnId) {
+
+            const allFields = document.querySelectorAll('input[type="text"], input[type="tel"], input[type="password"]');
+            const allButtons = document.querySelectorAll('.edit-btn');
+
+            // Disable all fields and reset button texts
+            allFields.forEach(field => field.disabled = true);
+            allButtons.forEach(button => button.textContent = '🖊️');
+
+            const credField = document.getElementById(credFieldId);
+            const editBtn = document.getElementById(editBtnId);
+            credField.disabled = !credField.disabled;
+            if (credField.disabled) {
+                editBtn.textContent = '🖊️'
+            }
+            else {
+                editBtn.textContent = '❌'
+            }
+        }
+
+    </script>
+
 </body>
+
 </html>

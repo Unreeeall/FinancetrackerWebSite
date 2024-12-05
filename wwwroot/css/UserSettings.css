@@ -3,11 +3,98 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 65vh;
+    height: 100vh;
     background: linear-gradient(to bottom, #000000, #15025E);
     background-position: fixed;
 }
 
 h1 {
     color: floralwhite;
+}
+
+.user-settings-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh;
+}
+
+.account-creditials-container {
+    color: aliceblue;
+    border-color: yellow;
+    border-style: dashed;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    position: relative;
+}
+
+.account-creditials-container form{
+    display: flex;
+    flex-direction: column;
+}
+
+.cred-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.cred-group label {
+    width: 120px;
+}
+
+.cred-group button {
+    margin-left: 5px;
+}
+
+.accounts-table-container {
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    border-color: yellow;
+    border-style: dashed;
+}
+
+.accounts-table-container h3 {
+    color: aliceblue;
+}
+
+.accounts-table-container tbody {
+    background-color: aliceblue;
+}
+
+.accounts-table-container th {
+    background-color: aqua;
+}
+
+.accounts-table-container td {
+    text-align: center;
+    padding: 10px;
+}
+
+.edit-buttons {
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+}
+
+
+.edit-fin-acc-background {
+    background-color: #00000083;
+    position: absolute;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
+
+.edit-menu-background.visible {
+    display: block;
+}
+
+.edit-fin-acc-window {
+    background-color: palevioletred;
+
 }
