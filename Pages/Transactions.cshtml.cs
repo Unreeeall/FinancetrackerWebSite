@@ -89,46 +89,46 @@ public class TransactionsModel : PageModel
             if (WebUser == null) return RedirectToPage("/Index");
 
 
-            if (IsIncoming)
-            {
-                var newIncomingTransaction = new Transaction
-                (
-                    Type,
-                    Date,
-                    Amount,
-                    Origin,
-                    Destination,
-                    Description,
-                    UseCase,
-                    Category,
-                    SenderName,
-                    SenderAccount,
-                    IsIncoming,
-                    ID = System.Guid.NewGuid().ToString()
-                );
+            // if (IsIncoming)
+            // {
+            //     var newIncomingTransaction = new Transaction
+            //     (
+            //         Type,
+            //         Date,
+            //         Amount,
+            //         Origin,
+            //         Destination,
+            //         Description,
+            //         UseCase,
+            //         Category,
+            //         SenderName,
+            //         SenderAccount,
+            //         IsIncoming,
+            //         ID = System.Guid.NewGuid().ToString()
+            //     );
 
-                WebUser.Transactions.Add(newIncomingTransaction);
-            }
-            else
-            {
-                var newOutgoingTransaction = new Transaction
-                (
-                Type,
-                    Date,
-                    Amount,
-                    Origin,
-                    Destination,
-                    Description,
-                    UseCase,
-                    Category,
-                    SenderName,
-                    SenderAccount,
-                    IsIncoming,
-                    ID = System.Guid.NewGuid().ToString()
-                );
-                WebUser.Transactions.Add(newOutgoingTransaction);
+            //     WebUser.Transactions.Add(newIncomingTransaction);
+            // }
+            // else
+            // {
+            //     var newOutgoingTransaction = new Transaction
+            //     (
+            //     Type,
+            //         Date,
+            //         Amount,
+            //         Origin,
+            //         Destination,
+            //         Description,
+            //         UseCase,
+            //         Category,
+            //         SenderName,
+            //         SenderAccount,
+            //         IsIncoming,
+            //         ID = System.Guid.NewGuid().ToString()
+            //     );
+            //     WebUser.Transactions.Add(newOutgoingTransaction);
 
-            }
+            // }
 
 
 
@@ -156,23 +156,23 @@ public class TransactionsModel : PageModel
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
 
-        if (Trans_ID != null)
-        {
+        // if (Trans_ID != null)
+        // {
 
-            var currentTransaction = WebUser.GetTransactionByID(Trans_ID);
+        //     var currentTransaction = WebUser.GetTransactionByID(Trans_ID);
 
-            currentTransaction.Type = Type;
-            currentTransaction.Category = Category;
-            currentTransaction.UseCase = UseCase;
-            currentTransaction.Amount = Amount;
-            currentTransaction.Origin = Origin;
-            currentTransaction.Destination = Destination;
-            currentTransaction.Date = Date;
-            currentTransaction.ID = Trans_ID;
+        //     currentTransaction.Type = Type;
+        //     currentTransaction.Category = Category;
+        //     currentTransaction.UseCase = UseCase;
+        //     currentTransaction.Amount = Amount;
+        //     currentTransaction.Origin = Origin;
+        //     currentTransaction.Destination = Destination;
+        //     currentTransaction.Date = Date;
+        //     currentTransaction.ID = Trans_ID;
 
-            OnPostDeleteTransaction(Trans_ID);
-            WebUser.Transactions.Add(currentTransaction);
-        }
+        //     OnPostDeleteTransaction(Trans_ID);
+        //     WebUser.Transactions.Add(currentTransaction);
+        // }
         return Page();
     }
 

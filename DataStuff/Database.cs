@@ -188,11 +188,11 @@ public class WebUser
     {
         if (!string.IsNullOrEmpty(name)) cryptoWallet.AccountName = name;
     }
-  
+
 
     public bool HasFinancialAccounts()
     {
-        if(BankAccounts.Count == 0 && PortfolioAccounts.Count == 0 && CryptoWallets.Count == 0)
+        if (BankAccounts.Count == 0 && PortfolioAccounts.Count == 0 && CryptoWallets.Count == 0)
         {
             return false;
         }
@@ -203,7 +203,7 @@ public class WebUser
     {
         foreach (var bankAccount in BankAccounts)
         {
-            if(bankAccount.ID == accountID)
+            if (bankAccount.ID == accountID)
             {
                 Console.WriteLine($"Bankaccount found: {bankAccount}");
                 return bankAccount;
@@ -217,7 +217,7 @@ public class WebUser
     {
         foreach (var cashAccount in CashAccounts)
         {
-            if(cashAccount.ID == accountID)
+            if (cashAccount.ID == accountID)
             {
                 Console.WriteLine($"CashAccount found: {cashAccount}");
                 return cashAccount;
@@ -231,7 +231,7 @@ public class WebUser
     {
         foreach (var portfolioAccount in PortfolioAccounts)
         {
-            if(portfolioAccount.ID == accountID)
+            if (portfolioAccount.ID == accountID)
             {
                 Console.WriteLine($"PortfolioAccount found: {portfolioAccount}");
                 return portfolioAccount;
@@ -245,7 +245,7 @@ public class WebUser
     {
         foreach (var cryptoWallet in CryptoWallets)
         {
-            if(cryptoWallet.ID == accountID)
+            if (cryptoWallet.ID == accountID)
             {
                 Console.WriteLine($"CryptoWallet found: {cryptoWallet}");
                 return cryptoWallet;
@@ -253,6 +253,52 @@ public class WebUser
         }
         Console.WriteLine($"No CryptoWallet found with ID {accountID}");
         return null;
+    }
+
+
+    public FinancialAccount? GetFinancialAccountByID(string accountID)
+    {
+
+        
+        FinancialAccount? financialAccount = GetBankAccountByID(accountID);
+        if(financialAccount != null)
+        {
+            return financialAccount;
+        }
+        else
+        {
+            financialAccount = null;
+        }
+
+        financialAccount = GetCashAccountByID(accountID);
+        if(financialAccount != null)
+        {
+            return financialAccount;
+        }
+        else
+        {
+            financialAccount = null;
+        }
+        financialAccount = GetCryptoWalletByID(accountID);
+        if(financialAccount != null)
+        {
+            return financialAccount;
+        }
+        else
+        {
+            financialAccount = null;
+        }
+        financialAccount = GetPortfolioAccountByID(accountID);
+        if(financialAccount != null)
+        {
+            return financialAccount;
+        }
+        else
+        {
+            financialAccount = null;
+        }
+        return null;
+        
     }
 
 
@@ -283,7 +329,7 @@ public class SessionUser(Session session, WebUser user)
 //     decimal Balance { get; set; }
 // }
 
-public abstract class FinancialAccount 
+public abstract class FinancialAccount
 {
     public string AccountName { get; set; } = "";
     public decimal Balance { get; set; } = 0;
@@ -304,7 +350,7 @@ public class BankAccount : FinancialAccount
 
 public class CashAccount : FinancialAccount
 {
-    public CashAccount() {}
+    public CashAccount() { }
 
     public CashAccount(string accountName, CurrencyType curreny)
     {
@@ -411,61 +457,102 @@ public class Transaction
     public string? Type { get; set; }
     public DateTime Date { get; set; }
     public decimal? Amount { get; set; }
-
     public string? Origin { get; set; }
     public string? Destination { get; set; }
     public string? Description { get; set; }
-    public string? UseCase { get; set; }
     public string? Category { get; set; }
-    public string? SenderName { get; set; }
-    public string? SenderAccount { get; set; }
-    public bool IsIncoming { get; set; }
     public string? ID { get; set; }
+    public FinancialAccount? Account { get; set; }
 
-    
+    public bool IsContract { get; set; }
+
+    public BillingCycle Cycle { get; set; }
+
+
     public Transaction()
     {
-        Type = "EMPTY";
-        Category = "EMPTY";
-        UseCase = "EMPTY";
-        Amount = 0;
+        Type = null;
+        Date = DateTime.Now;
+        Amount = null;
         Origin = null;
         Destination = null;
-        SenderName = "EMPTY";
-        SenderAccount ="EMTPY";
-        Description = "EMPTY";
-        Date = DateTime.Now;
-        ID = "EMPTY";
-        IsIncoming = false;
-        
+        Description = null;
+        Category = null;
+        ID = null;
+        Account = null;
+        IsContract = false;
+        Cycle = (BillingCycle)1;
     }
-
-    public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string useCase, string category, string senderName, string senderAccount,bool isincoming, string id)
+//Constructor for everything
+    public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string category, string id, FinancialAccount account, bool iscontract, BillingCycle cycle)
     {
         Type = type;
         Category = category;
-        UseCase = useCase;
         Amount = amount;
         Origin = origin;
         Destination = destination;
-        SenderName = senderName;
-        SenderAccount = senderAccount;
         Description = description;
         Date = date;
-        IsIncoming = isincoming;
         ID = id;
+        Account = account;
+        IsContract = iscontract;
+        Cycle = cycle;
     }
-    /*
-    public string GetDate() {
-        return Date.ToString("s");
-    }
-    */
-
-    
-
-    
 
 
+    //Constructor (No Constract, No Transfer)
+    // public Transaction(string type, DateTime date, decimal amount, string origin, string category, string id, FinancialAccount account)
+    // {
+    //     Type = type;
+    //     Category = category;
+    //     Amount = amount;
+    //     Origin = origin;
+    //     Date = date;
+    //     ID = id;
+    //     Account = account;
+    // }
+
+
+    // //Constructor (No Constract)
+    // public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string category, string id, FinancialAccount account)
+    // {
+    //     Type = type;
+    //     Category = category;
+    //     Amount = amount;
+    //     Origin = origin;
+    //     Destination = destination;
+    //     Description = description;
+    //     Date = date;
+    //     ID = id;
+    //     Account = account;
+    // }
+
+    // //Constructor (No Transfer)
+    // public Transaction(string type, DateTime date, decimal amount, string origin, string category, string id, FinancialAccount account, bool iscontract, BillingCycle cycle)
+    // {
+    //     Type = type;
+    //     Category = category;
+    //     Amount = amount;
+    //     Origin = origin;
+    //     Date = date;
+    //     ID = id;
+    //     Account = account;
+    //     IsContract = iscontract;
+    //     Cycle = cycle;
+    // }
+}
+
+public enum BillingCycle
+{
+    Biannually,
+    Annually,
+    Semiannually,
+    Quarterly,
+    Bimonthly,
+    Monthly,
+    Biweekly,
+    Weekly,
+    Daily
 }
 
 
@@ -473,56 +560,58 @@ public class SharedServices
 {
     public void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
     {
-        
 
-            if (AccountType == "BankAccount")
-            {
-                var newBankAccount = new BankAccount
-                (
-                    AccountName,
-                    currency
-                    
-                );
 
-                newBankAccount.ID = System.Guid.NewGuid().ToString();
+        if (AccountType == "BankAccount")
+        {
+            var newBankAccount = new BankAccount
+            (
+                AccountName,
+                currency
 
-                webUser?.BankAccounts.Add(newBankAccount);
-            }
-            else if (AccountType == "Cash")
-            {
-                var newCashAccount = new CashAccount
-                (
-                    AccountName,
-                    currency
-                );
+            );
 
-                newCashAccount.ID = System.Guid.NewGuid().ToString();
+            newBankAccount.ID = System.Guid.NewGuid().ToString();
 
-                webUser?.CashAccounts.Add(newCashAccount);
+            webUser?.BankAccounts.Add(newBankAccount);
+        }
+        else if (AccountType == "Cash")
+        {
+            var newCashAccount = new CashAccount
+            (
+                AccountName,
+                currency
+            );
 
-            }
-            else if (AccountType == "Portfolio")
-            {
-                var newPortfolio = new PortfolioAccount
-                (
-                    AccountName
-                );
+            newCashAccount.ID = System.Guid.NewGuid().ToString();
 
-                newPortfolio.ID = System.Guid.NewGuid().ToString();
+            webUser?.CashAccounts.Add(newCashAccount);
 
-                webUser?.PortfolioAccounts.Add(newPortfolio);
-            }
-            else if (AccountType == "CryptoWallet")
-            {
-                var newCryptoWallet = new CryptoWallet
-                (
-                    AccountName
-                );
+        }
+        else if (AccountType == "Portfolio")
+        {
+            var newPortfolio = new PortfolioAccount
+            (
+                AccountName
+            );
 
-                newCryptoWallet.ID = System.Guid.NewGuid().ToString();
+            newPortfolio.ID = System.Guid.NewGuid().ToString();
 
-                webUser?.CryptoWallets.Add(newCryptoWallet);
-            }
+            webUser?.PortfolioAccounts.Add(newPortfolio);
+        }
+        else if (AccountType == "CryptoWallet")
+        {
+            var newCryptoWallet = new CryptoWallet
+            (
+                AccountName
+            );
+
+            newCryptoWallet.ID = System.Guid.NewGuid().ToString();
+
+            webUser?.CryptoWallets.Add(newCryptoWallet);
+        }
     }
+
+
 }
 
