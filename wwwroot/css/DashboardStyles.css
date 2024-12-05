@@ -172,12 +172,15 @@ header {
     align-items: center;
     position: relative;
     width: 100%;
-    min-height: 100vh; /* Ensure the wrapper takes full height of the viewport */
-    padding-bottom: 100px; /* Ensure the wrapper takes full height of the viewport */
+    min-height: 100vh;
+    /* Ensure the wrapper takes full height of the viewport */
+    padding-bottom: 100px;
+    /* Ensure the wrapper takes full height of the viewport */
 }
 
 .spacer {
-    flex-grow: 1; /* This will push the add-new-financialAccount-field to the bottom */
+    flex-grow: 1;
+    /* This will push the add-new-financialAccount-field to the bottom */
 }
 
 
@@ -219,7 +222,7 @@ header {
 
 
 .add-new-acc-background {
-    background-color: #00000083 ;
+    background-color: #00000083;
     position: absolute;
     width: 100%;
     height: 2000px;
@@ -259,13 +262,22 @@ header {
 
 }
 
-.Bank-Acc-Container,
+.Bank-Acc-Container:hover,
+.Cash-Acc-Container:hover,
+.Crypto-Wallet-Container:hover,
+.Crypto-Wallet-Container:hover {
+    cursor: pointer;
+    width: 41%;
+    height: 21%;
+}
+
+/* .Bank-Acc-Container,
 .Cash-Acc-Container,
 .Crypto-Wallet-Container,
 .Crypto-Wallet-Container p {
     top: 5%;
     left: 10%;
-}
+} */
 
 .Chart-Container {
     margin-top: 90px;
@@ -308,8 +320,9 @@ header {
     margin-top: 20px;
 }
 
-.Transaction-list th, .Transaction-list td {
-    
+.Transaction-list th,
+.Transaction-list td {
+
     text-align: center;
     border-bottom: 1px solid #ddd;
 }
@@ -354,7 +367,11 @@ header {
 }
 
 
-.usecase-field, .Amount-field, .Origin-field, .Destination-field, .Date-field {
+.usecase-field,
+.Amount-field,
+.Origin-field,
+.Destination-field,
+.Date-field {
     width: 100%;
     padding: 10px;
     margin: 5px 0;
@@ -371,12 +388,12 @@ header {
     cursor: pointer;
 }
 
-    
+
 
 
 .edit-buttons button {
     background-color: transparent !important;
-    border: none;  
+    border: none;
     display: inline-block;
     width: 50px;
     height: 50px;
@@ -389,8 +406,8 @@ header {
 
 
 .edit-menu-background {
-    
-    background-color: #00000083 ;
+
+    background-color: #00000083;
 
     position: absolute;
     width: 100%;
@@ -456,6 +473,35 @@ header {
     cursor: pointer;
     border: 1px solid #ddd;
 }
+
+
+.qick-add-transaction-container {
+    background-color: #00000083;
+
+    position: absolute;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
+
+.qick-add-transaction-container.visible {
+    display: block;
+}
+
+.qick-add-transaction-menu {
+    width: 50%;
+    height: 65%;
+    background-color: #ff00dd;
+    justify-self: center;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 10px;
+}
+
+
 
 
 
@@ -558,11 +604,18 @@ input[type="submit"] {
 
     }
 
-    .Transaction-list th, .Transaction-list td {
+    .Transaction-list th,
+    .Transaction-list td {
         padding: 5px;
     }
 
-    .category-drop, .type-select, .usecase-field, .Amount-field, .Origin-field, .Destination-field, .Date-field {
+    .category-drop,
+    .type-select,
+    .usecase-field,
+    .Amount-field,
+    .Origin-field,
+    .Destination-field,
+    .Date-field {
         padding: 5px;
     }
 

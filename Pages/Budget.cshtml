@@ -54,7 +54,7 @@
 
     <div class="Dashboard">
 
-        @if (!Model.WebUser.HasFinancialAccounts())
+        @if (Model.WebUser == null || !Model.WebUser.HasFinancialAccounts())
         {
             <div class="nothing-here-text">
                 <p>Nothing Here yet...</p>

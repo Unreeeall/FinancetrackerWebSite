@@ -22,11 +22,11 @@ public class TransactionsModel : PageModel
 
 
     [BindProperty]
-    public required FinancialAccount Origin { get; set; }
+    public required string Origin { get; set; }
 
 
     [BindProperty]
-    public required FinancialAccount Destination { get; set; }
+    public required string Destination { get; set; }
 
 
     [BindProperty]
