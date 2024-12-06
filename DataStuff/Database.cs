@@ -9,6 +9,8 @@ using System.Security.Cryptography;
 using System.ComponentModel;
 using FinanceTracker.Pages;
 using System.Security.Cryptography.X509Certificates;
+using System.Threading.Tasks;
+
 
 
 
@@ -24,7 +26,10 @@ public class WebUser
 
     static Dictionary<string, SessionUser> IdDict { get; set; } = [];
 
+    public static Dictionary<string, FinancialAccount> AccountLookup = new Dictionary<string, FinancialAccount>();
+
     public List<Transaction> Transactions { get; set; } = [];
+    public List<Contract> Contracts { get; set; } = [];
     public List<BankAccount> BankAccounts { get; set; } = [];
     public List<CashAccount> CashAccounts { get; set; } = [];
     public List<PortfolioAccount> PortfolioAccounts { get; set; } = [];
@@ -54,7 +59,29 @@ public class WebUser
                 {
                     IdDict.Add(session.Id, new SessionUser(session, user));
                 }
+                foreach (var bankAccount in user.BankAccounts)
+                {
+                    AccountLookup[bankAccount.ID] = bankAccount;
+                }
+
+                foreach (var cashAccount in user.CashAccounts)
+                {
+                    AccountLookup[cashAccount.ID] = cashAccount;
+                }
+
+                foreach (var portfolioAccount in user.PortfolioAccounts)
+                {
+                    AccountLookup[portfolioAccount.ID] = portfolioAccount;
+                }
+
+                foreach (var cryptoWallet in user.CryptoWallets)
+                {
+                    AccountLookup[cryptoWallet.ID] = cryptoWallet;
+                }
+                // user.CalculateAccountBalances();
+                user.ApplyContracts();
             }
+
         }
     }
 
@@ -256,51 +283,238 @@ public class WebUser
     }
 
 
-    public FinancialAccount? GetFinancialAccountByID(string accountID)
+    public FinancialAccount? GetAccountByID(string accountID)
     {
-
-        
-        FinancialAccount? financialAccount = GetBankAccountByID(accountID);
-        if(financialAccount != null)
+        if (AccountLookup.TryGetValue(accountID, out var account))
         {
-            return financialAccount;
+            return account;
         }
-        else
-        {
-            financialAccount = null;
-        }
-
-        financialAccount = GetCashAccountByID(accountID);
-        if(financialAccount != null)
-        {
-            return financialAccount;
-        }
-        else
-        {
-            financialAccount = null;
-        }
-        financialAccount = GetCryptoWalletByID(accountID);
-        if(financialAccount != null)
-        {
-            return financialAccount;
-        }
-        else
-        {
-            financialAccount = null;
-        }
-        financialAccount = GetPortfolioAccountByID(accountID);
-        if(financialAccount != null)
-        {
-            return financialAccount;
-        }
-        else
-        {
-            financialAccount = null;
-        }
+        Console.WriteLine($"No account found with ID {accountID}");
         return null;
-        
     }
 
+
+    // public void EIER()
+    // {
+    //     var report = FinancialReport.GenerateReport(userList);
+
+    //     Console.WriteLine($"Total Income: {report.TotalIncome}");
+    //     Console.WriteLine($"Total Expenses: {report.TotalExpenses}");
+
+    //     Console.WriteLine("Income by Category:");
+    //     foreach (var category in report.IncomeByCategory)
+    //     {
+    //         Console.WriteLine($"{category.Key}: {category.Value}");
+    //     }
+
+    //     Console.WriteLine("Expenses by Category:");
+    //     foreach (var category in report.ExpensesByCategory)
+    //     {
+    //         Console.WriteLine($"{category.Key}: {category.Value}");
+    //     }
+    // }
+
+    public void CalculateAccountBalances()
+    {
+        // Reset balances to zero before recalculating
+        foreach (var bankAccount in BankAccounts)
+        {
+            bankAccount.Balance = 0;
+        }
+        foreach (var cashAccount in CashAccounts)
+        {
+            cashAccount.Balance = 0;
+        }
+        foreach (var portfolioAccount in PortfolioAccounts)
+        {
+            portfolioAccount.Balance = 0;
+        }
+        foreach (var cryptoWallet in CryptoWallets)
+        {
+            cryptoWallet.Balance = 0;
+        }
+
+        // Recalculate balances based on transactions
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.Type == "Income" && transaction.AccountId != null)
+            {
+                var account = GetAccountByID(transaction.AccountId);
+                if (account != null)
+                {
+                    account.Balance += transaction.Amount;
+                }
+            }
+            else if (transaction.Type == "Expense" && transaction.AccountId != null)
+            {
+                var account = GetAccountByID(transaction.AccountId);
+                if (account != null)
+                {
+                    account.Balance -= transaction.Amount;
+                }
+            }
+            else if (transaction.Type == "Transfer")
+            {
+                if (transaction.Origin != null)
+                {
+                    var originAccount = GetAccountByID(transaction.Origin);
+                    if (originAccount != null)
+                    {
+                        originAccount.Balance -= transaction.Amount;
+                    }
+                }
+                if (transaction.Destination != null)
+                {
+                    var destinationAccount = GetAccountByID(transaction.Destination);
+                    if (destinationAccount != null)
+                    {
+                        destinationAccount.Balance += transaction.Amount;
+                    }
+                }
+            }
+            else if (transaction.Type == "Stock")
+            {
+                var portfolioAccount = PortfolioAccounts.FirstOrDefault(a => a.ID == transaction.AccountId);
+                if (portfolioAccount != null)
+                {
+                    var investment = portfolioAccount.Investments.FirstOrDefault(i => i.Ticker == transaction.Ticker);
+                    if (investment != null)
+                    {
+                        investment.Quantity += (int)transaction.Amount;
+                    }
+                    else
+                    {
+                        portfolioAccount.Investments.Add(new Investment
+                        {
+                            Ticker = transaction.Ticker,
+                            Quantity = (int)transaction.Amount,
+                            PurchasePrice = transaction.Amount
+                        });
+                    }
+                }
+            }
+            else if (transaction.Type == "Crypto")
+            {
+                var cryptoWallet = CryptoWallets.FirstOrDefault(a => a.ID == transaction.AccountId);
+                if (cryptoWallet != null)
+                {
+                    var holding = cryptoWallet.CryptoHoldings.FirstOrDefault(h => h.Coin == transaction.Coin);
+                    if (holding != null)
+                    {
+                        holding.Amount += transaction.Amount;
+                    }
+                    else
+                    {
+                        cryptoWallet.CryptoHoldings.Add(new CryptoHolding
+                        {
+                            Coin = (CryptoCoin)transaction.Coin,
+                            Amount = transaction.Amount
+                        });
+                    }
+                }
+            }
+        }
+    }
+
+    public void ApplyContracts()
+    {
+        foreach (var contract in Contracts)
+        {
+            if (contract.EndDate == null || contract.EndDate >= DateTime.Today)
+            {
+                DateTime nextDate = contract.StartDate;
+                while (nextDate <= DateTime.Today)
+                {
+                    if (nextDate >= contract.StartDate && (contract.EndDate == null || nextDate <= contract.EndDate))
+                    {
+                        bool transactionExists = Transactions.Any(t => t.ContractId == contract.ContractId && t.Date == nextDate);
+                        if (!transactionExists)
+                        {
+                            var newTransaction = new Transaction(
+                                contract.Type,
+                                nextDate,
+                                contract.Amount,
+                                contract.Origin,
+                                contract.Destination,
+                                "Contract Payment",
+                                null,
+                                Guid.NewGuid().ToString(),
+                                contract.AccountID,
+                                true,
+                                contract.Cycle,
+                                contract.ContractId
+                            );
+                            Transactions.Add(newTransaction);
+                        }
+                    }
+                    nextDate = GetNextBillingDate(nextDate, contract.Cycle);
+                }
+            }
+        }
+
+        CalculateAccountBalances();
+    }
+
+
+    private DateTime GetNextBillingDate(DateTime current, BillingCycle cycle)
+    {
+        return cycle switch
+        {
+            BillingCycle.Daily => current.AddDays(1),
+            BillingCycle.Weekly => current.AddDays(7),
+            BillingCycle.Biweekly => current.AddDays(14),
+            BillingCycle.Monthly => current.AddMonths(1),
+            BillingCycle.Quarterly => current.AddMonths(3),
+            BillingCycle.Annually => current.AddYears(1),
+            _ => current
+        };
+    }
+
+
+
+    public class FinancialReport
+    {
+        public decimal TotalIncome { get; set; }
+        public decimal TotalExpenses { get; set; }
+        public Dictionary<string, decimal> IncomeByCategory { get; set; } = new Dictionary<string, decimal>();
+        public Dictionary<string, decimal> ExpensesByCategory { get; set; } = new Dictionary<string, decimal>();
+
+        public static FinancialReport GenerateReport()
+        {
+            var report = new FinancialReport();
+
+            foreach (var user in userList)
+            {
+                foreach (var transaction in user.Transactions)
+                {
+                    if (transaction.Type == "Income")
+                    {
+                        report.TotalIncome += transaction.Amount;
+                        if (transaction.Category == null) continue;
+                        if (report.IncomeByCategory.ContainsKey(transaction.Category))
+
+                            if (transaction.Category != null && !report.IncomeByCategory.ContainsKey(transaction.Category))
+                            {
+                                report.IncomeByCategory[transaction.Category] = 0;
+                            }
+                        report.IncomeByCategory[transaction.Category] += transaction.Amount;
+                    }
+                    else if (transaction.Type == "Expense")
+                    {
+                        report.TotalExpenses += transaction.Amount;
+
+                        if (transaction.Category != null && !report.ExpensesByCategory.ContainsKey(transaction.Category))
+                        {
+                            report.ExpensesByCategory[transaction.Category] = 0;
+                        }
+                        report.ExpensesByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            return report;
+        }
+    }
 
 }
 
@@ -336,16 +550,20 @@ public abstract class FinancialAccount
 
     public string ID { get; set; } = "";
 
+
 }
 
 public class BankAccount : FinancialAccount
 {
+    public BankAccount() { }
     public BankAccount(string accountName, CurrencyType currency)
     {
         AccountName = accountName;
         Currency = currency;
     }
     public CurrencyType Currency { get; set; }
+
+
 }
 
 public class CashAccount : FinancialAccount
@@ -358,6 +576,8 @@ public class CashAccount : FinancialAccount
         Currency = curreny;
     }
     public CurrencyType Currency { get; set; }
+
+
 }
 
 public enum CurrencyType
@@ -401,11 +621,13 @@ public enum CurrencyType
 
 public class PortfolioAccount : FinancialAccount
 {
+    public PortfolioAccount() { }
     public PortfolioAccount(string accountName)
     {
         AccountName = accountName;
     }
     public List<Investment> Investments { get; set; } = [];
+
 }
 
 public class Investment
@@ -417,15 +639,19 @@ public class Investment
 
 public class CryptoWallet : FinancialAccount
 {
+    public CryptoWallet() { }
     public CryptoWallet(string accountName)
     {
         AccountName = accountName;
     }
     public List<CryptoHolding> CryptoHoldings { get; set; } = [];
+
+
 }
 
 public class CryptoHolding
 {
+
     public CryptoCoin Coin { get; set; }
     public decimal Amount { get; set; }
 }
@@ -454,37 +680,39 @@ public enum CryptoCoin
 public class Transaction
 {
 
-    public string? Type { get; set; }
+    public string Type { get; set; }
     public DateTime Date { get; set; }
-    public decimal? Amount { get; set; }
+    public decimal Amount { get; set; }
     public string? Origin { get; set; }
     public string? Destination { get; set; }
     public string? Description { get; set; }
     public string? Category { get; set; }
-    public string? ID { get; set; }
-    public FinancialAccount? Account { get; set; }
-
+    public string ID { get; set; }
+    public string AccountId { get; set; }
     public bool IsContract { get; set; }
-
-    public BillingCycle Cycle { get; set; }
+    public BillingCycle? Cycle { get; set; }
+    public string? ContractId { get; set; }
+    public string? Ticker { get; set; }  // For stock transactions
+    public CryptoCoin? Coin { get; set; }    // For crypto transactions
 
 
     public Transaction()
     {
-        Type = null;
+        Type = "null";
         Date = DateTime.Now;
-        Amount = null;
+        Amount = 0;
         Origin = null;
         Destination = null;
         Description = null;
         Category = null;
-        ID = null;
-        Account = null;
-        IsContract = false;
+        ID = "null";
+        AccountId = "null";
+        // IsContract = false;
         Cycle = (BillingCycle)1;
+        ContractId = null;
     }
-//Constructor for everything
-    public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string category, string id, FinancialAccount account, bool iscontract, BillingCycle cycle)
+    //Constructor for everything
+    public Transaction(string type, DateTime date, decimal amount, string? origin, string? destination, string? description, string? category, string id, string accountId, bool iscontract, BillingCycle cycle, string? contractId = null)
     {
         Type = type;
         Category = category;
@@ -494,52 +722,59 @@ public class Transaction
         Description = description;
         Date = date;
         ID = id;
-        Account = account;
+        AccountId = accountId;
         IsContract = iscontract;
         Cycle = cycle;
+        ContractId = contractId;
     }
 
+    // Constructor for stock transactions
+    public Transaction(string type, DateTime date, decimal amount, string ticker, string accountId)
+    {
+        Type = type;
+        Date = date;
+        Amount = amount;
+        Ticker = ticker;
+        AccountId = accountId;
+    }
 
-    //Constructor (No Constract, No Transfer)
-    // public Transaction(string type, DateTime date, decimal amount, string origin, string category, string id, FinancialAccount account)
-    // {
-    //     Type = type;
-    //     Category = category;
-    //     Amount = amount;
-    //     Origin = origin;
-    //     Date = date;
-    //     ID = id;
-    //     Account = account;
-    // }
+    // Constructor for crypto transactions
+    public Transaction(string type, DateTime date, decimal amount, CryptoCoin coin, string accountId)
+    {
+        Type = type;
+        Date = date;
+        Amount = amount;
+        Coin = coin;
+        AccountId = accountId;
+    }
+}
+
+public class Contract
+{
+    public string ContractId { get; set; }
+    public decimal Amount { get; set; }
+    public BillingCycle Cycle { get; set; }
+    public DateTime StartDate { get; set; }
+    public DateTime? EndDate { get; set; }
+    public string AccountID { get; set; }
+    public string Type { get; set; }
+
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
 
 
-    // //Constructor (No Constract)
-    // public Transaction(string type, DateTime date, decimal amount, string origin, string destination, string? description, string category, string id, FinancialAccount account)
-    // {
-    //     Type = type;
-    //     Category = category;
-    //     Amount = amount;
-    //     Origin = origin;
-    //     Destination = destination;
-    //     Description = description;
-    //     Date = date;
-    //     ID = id;
-    //     Account = account;
-    // }
-
-    // //Constructor (No Transfer)
-    // public Transaction(string type, DateTime date, decimal amount, string origin, string category, string id, FinancialAccount account, bool iscontract, BillingCycle cycle)
-    // {
-    //     Type = type;
-    //     Category = category;
-    //     Amount = amount;
-    //     Origin = origin;
-    //     Date = date;
-    //     ID = id;
-    //     Account = account;
-    //     IsContract = iscontract;
-    //     Cycle = cycle;
-    // }
+    public Contract(string type, decimal amount, string accountID, BillingCycle cycle, DateTime startDate, string? origin, string? destination, DateTime? endDate = null)
+    {
+        ContractId = ContractId = Guid.NewGuid().ToString();
+        Type = type;
+        AccountID = accountID;
+        Amount = amount;
+        Cycle = cycle;
+        StartDate = startDate;
+        EndDate = endDate;
+        Origin = origin;
+        Destination = destination;
+    }
 }
 
 public enum BillingCycle
@@ -568,7 +803,6 @@ public class SharedServices
             (
                 AccountName,
                 currency
-
             );
 
             newBankAccount.ID = System.Guid.NewGuid().ToString();
@@ -614,4 +848,55 @@ public class SharedServices
 
 
 }
+
+
+
+
+public static class ExchangeRateProvider
+{
+    // Define static exchange rates (example rates, you should use actual rates)
+    private static readonly Dictionary<(CurrencyType, CurrencyType), decimal> ExchangeRates = new Dictionary<(CurrencyType, CurrencyType), decimal>
+    {
+        {(CurrencyType.USD, CurrencyType.EUR), 0.85m},
+        {(CurrencyType.EUR, CurrencyType.USD), 1.18m},
+        {(CurrencyType.USD, CurrencyType.GBP), 0.74m},
+        {(CurrencyType.GBP, CurrencyType.USD), 1.35m},
+        // Add more exchange rates as needed
+    };
+
+    private static readonly Dictionary<(CurrencyType, CryptoCoin), decimal> CurrencyToCryptoRates = new Dictionary<(CurrencyType, CryptoCoin), decimal>
+    {
+        {(CurrencyType.USD, CryptoCoin.BTC), 0.000021m},
+        {(CurrencyType.USD, CryptoCoin.ETH), 0.00031m},
+        // Add more currency to crypto rates as needed
+    };
+
+    private static readonly Dictionary<(CryptoCoin, CurrencyType), decimal> CryptoToCurrencyRates = new Dictionary<(CryptoCoin, CurrencyType), decimal>
+    {
+        {(CryptoCoin.BTC, CurrencyType.USD), 47000m},
+        {(CryptoCoin.ETH, CurrencyType.USD), 3200m},
+        // Add more crypto to currency rates as needed
+    };
+
+    public static decimal GetExchangeRate(CurrencyType fromCurrency, CurrencyType toCurrency)
+    {
+        if (fromCurrency == toCurrency)
+        {
+            return 1;
+        }
+
+        return ExchangeRates[(fromCurrency, toCurrency)];
+    }
+
+    public static decimal GetCurrencyToCryptoRate(CurrencyType fromCurrency, CryptoCoin toCrypto)
+    {
+        return CurrencyToCryptoRates[(fromCurrency, toCrypto)];
+    }
+
+    public static decimal GetCryptoToCurrencyRate(CryptoCoin fromCrypto, CurrencyType toCurrency)
+    {
+        return CryptoToCurrencyRates[(fromCrypto, toCurrency)];
+    }
+}
+
 

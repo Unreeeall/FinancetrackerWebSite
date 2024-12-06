@@ -6,34 +6,213 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "ICPNFexrlIKQVwx8T4K3aqq5cThtD3/mi2YYXFM6P28=",
-        "ExpireDate": "2024-12-06T06:25:40.2907395+01:00"
+        "Id": "Af9sflx0ndbM6jExkxsoklWag0e3OeVJdDVkKAxcBZE=",
+        "ExpireDate": "2024-12-07T07:02:10.5882162+01:00"
+      },
+      {
+        "Id": "yq/FbzRf16BqACnzq5TawdjN5DDcVWrLPJlqJOLm9dY=",
+        "ExpireDate": "2024-12-07T10:32:43.6430374+01:00"
+      },
+      {
+        "Id": "f8p4G23wAf1cZLu/lPnOPUAoi/uFbBm\u002BOOA01Sa5hLw=",
+        "ExpireDate": "2024-12-07T10:37:19.1949766+01:00"
+      },
+      {
+        "Id": "nyssGkbeWgcKtuBfi2cOyOZscwz51mFPYxsMTjJaJp8=",
+        "ExpireDate": "2024-12-07T14:51:01.1353566+01:00"
       }
     ],
     "Transactions": [
       {
         "Type": "Income",
-        "Date": "2024-12-12T15:19:00",
-        "Amount": 1500,
+        "Date": "2024-12-01T11:29:00",
+        "Amount": 1000,
+        "Origin": null,
+        "Destination": null,
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "2fba82d9-4d7a-4cfd-8e78-7cddaa1b2b75",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-02T11:29:00",
+        "Amount": 1000,
+        "Origin": null,
+        "Destination": null,
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "1af36dc5-7a13-42df-9a40-ee9e46d30ad1",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-03T11:29:00",
+        "Amount": 1000,
+        "Origin": null,
+        "Destination": null,
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "111dd150-d513-4826-a77e-04593c40cce6",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-04T11:29:00",
+        "Amount": 1000,
+        "Origin": null,
+        "Destination": null,
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "2dd47f16-8a24-41cc-b452-12b529f92683",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-05T11:29:00",
+        "Amount": 1000,
+        "Origin": null,
+        "Destination": null,
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "9c17cdae-6485-49e5-8f0a-23f398907236",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2024-12-01T13:01:00",
+        "Amount": 50,
         "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "Destination": "",
-        "Description": "Eier",
-        "Category": "Salary",
-        "ID": "14ff8938-7a2e-4744-8796-919b88939adc",
-        "Account": {
-          "AccountName": "Test1",
-          "Balance": 0,
-          "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
-        },
-        "IsContract": false,
-        "Cycle": 0
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "9ba061a1-f567-46bd-b5e3-3e15906ba420",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2024-12-02T13:01:00",
+        "Amount": 50,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "391e5463-1112-41ed-b24f-713d903b9f53",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2024-12-03T13:01:00",
+        "Amount": 50,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "6c0f4c2d-9a02-4a16-97f0-99491be4cd44",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2024-12-04T13:01:00",
+        "Amount": 50,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "b87807df-4803-4b75-9c0b-f560454cd2d5",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2024-12-05T13:01:00",
+        "Amount": 50,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": null,
+        "ID": "a5c26ac8-e0ed-4d18-888d-3d2430cc6e88",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Ticker": null,
+        "Coin": null
+      }
+    ],
+    "Contracts": [
+      {
+        "ContractId": "94624862-b93a-4935-b7b4-2aae8dc3470c",
+        "Amount": 1000,
+        "Cycle": 8,
+        "StartDate": "2024-12-01T11:29:00",
+        "EndDate": null,
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Income",
+        "Origin": null,
+        "Destination": null
+      },
+      {
+        "ContractId": "6d6f6c93-24fc-44e5-8b32-9b0a1ca32608",
+        "Amount": 50,
+        "Cycle": 8,
+        "StartDate": "2024-12-01T13:01:00",
+        "EndDate": null,
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Transfer",
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d"
       }
     ],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 0,
+        "Balance": 4750,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
@@ -41,7 +220,7 @@
       {
         "Currency": 0,
         "AccountName": "asdas",
-        "Balance": 0,
+        "Balance": 250,
         "ID": "86fe583a-5d38-432b-9823-da9458c93f4d"
       },
       {
