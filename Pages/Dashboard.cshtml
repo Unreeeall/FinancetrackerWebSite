@@ -53,6 +53,10 @@
     </header>
 
     <div class="Dashboard">
+        <div class="Total-data">
+            <h4>Total Income: @Model.Report.TotalIncome</h4>
+            <h4>Total Expense: @Model.Report.TotalExpenses</h4>
+        </div>
         <div class="account-wrapper">
 
 
@@ -113,7 +117,8 @@
                         <h3>Bankaccount: @bankAccount.AccountName</h3>
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
 
-                        <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID" onclick="addTransactionWindow(this)" >+</button>
+                        <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
+                            onclick="addTransactionWindow(this)">+</button>
                     </div>
                 }
 
@@ -185,9 +190,9 @@
                     <div class="qick-add-transaction-menu">
                         <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                         <form method="post">
-                            
+
                             <input type="hidden" name="AccID" id="account-id" />
-                            
+
 
                             <div class="trans-type-slct-container" id="trans-type-slct-container">
 
@@ -203,8 +208,8 @@
                             <div class="trans-transf-input-container">
                                 <div class="transf-origin-container">
                                     <label for="transf-origin-slct">From:</label>
-                                    <select name="Origin" id="transf-orgini-slct" >
-                                        
+                                    <select name="Origin" id="transf-orgini-slct">
+
                                         @foreach (var bankAccount in Model.WebUser.BankAccounts)
                                         {
                                             <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
@@ -227,7 +232,7 @@
 
                                 <div class="transf-destination-container">
                                     <label for="transf-destination-slct">To:</label>
-                                    <select name="Destination" id="transf-destination-slct" >
+                                    <select name="Destination" id="transf-destination-slct">
                                         <option value="" disabled selected></option>
                                         @foreach (var bankAccount in Model.WebUser.BankAccounts)
                                         {
@@ -333,37 +338,39 @@
 
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
-                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" required>
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date"
+                                        required>
                                 </div>
 
                                 <div class="trans-contract-container">
                                     <label for="trans-contract-checkbox">Contract</label>
-                                    <input type="checkbox" name="Contract" id="trans-contract-checkbox" >
+                                    <input type="checkbox" asp-for="IsContract" id="trans-contract-checkbox">
                                 </div>
 
                                 <div class="trans-contract-cycle-container">
                                     <label for="contract-cycle-slct">Contract cycle</label>
-                                    <select name="ContractCycle" id="contract-cycle-slct" required>
+                                    <select name="Cycle" id="contract-cycle-slct" required>
 
-                                        @foreach(BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
-                                        {   
+                                        @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                        {
                                             <option value="@billingCycle">@billingCycle</option>
                                         }
-                                        
+
                                         @* <option value="730">Biannually</option>
-                                        <option value="365">Annually</option>
-                                        <option value="183">Semi-annually</option>
-                                        <option value="91">Quarterly</option>
-                                        <option value="60">Bimonthly</option>
-                                        <option value="30">Monthly</option>
-                                        <option value="14">Biweekly</option>
-                                        <option value="7">Weekly</option>
-                                        <option value="1">Daily</option> *@
+                                    <option value="365">Annually</option>
+                                    <option value="183">Semi-annually</option>
+                                    <option value="91">Quarterly</option>
+                                    <option value="60">Bimonthly</option>
+                                    <option value="30">Monthly</option>
+                                    <option value="14">Biweekly</option>
+                                    <option value="7">Weekly</option>
+                                    <option value="1">Daily</option> *@
                                     </select>
                                 </div>
                             </div>
                             <div class="save-transaction-container">
-                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn" asp-page-handler="AddTransaction">✅</button>
+                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
+                                    asp-page-handler="AddTransaction">✅</button>
                             </div>
                         </form>
                     </div>
@@ -373,7 +380,7 @@
                 function addAccountWindow() {
                     document.getElementById('new-acc-menu').classList.toggle("visible");
 
-                    
+
                 }
 
                 function closeAccountMenu() {
@@ -386,15 +393,11 @@
 
                     const accountID = button.getAttribute('data-id');
                     document.getElementById('account-id').value = accountID;
-
-
                 }
 
                 function closeTransactionWindow() {
                     document.getElementById('qick-add-transaction-container').classList.toggle("visible");
                 }
-
-
 
                 document.addEventListener("DOMContentLoaded", function () {
                     const transactionTypeSelect = document.getElementById('trans-type-slct');
@@ -432,6 +435,7 @@
                             transferInputContainer.style.display = "block";
                         } else {
                             transferInputContainer.style.display = "none";
+                            transferOriginSelect.value = ""; // Clear origin value if not Transfer
                         }
                     });
 
@@ -445,7 +449,7 @@
                     });
 
                     // Function to unselect the same option in the other select
-                    @* function unselectSameOption(event) {
+                    function unselectSameOption(event) {
                         const originValue = transferOriginSelect.value;
                         const destinationValue = transferDestinationSelect.value;
 
@@ -458,7 +462,7 @@
 
                     // Event listeners for transfer selects
                     transferOriginSelect.addEventListener('change', unselectSameOption);
-                    transferDestinationSelect.addEventListener('change', unselectSameOption); *@
+                    transferDestinationSelect.addEventListener('change', unselectSameOption);
 
                     // Initialize the form based on default values
                     filterCategories();

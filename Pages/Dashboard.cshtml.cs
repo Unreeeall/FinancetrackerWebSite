@@ -8,6 +8,7 @@ namespace FinanceTracker.Pages;
 public class DashboardModel : PageModel
 {
     public WebUser? WebUser { get; set; }
+    public WebUser.FinancialReport Report { get; set; }
 
     private readonly SharedServices _sharedServices;
 
@@ -52,7 +53,7 @@ public class DashboardModel : PageModel
     public required DateTime Date { get; set; }
 
     [BindProperty]
-    public bool Contract { get; set; }
+    public bool IsContract { get; set; }
 
     [BindProperty]
     public BillingCycle Cycle { get; set; }
@@ -67,6 +68,13 @@ public class DashboardModel : PageModel
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
         Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Dashboard");
+
+
+        // WebUser.EIER();
+        WebUser.ApplyContracts();
+        Report = WebUser.FinancialReport.GenerateReport();
+
+
         return Page();
     }
 
@@ -104,15 +112,6 @@ public class DashboardModel : PageModel
 
             Console.WriteLine($"AccID: {AccID}");
 
-
-
-
-
-
-
-
-
-
             Console.WriteLine($"TransactionType: {TransactionType}");
             Console.WriteLine($"Origin: {Origin}");
             Console.WriteLine($"Destination: {Destination}");
@@ -120,11 +119,28 @@ public class DashboardModel : PageModel
             Console.WriteLine($"Description: {Description}");
             Console.WriteLine($"Date: {Date}");
             Console.WriteLine($"Amount: {Amount}");
-            Console.WriteLine($"Contract: {Contract}");
+            Console.WriteLine($"IsContract: {IsContract}");
             Console.WriteLine($"Cycle: {Cycle}");
 
-            var newTransaction = new Transaction
-            (
+            if (IsContract)
+            {
+
+                var newContract = new Contract
+                (
+                    TransactionType,
+                    Amount,
+                    AccID,
+                    Cycle,
+                    Date,
+                    Origin,
+                    Destination
+                );
+                WebUser.Contracts.Add(newContract);
+            }
+            else
+            {
+                var newTransaction = new Transaction
+                (
                 TransactionType,
                 Date,
                 Amount,
@@ -133,11 +149,13 @@ public class DashboardModel : PageModel
                 Description,
                 Category,
                 System.Guid.NewGuid().ToString(),
-                WebUser.GetFinancialAccountByID(AccID),
-                Contract,
+                AccID,
+                IsContract,
                 Cycle
-            );
-            WebUser.Transactions.Add(newTransaction);
+                );
+                WebUser.Transactions.Add(newTransaction);
+            }
+
 
             return RedirectToPage("/Dashboard");
         }
@@ -147,4 +165,5 @@ public class DashboardModel : PageModel
             return RedirectToPage("/Error"); // Handle error appropriately
         }
     }
+
 }
