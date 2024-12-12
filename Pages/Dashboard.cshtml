@@ -1,6 +1,7 @@
 @page
 @using FinanceTracker.Pages
 @model DashboardModel
+
 @{
     ViewData["Title"] = "Dashboard";
 }
@@ -15,6 +16,7 @@
     <link rel="stylesheet" href="/css/DashboardStyles.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/site.js" defer></script>
 </head>
 
@@ -110,46 +112,197 @@
             }
             else
             {
-
                 foreach (var bankAccount in Model.WebUser.BankAccounts)
                 {
-                    <div class="Bank-Acc-Container">
+                    <div class="import-file-container" id="import-file-container">
+                            <div class="import-file-field">
+                                <button class="close-import-btn" onclick="toggleImportField()"></button>
+                                <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
+                                    <input type="file" name="file" class="import-transaction-btn" >
+                                    <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
+                                    <button type="submit" class="btn btn-primary">Import</button>
+                                </form>
+
+                                <div id="result"></div>
+                                
+                            </div>
+                    </div>
+                    <div class="Bank-Acc-Container Acc-Container" uuid="@bankAccount.ID">
                         <h3>Bankaccount: @bankAccount.AccountName</h3>
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
+                        <h4>@Stuff.MonthToWord(DateTime.Now.Month) @DateTime.Now.Year</h4>
+                        <div class="monthly-plus-minus-container">
+                            <p class="income-values">+ @Model.WebUser.CalculateMonthlyTotalPlus(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                            <p class="expense-values">- @Model.WebUser.CalculateMonthlyTotalMinus(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                        </div>
+                        <div class="other-data-container">
+                            <div class="in-out-data-container">
+                                <p>Income:  @Model.WebUser.CalculateMonthlyIncome(DateTime.Now.Year, DateTime.Now.Month) @bankAccount.Currency</p>
+                                <p>Expense: @Model.WebUser.CalculateMonthlyExpense(DateTime.Now.Year, DateTime.Now.Month) @bankAccount.Currency</p>
+                            </div>
+                            <div class="transf-data-contianer">
+                                <p>Outging Transfers: @Model.WebUser.CalculateMonthlyTransferExpense(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                                <p>Incomming Transfers: @Model.WebUser.CalculateMonthlyTransferIncome(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                            </div> 
+                        </div>
+                        
+                        
+                        
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
-                            onclick="addTransactionWindow(this)">+</button>
+                            onclick="addTransactionWindow(this, event)">+</button>
+                        <button type="button" class="toggle-import-file-btn" onclick="toggleImportField(event)">📥</button>
+                        <a asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📤</a>
+                        
+                        
+                        <div class="last-5-transaction-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Type</th>
+                                        <th>Category</th>
+                                        <th>Amount</th>
+                                        <th>Origin</th>
+                                        <th>Destination</th>
+                                        <th>Description</th>
+                                        <th>Date</th>
+                                    </tr>
+                                </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(bankAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                {
+                                    <tr>
+                                        <td>@transaction.Type</td>
+                                        <td>@transaction.Category</td>
+                                        <td>@transaction.Amount</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                        <td>@transaction.Description</td>
+                                        <td>@transaction.Date</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                        </div>
+                        
+
                     </div>
                 }
 
 
                 foreach (var cashAccount in Model.WebUser.CashAccounts)
                 {
-                    <div class="Cash-Acc-Container">
+                    <div class="Cash-Acc-Container Acc-Container" uuid="@cashAccount.ID">
                         <h3>Cashstash @cashAccount.AccountName</h3>
                         <p>Balance: @cashAccount.Balance @cashAccount.Currency</p>
 
-                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
+                        <button type="button" class="quickadd-transaction-btn" data-id="@cashAccount.ID"
+                            onclick="addTransactionWindow(this, event)">+</button>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cashAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                {
+                                    <tr>
+                                        <td>@transaction.Type</td>
+                                        <td>@transaction.Category</td>
+                                        <td>@transaction.Amount</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                        <td>@transaction.Description</td>
+                                        <td>@transaction.Date</td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 }
 
                 foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
                 {
-                    <div class="Crypto-Wallet-Container">
+                    <div class="Crypto-Wallet-Container Acc-Container" uuid="@cryptoWallet.ID">
                         <h3>Cryptowallet: @cryptoWallet.AccountName</h3>
                         <p>Balance: @cryptoWallet.Balance</p>
 
-                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
+                        <button type="button" class="quickadd-transaction-btn" data-id="@cryptoWallet.ID"
+                            onclick="addTransactionWindow(this, event)">+</button>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cryptoWallet.ID).OrderByDescending(t => t.Date).Take(5))
+                                {
+                                    <tr>
+                                        <td>@transaction.Type</td>
+                                        <td>@transaction.Category</td>
+                                        <td>@transaction.Amount</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                        <td>@transaction.Description</td>
+                                        <td>@transaction.Date</td>
+                                    </tr>
+
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 }
 
                 foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
                 {
-                    <div class="Crypto-Wallet-Container">
+                    <div class="Crypto-Wallet-Container Acc-Container" uuid="@portfolioAccount.ID">
                         <h3>Stockportoflio: @portfolioAccount.AccountName</h3>
                         <p>Balance: @portfolioAccount.Balance</p>
 
-                        <button type="button" class="quickadd-transaction-btn" onclick="addTransactionWindow()">+</button>
+                        <button type="button" class="quickadd-transaction-btn" data-id="@portfolioAccount.ID"
+                            onclick="addTransactionWindow(this, event)">+</button>
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Type</th>
+                                    <th>Category</th>
+                                    <th>Amount</th>
+                                    <th>Origin</th>
+                                    <th>Destination</th>
+                                    <th>Description</th>
+                                    <th>Date</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(portfolioAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                {
+                                    <tr>
+                                        <td>@transaction.Type</td>
+                                        <td>@transaction.Category</td>
+                                        <td>@transaction.Amount</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                        <td>@transaction.Description</td>
+                                        <td>@transaction.Date</td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
                     </div>
                 }
 
@@ -376,100 +529,7 @@
                     </div>
                 </div>
             }
-            <script>
-                function addAccountWindow() {
-                    document.getElementById('new-acc-menu').classList.toggle("visible");
-
-
-                }
-
-                function closeAccountMenu() {
-                    document.getElementById('new-acc-menu').classList.toggle("visible");
-                }
-
-
-                function addTransactionWindow(button) {
-                    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
-
-                    const accountID = button.getAttribute('data-id');
-                    document.getElementById('account-id').value = accountID;
-                }
-
-                function closeTransactionWindow() {
-                    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
-                }
-
-                document.addEventListener("DOMContentLoaded", function () {
-                    const transactionTypeSelect = document.getElementById('trans-type-slct');
-                    const categorySelect = document.getElementById('trans-category-slct');
-                    const transferInputContainer = document.querySelector('.trans-transf-input-container');
-                    const contractCheckbox = document.getElementById('trans-contract-checkbox');
-                    const contractCycleDiv = document.querySelector('.trans-contract-cycle-container');
-                    const transferOriginSelect = document.getElementById('transf-orgini-slct');
-                    const transferDestinationSelect = document.getElementById('transf-destination-slct');
-
-                    // Function to filter categories based on transaction type
-                    function filterCategories() {
-                        const selectedType = transactionTypeSelect.value;
-                        const options = categorySelect.querySelectorAll('option');
-
-                        options.forEach(option => {
-                            if (option.value === "") {
-                                option.style.display = "block";
-                            } else {
-                                const dataType = option.getAttribute('data-type');
-                                if (selectedType === "Transfer") {
-                                    option.style.display = dataType === "Transfer" ? "block" : "none";
-                                } else {
-                                    option.style.display = dataType === selectedType ? "block" : "none";
-                                }
-                            }
-                        });
-                    }
-
-                    // Event listener for transaction type change
-                    transactionTypeSelect.addEventListener('change', function () {
-                        filterCategories();
-
-                        if (this.value === "Transfer") {
-                            transferInputContainer.style.display = "block";
-                        } else {
-                            transferInputContainer.style.display = "none";
-                            transferOriginSelect.value = ""; // Clear origin value if not Transfer
-                        }
-                    });
-
-                    // Event listener for contract checkbox change
-                    contractCheckbox.addEventListener('change', function () {
-                        if (this.checked) {
-                            contractCycleDiv.style.display = "block";
-                        } else {
-                            contractCycleDiv.style.display = "none";
-                        }
-                    });
-
-                    // Function to unselect the same option in the other select
-                    function unselectSameOption(event) {
-                        const originValue = transferOriginSelect.value;
-                        const destinationValue = transferDestinationSelect.value;
-
-                        if (event.target.id === 'transf-orgini-slct' && originValue === destinationValue) {
-                            transferDestinationSelect.value = "";
-                        } else if (event.target.id === 'transf-destination-slct' && originValue === destinationValue) {
-                            transferOriginSelect.value = "";
-                        }
-                    }
-
-                    // Event listeners for transfer selects
-                    transferOriginSelect.addEventListener('change', unselectSameOption);
-                    transferDestinationSelect.addEventListener('change', unselectSameOption);
-
-                    // Initialize the form based on default values
-                    filterCategories();
-                    transferInputContainer.style.display = transactionTypeSelect.value === "Transfer" ? "block" : "none";
-                    contractCycleDiv.style.display = contractCheckbox.checked ? "block" : "none";
-                });
-            </script>
+            <script src="/js/dashboard.js"></script>
 
             @* <script>
 

@@ -10,6 +10,10 @@ using System.ComponentModel;
 using FinanceTracker.Pages;
 using System.Security.Cryptography.X509Certificates;
 using System.Threading.Tasks;
+using System.Security.Claims;
+using System.Data.SqlTypes;
+using System.Globalization;
+
 
 
 
@@ -120,9 +124,27 @@ public class WebUser
         }
     }
 
+    public static List<Transaction> GetCurrentUserTransactions(WebUser webUser)
+    {
+        if (webUser != null)
+        {
+            // Return the list of transactions for the current user
+            Console.WriteLine("EIEIEIEIEIEIEIEIIE");
+
+            var test = webUser.Transactions;
+            Console.WriteLine($"EIEIE: {test.Count}");
+            return webUser.Transactions;
+        }
+        else
+        {
+            // If user is not found, return an empty list or handle accordingly
+            return new List<Transaction>();
+        }
+    }
+
     public static WebUser? getUserByEmail(string email)
     {
-        Console.WriteLine($"Email--: {email}");
+        Console.WriteLine($"Email: {email}");
         foreach (var user in userList)
         {
             Console.WriteLine($"Checking user: {user.Email}");
@@ -185,6 +207,20 @@ public class WebUser
         }
         Console.WriteLine($"No transaction found with ID: {transactionID}");
         return null;
+    }
+
+
+    public List<Transaction> GetTransactionsByAccID(string accountID)
+    {
+        List<Transaction> accountTransactions = [];
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.AccountId == accountID)
+            {
+                accountTransactions.Add(transaction);
+            }
+        }
+        return accountTransactions;
     }
 
     public void UpdateUser(string? email = null, string? name = null, string? phonenumber = null, string? password = null)
@@ -291,6 +327,88 @@ public class WebUser
         }
         Console.WriteLine($"No account found with ID {accountID}");
         return null;
+    }
+
+
+    public string GetAccountNameById(string accountID)
+    {
+        foreach (var account in BankAccounts)
+        {
+            if (account.ID == accountID)
+            {
+                return account.AccountName;
+            }
+        }
+        foreach (var account in CashAccounts)
+        {
+            if (account.ID == accountID)
+            {
+                return account.AccountName;
+            }
+        }
+        foreach (var account in PortfolioAccounts)
+        {
+            if (account.ID == accountID)
+            {
+                return account.AccountName;
+            }
+        }
+        foreach (var account in CryptoWallets)
+        {
+            if (account.ID == accountID)
+            {
+                return account.AccountName;
+            }
+        }
+        return "";
+    }
+
+    public int GetWeekNumber(DateTime date)
+    {
+        CultureInfo ciCurr = CultureInfo.CurrentCulture;
+        int weekNum = ciCurr.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
+        return weekNum;
+    }
+
+
+
+    public decimal[] CalculateWeeklyDailyAccountBalance(DateTime firstDateOfWeek, string accID)
+    {
+        decimal totalBalance = 0;
+
+        List<Transaction> SortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+        decimal[] DaiylBalances = new decimal[7];
+
+        foreach (var transaction in SortedTransactions)
+        {
+            if (transaction.AccountId == accID)
+            {
+                if (transaction.Type == "Income")
+                {
+                    totalBalance += transaction.Amount;
+                }
+                else if (transaction.Type == "Expense")
+                {
+                    totalBalance -= transaction.Amount;
+                }
+            }
+            else if (transaction.Type == "Transfer")
+            {
+                if (transaction.Origin == accID)
+                {
+                    totalBalance -= transaction.Amount;
+                }
+                else if (transaction.Destination == accID)
+                {
+                    totalBalance += transaction.Amount;
+                }
+            }
+            if ((GetWeekNumber(transaction.Date) == GetWeekNumber(firstDateOfWeek)) && transaction.Date.Year == firstDateOfWeek.Year)
+            {
+                DaiylBalances[(int)transaction.Date.DayOfWeek] = totalBalance;
+            }
+        }
+        return DaiylBalances;
     }
 
 
@@ -416,6 +534,106 @@ public class WebUser
         }
     }
 
+
+
+
+    public decimal CalculateMonthlyIncome(int year, int month)
+    {
+        decimal totalIncome = 0;
+
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            {
+                if (transaction.Type == "Income")
+                {
+                    totalIncome += transaction.Amount;
+                }
+
+            }
+        }
+        return totalIncome;
+    }
+
+    public decimal CalculateMonthlyExpense(int year, int month)
+    {
+        decimal TotalExpense = 0;
+
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            {
+                if (transaction.Type == "Expense")
+                {
+                    TotalExpense += transaction.Amount;
+                }
+            }
+        }
+        return TotalExpense;
+    }
+
+    public decimal CalculateMonthlyTransferIncome(int year, int month, string accountID)
+    {
+        decimal TotalTransferAmount = 0;
+
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            {
+                if (transaction.Type == "Transfer")
+                {
+                    if (transaction.Destination == accountID)
+                    {
+                        TotalTransferAmount += transaction.Amount;
+                    }
+                }
+            }
+        }
+        return TotalTransferAmount;
+    }
+
+    public decimal CalculateMonthlyTransferExpense(int year, int month, string accountID)
+    {
+        decimal TotalTransferAmount = 0;
+
+        foreach (var transaction in Transactions)
+        {
+            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            {
+                if (transaction.Type == "Transfer")
+                {
+                    if (transaction.Origin == accountID)
+                    {
+                        TotalTransferAmount += transaction.Amount;
+                    }
+                }
+            }
+        }
+        return TotalTransferAmount;
+    }
+
+    public decimal CalculateMonthlyTotalPlus(int year, int month, string accountID)
+    {
+        decimal Income = CalculateMonthlyIncome(year, month);
+        decimal Expense = CalculateMonthlyExpense(year, month);
+        decimal TransferInc = CalculateMonthlyTransferIncome(year, month, accountID);
+        decimal TransferExp = CalculateMonthlyTransferExpense(year, month, accountID);
+
+        decimal TotalPlus = Income + TransferInc - (Expense + TransferExp);
+
+        return TotalPlus;
+    }
+
+    public decimal CalculateMonthlyTotalMinus(int year, int month, string accountID)
+    {
+        decimal Expense = CalculateMonthlyExpense(year, month);
+        decimal TransferExp = CalculateMonthlyTransferExpense(year, month, accountID);
+
+        decimal TotalPlus = Expense + TransferExp;
+
+        return TotalPlus;
+    }
+
     public void ApplyContracts()
     {
         foreach (var contract in Contracts)
@@ -491,12 +709,11 @@ public class WebUser
                     {
                         report.TotalIncome += transaction.Amount;
                         if (transaction.Category == null) continue;
-                        if (report.IncomeByCategory.ContainsKey(transaction.Category))
 
-                            if (transaction.Category != null && !report.IncomeByCategory.ContainsKey(transaction.Category))
-                            {
-                                report.IncomeByCategory[transaction.Category] = 0;
-                            }
+                        if (!report.IncomeByCategory.ContainsKey(transaction.Category))
+                        {
+                            report.IncomeByCategory[transaction.Category] = 0;
+                        }
                         report.IncomeByCategory[transaction.Category] += transaction.Amount;
                     }
                     else if (transaction.Type == "Expense")
@@ -845,6 +1062,10 @@ public class SharedServices
             webUser?.CryptoWallets.Add(newCryptoWallet);
         }
     }
+
+
+
+
 
 
 }
