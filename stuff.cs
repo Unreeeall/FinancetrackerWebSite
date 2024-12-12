@@ -1,5 +1,6 @@
 using System;
 using System.Security.Cryptography;
+using System.Globalization;
 
 public class Stuff
 {
@@ -11,5 +12,13 @@ public class Stuff
             rng.GetBytes(randomBytes);
         }
         return Convert.ToBase64String(randomBytes);
+    }
+
+    // CultureInfo englishCulture = new CultureInfo("en-US");
+    public static string MonthToWord(int month)
+    {
+        CultureInfo englishCulture = new CultureInfo("en-US");
+        string monthName = englishCulture.DateTimeFormat.GetMonthName(month);
+        return monthName;
     }
 }

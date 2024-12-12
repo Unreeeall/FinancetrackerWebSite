@@ -2,6 +2,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
+using System.Text.Json;
+
+
+
 
 namespace FinanceTracker.Pages;
 
@@ -16,6 +20,10 @@ public class DashboardModel : PageModel
     {
         _sharedServices = sharedServices;
     }
+
+    
+        
+    
 
 
     [BindProperty]
@@ -165,5 +173,26 @@ public class DashboardModel : PageModel
             return RedirectToPage("/Error"); // Handle error appropriately
         }
     }
+
+
+    [HttpGet]
+    [Route("download-transactions")]
+    public IActionResult DownloadTransactions()
+    {
+        // Get the current user's transactions
+        var transactions = WebUser.GetCurrentUserTransactions(WebUser);
+
+        // Serialize the transactions to JSON
+        string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
+
+        // Convert the JSON string to a byte array
+        var fileBytes = System.Text.Encoding.UTF8.GetBytes(transactionsJson);
+        var fileName = "transactions.json";
+
+        // Return the file for download
+        return File(fileBytes, "Financetracker/json", fileName);
+    }
+
+
 
 }

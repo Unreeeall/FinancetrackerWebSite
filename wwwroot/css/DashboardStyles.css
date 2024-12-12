@@ -253,12 +253,13 @@ header {
 .Crypto-Wallet-Container,
 .Crypto-Wallet-Container {
     width: 40%;
-    height: 20%;
+    height: auto;
     padding: 20px;
     background-color: #3c3a3d;
     border-radius: 10px;
     color: #c7c7c7;
     margin-bottom: 20px;
+    text-align: center;
 
 }
 
@@ -267,9 +268,88 @@ header {
 .Crypto-Wallet-Container:hover,
 .Crypto-Wallet-Container:hover {
     cursor: pointer;
-    width: 41%;
-    height: 21%;
+    padding: 25px;
 }
+
+.income-values {
+    color: greenyellow;
+}
+
+
+.expense-values {
+    color: red;
+}
+
+.monthly-plus-minus-container {
+    gap: 20px;
+    text-align: center;
+}
+
+.other-data-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.in-out-data-container {
+    display: block;
+    text-align: left;
+}
+
+.transf-data-contianer {
+    display: block;
+    text-align: right;
+    top: 20px;
+}
+
+.quickadd-transaction-btn {
+    background-color: #67367c;
+    border: none;
+    border-radius: 3px;
+    width: 8%;
+    height: 8%;
+    font-size: larger;
+    justify-content: center;
+    display: flex;
+    align-content: right;
+}
+
+.quickadd-transaction-btn:hover {
+    cursor: pointer;
+    background-color: #984fb8;
+}
+
+
+.last-5-transaction-container table{
+    border-collapse: collapse;
+}
+
+.last-5-transaction-container thead{
+    background-color: #4A2759;
+}
+
+.last-5-transaction-container th,
+.last-5-transaction-container td {
+
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+.import-file-container {
+    background-color: #00000083;
+    color: #ddd;
+
+    width: 40%;
+    height: 20%;
+    position: absolute;
+    justify-content: center;
+    display: none;
+}
+
+.import-file-container.visible {
+    display: block;
+}
+
+
 
 /* .Bank-Acc-Container,
 .Cash-Acc-Container,
@@ -505,6 +585,52 @@ header {
     color: #c7c7c7;
 }
 
+
+
+.accountOverview-container {
+    position: absolute;
+    justify-content: left;
+    left: 10%;
+    color: #ddd;
+}
+
+.Account-Name-H1 {
+    font-size: 100px;
+}
+
+.Account-Balance-p {
+    font-size: 30px;
+}
+
+.time-range-container {
+    color: #ddd;
+}
+
+.time-selector {
+    display: flex;
+    align-items: center;
+    margin-bottom: 20px;
+    color: #ddd;
+}
+
+.time-selector button {
+    font-size: 1.5em;
+    padding: 5px 10px;
+}
+
+
+
+#timeframe {
+    margin: 0 10px;
+    font-size: 1.5em;
+}
+
+
+.accountBlanceChart-Container {
+    margin-top: 100px;
+    color: #ddd;
+    width: 50%;
+}
 
 
 
