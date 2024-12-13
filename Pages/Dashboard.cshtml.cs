@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.SignalR;
 using System.Text.Json;
-
+using System.Globalization;
 
 
 
@@ -21,9 +21,9 @@ public class DashboardModel : PageModel
         _sharedServices = sharedServices;
     }
 
-    
-        
-    
+
+
+
 
 
     [BindProperty]
@@ -55,7 +55,7 @@ public class DashboardModel : PageModel
     public required string Description { get; set; }
 
     [BindProperty]
-    public required decimal Amount { get; set; }
+    public required string Amount { get; set; }
 
     [BindProperty]
     public required DateTime Date { get; set; }
@@ -118,54 +118,60 @@ public class DashboardModel : PageModel
             WebUser = WebUser.GetUserBySession(sessionId);
             if (WebUser == null) return RedirectToPage("/Index");
 
-            Console.WriteLine($"AccID: {AccID}");
 
-            Console.WriteLine($"TransactionType: {TransactionType}");
-            Console.WriteLine($"Origin: {Origin}");
-            Console.WriteLine($"Destination: {Destination}");
-            Console.WriteLine($"Category: {Category}");
-            Console.WriteLine($"Description: {Description}");
-            Console.WriteLine($"Date: {Date}");
-            Console.WriteLine($"Amount: {Amount}");
-            Console.WriteLine($"IsContract: {IsContract}");
-            Console.WriteLine($"Cycle: {Cycle}");
-
-            if (IsContract)
+            if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
             {
+                Console.WriteLine($"AccID: {AccID}");
 
-                var newContract = new Contract
-                (
+                Console.WriteLine($"TransactionType: {TransactionType}");
+                Console.WriteLine($"Origin: {Origin}");
+                Console.WriteLine($"Destination: {Destination}");
+                Console.WriteLine($"Category: {Category}");
+                Console.WriteLine($"Description: {Description}");
+                Console.WriteLine($"Date: {Date}");
+                Console.WriteLine($"Amount: {Amount}");
+                Console.WriteLine($"IsContract: {IsContract}");
+                Console.WriteLine($"Cycle: {Cycle}");
+
+
+
+                if (IsContract)
+                {
+
+                    var newContract = new Contract
+                    (
+                        TransactionType,
+                        Category,
+                        parsedAmount,
+                        AccID,
+                        Cycle,
+                        Date,
+                        Origin,
+                        Destination
+                    );
+                    WebUser.Contracts.Add(newContract);
+                }
+                else
+                {
+                    var newTransaction = new Transaction
+                    (
                     TransactionType,
-                    Amount,
-                    AccID,
-                    Cycle,
                     Date,
+                    parsedAmount,
                     Origin,
-                    Destination
-                );
-                WebUser.Contracts.Add(newContract);
+                    Destination,
+                    Description,
+                    Category,
+                    System.Guid.NewGuid().ToString(),
+                    AccID,
+                    IsContract,
+                    Cycle
+                    );
+                    WebUser.Transactions.Add(newTransaction);
+                } 
             }
-            else
-            {
-                var newTransaction = new Transaction
-                (
-                TransactionType,
-                Date,
-                Amount,
-                Origin,
-                Destination,
-                Description,
-                Category,
-                System.Guid.NewGuid().ToString(),
-                AccID,
-                IsContract,
-                Cycle
-                );
-                WebUser.Transactions.Add(newTransaction);
-            }
-
-
             return RedirectToPage("/Dashboard");
+
         }
         catch (Exception ex)
         {
