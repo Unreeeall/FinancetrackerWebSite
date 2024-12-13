@@ -626,11 +626,37 @@ header {
 }
 
 
+
 .accountBlanceChart-Container {
-    margin-top: 100px;
-    color: #ddd;
     width: 50%;
 }
+
+.in-ex-charts-container {
+    margin-top: 200px;
+    width: 100%;
+    color: #ddd;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+}
+
+.expensesByCategoryChart-container,
+.incomeByCategoryChart-container {
+    width: 45%;
+    height: 450px;
+    display: flex;
+    flex-direction: column;
+    align-items: center; /* Center h2 and canvas horizontally */
+    margin: 0 2.5%;
+}
+
+.expensesByCategoryChart-container h2,
+.incomeByCategoryChart-container h2 {
+    text-align: center; /* Center the h2 text */
+    margin-bottom: 20px; /* Add some space between h2 and canvas */
+}
+
+
 
 
 

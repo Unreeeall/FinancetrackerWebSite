@@ -16,7 +16,8 @@
     <script src="/js/site.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="js/analysisCharts.js"></script>
-    
+    <script src="/js/accountOverview.js"></script>
+
 </head>
 
 <body>
@@ -92,6 +93,7 @@
                 else if (Model.financialAccount is PortfolioAccount portfolioAccount)
                 {
                     <p>Portfolio Name: @portfolioAccount.AccountName</p>
+
                 }
             </div>
 
@@ -99,7 +101,21 @@
             <div class="accountBlanceChart-Container">
                 <canvas id="accountBalanceChart" width="400" height="200"></canvas>
             </div>
+
+            <div class="in-ex-charts-container">
             
+                <div class="expensesByCategoryChart-container">
+                    <h2>Expenses</h2>
+                    <canvas id="expensesByCategoryChart" width="400" height="200"></canvas>
+                </div>
+
+                <div class="incomeByCategoryChart-container">
+                    <h2>Income</h2>
+                    <canvas id="incomeByCategoryChart" width="400" height="200"></canvas>
+                </div>
+            </div>
+
+
 
 
 
@@ -111,7 +127,15 @@
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
     </footer>
 
-    <script src="/js/accountOverview.js"></script>
+
+    <script>
+        const userEmail = '@Model.WebUser.Email';
+        const accID = '@Model.financialAccount.ID';
+        console.log("User Email:", userEmail);
+        console.log("Account ID:", accID);
+    </script>
+
+
 
 </body>
 

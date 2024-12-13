@@ -39,14 +39,14 @@ public class AccountOverviewModel : PageModel
                     return RedirectToPage("/Error");
             }
         }
-        DateTime eier = DateTime.Now;
+        // DateTime eier = DateTime.Now;
 
-        decimal[] eggs = WebUser.CalculateWeeklyDailyAccountBalance(eier, accountID);
+        // decimal[] eggs = WebUser.CalculateWeeklyDailyAccountBalance(eier, accountID);
 
-        foreach (var egg in eggs)
-        {
-            Console.WriteLine($"Ei: {egg}");
-        }
+        // foreach (var egg in eggs)
+        // {
+        //     Console.WriteLine($"Ei: {egg}");
+        // }
 
 
 

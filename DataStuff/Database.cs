@@ -374,13 +374,26 @@ public class WebUser
 
     public decimal[] CalculateWeeklyDailyAccountBalance(DateTime firstDateOfWeek, string accID)
     {
+        Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {firstDateOfWeek}");
+
         decimal totalBalance = 0;
+        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+        decimal[] dailyBalances = new decimal[7];
+        int dayOfWeek = 0;
+        TimeSpan daySinceFirstDayOfWeek;
 
-        List<Transaction> SortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        decimal[] DaiylBalances = new decimal[7];
+        long weekNumber = firstDateOfWeek.Ticks / 6048000000000;
 
-        foreach (var transaction in SortedTransactions)
+        foreach (var transaction in sortedTransactions)
         {
+            long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+            daySinceFirstDayOfWeek = transaction.Date.Date - firstDateOfWeek.Date;
+
+            for (; transactionWeekNumber >= weekNumber && dayOfWeek < daySinceFirstDayOfWeek.Days && dayOfWeek < 7; dayOfWeek++)
+            {
+                dailyBalances[dayOfWeek] = totalBalance;
+            }
+
             if (transaction.AccountId == accID)
             {
                 if (transaction.Type == "Income")
@@ -403,13 +416,132 @@ public class WebUser
                     totalBalance += transaction.Amount;
                 }
             }
-            if ((GetWeekNumber(transaction.Date) == GetWeekNumber(firstDateOfWeek)) && transaction.Date.Year == firstDateOfWeek.Year)
+        }
+        for (; dayOfWeek < 7; dayOfWeek++)
+        {
+            dailyBalances[dayOfWeek] = totalBalance;
+        }
+
+        return dailyBalances;
+    }
+
+
+    public decimal[] CalculateMonthlyDailyAccountBalance(DateTime dateOfMonth, string accID)
+    {
+        DateTime firstDateOfMonth = dateOfMonth.AddDays(-dateOfMonth.Day + 1);
+        Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+
+        decimal totalBalance = 0;
+        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+        int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
+        decimal[] dailyBalances = new decimal[daysInMonth];
+        int dayOfMonth = 0;
+        TimeSpan daySinceFirstDayOfMonth;
+
+        // long weekNumber = firstDateOfMonth.Ticks / 6048000000000;
+
+        foreach (var transaction in sortedTransactions)
+        {
+            // long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+            daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
+
+            for (; (transaction.Date.Month >= firstDateOfMonth.Month || transaction.Date.Year > firstDateOfMonth.Year) && dayOfMonth < daySinceFirstDayOfMonth.Days && dayOfMonth < daysInMonth; dayOfMonth++)
             {
-                DaiylBalances[(int)transaction.Date.DayOfWeek] = totalBalance;
+                dailyBalances[dayOfMonth] = totalBalance;
+            }
+
+            if (transaction.AccountId == accID)
+            {
+                if (transaction.Type == "Income")
+                {
+                    totalBalance += transaction.Amount;
+                }
+                else if (transaction.Type == "Expense")
+                {
+                    totalBalance -= transaction.Amount;
+                }
+            }
+            else if (transaction.Type == "Transfer")
+            {
+                if (transaction.Origin == accID)
+                {
+                    totalBalance -= transaction.Amount;
+                }
+                else if (transaction.Destination == accID)
+                {
+                    totalBalance += transaction.Amount;
+                }
             }
         }
-        return DaiylBalances;
+        for (; dayOfMonth < daysInMonth; dayOfMonth++)
+        {
+            dailyBalances[dayOfMonth] = totalBalance;
+        }
+
+        return dailyBalances;
     }
+
+
+
+    public decimal[] CalculateYearlyMonthlyAccountBalance(DateTime dateOfYear, string accID)
+    {
+
+        Console.WriteLine($"Calculating YearlyMonthly Account balance for Account: {accID} with starting date: {dateOfYear}");
+
+        decimal totalBalance = 0;
+        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+
+        decimal[] monthlyBalances = new decimal[12];
+        int monthOfYear = 0;
+        int monthsSinceCurrentMonth;
+
+
+
+        foreach (var transaction in sortedTransactions)
+        {
+
+            for (; transaction.Date.Year == dateOfYear.Year && monthOfYear < transaction.Date.Month; monthOfYear++)
+            {
+                monthlyBalances[monthOfYear] = totalBalance;
+            }
+            for (; transaction.Date.Year > dateOfYear.Year && monthOfYear < 12; monthOfYear++)
+            {
+                monthlyBalances[monthOfYear] = totalBalance;
+            }
+
+            if (transaction.AccountId == accID)
+            {
+                if (transaction.Type == "Income")
+                {
+                    totalBalance += transaction.Amount;
+                }
+                else if (transaction.Type == "Expense")
+                {
+                    totalBalance -= transaction.Amount;
+                }
+            }
+            else if (transaction.Type == "Transfer")
+            {
+                if (transaction.Origin == accID)
+                {
+                    totalBalance -= transaction.Amount;
+                }
+                else if (transaction.Destination == accID)
+                {
+                    totalBalance += transaction.Amount;
+                }
+            }
+        }
+        for (; monthOfYear < 12; monthOfYear++)
+        {
+            monthlyBalances[monthOfYear] = totalBalance;
+        }
+
+        return monthlyBalances;
+    }
+
+
+
 
 
     // public void EIER()
@@ -655,7 +787,7 @@ public class WebUser
                                 contract.Origin,
                                 contract.Destination,
                                 "Contract Payment",
-                                null,
+                                contract.Category,
                                 Guid.NewGuid().ToString(),
                                 contract.AccountID,
                                 true,
@@ -688,6 +820,15 @@ public class WebUser
         };
     }
 
+    public class ExpenseIncomeReport
+    {
+        public string[]? Categories { get; set; }
+        public decimal[]? Expenses { get; set; }
+
+
+        public ExpenseIncomeReport(string[] categories, decimal[] expenses) { Categories = categories; Expenses = expenses; }
+    }
+
 
 
     public class FinancialReport
@@ -696,6 +837,13 @@ public class WebUser
         public decimal TotalExpenses { get; set; }
         public Dictionary<string, decimal> IncomeByCategory { get; set; } = new Dictionary<string, decimal>();
         public Dictionary<string, decimal> ExpensesByCategory { get; set; } = new Dictionary<string, decimal>();
+
+        // public static void SplitExpensesByCategory()
+        // {
+        //     Categories = ExpensesByCategory.Keys.ToArray();
+        //     Expenses = ExpensesByCategory.Values.ToArray();
+        // }
+
 
         public static FinancialReport GenerateReport()
         {
@@ -719,6 +867,7 @@ public class WebUser
                     else if (transaction.Type == "Expense")
                     {
                         report.TotalExpenses += transaction.Amount;
+                        if (transaction.Category == null) continue;
 
                         if (transaction.Category != null && !report.ExpensesByCategory.ContainsKey(transaction.Category))
                         {
@@ -731,9 +880,267 @@ public class WebUser
 
             return report;
         }
+
+
+        //Weekly Expense
+        public static Dictionary<string, decimal>? GenerateWeeklyAccountExpenseReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> expensesByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+            long weekNumber = date.Ticks / 6048000000000;
+
+            Console.WriteLine($"Calculating Weekly Expenses for Account: {accID} with starting date: {date} (Weeknumber: {weekNumber})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+                long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                Console.WriteLine($"transactionWeekNumber: {transactionWeekNumber} -- -- weekNumber: {weekNumber}");
+
+                if (transactionWeekNumber == weekNumber)
+                {
+                    if (transaction.Type == "Expense")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!expensesByCategory.ContainsKey(transaction.Category))
+                        {
+                            expensesByCategory[transaction.Category] = 0;
+                        }
+                        expensesByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized  Weekly expenses: {string.Join(", ", expensesByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (expensesByCategory == null)
+            {
+                Console.WriteLine("EIER");
+            }
+            return expensesByCategory;
+        }
+
+        //WeeklyIncome
+        public static Dictionary<string, decimal>? GenerateWeeklyAccountIncomeReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> incomeByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+            long weekNumber = date.Ticks / 6048000000000;
+
+            Console.WriteLine($"Calculating Weekly Expenses for Account: {accID} with starting date: {date} (Weeknumber: {weekNumber})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+                long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                Console.WriteLine($"transactionWeekNumber: {transactionWeekNumber} -- -- weekNumber: {weekNumber}");
+
+                if (transactionWeekNumber == weekNumber)
+                {
+                    if (transaction.Type == "Income")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!incomeByCategory.ContainsKey(transaction.Category))
+                        {
+                            incomeByCategory[transaction.Category] = 0;
+                        }
+                        incomeByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized Weekly income: {string.Join(", ", incomeByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (incomeByCategory.Count == 0)
+            {
+                Console.WriteLine("EIER");
+            }
+            return incomeByCategory;
+        }
+
+        //Monthly Expense
+        public static Dictionary<string, decimal>? GenerateMonthlyAccountExpenseReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> expenseByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+
+            Console.WriteLine($"Calculating Monthly Expenses for Account: {accID} with starting date: {date} (date.Month: {date.Month})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+
+                Console.WriteLine($"transaction Month: {transaction.Date.Month} -- -- date.Month: {date.Month}");
+
+                if (transaction.Date.Month == date.Month && transaction.Date.Year == date.Year)
+                {
+                    if (transaction.Type == "Expense")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!expenseByCategory.ContainsKey(transaction.Category))
+                        {
+                            expenseByCategory[transaction.Category] = 0;
+                        }
+                        expenseByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized Monthly expense: {string.Join(", ", expenseByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (expenseByCategory.Count == 0)
+            {
+                Console.WriteLine("EIER");
+            }
+            return expenseByCategory;
+        }
+
+
+
+        //Monthly Income
+        public static Dictionary<string, decimal>? GenerateMonthlyAccountIncomeReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> incomeByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+
+            Console.WriteLine($"Calculating Monthly Expenses for Account: {accID} with starting date: {date} (date.Month: {date.Month})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+
+                Console.WriteLine($"transaction Month: {transaction.Date.Month} -- -- date.Month: {date.Month}");
+
+                if (transaction.Date.Month == date.Month && transaction.Date.Year == date.Year)
+                {
+                    if (transaction.Type == "Income")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!incomeByCategory.ContainsKey(transaction.Category))
+                        {
+                            incomeByCategory[transaction.Category] = 0;
+                        }
+                        incomeByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized Monthly Income: {string.Join(", ", incomeByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (incomeByCategory.Count == 0)
+            {
+                Console.WriteLine("EIER");
+            }
+            return incomeByCategory;
+        }
+
+
+
+
+        //Yearly Expense
+        public static Dictionary<string, decimal>? GenerateYearlyAccountExpenseReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> expenseByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+
+            Console.WriteLine($"Calculating Monthly Expenses for Account: {accID} with starting date: {date} (date.Month: {date.Year})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+                Console.WriteLine($"transaction Month: {transaction.Date.Year} -- -- date.Month: {date.Year}");
+
+                if (transaction.Date.Year == date.Year)
+                {
+                    if (transaction.Type == "Expense")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!expenseByCategory.ContainsKey(transaction.Category))
+                        {
+                            expenseByCategory[transaction.Category] = 0;
+                        }
+                        expenseByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized yearly expense: {string.Join(", ", expenseByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (expenseByCategory.Count == 0)
+            {
+                Console.WriteLine("EIER");
+            }
+            return expenseByCategory;
+        }
+
+
+
+
+        //Yearly Income
+        public static Dictionary<string, decimal>? GenerateYearlyAccountIncomeReport(string userEmail, string accID, DateTime date)
+        {
+            Dictionary<string, decimal> incomeByCategory = new Dictionary<string, decimal>();
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+
+            Console.WriteLine($"Calculating Monthly Expenses for Account: {accID} with starting date: {date} (date.Month: {date.Month})");
+
+            foreach (var transaction in webUser.Transactions)
+            {
+
+                Console.WriteLine($"transaction Month: {transaction.Date.Year} -- -- date.Month: {date.Year}");
+
+                if (transaction.Date.Year == date.Year)
+                {
+                    if (transaction.Type == "Income")
+                    {
+                        if (transaction.Category == null) continue;
+
+                        Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
+
+                        if (!incomeByCategory.ContainsKey(transaction.Category))
+                        {
+                            incomeByCategory[transaction.Category] = 0;
+                        }
+                        incomeByCategory[transaction.Category] += transaction.Amount;
+                    }
+                }
+            }
+
+            Console.WriteLine($"Final categorized Yearly Income: {string.Join(", ", incomeByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+            if (incomeByCategory.Count == 0)
+            {
+                Console.WriteLine("EIER");
+            }
+            return incomeByCategory;
+        }
+
+
     }
 
+
+
+
+
 }
+
+
 
 
 public class Session(string id, DateTime expiredate)
@@ -970,6 +1377,7 @@ public class Contract
 {
     public string ContractId { get; set; }
     public decimal Amount { get; set; }
+    public string Category { get; set; }
     public BillingCycle Cycle { get; set; }
     public DateTime StartDate { get; set; }
     public DateTime? EndDate { get; set; }
@@ -980,10 +1388,11 @@ public class Contract
     public string? Destination { get; set; }
 
 
-    public Contract(string type, decimal amount, string accountID, BillingCycle cycle, DateTime startDate, string? origin, string? destination, DateTime? endDate = null)
+    public Contract(string type, string category, decimal amount, string accountID, BillingCycle cycle, DateTime startDate, string? origin, string? destination, DateTime? endDate = null)
     {
         ContractId = ContractId = Guid.NewGuid().ToString();
         Type = type;
+        Category = category;
         AccountID = accountID;
         Amount = amount;
         Cycle = cycle;

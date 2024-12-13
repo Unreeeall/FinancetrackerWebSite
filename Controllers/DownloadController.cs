@@ -29,11 +29,11 @@ namespace FinanceTracker.Controllers
                 string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
 
                 // Debugging output
-                Console.WriteLine(transactionsJson);
+                // Console.WriteLine(transactionsJson);
 
                 // Convert the JSON string to a byte array
                 var fileBytes = Encoding.UTF8.GetBytes(transactionsJson);
-                var fileName = "transactions.json";
+                var fileName = "BudgetBuddy-transactions.json";
 
                 // Return the file for download
                 return File(fileBytes, "application/json", fileName);
