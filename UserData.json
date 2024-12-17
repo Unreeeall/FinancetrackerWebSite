@@ -6,8 +6,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "NJbq\u002B2\u002Bgwoy\u002BC5VZ40vbrDu029ETL\u002BkGDAGQztETPzg=",
-        "ExpireDate": "2024-12-14T15:20:04.3272323+01:00"
+        "Id": "xke2IWI89\u002BPO4Ahabu3Rc0Qfo31Iq7GQpUCBM8bcFAQ=",
+        "ExpireDate": "2024-12-18T07:49:25.9081209+01:00"
       }
     ],
     "Transactions": [
@@ -5562,6 +5562,86 @@
         "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-13T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "1d5066cf-d17b-4a79-93a7-7a99f56cd328",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-14T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "d7625d5a-7388-49c5-925a-b75c642ee5f3",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-15T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "138907f2-476b-4b21-a437-07da0a19da70",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-16T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "d9676dff-77d9-4c69-93dd-73d2fdf6f57c",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-12-08T07:50:00",
+        "Amount": 20,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Insurance (Health, Car, Home)",
+        "ID": "226c1a26-3476-4447-a580-f0fb2b4be16a",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 5,
+        "ContractId": "070bc2f9-10b4-47fb-a017-d7e103728df3",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -5576,13 +5656,25 @@
         "Type": "Income",
         "Origin": "",
         "Destination": ""
+      },
+      {
+        "ContractId": "070bc2f9-10b4-47fb-a017-d7e103728df3",
+        "Amount": 20,
+        "Category": "Insurance (Health, Car, Home)",
+        "Cycle": 5,
+        "StartDate": "2024-12-08T07:50:00",
+        "EndDate": null,
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Expense",
+        "Origin": "",
+        "Destination": ""
       }
     ],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 347,
+        "Balance": 331,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

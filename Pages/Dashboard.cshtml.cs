@@ -121,17 +121,17 @@ public class DashboardModel : PageModel
 
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
             {
-                Console.WriteLine($"AccID: {AccID}");
+                // Console.WriteLine($"AccID: {AccID}");
 
-                Console.WriteLine($"TransactionType: {TransactionType}");
-                Console.WriteLine($"Origin: {Origin}");
-                Console.WriteLine($"Destination: {Destination}");
-                Console.WriteLine($"Category: {Category}");
-                Console.WriteLine($"Description: {Description}");
-                Console.WriteLine($"Date: {Date}");
-                Console.WriteLine($"Amount: {Amount}");
-                Console.WriteLine($"IsContract: {IsContract}");
-                Console.WriteLine($"Cycle: {Cycle}");
+                // Console.WriteLine($"TransactionType: {TransactionType}");
+                // Console.WriteLine($"Origin: {Origin}");
+                // Console.WriteLine($"Destination: {Destination}");
+                // Console.WriteLine($"Category: {Category}");
+                // Console.WriteLine($"Description: {Description}");
+                // Console.WriteLine($"Date: {Date}");
+                // Console.WriteLine($"Amount: {Amount}");
+                // Console.WriteLine($"IsContract: {IsContract}");
+                // Console.WriteLine($"Cycle: {Cycle}");
 
 
 

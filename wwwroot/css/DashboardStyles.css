@@ -657,6 +657,14 @@ header {
 }
 
 
+.transaction-table-container {
+    margin-top: 60px;
+    width: 1000px;
+    height: 800px;
+    overflow: scroll;
+}
+
+
 
 
 

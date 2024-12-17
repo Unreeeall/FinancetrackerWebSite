@@ -52,11 +52,14 @@ namespace FinanceTracker.Controllers
 
 
         [HttpGet]
-        [Route("fetch-weekly-category-expense-data")]
-        public IActionResult GetWeeklyCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
+        [Route("fetch-category-expense-data")]
+        public IActionResult GetCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID, [FromQuery] string timeFrame)
         {
-            Dictionary<string, decimal> weekylExpensesByCategory = WebUser.FinancialReport.GenerateWeeklyAccountExpenseReport(userEmail, accID, firstDateOfWeek);
 
+            Console.WriteLine("EIER 1");
+            Dictionary<string, decimal> weekylExpensesByCategory = WebUser.FinancialReport.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
+
+            
             if (weekylExpensesByCategory == null)
             {
                 return NotFound("No expenses found for the specified criteria.");
@@ -74,11 +77,14 @@ namespace FinanceTracker.Controllers
         }
 
         [HttpGet]
-        [Route("fetch-weekly-category-income-data")]
-        public IActionResult GetWeeklyCategoryIncome([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
+        [Route("fetch-category-income-data")]
+        public IActionResult GetCategoryIncome([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID, [FromQuery] string timeFrame)
         {
+            Console.WriteLine("EIER 2");
 
-            Dictionary<string, decimal> weekylIncomeByCategory = WebUser.FinancialReport.GenerateWeeklyAccountIncomeReport(userEmail, accID, firstDateOfWeek);
+            Dictionary<string, decimal> weekylIncomeByCategory = WebUser.FinancialReport.GenerateAccountIncomeReport(userEmail, accID, firstDateOfWeek, timeFrame);
+
+            
 
             if (weekylIncomeByCategory == null)
             {
@@ -95,100 +101,5 @@ namespace FinanceTracker.Controllers
 
             return Ok(newIncomeReport);
         }
-
-
-        [HttpGet]
-        [Route("fetch-monthly-category-expense-data")]
-        public IActionResult GetMonthlyCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
-        {
-            Dictionary<string, decimal> monthlyExpenseByCategory = WebUser.FinancialReport.GenerateMonthlyAccountExpenseReport(userEmail, accID, firstDateOfWeek);
-
-            if (monthlyExpenseByCategory == null)
-            {
-                return NotFound("No expenses found for the specified criteria.");
-            }
-
-            string[] Categories = monthlyExpenseByCategory.Keys.ToArray();
-            decimal[] Expenses = monthlyExpenseByCategory.Values.ToArray();
-
-            var newExpenseReport = new WebUser.ExpenseIncomeReport(
-                Categories,
-                Expenses
-            );
-
-            return Ok(newExpenseReport);
-        }
-
-
-        [HttpGet]
-        [Route("fetch-monthly-category-income-data")]
-        public IActionResult GetMonthlyCategoryIncome([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
-        {
-            Dictionary<string, decimal> monthlyIncomeByCategory = WebUser.FinancialReport.GenerateMonthlyAccountIncomeReport(userEmail, accID, firstDateOfWeek);
-
-            if (monthlyIncomeByCategory == null)
-            {
-                return NotFound("No expenses found for the specified criteria.");
-            }
-
-            string[] Categories = monthlyIncomeByCategory.Keys.ToArray();
-            decimal[] Expenses = monthlyIncomeByCategory.Values.ToArray();
-
-            var newIncomeReport = new WebUser.ExpenseIncomeReport(
-                Categories,
-                Expenses
-            );
-
-            return Ok(newIncomeReport);
-        }
-
-
-        [HttpGet]
-        [Route("fetch-yearly-category-income-data")]
-        public IActionResult GetYearlyCategoryIncome([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
-        {
-            Dictionary<string, decimal> yearlyIncomeByCategory = WebUser.FinancialReport.GenerateYearlyAccountIncomeReport(userEmail, accID, firstDateOfWeek);
-
-            if (yearlyIncomeByCategory == null)
-            {
-                return NotFound("No expenses found for the specified criteria.");
-            }
-
-            string[] Categories = yearlyIncomeByCategory.Keys.ToArray();
-            decimal[] Expenses = yearlyIncomeByCategory.Values.ToArray();
-
-            var newIncomeReport = new WebUser.ExpenseIncomeReport(
-                Categories,
-                Expenses
-            );
-
-            return Ok(newIncomeReport);
-        }
-
-
-        [HttpGet]
-        [Route("fetch-yearly-category-expense-data")]
-        public IActionResult GetYearlyCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
-        {
-            Dictionary<string, decimal> yearlyExpenseByCategory = WebUser.FinancialReport.GenerateMonthlyAccountExpenseReport(userEmail, accID, firstDateOfWeek);
-
-            if (yearlyExpenseByCategory == null)
-            {
-                return NotFound("No expenses found for the specified criteria.");
-            }
-
-            string[] Categories = yearlyExpenseByCategory.Keys.ToArray();
-            decimal[] Expenses = yearlyExpenseByCategory.Values.ToArray();
-
-            var newExpenseReport = new WebUser.ExpenseIncomeReport(
-                Categories,
-                Expenses
-            );
-
-            return Ok(newExpenseReport);
-        }
-
-
-
     }
 }
