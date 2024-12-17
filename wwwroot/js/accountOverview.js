@@ -144,25 +144,25 @@ document.addEventListener('DOMContentLoaded', (event) => {
         switch (timeframe) {
             case 'week':
                 accountBalanceData = await fetchWeeklyData(date);
-                expensesByCategoryData = await fetchWeeklyExpenseData(date);
-                incomeByCategoryData = await fetchWeeklyIncomeData(date);
+                expensesByCategoryData = await fetchExpenseData(date, timeframe);
+                incomeByCategoryData = await fetchIncomeData(date, timeframe);
                 break;
             case 'month':
                 // Replace this with the actual monthly data fetching logic
                 accountBalanceData = await fetchMonthlyData(date);
-                expensesByCategoryData = await fetchMonthlyExpenseData(date);
-                incomeByCategoryData = await fetchMonthlyIncomeData(date);
+                expensesByCategoryData = await fetchExpenseData(date, timeframe);
+                incomeByCategoryData = await fetchIncomeData(date, timeframe);
                 break;
             case 'year':
                 // Replace this with the actual yearly data fetching logic
                 accountBalanceData = await fetchYearlyData(date);
-                expensesByCategoryData  = await fetchYearlyExpenseData(date);
-                incomeByCategoryData = await fetchYearlyIncomeData(date);
+                expensesByCategoryData = await fetchExpenseData(date, timeframe);
+                incomeByCategoryData = await fetchIncomeData(date, timeframe);
                 break;
             default:
                 accountBalanceData = await fetchWeeklyData(date);
-                expensesByCategoryData = await fetchWeeklyExpenseData(date);
-                incomeByCategoryData = await fetchWeeklyIncomeData(date);
+                expensesByCategoryData = await fetchExpenseData(date, "week");
+                incomeByCategoryData = await fetchIncomeData(date, "week");
         }
 
         console.log('Account Balance Data:', accountBalanceData);
@@ -290,47 +290,20 @@ async function fetchYearlyData(date) {
 }
 
 
-async function fetchWeeklyExpenseData(date) {
-    const response = await fetch(`api/Analysis/fetch-weekly-category-expense-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const weeklyCategorieExepnses = await response.json();
-    console.log('Raw Weekly Expense Data:', weeklyCategorieExepnses); // Log the raw response for debugging
-    return weeklyCategorieExepnses;
+async function fetchExpenseData(date, timeframe) {
+    const response = await fetch(`api/Analysis/fetch-category-expense-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}&timeFrame=${timeframe}`);
+    const CategoryExpenses = await response.json();
+    console.log('Raw Expense by Category Data:', CategoryExpenses); // Log the raw response for debugging
+    return CategoryExpenses;
 }
 
-async function fetchWeeklyIncomeData(date) {
-    const response = await fetch(`api/Analysis/fetch-weekly-category-income-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const weeklyCategoryIncome = await response.json();
-    console.log('Raw Weekly Income Data:', weeklyCategoryIncome); // Log the raw response for debugging
-    return weeklyCategoryIncome;
-}
-
-async function fetchMonthlyExpenseData(date) {
-    const response = await fetch(`api/Analysis/fetch-monthly-category-expense-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const monthlyCategoryExpense = await response.json();
-    console.log('Raw Monthly Income Data:', monthlyCategoryExpense); // Log the raw response for debugging
-    return monthlyCategoryExpense;
-}
-
-async function fetchMonthlyIncomeData(date) {
-    const response = await fetch(`api/Analysis/fetch-monthly-category-income-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const monthlyCategoryIncome = await response.json();
-    console.log('Raw Monthly Income Data:', monthlyCategoryIncome); // Log the raw response for debugging
-    return monthlyCategoryIncome;
+async function fetchIncomeData(date, timeframe) {
+    const response = await fetch(`api/Analysis/fetch-category-income-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}&timeFrame=${timeframe}`);
+    const CategoryIncome = await response.json();
+    console.log('Raw Income by Category Data:', CategoryIncome); // Log the raw response for debugging
+    return CategoryIncome;
 }
 
 
-async function fetchYearlyExpenseData(date) {
-    const response = await fetch(`api/Analysis/fetch-yearly-category-expense-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const yearlyCategoryExpense = await response.json();
-    console.log('Raw Yearly Income Data:', yearlyCategoryExpense); // Log the raw response for debugging
-    return yearlyCategoryExpense;
-}
-
-async function fetchYearlyIncomeData(date) {
-    const response = await fetch(`api/Analysis/fetch-yearly-category-income-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
-    const yearlyCategoryIncome = await response.json();
-    console.log('Raw Yearly Income Data:', yearlyCategoryIncome); // Log the raw response for debugging
-    return yearlyCategoryIncome;
-}
 
 
