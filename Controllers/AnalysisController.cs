@@ -57,9 +57,9 @@ namespace FinanceTracker.Controllers
         {
 
             Console.WriteLine("EIER 1");
-            Dictionary<string, decimal> weekylExpensesByCategory = WebUser.FinancialReport.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
+            Dictionary<string, decimal>? weekylExpensesByCategory = WebUser.FinancialReport.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
 
-            
+
             if (weekylExpensesByCategory == null)
             {
                 return NotFound("No expenses found for the specified criteria.");
@@ -82,9 +82,9 @@ namespace FinanceTracker.Controllers
         {
             Console.WriteLine("EIER 2");
 
-            Dictionary<string, decimal> weekylIncomeByCategory = WebUser.FinancialReport.GenerateAccountIncomeReport(userEmail, accID, firstDateOfWeek, timeFrame);
+            Dictionary<string, decimal>? weekylIncomeByCategory = WebUser.FinancialReport.GenerateAccountIncomeReport(userEmail, accID, firstDateOfWeek, timeFrame);
 
-            
+
 
             if (weekylIncomeByCategory == null)
             {
@@ -100,6 +100,27 @@ namespace FinanceTracker.Controllers
             );
 
             return Ok(newIncomeReport);
+        }
+
+
+        [HttpGet]
+        [Route("calculate-income")]
+        public JsonResult CalculateAccIncome([FromQuery] DateTime date, [FromQuery] string userEmail, [FromQuery] string accID, [FromQuery] string rangeType)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail); 
+            var totalIncome = webUser.CalculateAccIncomeForTimeframe(date, accID, rangeType);
+
+            return Json(new { totalIncome = totalIncome });
+        }
+
+        [HttpGet]
+        [Route("calculate-expense")]
+        public JsonResult CalculateAccExpense([FromQuery] DateTime date, [FromQuery] string userEmail, [FromQuery] string accID, [FromQuery] string rangeType)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail); 
+            var totalExpense = webUser.CalculateAccExpenseForTimeframe(date, accID, rangeType);
+
+            return Json(new { totalExpense = totalExpense });
         }
     }
 }

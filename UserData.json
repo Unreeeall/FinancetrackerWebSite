@@ -5722,6 +5722,22 @@
         "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-12-17T12:09:00",
+        "Amount": 20,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Description": "EIER",
+        "Category": "Groceries",
+        "ID": "0c8e4551-1380-4cea-93dc-61c9eb2a14e1",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -5754,7 +5770,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 332,
+        "Balance": 399,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

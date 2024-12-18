@@ -228,7 +228,7 @@ public class WebUser
     {
         foreach (var contract in Contracts)
         {
-            if(contract.ContractId == contractId) return contract;
+            if (contract.ContractId == contractId) return contract;
         }
         return null;
     }
@@ -676,54 +676,91 @@ public class WebUser
     }
 
 
-
-
-    public decimal CalculateMonthlyIncome(int year, int month)
+    public decimal CalculateAccIncomeForTimeframe(DateTime date, string accID, string timeframe)
     {
         decimal totalIncome = 0;
 
+        long weekNumber = date.Ticks / 6048000000000;
+
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == year && transaction.Date.Month == month)
-            {
-                if (transaction.Type == "Income")
-                {
-                    totalIncome += transaction.Amount;
-                }
 
+            bool isInTimeframe = false;
+
+            switch (timeframe.ToLower())
+            {
+                case "week":
+                    long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                    isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                    break;
+                case "month":
+                    isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                case "year":
+                    isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                default:
+                    Console.WriteLine("Invalid timeframe specified.");
+                    return 0;
+            }
+
+            if (isInTimeframe && transaction.Type == "Income")
+            {
+                totalIncome += transaction.Amount;
+                Console.WriteLine("TotalIncome for timeframe: " + timeframe + " " + totalIncome);
             }
         }
         return totalIncome;
     }
 
-    public decimal CalculateMonthlyExpense(int year, int month)
+    public decimal CalculateAccExpenseForTimeframe(DateTime date, string accID, string timeframe)
     {
-        decimal TotalExpense = 0;
+        decimal totalIncome = 0;
+
+        long weekNumber = date.Ticks / 6048000000000;
 
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            bool isInTimeframe = false;
+
+            switch (timeframe.ToLower())
             {
-                if (transaction.Type == "Expense")
-                {
-                    TotalExpense += transaction.Amount;
-                }
+                case "week":
+                    long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                    isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                    break;
+                case "month":
+                    isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                case "year":
+                    isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                default:
+                    Console.WriteLine("Invalid timeframe specified.");
+                    return 0;
+            }
+
+            if (isInTimeframe && transaction.Type == "Expense")
+            {
+                totalIncome += transaction.Amount;
+                Console.WriteLine("TotalExpense for timeframe: " + timeframe + " " + totalIncome);
             }
         }
-        return TotalExpense;
+        return totalIncome;
     }
 
-    public decimal CalculateMonthlyTransferIncome(int year, int month, string accountID)
+
+    public decimal CalculateMonthlyAccTransferIncome(DateTime date, string accID)
     {
         decimal TotalTransferAmount = 0;
 
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            if (transaction.Date.Year == date.Year && transaction.Date.Month == date.Year)
             {
                 if (transaction.Type == "Transfer")
                 {
-                    if (transaction.Destination == accountID)
+                    if (transaction.Destination == accID)
                     {
                         TotalTransferAmount += transaction.Amount;
                     }
@@ -733,17 +770,17 @@ public class WebUser
         return TotalTransferAmount;
     }
 
-    public decimal CalculateMonthlyTransferExpense(int year, int month, string accountID)
+    public decimal CalculateMonthlyAccTransferExpense(DateTime date, string accID)
     {
         decimal TotalTransferAmount = 0;
 
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == year && transaction.Date.Month == month)
+            if (transaction.Date.Year == date.Year && transaction.Date.Month == date.Month)
             {
                 if (transaction.Type == "Transfer")
                 {
-                    if (transaction.Origin == accountID)
+                    if (transaction.Origin == accID)
                     {
                         TotalTransferAmount += transaction.Amount;
                     }
@@ -753,22 +790,22 @@ public class WebUser
         return TotalTransferAmount;
     }
 
-    public decimal CalculateMonthlyTotalPlus(int year, int month, string accountID)
+    public decimal CalculateMonthlyTotalPlus(DateTime date, string accID, string timeFrame)
     {
-        decimal Income = CalculateMonthlyIncome(year, month);
-        decimal Expense = CalculateMonthlyExpense(year, month);
-        decimal TransferInc = CalculateMonthlyTransferIncome(year, month, accountID);
-        decimal TransferExp = CalculateMonthlyTransferExpense(year, month, accountID);
+        decimal Income = CalculateAccIncomeForTimeframe(date, accID, timeFrame);
+        decimal Expense = CalculateAccExpenseForTimeframe(date, accID, timeFrame);
+        decimal TransferInc = CalculateMonthlyAccTransferIncome(date, accID);
+        decimal TransferExp = CalculateMonthlyAccTransferExpense(date, accID);
 
         decimal TotalPlus = Income + TransferInc - (Expense + TransferExp);
 
         return TotalPlus;
     }
 
-    public decimal CalculateMonthlyTotalMinus(int year, int month, string accountID)
+    public decimal CalculateMonthlyTotalMinus(DateTime date, string accID, string timeFrame)
     {
-        decimal Expense = CalculateMonthlyExpense(year, month);
-        decimal TransferExp = CalculateMonthlyTransferExpense(year, month, accountID);
+        decimal Expense = CalculateAccExpenseForTimeframe(date, accID ,timeFrame);
+        decimal TransferExp = CalculateMonthlyAccTransferExpense(date, accID);
 
         decimal TotalPlus = Expense + TransferExp;
 
@@ -908,13 +945,13 @@ public class WebUser
                 {
                     case "week":
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-                        isInTimeframe = transactionWeekNumber == weekNumber;
+                        isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
                     case "month":
-                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year;
+                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     case "year":
-                        isInTimeframe = transaction.Date.Year == date.Year;
+                        isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
                         Console.WriteLine("Invalid timeframe specified.");
@@ -963,13 +1000,13 @@ public class WebUser
                 {
                     case "week":
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-                        isInTimeframe = transactionWeekNumber == weekNumber;
+                        isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
                     case "month":
-                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year;
+                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     case "year":
-                        isInTimeframe = transaction.Date.Year == date.Year;
+                        isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
                         Console.WriteLine("Invalid timeframe specified.");

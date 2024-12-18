@@ -78,7 +78,6 @@ public class DashboardModel : PageModel
         Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Dashboard");
 
 
-        // WebUser.EIER();
         WebUser.ApplyContracts();
         Report = WebUser.FinancialReport.GenerateReport();
 

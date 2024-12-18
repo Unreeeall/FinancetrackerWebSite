@@ -104,12 +104,16 @@
             <div class="in-ex-charts-container">
                 <div class="expensesByCategoryChart-container">
                     <h2>Expenses</h2>
+                    <h2>Total: <span id="totalExpense"></span></h2>
                     <canvas id="expensesByCategoryChart" width="400" height="200"></canvas>
+                    
                 </div>
 
                 <div class="incomeByCategoryChart-container">
                     <h2>Income</h2>
+                    <h2>Total: <span id="totalIncome"></span></h2>
                     <canvas id="incomeByCategoryChart" width="400" height="200"></canvas>
+                    
                 </div>
             </div>
 
@@ -361,7 +365,7 @@
                         <div class="trans-type-slct-container" id="trans-type-slct-container">
 
                             <label for="trans-type-slct">Transaction Type</label>
-                            <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
+                            <select class="trans-type-slct" id="trans-type-slct" name="Type" required>
                                 <option value="" selected disabled></option>
                                 <option value="Income">Income</option>
                                 <option value="Expense">Expense</option>
