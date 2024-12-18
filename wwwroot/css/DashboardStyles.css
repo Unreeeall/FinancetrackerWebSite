@@ -9,6 +9,7 @@ body {
     display: flex;
     flex-direction: column;
     color-scheme: dark;
+
 }
 
 header {
@@ -319,11 +320,11 @@ header {
 }
 
 
-.last-5-transaction-container table{
+.last-5-transaction-container table {
     border-collapse: collapse;
 }
 
-.last-5-transaction-container thead{
+.last-5-transaction-container thead {
     background-color: #4A2759;
 }
 
@@ -486,14 +487,11 @@ header {
 
 
 .edit-menu-background {
-
     background-color: #00000083;
 
     position: absolute;
     width: 100%;
     height: 2000px;
-    /* z-index: 6; */
-
     display: none;
 }
 
@@ -501,11 +499,10 @@ header {
     display: block;
 }
 
-.edit-menu {
-    background-color: #4A2759;
-    top: auto;
-    width: 750px;
-    height: 550px;
+.edit-menu-container {
+    width: 50%;
+    height: 65%;
+    background-color: #ff00dd;
     justify-self: center;
     position: fixed;
     top: 25%;
@@ -516,7 +513,7 @@ header {
 }
 
 
-.edit-type-select {
+/* .edit-type-select {
     width: 20%;
     height: 10%;
     font-size: 1rem;
@@ -538,7 +535,7 @@ header {
     border-radius: 5px;
     padding: 10px;
     font-size: 1.3rem;
-}
+} */
 
 .exit-btn {
     background: none;
@@ -555,7 +552,7 @@ header {
 }
 
 
-.qick-add-transaction-container {
+.add-transaction-container {
     background-color: #00000083;
 
     position: absolute;
@@ -564,11 +561,11 @@ header {
     display: none;
 }
 
-.qick-add-transaction-container.visible {
+.add-transaction-container.visible {
     display: block;
 }
 
-.qick-add-transaction-menu {
+.add-transaction-menu {
     width: 50%;
     height: 65%;
     background-color: #ff00dd;
@@ -646,23 +643,88 @@ header {
     height: 450px;
     display: flex;
     flex-direction: column;
-    align-items: center; /* Center h2 and canvas horizontally */
+    align-items: center;
+    /* Center h2 and canvas horizontally */
     margin: 0 2.5%;
 }
 
 .expensesByCategoryChart-container h2,
 .incomeByCategoryChart-container h2 {
-    text-align: center; /* Center the h2 text */
-    margin-bottom: 20px; /* Add some space between h2 and canvas */
+    text-align: center;
+    /* Center the h2 text */
+    margin-bottom: 20px;
+    /* Add some space between h2 and canvas */
 }
 
 
 .transaction-table-container {
     margin-top: 60px;
-    width: 1000px;
+    width: 900px;
     height: 800px;
-    overflow: scroll;
+    color: #ffff;
+    display: flex;
+    align-content: center;
+    justify-content: center;
+    border-radius: 10px;
+    overflow: hidden; /* Add this to prevent overflow issues */
 }
+
+.transaction-table-container table {
+    background-color: #221f1f;
+    width: 100%;
+    border-collapse: collapse;
+}
+
+/* Add this block to make the tbody scrollable */
+.transaction-table-container tbody {
+    display: block;
+    height: 700px; /* Adjust the height as needed */
+    overflow-y: auto;
+    width: 100%;
+}
+
+/* Add this block to keep the thead fixed */
+.transaction-table-container thead {
+    display: block;
+    width: 100%;
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+    background-color: #4A2759;
+    display: table;
+    table-layout: fixed;
+}
+
+.transaction-table-container tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+
+.transaction-table-container thead th, .transaction-table-container tbody td {
+    padding: 10px;
+    text-align: left;
+}
+
+
+::-webkit-scrollbar {
+    width: 15px;
+  }
+  
+  /* Track */
+  ::-webkit-scrollbar-track {
+    background: transparent;
+  }
+  
+  /* Handle */
+  ::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 6px;
+  }
+  
+  /* Handle on hover */
+  ::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
 
 
 
