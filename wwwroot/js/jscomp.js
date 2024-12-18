@@ -1,4 +1,5 @@
-document.addEventListener('DOMContentLoaded', (event) => {
+document.addEventListener('DOMContentLoaded', (event) => { // Ensure the DOM is fully loaded before executing the script
+
     // Create the Chart.js charts.
     const ctx1 = document.getElementById('accountBalanceChart').getContext('2d');
     const accountBalanceChart = new Chart(ctx1, {
@@ -63,7 +64,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-
     const ctx3 = document.getElementById('incomeByCategoryChart').getContext('2d');
     const incomeByChategoryChart = new Chart(ctx3, {
         type: 'doughnut',
@@ -104,8 +104,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-
-
     // Function to generate date labels for the selected timeframe.
     function generateLabels(timeframe, date) {
         let labels = [];
@@ -114,7 +112,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         switch (timeframe) {
             case 'week':
                 const startOfWeek = new Date(date);
-                // startOfWeek.setDate(date.getDate() - date.getDay());
                 for (let i = 0; i < 7; i++) {
                     let currentDate = new Date(startOfWeek);
                     currentDate.setDate(startOfWeek.getDate() + i);
@@ -148,13 +145,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
                 break;
             case 'month':
-                // Replace this with the actual monthly data fetching logic
                 accountBalanceData = await fetchMonthlyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, timeframe);
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
                 break;
             case 'year':
-                // Replace this with the actual yearly data fetching logic
                 accountBalanceData = await fetchYearlyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, timeframe);
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
@@ -168,7 +163,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         console.log('Account Balance Data:', accountBalanceData);
         console.log('Expenses By Category Data:', expensesByCategoryData);
         console.log('Income By Category Data:', incomeByCategoryData);
-
 
         accountBalanceChart.data.labels = generateLabels(timeframe, date);
         accountBalanceChart.data.datasets[0].data = accountBalanceData;
@@ -185,19 +179,20 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     // Timeframe management logic
     const timeframeSpan = document.getElementById('timeframe');
-    const rangeTypeSelect = document.getElementById('rangeType');
+    const rangeTypeSelect = document.getElementById('rangeType'); // Ensure this is defined after DOM is loaded
     let date = new Date();
     var day = date.getDay(),
-        diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
+        diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is Sunday
     let currentDate = new Date(date.setDate(diff));
 
+    const userEmail = '@Model.WebUser.Email';
+    const accID = '@Model.financialAccount.ID';
 
     function formatTimeframe(date, rangeType) {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
         switch (rangeType) {
             case 'week':
                 const startOfWeek = date;
-                // startOfWeek.setDate(date.getDate() - date.getDay());
                 const endOfWeek = new Date(startOfWeek);
                 endOfWeek.setDate(startOfWeek.getDate() + 6);
                 return `${startOfWeek.toLocaleDateString(undefined, options)} - ${endOfWeek.toLocaleDateString(undefined, options)}`;
@@ -244,33 +239,43 @@ document.addEventListener('DOMContentLoaded', (event) => {
 
     rangeTypeSelect.addEventListener('change', updateTimeframe);
 
-    // Initialize timeframe display
-    async function updateIncomeAndExpense() {
+    function updateIncomeAndExpense() {
         const rangeType = rangeTypeSelect.value;
         const dateData = currentDate.toISOString();
         const accIDData = encodeURIComponent(accID);
         const userEmailData = encodeURIComponent(userEmail);
 
-        try {
-            const incomeResponse = await fetch(`api/Analysis/calculate-income?date=${dateData}&userEmail=${userEmailData}&accID=${accIDData}&rangeType=${rangeType}`);
-            const incomeResponseData = await incomeResponse.json();
-            document.getElementById('totalIncome').textContent = incomeResponseData.totalIncome;
+        fetch('/AnalysisController/CalculateIncome', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date: dateData, rangeType: rangeType, accID: accIDData, userEmail: userEmailData })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalIncome').textContent = data.totalIncome;
+            });
 
-            const expenseResponse = await fetch(`api/Analysis/calculate-expense?date=${dateData}&userEmail=${userEmailData}&accID=${accIDData}&rangeType=${rangeType}`);
-            const expenseResponseData = await expenseResponse.json();
-            document.getElementById('totalExpense').textContent = expenseResponseData.totalExpense;
-        } catch (error) {
-            console.error('Error fetching income or expense data:', error);
-        }
+        fetch('/AnalysisController/CalculateExpense', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ date: dateData, rangeType: rangeType, accID: accIDData, userEmail: userEmailData })
+        })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('totalExpense').textContent = data.totalExpense;
+            });
     }
 
-    // Initial call to set the income
+    // Initial call to set the income and expense
     updateTimeframe();
     updateIncomeAndExpense();
 });
 
-
-
+// Function to generate modern colors
 function generateModernColors(numColors) {
     const baseHues = [200, 300]; // Base hues for purple and blue-ish tones
     const colors = [];
@@ -285,14 +290,6 @@ function generateModernColors(numColors) {
 const numCategories = 20; // Example number of categories
 const dynamicColors = generateModernColors(numCategories);
 const dynamicBorderColors = dynamicColors.map(color => color.replace('50%', '35%')); // Darker border colors
-
-
-
-
-
-
-
-
 
 async function fetchWeeklyData(date) {
     const response = await fetch(`api/Analysis/fetch-weekly-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
@@ -312,7 +309,6 @@ async function fetchYearlyData(date) {
     return yearlyData;
 }
 
-
 async function fetchExpenseData(date, timeframe) {
     const response = await fetch(`api/Analysis/fetch-category-expense-data?userEmail=${encodeURIComponent(userEmail)}&firstDateOfWeek=${date.toISOString()}&accID=${encodeURIComponent(accID)}&timeFrame=${timeframe}`);
     const CategoryExpenses = await response.json();
@@ -327,11 +323,7 @@ async function fetchIncomeData(date, timeframe) {
     return CategoryIncome;
 }
 
-
-
-
 function addTransactionWindow(button) {
-
     document.getElementById('add-transaction-container').classList.toggle("visible");
     const accountID = button.getAttribute('data-id');
     document.getElementById('account-id').value = accountID;
@@ -412,7 +404,6 @@ document.addEventListener("DOMContentLoaded", function () {
     contractCycleDiv.style.display = contractCheckbox.checked ? "block" : "none";
 });
 
-
 function editTransactionWindow(event, button) {
     document.getElementById('edit-popup').classList.toggle("visible");
     const transactionID = button.getAttribute('data-id');
@@ -425,7 +416,6 @@ function editTransactionWindow(event, button) {
     const transactionDescription = button.getAttribute('data-description');
     const transactionIsContract = button.getAttribute('data-iscontract');
 
-
     document.getElementById('edit-Trans-ID').value = transactionID;
     document.getElementById('edit-type-select').value = transactionType;
     document.getElementById('edit-category-Dropdown').value = transactionCategory;
@@ -436,7 +426,6 @@ function editTransactionWindow(event, button) {
     document.getElementById('.edit-trans-description-inp').value = transactionDescription;
     document.getElementById('.edit-trans-contract-checkbox').value = transactionIsContract;
     document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract;
-
 }
 
 function closeEditMenu() {
@@ -513,26 +502,3 @@ document.addEventListener("DOMContentLoaded", function () {
     edittransferInputContainer.style.display = edittransactionTypeSelect.value === "Transfer" ? "block" : "none";
     editcontractCycleDiv.style.display = editcontractCheckbox.checked ? "block" : "none";
 });
-
-// function editTransactionWindow(event, button) {
-//     const editPopup = document.getElementById('edit-popup');
-//     editPopup.classList.toggle("visible");
-
-//     const fields = ['id', 'type', 'category', 'amount', 'origin', 'destination', 'date', 'description', 'iscontract', 'cycle'];
-//     fields.forEach(field => {
-//         const value = button.getAttribute(`data-${field}`);
-//         const element = document.getElementById(`edit-${field.replace('id', 'Trans-ID')}`);
-//         if (element) {
-//             element.value = value;
-//         }
-//     });
-// }
-
-// function closeEditMenu() {
-//     document.getElementById('edit-popup').classList.toggle("visible");
-// }
-
-
-
-
-

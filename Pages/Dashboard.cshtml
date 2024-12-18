@@ -131,17 +131,17 @@
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
                         <h4>@Stuff.MonthToWord(DateTime.Now.Month) @DateTime.Now.Year</h4>
                         <div class="monthly-plus-minus-container">
-                            <p class="income-values">+ @Model.WebUser.CalculateMonthlyTotalPlus(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
-                            <p class="expense-values">- @Model.WebUser.CalculateMonthlyTotalMinus(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                            @* <p class="income-values">+ @Model.WebUser.CalculateMonthlyTotalPlus(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
+                            <p class="expense-values">- @Model.WebUser.CalculateMonthlyTotalMinus(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
                         </div>
                         <div class="other-data-container">
                             <div class="in-out-data-container">
-                                <p>Income:  @Model.WebUser.CalculateMonthlyIncome(DateTime.Now.Year, DateTime.Now.Month) @bankAccount.Currency</p>
-                                <p>Expense: @Model.WebUser.CalculateMonthlyExpense(DateTime.Now.Year, DateTime.Now.Month) @bankAccount.Currency</p>
+                                @* <p>Income:  @Model.WebUser.CalculateMonthlyAccIncome(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
+                                <p>Expense: @Model.WebUser.CalculateMonthlyAccExpense(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
                             </div>
                             <div class="transf-data-contianer">
-                                <p>Outging Transfers: @Model.WebUser.CalculateMonthlyTransferExpense(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
-                                <p>Incomming Transfers: @Model.WebUser.CalculateMonthlyTransferIncome(DateTime.Now.Year, DateTime.Now.Month, bankAccount.ID) @bankAccount.Currency</p>
+                                @* <p>Outging Transfers: @Model.WebUser.CalculateMonthlyAccTransferExpense(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
+                                <p>Incomming Transfers: @Model.WebUser.CalculateMonthlyAccTransferIncome(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
                             </div> 
                         </div>
                         
