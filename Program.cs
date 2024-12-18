@@ -15,6 +15,10 @@ if (!app.Environment.IsDevelopment())
     // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
     app.UseHsts();
 }
+else
+{
+    app.UseDeveloperExceptionPage();
+}
 
 
 app.UseHttpsRedirection();
@@ -36,7 +40,12 @@ stopwatch.Stop();
 TimeSpan ts = stopwatch.Elapsed;
 string elapsedTime = String.Format("{0:00}:{1:00}:{2:00}.{3:00}",
             ts.Hours, ts.Minutes, ts.Seconds, ts.Milliseconds / 10);
-        Console.ForegroundColor = ConsoleColor.Blue;
-        Console.BackgroundColor = ConsoleColor.White;
-        Console.WriteLine("RunTime " + elapsedTime);
-        Console.ResetColor();
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.BackgroundColor = ConsoleColor.White;
+Console.WriteLine("RunTime " + elapsedTime);
+Console.ResetColor();
+
+Console.ForegroundColor = ConsoleColor.Blue;
+Console.BackgroundColor = ConsoleColor.White;
+Console.WriteLine("This is a test message.");
+Console.ResetColor();

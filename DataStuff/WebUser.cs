@@ -223,6 +223,15 @@ public class WebUser
         return accountTransactions;
     }
 
+
+    public Contract? GetContractByID(string contractId)
+    {
+        foreach (var contract in Contracts)
+        {
+            if(contract.ContractId == contractId) return contract;
+        }
+        return null;
+    }
     public void UpdateUser(string? email = null, string? name = null, string? phonenumber = null, string? password = null)
     {
         if (!string.IsNullOrEmpty(email)) Email = email;

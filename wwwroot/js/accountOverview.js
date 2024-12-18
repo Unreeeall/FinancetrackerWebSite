@@ -307,3 +307,206 @@ async function fetchIncomeData(date, timeframe) {
 
 
 
+function addTransactionWindow(button) {
+
+    document.getElementById('add-transaction-container').classList.toggle("visible");
+    const accountID = button.getAttribute('data-id');
+    document.getElementById('account-id').value = accountID;
+}
+
+function closeTransactionWindow() {
+    document.getElementById('add-transaction-container').classList.toggle("visible");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const transactionTypeSelect = document.getElementById('trans-type-slct');
+    const categorySelect = document.getElementById('trans-category-slct');
+    const transferInputContainer = document.querySelector('.trans-transf-input-container');
+    const contractCheckbox = document.getElementById('trans-contract-checkbox');
+    const contractCycleDiv = document.querySelector('.trans-contract-cycle-container');
+    const transferOriginSelect = document.getElementById('transf-orgini-slct');
+    const transferDestinationSelect = document.getElementById('transf-destination-slct');
+
+    // Function to filter categories based on transaction type
+    function filterCategories() {
+        const selectedType = transactionTypeSelect.value;
+        const options = categorySelect.querySelectorAll('option');
+
+        options.forEach(option => {
+            if (option.value === "") {
+                option.style.display = "block";
+            } else {
+                const dataType = option.getAttribute('data-type');
+                if (selectedType === "Transfer") {
+                    option.style.display = dataType === "Transfer" ? "block" : "none";
+                } else {
+                    option.style.display = dataType === selectedType ? "block" : "none";
+                }
+            }
+        });
+    }
+
+    // Event listener for transaction type change
+    transactionTypeSelect.addEventListener('change', function () {
+        filterCategories();
+
+        if (this.value === "Transfer") {
+            transferInputContainer.style.display = "block";
+        } else {
+            transferInputContainer.style.display = "none";
+            transferOriginSelect.value = ""; // Clear origin value if not Transfer
+        }
+    });
+
+    // Event listener for contract checkbox change
+    contractCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            contractCycleDiv.style.display = "block";
+        } else {
+            contractCycleDiv.style.display = "none";
+        }
+    });
+
+    // Function to unselect the same option in the other select
+    function unselectSameOption(event) {
+        const originValue = transferOriginSelect.value;
+        const destinationValue = transferDestinationSelect.value;
+
+        if (event.target.id === 'transf-orgini-slct' && originValue === destinationValue) {
+            transferDestinationSelect.value = "";
+        } else if (event.target.id === 'transf-destination-slct' && originValue === destinationValue) {
+            transferOriginSelect.value = "";
+        }
+    }
+
+    // Event listeners for transfer selects
+    transferOriginSelect.addEventListener('change', unselectSameOption);
+    transferDestinationSelect.addEventListener('change', unselectSameOption);
+
+    // Initialize the form based on default values
+    filterCategories();
+    transferInputContainer.style.display = transactionTypeSelect.value === "Transfer" ? "block" : "none";
+    contractCycleDiv.style.display = contractCheckbox.checked ? "block" : "none";
+});
+
+
+function editTransactionWindow(event, button) {
+    document.getElementById('edit-popup').classList.toggle("visible");
+    const transactionID = button.getAttribute('data-id');
+    const transactionType = button.getAttribute('data-type');
+    const transactionCategory = button.getAttribute('data-category');
+    const transactionAmount = button.getAttribute('data-amount');
+    const transactionOrigin = button.getAttribute('data-origin');
+    const transactionDestination = button.getAttribute('data-destination');
+    const transactionDate = button.getAttribute('data-date');
+    const transactionDescription = button.getAttribute('data-description');
+    const transactionIsContract = button.getAttribute('data-iscontract');
+
+
+    document.getElementById('edit-Trans-ID').value = transactionID;
+    document.getElementById('edit-type-select').value = transactionType;
+    document.getElementById('edit-category-Dropdown').value = transactionCategory;
+    document.querySelector('.edit-trans-amount-inp').value = transactionAmount;
+    document.getElementById('.edit-transf-orgin-slct').value = transactionOrigin;
+    document.querySelector('.edit-transf-destination-slct').value = transactionDestination;
+    document.querySelector('.edit-trans-date-inp').value = transactionDate;
+    document.getElementById('.edit-trans-description-inp').value = transactionDescription;
+    document.getElementById('.edit-trans-contract-checkbox').value = transactionIsContract;
+    document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract;
+    
+}
+
+function closeEditMenu() {
+    document.getElementById('edit-popup').classList.toggle("visible");
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+    const edittransactionTypeSelect = document.getElementById('.edit-trans-type-slct');
+    const editcategorySelect = document.getElementById('.edit-trans-category-slct');
+    const edittransferInputContainer = document.querySelector('.edit-trans-transf-input-container');
+    const editcontractCheckbox = document.getElementById('.edit-trans-contract-checkbox');
+    const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
+    const edittransferOriginSelect = document.getElementById('.edit-transf-orgini-slct');
+    const edittransferDestinationSelect = document.getElementById('.edit-transf-destination-slct');
+
+    // Function to filter categories based on transaction type
+    function filterEditCategories() {
+        const selectedType = edittransactionTypeSelect.value;
+        const options = editcategorySelect.querySelectorAll('option');
+
+        options.forEach(option => {
+            if (option.value === "") {
+                option.style.display = "block";
+            } else {
+                const dataType = option.getAttribute('data-type');
+                if (selectedType === "Transfer") {
+                    option.style.display = dataType === "Transfer" ? "block" : "none";
+                } else {
+                    option.style.display = dataType === selectedType ? "block" : "none";
+                }
+            }
+        });
+    }
+
+    // Event listener for transaction type change
+    edittransactionTypeSelect.addEventListener('change', function () {
+        filterEditCategories();
+
+        if (this.value === "Transfer") {
+            edittransferInputContainer.style.display = "block";
+        } else {
+            edittransferInputContainer.style.display = "none";
+            edittransferOriginSelect.value = ""; // Clear origin value if not Transfer
+        }
+    });
+
+    // Event listener for contract checkbox change
+    editcontractCheckbox.addEventListener('change', function () {
+        if (this.checked) {
+            editcontractCycleDiv.style.display = "block";
+        } else {
+            editcontractCycleDiv.style.display = "none";
+        }
+    });
+
+    // Function to unselect the same option in the other select
+    function unselectSameEditOption(event) {
+        const originValue = edittransferOriginSelect.value;
+        const destinationValue = edittransferDestinationSelect.value;
+
+        if (event.target.id === 'edit-transf-orgini-slct' && originValue === destinationValue) {
+            edittransferDestinationSelect.value = "";
+        } else if (event.target.id === 'edit-transf-destination-slct' && originValue === destinationValue) {
+            edittransferOriginSelect.value = "";
+        }
+    }
+
+    // Event listeners for transfer selects
+    edittransferOriginSelect.addEventListener('change', unselectSameOption);
+    edittransferDestinationSelect.addEventListener('change', unselectSameOption);
+
+    // Initialize the form based on default values
+    filterEditCategories();
+    edittransferInputContainer.style.display = edittransactionTypeSelect.value === "Transfer" ? "block" : "none";
+    editcontractCycleDiv.style.display = editcontractCheckbox.checked ? "block" : "none";
+});
+
+// function editTransactionWindow(event, button) {
+//     const editPopup = document.getElementById('edit-popup');
+//     editPopup.classList.toggle("visible");
+
+//     const fields = ['id', 'type', 'category', 'amount', 'origin', 'destination', 'date', 'description', 'iscontract', 'cycle'];
+//     fields.forEach(field => {
+//         const value = button.getAttribute(`data-${field}`);
+//         const element = document.getElementById(`edit-${field.replace('id', 'Trans-ID')}`);
+//         if (element) {
+//             element.value = value;
+//         }
+//     });
+// }
+
+// function closeEditMenu() {
+//     document.getElementById('edit-popup').classList.toggle("visible");
+// }
+
+
