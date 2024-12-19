@@ -142,7 +142,7 @@ namespace FinanceTracker.Controllers
         public IActionResult GetDailyExpense([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
         {
             var webUser = WebUser.getUserByEmail(userEmail);
-            decimal[]? dailyExpense = webUser?.GetDailyAccExpense(accID, date);
+            decimal[]? dailyExpense = webUser?.GetDailyAccExpense(date, accID);
 
             return Ok(dailyExpense);
         }

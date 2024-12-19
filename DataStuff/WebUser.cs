@@ -847,291 +847,193 @@ public class WebUser
     }
 
 
-    public decimal[]? GetDailyAccIncome(DateTime date, string accID)
+public decimal[]? GetDailyAccIncome(DateTime date, string accID)
+{
+    Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {date}");
+
+    decimal totalIncome = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    decimal[] dailyIncome = new decimal[7];
+    int dayOfWeek;
+    TimeSpan daySinceFirstDayOfWeek;
+
+    foreach (var transaction in sortedTransactions)
     {
-        Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {date}");
+        daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
+        dayOfWeek = (int)daySinceFirstDayOfWeek.TotalDays;
 
-        decimal totalIncome = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        decimal[] dailyIcome = new decimal[7];
-        int dayOfWeek = 0;
-        TimeSpan daySinceFirstDayOfWeek;
-
-        long weekNumber = date.Ticks / 6048000000000;
-
-        foreach (var transaction in sortedTransactions)
+        if (dayOfWeek >= 0 && dayOfWeek < 7)
         {
-            long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-            daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
-
-            for (; transactionWeekNumber >= weekNumber && dayOfWeek < daySinceFirstDayOfWeek.Days && dayOfWeek < 7; dayOfWeek++)
+            if (transaction.AccountId == accID && transaction.Type == "Income")
             {
-                dailyIcome[dayOfWeek] = totalIncome;
+                totalIncome += transaction.Amount;
             }
-
-            if (transaction.AccountId == accID)
+            else if (transaction.Type == "Transfer" && transaction.Destination == accID)
             {
-                if (transaction.Type == "Income")
-                {
-                    totalIncome += transaction.Amount;
-                }
+                totalIncome += transaction.Amount;
             }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Destination == accID)
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
+            dailyIncome[dayOfWeek] = totalIncome;
         }
-        // for (; dayOfWeek < 7; dayOfWeek++)
-        // {
-        //     dailyIcome[dayOfWeek] = totalIncome;
-        // }
-
-        return dailyIcome;
     }
 
+    return dailyIncome;
+}
 
-    public decimal[]? GetDailyAccExpense(string accID, DateTime date)
+public decimal[]? GetDailyAccExpense(DateTime date, string accID)
+{
+    Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {date}");
+
+    decimal totalExpense = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    decimal[] dailyExpense = new decimal[7];
+    int dayOfWeek;
+    TimeSpan daySinceFirstDayOfWeek;
+
+    foreach (var transaction in sortedTransactions)
     {
+        daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
+        dayOfWeek = (int)daySinceFirstDayOfWeek.TotalDays;
 
-
-        Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {date}");
-
-        decimal totalExpense = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        decimal[] dailyExpense = new decimal[7];
-        int dayOfWeek = 0;
-        TimeSpan daySinceFirstDayOfWeek;
-
-        long weekNumber = date.Ticks / 6048000000000;
-
-        foreach (var transaction in sortedTransactions)
+        if (dayOfWeek >= 0 && dayOfWeek < 7)
         {
-            long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-            daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
-
-            for (; transactionWeekNumber >= weekNumber && dayOfWeek < daySinceFirstDayOfWeek.Days && dayOfWeek < 7; dayOfWeek++)
+            if (transaction.AccountId == accID && transaction.Type == "Expense")
             {
-                dailyExpense[dayOfWeek] = totalExpense;
+                totalExpense += transaction.Amount;
             }
-
-            if (transaction.AccountId == accID)
+            else if (transaction.Type == "Transfer" && transaction.Origin == accID)
             {
-
-                if (transaction.Type == "Expense")
-                {
-                    totalExpense += transaction.Amount;
-                }
+                totalExpense += transaction.Amount;
             }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Origin == accID)
-                {
-                    totalExpense += transaction.Amount;
-                }
-            }
+            dailyExpense[dayOfWeek] = totalExpense;
         }
-        // for (; dayOfWeek < 7; dayOfWeek++)
-        // {
-        //     dailyExpense[dayOfWeek] = totalExpense;
-        // }
-
-        return dailyExpense;
     }
 
+    return dailyExpense;
+}
 
-    public decimal[] GetMonthlyAccIncome(DateTime date, string accID)
+public decimal[] GetMonthlyAccIncome(DateTime date, string accID)
+{
+    DateTime firstDateOfMonth = new DateTime(date.Year, date.Month, 1);
+    Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+
+    decimal totalIncome = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
+    decimal[] dailyIncome = new decimal[daysInMonth];
+    int dayOfMonth;
+
+    foreach (var transaction in sortedTransactions)
     {
-        DateTime firstDateOfMonth = date.AddDays(-date.Day + 1);
-        Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+        dayOfMonth = (transaction.Date.Date - firstDateOfMonth.Date).Days;
 
-        decimal totalIncome = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
-        decimal[] dailyIncome = new decimal[daysInMonth];
-        int dayOfMonth = 0;
-        TimeSpan daySinceFirstDayOfMonth;
-
-        // long weekNumber = firstDateOfMonth.Ticks / 6048000000000;
-
-        foreach (var transaction in sortedTransactions)
+        if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
         {
-            // long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-            daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
-
-            for (; (transaction.Date.Month >= firstDateOfMonth.Month || transaction.Date.Year > firstDateOfMonth.Year) && dayOfMonth < daySinceFirstDayOfMonth.Days && dayOfMonth < daysInMonth; dayOfMonth++)
+            if (transaction.AccountId == accID && transaction.Type == "Income")
             {
-                dailyIncome[dayOfMonth] = totalIncome;
+                totalIncome += transaction.Amount;
             }
-            if (transaction.AccountId == accID)
+            else if (transaction.Type == "Transfer" && transaction.Destination == accID)
             {
-                if (transaction.Type == "Income")
-                {
-                    totalIncome += transaction.Amount;
-                }
+                totalIncome += transaction.Amount;
             }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Destination == accID)
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
+            dailyIncome[dayOfMonth] = totalIncome;
         }
-        // for (; dayOfMonth < daysInMonth; dayOfMonth++)
-        // {
-        //     dailyIncome[dayOfMonth] = totalIncome;
-        // }
-        return dailyIncome;
     }
 
+    return dailyIncome;
+}
 
-    public decimal[] GetMonthlyAccExpense(DateTime date, string accID)
+public decimal[] GetMonthlyAccExpense(DateTime date, string accID)
+{
+    DateTime firstDateOfMonth = new DateTime(date.Year, date.Month, 1);
+    Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+
+    decimal totalExpense = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
+    decimal[] dailyExpense = new decimal[daysInMonth];
+    int dayOfMonth;
+
+    foreach (var transaction in sortedTransactions)
     {
-        DateTime firstDateOfMonth = date.AddDays(-date.Day + 1);
-        Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+        dayOfMonth = (transaction.Date.Date - firstDateOfMonth.Date).Days;
 
-        decimal totalIncome = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
-        decimal[] dailyIncome = new decimal[daysInMonth];
-        int dayOfMonth = 0;
-        TimeSpan daySinceFirstDayOfMonth;
-
-        // long weekNumber = firstDateOfMonth.Ticks / 6048000000000;
-
-        foreach (var transaction in sortedTransactions)
+        if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
         {
-            // long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-            daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
-
-            for (; (transaction.Date.Month >= firstDateOfMonth.Month || transaction.Date.Year > firstDateOfMonth.Year) && dayOfMonth < daySinceFirstDayOfMonth.Days && dayOfMonth < daysInMonth; dayOfMonth++)
+            if (transaction.AccountId == accID && transaction.Type == "Expense")
             {
-                dailyIncome[dayOfMonth] = totalIncome;
+                totalExpense += transaction.Amount;
             }
-
-            if (transaction.AccountId == accID)
+            else if (transaction.Type == "Transfer" && transaction.Origin == accID)
             {
-                if (transaction.Type == "Expense")
-                {
-                    totalIncome += transaction.Amount;
-                }
+                totalExpense += transaction.Amount;
             }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Origin == accID)
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
+            dailyExpense[dayOfMonth] = totalExpense;
         }
-        // for (; dayOfMonth < daysInMonth; dayOfMonth++)
-        // {
-        //     dailyIncome[dayOfMonth] = totalIncome;
-        // }
-
-        return dailyIncome;
     }
 
+    return dailyExpense;
+}
 
+public decimal[] GetYearlyAccIncome(DateTime date, string accID)
+{
+    Console.WriteLine($"Calculating YearlyMonthly Account balance for Account: {accID} with starting date: {date}");
 
-    public decimal[] GetYearlyAccIncome(DateTime date, string accID)
+    decimal totalIncome = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    decimal[] monthlyIncome = new decimal[12];
+    int monthOfYear;
+
+    foreach (var transaction in sortedTransactions)
     {
-        Console.WriteLine($"Calculating YearlyMonthly Account balance for Account: {accID} with starting date: {date}");
+        monthOfYear = transaction.Date.Month - 1;
 
-        decimal totalIncome = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-
-        decimal[] monthlyIncome = new decimal[12];
-        int monthOfYear = 0;
-        int monthsSinceCurrentMonth;
-
-
-
-        foreach (var transaction in sortedTransactions)
+        if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
         {
-
-            for (; transaction.Date.Year == date.Year && monthOfYear < transaction.Date.Month; monthOfYear++)
+            if (transaction.AccountId == accID && transaction.Type == "Income")
             {
-                monthlyIncome[monthOfYear] = totalIncome;
+                totalIncome += transaction.Amount;
             }
-            for (; transaction.Date.Year > date.Year && monthOfYear < 12; monthOfYear++)
+            else if (transaction.Type == "Transfer" && transaction.Destination == accID)
             {
-                monthlyIncome[monthOfYear] = totalIncome;
+                totalIncome += transaction.Amount;
             }
-
-            if (transaction.AccountId == accID)
-            {
-                if (transaction.Type == "Income")
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Destination == accID)
-                {
-                    totalIncome += transaction.Amount;
-                }
-            }
+            monthlyIncome[monthOfYear] = totalIncome;
         }
-        // for (; monthOfYear < 12; monthOfYear++)
-        // {
-        //     monthlyIncome[monthOfYear] = totalIncome;
-        // }
-
-        return monthlyIncome;
     }
 
+    return monthlyIncome;
+}
 
-    public decimal[] GetYearlyAccExpense(DateTime date, string accID)
+public decimal[] GetYearlyAccExpense(DateTime date, string accID)
+{
+    Console.WriteLine($"Calculating YearlyMonthly Account balance for Account: {accID} with starting date: {date}");
+
+    decimal totalExpense = 0;
+    List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
+    decimal[] monthlyExpense = new decimal[12];
+    int monthOfYear;
+
+    foreach (var transaction in sortedTransactions)
     {
-        DateTime firstDateOfMonth = date.AddDays(-date.Day + 1);
-        Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
+        monthOfYear = transaction.Date.Month - 1;
 
-        decimal totalExpense = 0;
-        List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
-        int daysInMonth = DateTime.DaysInMonth(firstDateOfMonth.Year, firstDateOfMonth.Month);
-        decimal[] dailyExpense = new decimal[daysInMonth];
-        int dayOfMonth = 0;
-        TimeSpan daySinceFirstDayOfMonth;
-
-        // long weekNumber = firstDateOfMonth.Ticks / 6048000000000;
-
-        foreach (var transaction in sortedTransactions)
+        if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
         {
-            // long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-            daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
-
-            for (; (transaction.Date.Month >= firstDateOfMonth.Month || transaction.Date.Year > firstDateOfMonth.Year) && dayOfMonth < daySinceFirstDayOfMonth.Days && dayOfMonth < daysInMonth; dayOfMonth++)
+            if (transaction.AccountId == accID && transaction.Type == "Expense")
             {
-                dailyExpense[dayOfMonth] = totalExpense;
+                totalExpense += transaction.Amount;
             }
-
-            if (transaction.AccountId == accID)
+            else if (transaction.Type == "Transfer" && transaction.Origin == accID)
             {
-                if (transaction.Type == "Expense")
-                {
-                    totalExpense += transaction.Amount;
-                }
+                totalExpense += transaction.Amount;
             }
-            else if (transaction.Type == "Transfer")
-            {
-                if (transaction.Origin == accID)
-                {
-                    totalExpense += transaction.Amount;
-                }
-            }
+            monthlyExpense[monthOfYear] = totalExpense;
         }
-        // for (; dayOfMonth < daysInMonth; dayOfMonth++)
-        // {
-        //     dailyExpense[dayOfMonth] = totalExpense;
-        // }
-
-        return dailyExpense;
     }
+
+    return monthlyExpense;
+}
 
     public void ApplyContracts()
     {
