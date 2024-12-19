@@ -108,7 +108,7 @@ namespace FinanceTracker.Controllers
         public JsonResult CalculateAccIncome([FromQuery] DateTime date, [FromQuery] string userEmail, [FromQuery] string accID, [FromQuery] string rangeType)
         {
             var webUser = WebUser.getUserByEmail(userEmail); 
-            var totalIncome = webUser.CalculateAccIncomeForTimeframe(date, accID, rangeType);
+            var totalIncome = webUser?.CalculateAccIncomeForTimeframe(date, accID, rangeType);
 
             return Json(new { totalIncome = totalIncome });
         }
@@ -118,9 +118,75 @@ namespace FinanceTracker.Controllers
         public JsonResult CalculateAccExpense([FromQuery] DateTime date, [FromQuery] string userEmail, [FromQuery] string accID, [FromQuery] string rangeType)
         {
             var webUser = WebUser.getUserByEmail(userEmail); 
-            var totalExpense = webUser.CalculateAccExpenseForTimeframe(date, accID, rangeType);
+            var totalExpense = webUser?.CalculateAccExpenseForTimeframe(date, accID, rangeType);
 
             return Json(new { totalExpense = totalExpense });
+        }
+
+
+
+
+
+        [HttpGet]
+        [Route("fetch-weekly-income-data")]
+        public IActionResult GetDailyIncome([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyIncome = webUser?.GetDailyAccIncome(date, accID);
+
+            return Ok(dailyIncome);
+        }
+
+        [HttpGet]
+        [Route("fetch-weekly-expense-data")]
+        public IActionResult GetDailyExpense([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyExpense = webUser?.GetDailyAccExpense(accID, date);
+
+            return Ok(dailyExpense);
+        }
+
+
+        [HttpGet]
+        [Route("fetch-monthly-income-data")]
+        public IActionResult GetMothlyIncome([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyIncome = webUser?.GetMonthlyAccIncome(date, accID);
+
+            return Ok(dailyIncome);
+        }
+
+        [HttpGet]
+        [Route("fetch-monthly-expense-data")]
+        public IActionResult GetMothlyExpense([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyExpense = webUser?.GetMonthlyAccExpense(date, accID);
+
+            return Ok(dailyExpense);
+        }
+
+
+        [HttpGet]
+        [Route("fetch-yearly-income-data")]
+        public IActionResult GetYearlyIncome([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyIncome = webUser?.GetYearlyAccIncome(date, accID);
+
+            return Ok(dailyIncome);
+        }
+
+        [HttpGet]
+        [Route("fetch-yearly-expense-data")]
+        public IActionResult GetYearlyExpense([FromQuery] string userEmail, [FromQuery] DateTime date, [FromQuery] string accID)
+        {
+            var webUser = WebUser.getUserByEmail(userEmail);
+            decimal[]? dailyExpense = webUser?.GetYearlyAccExpense(date, accID);
+
+            return Ok(dailyExpense);
         }
     }
 }

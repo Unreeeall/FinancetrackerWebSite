@@ -104,6 +104,41 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
+    var ctx4 = document.getElementById('incomeExpensesChart').getContext('2d');
+    var incomeExpensesChart = new Chart(ctx4, {
+        type: 'line',
+        data: {
+            labels: [],
+            datasets: [{
+                label: 'Income',
+                data: [],
+                borderColor: 'rgba(75, 192, 192, 1)',
+                backgroundColor: 'rgba(75, 192, 192, 0.2)',
+                borderWidth: 1,
+                tension: 0.1 // This value controls the amount of curvature. 0 means no curve, 1 means maximum curve.
+            },
+            {
+                label: 'Expense',
+                data: [],
+                borderColor: 'rgba(255, 99, 132, 1)',
+                backgroundColor: 'rgba(255, 99, 132, 0.2)',
+                borderWidth: 1,
+                tension: 0.1 // This value controls the amount of curvature. 0 means no curve, 1 means maximum curve.
+            }]
+        },
+        options: {
+            responsive: true,
+            scales: {
+                x: {
+                    beginAtZero: false
+                },
+                y: {
+                    beginAtZero: false
+                }
+            }
+        }
+    });
+
 
 
     // Function to generate date labels for the selected timeframe.
@@ -141,28 +176,38 @@ document.addEventListener('DOMContentLoaded', (event) => {
         let accountBalanceData = [];
         let expensesByCategoryData = { categories: [], expenses: [] };
         let incomeByCategoryData = { categories: [], expenses: [] };
+        let weeklyIncomeData = [];
+        let weeklyExpenseData = [];
         switch (timeframe) {
             case 'week':
                 accountBalanceData = await fetchWeeklyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, timeframe);
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
+                weeklyIncomeData = await fetchWeeklyIncome(date);
+                weeklyExpenseData = await fetchWeeklyExpense(date);
                 break;
             case 'month':
                 // Replace this with the actual monthly data fetching logic
                 accountBalanceData = await fetchMonthlyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, timeframe);
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
+                weeklyIncomeData = await fetchMonthlyIncome(date);
+                weeklyExpenseData = await fetchMonthlyExpense(date);
                 break;
             case 'year':
                 // Replace this with the actual yearly data fetching logic
                 accountBalanceData = await fetchYearlyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, timeframe);
                 incomeByCategoryData = await fetchIncomeData(date, timeframe);
+                weeklyIncomeData = await fetchYearlylIncome(date);
+                weeklyExpenseData = await fetchYearlyExpense(date);
                 break;
             default:
                 accountBalanceData = await fetchWeeklyData(date);
                 expensesByCategoryData = await fetchExpenseData(date, "week");
                 incomeByCategoryData = await fetchIncomeData(date, "week");
+                weeklyIncomeData = await fetchWeeklyIncome(date);
+                weeklyExpenseData = await fetchWeeklyExpense(date);
         }
 
         console.log('Account Balance Data:', accountBalanceData);
@@ -181,6 +226,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
         incomeByChategoryChart.data.labels = incomeByCategoryData.categories || [];
         incomeByChategoryChart.data.datasets[0].data = incomeByCategoryData.expenses || [];
         incomeByChategoryChart.update();
+
+        incomeExpensesChart.data.labels = generateLabels(timeframe, date);
+        incomeExpensesChart.data.datasets[0].data = weeklyIncomeData;
+        incomeExpensesChart.data.datasets[1].data = weeklyExpenseData;
+        incomeExpensesChart.update();
     }
 
     // Timeframe management logic
@@ -328,6 +378,54 @@ async function fetchIncomeData(date, timeframe) {
 }
 
 
+async function fetchWeeklyIncome(date) {
+    const response = await fetch(`api/Analysis/fetch-weekly-income-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
+async function fetchWeeklyExpense(date) {
+    const response = await fetch(`api/Analysis/fetch-weekly-expense-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
+async function fetchMonthlyIncome(date) {
+    const response = await fetch(`api/Analysis/fetch-monthly-income-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
+async function fetchMonthlyExpense(date) {
+    const response = await fetch(`api/Analysis/fetch-monthly-expense-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
+async function fetchYearlylIncome(date) {
+    const response = await fetch(`api/Analysis/fetch-yearly-income-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
+async function fetchYearlyExpense(date) {
+    const response = await fetch(`api/Analysis/fetch-yearly-expense-data?userEmail=${encodeURIComponent(userEmail)}&date=${date.toISOString()}&accID=${encodeURIComponent(accID)}`);
+    console.log(`Response Status: ${response.status}`);
+    const dailyData = await response.json();
+    console.log('Fetched Weekly Income Data:', dailyData);
+    return dailyData;
+}
+
 
 
 function addTransactionWindow(button) {
@@ -425,7 +523,7 @@ function editTransactionWindow(event, button) {
         const transactionDate = button.getAttribute('data-date');
         const transactionDescription = button.getAttribute('data-description');
         const transactionIsContract = button.getAttribute('data-iscontract');
-        
+
 
         document.getElementById('edit-Trans-ID').value = transactionID;
         document.getElementById('edit-type-select').value = transactionType;
