@@ -38,6 +38,19 @@
             </div>
         </div>
 
+        <div class="time-range-container">
+            <div class="time-selector">
+                <button id="prev">&lt;</button>
+                <span id="timeframe"></span>
+                <button id="next">&gt;</button>
+            </div>
+            <select id="rangeType">
+                <option value="week">Week</option>
+                <option value="month">Month</option>
+                <option value="year">Year</option>
+            </select>
+        </div>
+
         <div class="user-options">
             <div class="login-button">
                 <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser?.Name</span>
@@ -63,18 +76,7 @@
         else
         {
 
-            <div class="time-range-container">
-                <div class="time-selector">
-                    <button id="prev">&lt;</button>
-                    <span id="timeframe"></span>
-                    <button id="next">&gt;</button>
-                </div>
-                <select id="rangeType">
-                    <option value="week">Week</option>
-                    <option value="month">Month</option>
-                    <option value="year">Year</option>
-                </select>
-            </div>
+
             <div class="accountOverview-container">
                 <h1 class="Account-Name-H1">@Model.financialAccount?.AccountName</h1>
                 @if (Model.financialAccount is BankAccount bankAccount)
@@ -119,7 +121,9 @@
             </div>
 
 
-
+            <div class="income-to-expense-chart-contianer">
+                <canvas id="incomeExpensesChart"></canvas>
+            </div>
 
 
 

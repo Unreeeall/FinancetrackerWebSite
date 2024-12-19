@@ -137,8 +137,6 @@ $(document).ready(function () {
 
 
 
-
-
 const accountDivs = document.getElementsByClassName('Acc-Container')
 Array.prototype.forEach.call(accountDivs, element => {
     const uuid = element.getAttribute("uuid");
