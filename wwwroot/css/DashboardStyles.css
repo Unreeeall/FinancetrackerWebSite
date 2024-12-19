@@ -616,6 +616,12 @@ header {
     transform: translateX(-50%);
 }
 
+.time-range-container select{
+    align-self: center;
+    margin-left: 50%;
+    transform: translateX(-50%);
+}
+
 .time-selector {
     color: #ddd;
     
@@ -623,7 +629,16 @@ header {
 
 .time-selector button {
     font-size: 1.5em;
-    
+    background: none;
+    border: none;
+}
+
+.time-selector button:hover {
+    background-color: #555;
+    /* border-style: solid; */
+    cursor: pointer;
+    /* border-color: #888; */
+    border-radius: 3px;
 }
 
 #timeframe {
@@ -631,7 +646,6 @@ header {
     font-size: 1.5em;
     
 }
-
 
 
 .accountBlanceChart-Container {
