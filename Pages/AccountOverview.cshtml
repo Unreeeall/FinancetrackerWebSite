@@ -80,6 +80,7 @@
                 @if (Model.financialAccount is BankAccount bankAccount)
                 {
                     <p class="Account-Balance-p">@bankAccount.Balance @bankAccount.Currency</p>
+
                 }
                 else if (Model.financialAccount is CashAccount cashAccount)
                 {
@@ -106,16 +107,19 @@
                     <h2>Expenses</h2>
                     <h2>Total: <span id="totalExpense"></span></h2>
                     <canvas id="expensesByCategoryChart" width="400" height="200"></canvas>
-                    
+
                 </div>
 
                 <div class="incomeByCategoryChart-container">
                     <h2>Income</h2>
                     <h2>Total: <span id="totalIncome"></span></h2>
                     <canvas id="incomeByCategoryChart" width="400" height="200"></canvas>
-                    
+
                 </div>
             </div>
+
+
+
 
 
 
@@ -183,7 +187,7 @@
             <div class="edit-menu-background" id="edit-popup">
                 <div class="edit-menu-container">
                     <button class="exit-btn" onclick="closeEditMenu()">X</button>
-                    <form method="post" >
+                    <form method="post">
                         <input type="hidden" name="TransID" id="edit-Trans-ID" />
                         <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount.ID" />
                         <div class="edit-type-select-container">
@@ -265,54 +269,56 @@
                                 </option>
                             </select>
                         </div>
+                        <div class="edit-trans-transf-input-container">
+                            <div class="edit-transf-orgin-slct-container">
+                                <label for="edit-transf-orgin-slct">From</label>
+                                <select name="Origin" id="edit-transf-orgin-slct">
+                                    <!-- Populate account options dynamically -->
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                    {
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
+                                    }
+                                </select>
+                            </div>
 
-                        <div class="edit-transf-orgin-slct-container">
-                            <label for="edit-transf-orgin-slct">From</label>
-                            <select name="Origin" id="edit-transf-orgin-slct">
-                                <!-- Populate account options dynamically -->
-                                @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                {
-                                    <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                }
-                                @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                {
-                                    <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                }
-                                @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                {
-                                    <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                }
-                                @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                {
-                                    <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                    </option>
-                                }
-                            </select>
+                            <div class="edit-transf-destination-slct-contianer">
+                                <label for="edit-transf-destination-slct">To</label>
+                                <select name="Destination" id="edit-transf-destination-slct">
+                                    <!-- Populate account options dynamically -->
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                    {
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
+                                    }
+                                </select>
+                            </div>
                         </div>
 
-                        <div class="edit-transf-destination-slct-contianer">
-                            <label for="edit-transf-destination-slct">To</label>
-                            <select name="Destination" id="edit-transf-destination-slct">
-                                <!-- Populate account options dynamically -->
-                                @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                {
-                                    <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                }
-                                @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                {
-                                    <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                }
-                                @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                {
-                                    <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                }
-                                @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                {
-                                    <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                    </option>
-                                }
-                            </select>
-                        </div>
 
                         <div class="edit-trans-description-container">
                             <label for="edit-trans-description-inp">Description</label>
@@ -357,7 +363,7 @@
             <div class="add-transaction-container" id="add-transaction-container">
                 <div class="add-transaction-menu">
                     <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
-                    <form method="post" >
+                    <form method="post">
 
                         <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount.ID" />
 
@@ -529,7 +535,8 @@
 
                         <div class="save-transaction-container">
                             <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
-                            <button type="submit" class="save-transaction-btn" id="save-transaction-btn" asp-page-handler="AddTransaction">Save</button>
+                            <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
+                                asp-page-handler="AddTransaction">Save</button>
                         </div>
                     </form>
                 </div>

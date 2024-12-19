@@ -750,40 +750,74 @@ public class WebUser
     }
 
 
-    public decimal CalculateMonthlyAccTransferIncome(DateTime date, string accID)
+    public decimal CalculatAccTransferIncomeForTimeFrame(DateTime date, string accID, string timeframe)
     {
         decimal TotalTransferAmount = 0;
 
+        long weekNumber = date.Ticks / 6048000000000;
+
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == date.Year && transaction.Date.Month == date.Year)
+            bool isInTimeframe = false;
+
+            switch (timeframe.ToLower())
             {
-                if (transaction.Type == "Transfer")
+                case "week":
+                    long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                    isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                    break;
+                case "month":
+                    isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                case "year":
+                    isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                default:
+                    Console.WriteLine("Invalid timeframe specified.");
+                    return 0;
+            }
+            if (isInTimeframe && transaction.Type == "Transfer")
+            {
+                if (transaction.Destination == accID)
                 {
-                    if (transaction.Destination == accID)
-                    {
-                        TotalTransferAmount += transaction.Amount;
-                    }
+                    TotalTransferAmount += transaction.Amount;
                 }
             }
         }
         return TotalTransferAmount;
     }
 
-    public decimal CalculateMonthlyAccTransferExpense(DateTime date, string accID)
+    public decimal CalculatAccTransferExpenseForTimeFrame(DateTime date, string accID, string timeframe)
     {
         decimal TotalTransferAmount = 0;
 
+        long weekNumber = date.Ticks / 6048000000000;
+
         foreach (var transaction in Transactions)
         {
-            if (transaction.Date.Year == date.Year && transaction.Date.Month == date.Month)
+            bool isInTimeframe = false;
+
+            switch (timeframe.ToLower())
             {
-                if (transaction.Type == "Transfer")
+                case "week":
+                    long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                    isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                    break;
+                case "month":
+                    isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                case "year":
+                    isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                    break;
+                default:
+                    Console.WriteLine("Invalid timeframe specified.");
+                    return 0;
+            }
+            if (isInTimeframe && transaction.Type == "Transfer")
+            {
+                if (transaction.Origin == accID)
                 {
-                    if (transaction.Origin == accID)
-                    {
-                        TotalTransferAmount += transaction.Amount;
-                    }
+                    TotalTransferAmount += transaction.Amount;
                 }
             }
         }
@@ -794,8 +828,8 @@ public class WebUser
     {
         decimal Income = CalculateAccIncomeForTimeframe(date, accID, timeFrame);
         decimal Expense = CalculateAccExpenseForTimeframe(date, accID, timeFrame);
-        decimal TransferInc = CalculateMonthlyAccTransferIncome(date, accID);
-        decimal TransferExp = CalculateMonthlyAccTransferExpense(date, accID);
+        decimal TransferInc = CalculatAccTransferIncomeForTimeFrame(date, accID, timeFrame);
+        decimal TransferExp = CalculatAccTransferExpenseForTimeFrame(date, accID, timeFrame);
 
         decimal TotalPlus = Income + TransferInc - (Expense + TransferExp);
 
@@ -805,7 +839,7 @@ public class WebUser
     public decimal CalculateMonthlyTotalMinus(DateTime date, string accID, string timeFrame)
     {
         decimal Expense = CalculateAccExpenseForTimeframe(date, accID ,timeFrame);
-        decimal TransferExp = CalculateMonthlyAccTransferExpense(date, accID);
+        decimal TransferExp = CalculatAccTransferExpenseForTimeFrame(date, accID, timeFrame);
 
         decimal TotalPlus = Expense + TransferExp;
 
