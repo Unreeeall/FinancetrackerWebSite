@@ -414,29 +414,49 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function editTransactionWindow(event, button) {
-    document.getElementById('edit-popup').classList.toggle("visible");
-    const transactionID = button.getAttribute('data-id');
-    const transactionType = button.getAttribute('data-type');
-    const transactionCategory = button.getAttribute('data-category');
-    const transactionAmount = button.getAttribute('data-amount');
-    const transactionOrigin = button.getAttribute('data-origin');
-    const transactionDestination = button.getAttribute('data-destination');
-    const transactionDate = button.getAttribute('data-date');
-    const transactionDescription = button.getAttribute('data-description');
-    const transactionIsContract = button.getAttribute('data-iscontract');
+    try {
+        document.getElementById('edit-popup').classList.toggle("visible");
+        const transactionID = button.getAttribute('data-id');
+        const transactionType = button.getAttribute('data-type');
+        const transactionCategory = button.getAttribute('data-category');
+        const transactionAmount = button.getAttribute('data-amount');
+        const transactionOrigin = button.getAttribute('data-origin');
+        const transactionDestination = button.getAttribute('data-destination');
+        const transactionDate = button.getAttribute('data-date');
+        const transactionDescription = button.getAttribute('data-description');
+        const transactionIsContract = button.getAttribute('data-iscontract');
+        
 
+        document.getElementById('edit-Trans-ID').value = transactionID;
+        document.getElementById('edit-type-select').value = transactionType;
+        document.getElementById('edit-category-Dropdown').value = transactionCategory;
+        document.querySelector('.edit-trans-amount-inp').value = transactionAmount;
 
-    document.getElementById('edit-Trans-ID').value = transactionID;
-    document.getElementById('edit-type-select').value = transactionType;
-    document.getElementById('edit-category-Dropdown').value = transactionCategory;
-    document.querySelector('.edit-trans-amount-inp').value = transactionAmount;
-    document.getElementById('.edit-transf-orgin-slct').value = transactionOrigin;
-    document.querySelector('.edit-transf-destination-slct').value = transactionDestination;
-    document.querySelector('.edit-trans-date-inp').value = transactionDate;
-    document.getElementById('.edit-trans-description-inp').value = transactionDescription;
-    document.getElementById('.edit-trans-contract-checkbox').value = transactionIsContract;
-    document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract;
+        // Set the date field first to ensure it always gets populated
+        document.querySelector('.edit-trans-date-inp').value = transactionDate;
 
+        document.querySelector('.edit-trans-description-inp').value = transactionDescription;
+
+        if (transactionType === "Transfer") {
+            document.getElementById('edit-transf-orgin-slct').value = transactionOrigin;
+            document.getElementById('edit-transf-destination-slct').value = transactionDestination;
+            document.querySelector('.edit-trans-transf-input-container').style.display = "block";
+        } else {
+            document.querySelector('.edit-trans-transf-input-container').style.display = "none";
+        }
+
+        document.getElementById('edit-trans-contract-checkbox').checked = transactionIsContract === "true";
+        document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract === "true" ? transactionIsContract : "";
+
+        // Show or hide contract cycle based on the contract checkbox
+        if (transactionIsContract === "true") {
+            document.querySelector('.edit-trans-contract-cycle-container').style.display = "block";
+        } else {
+            document.querySelector('.edit-trans-contract-cycle-container').style.display = "none";
+        }
+    } catch (error) {
+        console.error("Error setting transaction data: ", error);
+    }
 }
 
 function closeEditMenu() {
@@ -444,13 +464,13 @@ function closeEditMenu() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-    const edittransactionTypeSelect = document.getElementById('.edit-trans-type-slct');
-    const editcategorySelect = document.getElementById('.edit-trans-category-slct');
+    const edittransactionTypeSelect = document.getElementById('edit-type-select');
+    const editcategorySelect = document.getElementById('edit-category-Dropdown');
     const edittransferInputContainer = document.querySelector('.edit-trans-transf-input-container');
-    const editcontractCheckbox = document.getElementById('.edit-trans-contract-checkbox');
+    const editcontractCheckbox = document.getElementById('edit-trans-contract-checkbox');
     const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
-    const edittransferOriginSelect = document.getElementById('.edit-transf-orgini-slct');
-    const edittransferDestinationSelect = document.getElementById('.edit-transf-destination-slct');
+    const edittransferOriginSelect = document.getElementById('edit-transf-orgin-slct');
+    const edittransferDestinationSelect = document.getElementById('edit-transf-destination-slct');
 
     // Function to filter categories based on transaction type
     function filterEditCategories() {
@@ -480,6 +500,7 @@ document.addEventListener("DOMContentLoaded", function () {
         } else {
             edittransferInputContainer.style.display = "none";
             edittransferOriginSelect.value = ""; // Clear origin value if not Transfer
+            edittransferDestinationSelect.value = ""; // Clear destination value if not Transfer
         }
     });
 
@@ -497,7 +518,7 @@ document.addEventListener("DOMContentLoaded", function () {
         const originValue = edittransferOriginSelect.value;
         const destinationValue = edittransferDestinationSelect.value;
 
-        if (event.target.id === 'edit-transf-orgini-slct' && originValue === destinationValue) {
+        if (event.target.id === 'edit-transf-orgin-slct' && originValue === destinationValue) {
             edittransferDestinationSelect.value = "";
         } else if (event.target.id === 'edit-transf-destination-slct' && originValue === destinationValue) {
             edittransferOriginSelect.value = "";

@@ -115,15 +115,13 @@
                 {
                     <div class="import-file-container" id="import-file-container">
                             <div class="import-file-field">
-                                <button class="close-import-btn" onclick="toggleImportField()"></button>
+                                <button class="close-import-btn" onclick="closeImportField()">x</button>
                                 <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
                                     <input type="file" name="file" class="import-transaction-btn" >
                                     <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
                                     <button type="submit" class="btn btn-primary">Import</button>
                                 </form>
-
                                 <div id="result"></div>
-                                
                             </div>
                     </div>
                     <div class="Bank-Acc-Container Acc-Container" uuid="@bankAccount.ID">
@@ -131,17 +129,17 @@
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
                         <h4>@Stuff.MonthToWord(DateTime.Now.Month) @DateTime.Now.Year</h4>
                         <div class="monthly-plus-minus-container">
-                            @* <p class="income-values">+ @Model.WebUser.CalculateMonthlyTotalPlus(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
-                            <p class="expense-values">- @Model.WebUser.CalculateMonthlyTotalMinus(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
+                            <p class="income-values">+ @Model.WebUser.CalculateMonthlyTotalPlus(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
+                            <p class="expense-values">- @Model.WebUser.CalculateMonthlyTotalMinus(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
                         </div>
                         <div class="other-data-container">
                             <div class="in-out-data-container">
-                                @* <p>Income:  @Model.WebUser.CalculateMonthlyAccIncome(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
-                                <p>Expense: @Model.WebUser.CalculateMonthlyAccExpense(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
+                                <p>Income:  @Model.WebUser.CalculateAccIncomeForTimeframe(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
+                                <p>Expense: @Model.WebUser.CalculateAccExpenseForTimeframe(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
                             </div>
                             <div class="transf-data-contianer">
-                                @* <p>Outging Transfers: @Model.WebUser.CalculateMonthlyAccTransferExpense(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p>
-                                <p>Incomming Transfers: @Model.WebUser.CalculateMonthlyAccTransferIncome(DateTime.Now, bankAccount.ID) @bankAccount.Currency</p> *@
+                                <p>Outging Transfers: @Model.WebUser.CalculatAccTransferExpenseForTimeFrame(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
+                                <p>Incomming Transfers: @Model.WebUser.CalculatAccTransferIncomeForTimeFrame(DateTime.Now, bankAccount.ID, "month") @bankAccount.Currency</p>
                             </div> 
                         </div>
                         
@@ -150,7 +148,7 @@
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <button type="button" class="toggle-import-file-btn" onclick="toggleImportField(event)">📥</button>
+                        <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📥</button>
                         <a asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📤</a>
                         
                         <div class="last-5-transaction-container">

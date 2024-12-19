@@ -55,5 +55,9 @@ namespace FinanceTracker.Controllers
 
             return Json(new { ImportedCount = newTransactions.Count, SkippedCount = importedTransactions.Count - newTransactions.Count });
         }
+
+
+
+        
     }
 }

@@ -12,18 +12,23 @@ function closeAccountMenu() {
 function addTransactionWindow(button, event) {
 
     event.stopPropagation();
-    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
+    document.getElementById('add-transaction-container').classList.toggle("visible");
     const accountID = button.getAttribute('data-id');
     document.getElementById('account-id').value = accountID;
 }
 
 function closeTransactionWindow() {
-    document.getElementById('qick-add-transaction-container').classList.toggle("visible");
+    document.getElementById('add-transaction-container').classList.toggle("visible");
 }
 
 
-function toggleImportField(event) {
+function openImportField(event) {
     event.stopPropagation();
+    document.getElementById('import-file-container').classList.toggle("visible");
+}
+
+function closeImportField() {
+    
     document.getElementById('import-file-container').classList.toggle("visible");
 }
 

@@ -6,8 +6,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "NgHiQG4zN6HNTuvRCpOLf4FZ6vtMmn5xuNfPP0QjVFs=",
-        "ExpireDate": "2024-12-19T07:51:37.7950822+01:00"
+        "Id": "oGO2ykxlrgMVNlrHlWaSsq6mhzixUvTCgNe9VnofJio=",
+        "ExpireDate": "2024-12-20T07:55:34.318713+01:00"
       }
     ],
     "Transactions": [
@@ -5738,6 +5738,22 @@
         "ContractId": null,
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-18T15:41:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "2c05d0bd-25cc-4ae2-b9e1-c3bffca14ac1",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -5770,7 +5786,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 399,
+        "Balance": 401,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
