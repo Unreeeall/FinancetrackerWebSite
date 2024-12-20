@@ -496,7 +496,7 @@ header {
 .edit-menu-background {
     background-color: #00000083;
 
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 2000px;
     display: none;
@@ -562,7 +562,7 @@ header {
 .add-transaction-container {
     background-color: #00000083;
 
-    position: absolute;
+    position: fixed;
     width: 100%;
     height: 2000px;
     display: none;
@@ -572,7 +572,8 @@ header {
     display: block;
 }
 
-.add-transaction-menu {
+.add-transaction-menu,
+.edit-contract-container {
     width: 50%;
     height: 65%;
     background-color: #ff00dd;
@@ -681,7 +682,8 @@ header {
 }
 
 
-.transaction-table-container {
+.transaction-table-container,
+.contract-table-container {
     margin-top: 150px;
     width: 900px;
     height: 800px;
@@ -693,14 +695,16 @@ header {
     overflow: hidden; /* Add this to prevent overflow issues */
 }
 
-.transaction-table-container table {
+.transaction-table-container table,
+.contract-table-container table {
     background-color: #221f1f;
     width: 100%;
     border-collapse: collapse;
 }
 
 /* Add this block to make the tbody scrollable */
-.transaction-table-container tbody {
+.transaction-table-container tbody,
+.contract-table-container tbody {
     display: block;
     height: 700px; /* Adjust the height as needed */
     overflow-y: auto;
@@ -708,7 +712,8 @@ header {
 }
 
 /* Add this block to keep the thead fixed */
-.transaction-table-container thead {
+.transaction-table-container thead,
+.contract-table-container thead {
     display: block;
     width: 100%;
     text-align: center;
@@ -718,13 +723,22 @@ header {
     table-layout: fixed;
 }
 
-.transaction-table-container tbody tr {
+.transaction-table-container tbody tr,
+.contract-table-container tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
+    
 }
 
-.transaction-table-container thead th, .transaction-table-container tbody td {
+.transaction-table-container tbody tr:hover,
+.contract-table-container tbody tr:hover {
+
+    background-color: #555;
+}
+
+.transaction-table-container thead th, .transaction-table-container tbody td
+.contract-table-container thead th, .contract-table-container tbody td {
     padding: 10px;
     text-align: left;
 }
@@ -754,6 +768,26 @@ header {
   ::-webkit-scrollbar-thumb:hover {
     background: #555;
   }
+
+
+
+
+.edit-contract-background {
+    background-color: #00000083;
+
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    display: none;
+}
+
+.edit-contract-background.visible {
+    display: block;
+}
+
+
+
+
 
 
 

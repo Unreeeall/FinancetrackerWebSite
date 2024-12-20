@@ -188,6 +188,73 @@
                 </table>
             </div>
 
+
+            <div class="contract-table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Type</th>
+                            <th>Category</th>
+                            <th>Amount</th>
+                            <th>Origin</th>
+                            <th>Destination</th>
+                            <th>Cycle</th>
+                            <th>Since</th>
+                            <th>Till</th>
+                            <th><button type="button" data-id="@Model.financialAccount?.ID"
+                                    onclick="addContractWindow(this)">+</button></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var contract in Model.WebUser.Contracts)
+                        {
+                            <tr>
+                                <td>@contract.Type</td>
+                                <td>@contract.Category</td>
+                                <td><p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
+                                        @contract.Amount</p>
+                                    <style>
+                                        .trans-amount.expense {
+                                            color: red;
+                                        }
+
+                                        .trans-amount.income {
+                                            color: greenyellow;
+                                        }
+                                    </style></td>
+                                <td>@contract.Origin</td>
+                                <td>@contract.Destination</td>
+                                <td>@contract.Cycle</td>
+                                <td>@contract.StartDate</td>
+                                <td>@contract.EndDate</td>
+                                <td><button type="button" class="edit-button" onclick="toggleEditContract(this)" data-contractId="@contract.ContractId">🖊️</button>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="edit-contract-background" id="edit-contract-background">
+                <div class="edit-contract-container">
+                    <button type="button" class="closeEditMenu" onclick="toggleEditContract()">X</button>
+                    <form method="post">
+                        <input type="hidden" name="ContractID" >
+
+                        <input type="text" >
+
+                        <label for="edit-end-date-input">EndDate</label>
+                        <input type="datetime-local" name="EndDate" class="edit-end-date-input" id="edit-end-date-input">
+                        <button type="submit" class="save-contract-changes-btn" asp-page-handler="EditContract">Save Changes</button>
+                    </form>
+                    <form method="post">
+                        <input type="hidden" name="ContractID" >
+                        <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
+                        <button type="submit" class="delete-contract-button" id="delete-contract-button" asp-page-handler="DeleteContract">❌</button>
+                    </form>
+                </div>
+            </div>
+
             <div class="edit-menu-background" id="edit-popup">
                 <div class="edit-menu-container">
                     <button class="exit-btn" onclick="closeEditMenu()">X</button>
