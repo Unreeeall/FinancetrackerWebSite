@@ -5818,6 +5818,22 @@
         "ContractId": null,
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-19T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "85d79d97-c1d8-4dd8-8985-b006a82eebe0",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -5850,7 +5866,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 580,
+        "Balance": 581,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
