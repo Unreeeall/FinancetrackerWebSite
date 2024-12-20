@@ -61,6 +61,9 @@ public class DashboardModel : PageModel
     public required DateTime Date { get; set; }
 
     [BindProperty]
+    public DateTime? EndDate { get; set; }
+
+    [BindProperty]
     public bool IsContract { get; set; }
 
     [BindProperty]
@@ -146,7 +149,8 @@ public class DashboardModel : PageModel
                         Cycle,
                         Date,
                         Origin,
-                        Destination
+                        Destination,
+                        EndDate
                     );
                     WebUser.Contracts.Add(newContract);
                 }

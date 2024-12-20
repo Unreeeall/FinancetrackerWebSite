@@ -8,6 +8,10 @@
       {
         "Id": "Rt8932nwWv7ISw8JUPZC3hAcSNoqsp7eeFhgC677zic=",
         "ExpireDate": "2024-12-21T07:06:41.6281023+01:00"
+      },
+      {
+        "Id": "dBBZltjd5koAEHhwmRMsQYMFB04ulV6P3JEEYmtjGt0=",
+        "ExpireDate": "2024-12-21T10:11:36.7933344+01:00"
       }
     ],
     "Transactions": [
@@ -5834,6 +5838,102 @@
         "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-17T10:33:00",
+        "Amount": 5,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Freelance/Consulting",
+        "ID": "313302f9-34bd-4ce2-9a3c-155940ce49ee",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "90be496b-0ca5-4419-a010-b3c2cbc468b9",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-18T10:33:00",
+        "Amount": 5,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Freelance/Consulting",
+        "ID": "eb1efd88-b381-4d14-bf4f-6ee0470f60ef",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "90be496b-0ca5-4419-a010-b3c2cbc468b9",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2024-12-19T10:33:00",
+        "Amount": 5,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Freelance/Consulting",
+        "ID": "46d24e9a-5954-414d-8db4-86bfabdd8219",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "90be496b-0ca5-4419-a010-b3c2cbc468b9",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-12-17T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "a65c88c1-1501-4d84-950b-0a22f3f6cad5",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-12-18T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "374367b4-0a7c-4fd7-b9ff-d3ffc2455105",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2024-12-19T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "1fb87769-09ee-4a98-89c8-5fda2d80a338",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -5860,13 +5960,37 @@
         "Type": "Expense",
         "Origin": "",
         "Destination": ""
+      },
+      {
+        "ContractId": "90be496b-0ca5-4419-a010-b3c2cbc468b9",
+        "Amount": 5,
+        "Category": "Freelance/Consulting",
+        "Cycle": 8,
+        "StartDate": "2024-12-17T10:33:00",
+        "EndDate": "2024-12-21T10:33:00",
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Income",
+        "Origin": "",
+        "Destination": ""
+      },
+      {
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Amount": 2,
+        "Category": "Travel (Flights, Hotels)",
+        "Cycle": 8,
+        "StartDate": "2024-12-17T10:33:00",
+        "EndDate": null,
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Expense",
+        "Origin": "",
+        "Destination": ""
       }
     ],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 581,
+        "Balance": 590,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

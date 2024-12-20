@@ -633,6 +633,11 @@ document.addEventListener("DOMContentLoaded", function () {
     editcontractCycleDiv.style.display = editcontractCheckbox.checked ? "block" : "none";
 });
 
+
+function toggleEditContract() {
+    document.getElementById('edit-contract-background').classList.toggle("visible");
+}
+
 // function editTransactionWindow(event, button) {
 //     const editPopup = document.getElementById('edit-popup');
 //     editPopup.classList.toggle("visible");
