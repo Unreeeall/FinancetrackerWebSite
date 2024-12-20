@@ -873,6 +873,7 @@ public decimal[]? GetDailyAccIncome(DateTime date, string accID)
                 totalIncome += transaction.Amount;
             }
             dailyIncome[dayOfWeek] = totalIncome;
+            totalIncome = 0;
         }
     }
 
@@ -905,6 +906,7 @@ public decimal[]? GetDailyAccExpense(DateTime date, string accID)
                 totalExpense += transaction.Amount;
             }
             dailyExpense[dayOfWeek] = totalExpense;
+            totalExpense = 0;
         }
     }
 
@@ -937,6 +939,7 @@ public decimal[] GetMonthlyAccIncome(DateTime date, string accID)
                 totalIncome += transaction.Amount;
             }
             dailyIncome[dayOfMonth] = totalIncome;
+            totalIncome = 0;
         }
     }
 
@@ -969,6 +972,7 @@ public decimal[] GetMonthlyAccExpense(DateTime date, string accID)
                 totalExpense += transaction.Amount;
             }
             dailyExpense[dayOfMonth] = totalExpense;
+            totalExpense = 0;
         }
     }
 
@@ -999,6 +1003,7 @@ public decimal[] GetYearlyAccIncome(DateTime date, string accID)
                 totalIncome += transaction.Amount;
             }
             monthlyIncome[monthOfYear] = totalIncome;
+            totalIncome = 0;
         }
     }
 
@@ -1029,6 +1034,7 @@ public decimal[] GetYearlyAccExpense(DateTime date, string accID)
                 totalExpense += transaction.Amount;
             }
             monthlyExpense[monthOfYear] = totalExpense;
+            totalExpense = 0;
         }
     }
 
