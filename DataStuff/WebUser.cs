@@ -1076,6 +1076,27 @@ public class WebUser
         };
     }
 
+    public void DeleteContract(string contractId)
+    {
+        Contracts.Remove(GetContractByID(contractId));
+    }
+
+
+    public void DeleteAllContractTransactions(string contractId, string contractAccId)
+    {
+
+        foreach (var transaction in Transactions)
+        {
+            if(transaction.ContractId == contractId)
+            {
+                if(transaction.AccountId == contractAccId)
+                {
+                    Transactions.Remove(transaction);
+                }
+            }   
+        }
+    }
+
     public class ExpenseIncomeReport
     {
         public string[]? Categories { get; set; }

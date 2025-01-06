@@ -634,7 +634,43 @@ document.addEventListener("DOMContentLoaded", function () {
 });
 
 
-function toggleEditContract() {
+function editContract(event, button) {
+    document.getElementById('edit-contract-background').classList.toggle("visible");
+
+    const contractID = button.getAttribute('data-contractId');
+        const contractType = button.getAttribute('data-type');
+        const contractCategory = button.getAttribute('data-category');
+        const contractAmount = button.getAttribute('data-amount');
+        const contractOrigin = button.getAttribute('data-origin');
+        const contractDestination = button.getAttribute('data-destination');
+        const contractStartDate = button.getAttribute('data-startDate');
+        const contractEndDate = button.getAttribute('data-endDate');
+        const contractAccId = button.getAttribute('data-accountId');
+        const contractCycle = button.getAttribute('data-cycle');
+        
+
+
+        document.getElementById('contract-id').value = contractID;
+        document.getElementById('contract-type-slct').value = contractType;
+        document.getElementById('contract-category-slct').value = contractCategory;
+        document.getElementById('contract-amount-inp').value = contractAmount;
+        document.getElementById('edit-contract-cycle-slct').value = contractCycle;
+        document.getElementById('contract-acc-id').value = contractAccId;
+
+        // Set the date field first to ensure it always gets populated
+        document.querySelector('.edit-start-date-input').value = contractStartDate;
+        document.querySelector('.edit-end-date-input').value = contractEndDate;
+
+        if (contractType === "Transfer") {
+            document.getElementById('edit-contract-transf-orgin-slct').value = contractOrigin;
+            document.getElementById('edit-contract-transf-destination-slct').value = contractDestination;
+            document.querySelector('.edit-contract-transfer-input-container').style.display = "block";
+        } else {
+            document.querySelector('.edit-trans-transf-input-container').style.display = "none";
+        }
+}
+
+function closeEditContract() {
     document.getElementById('edit-contract-background').classList.toggle("visible");
 }
 
