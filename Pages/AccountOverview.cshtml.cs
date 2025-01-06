@@ -55,6 +55,9 @@ public class AccountOverviewModel : PageModel
     public required DateTime Date { get; set; }
 
     [BindProperty]
+    public DateTime? EndDate { get; set; }
+
+    [BindProperty]
     public bool IsContract { get; set; }
 
     [BindProperty]
@@ -63,6 +66,12 @@ public class AccountOverviewModel : PageModel
 
     [BindProperty]
     public required string TransID { get; set; }
+
+    [BindProperty]
+    public required string ContractId { get; set; }
+
+    [BindProperty]
+    public required string ContractAccId { get; set; }
 
 
 
@@ -84,6 +93,7 @@ public class AccountOverviewModel : PageModel
                 Console.WriteLine("accountID from query is EMPTY!!");
                 return RedirectToPage("/Error");
             }
+            //UuId = accountID;
             Console.WriteLine("Account ID from query: " + accountID);
             // UuId = accountID;
 
@@ -173,7 +183,8 @@ public class AccountOverviewModel : PageModel
                         Cycle,
                         Date,
                         Origin,
-                        Destination
+                        Destination,
+                        EndDate
                     );
                     WebUser.Contracts.Add(newContract);
                 }
@@ -248,7 +259,7 @@ public class AccountOverviewModel : PageModel
                         currentContract.Destination = Destination;
                         currentContract.ContractId = currentContract.ContractId;
 
-                        OnPostDeleteContract(currentContract.ContractId);
+                        WebUser.DeleteContract(currentContract.ContractId);
                         WebUser.Contracts.Add(currentContract);
                     }
                     else
@@ -330,7 +341,7 @@ public class AccountOverviewModel : PageModel
     }
 
 
-    public IActionResult OnPostDeleteContract(string ContractId)
+    public IActionResult OnPostDeleteContract()
     {
         try
         {
@@ -351,6 +362,7 @@ public class AccountOverviewModel : PageModel
             else
             {
                 WebUser.Contracts.Remove(WebUser.GetContractByID(ContractId));
+                WebUser.DeleteAllContractTransactions(ContractId, ContractAccId);
                 Console.WriteLine($"Contract with ID: {ContractId} deleted!");
             }
 

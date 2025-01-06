@@ -202,7 +202,7 @@
                             <th>Since</th>
                             <th>Till</th>
                             <th><button type="button" data-id="@Model.financialAccount?.ID"
-                                    onclick="addContractWindow(this)">+</button></th>
+                                    onclick="addTransactionWindow(this)">+</button></th>
                         </tr>
                     </thead>
                     <tbody>
@@ -211,7 +211,8 @@
                             <tr>
                                 <td>@contract.Type</td>
                                 <td>@contract.Category</td>
-                                <td><p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
+                                <td>
+                                    <p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
                                         @contract.Amount</p>
                                     <style>
                                         .trans-amount.expense {
@@ -221,13 +222,19 @@
                                         .trans-amount.income {
                                             color: greenyellow;
                                         }
-                                    </style></td>
+                                    </style>
+                                </td>
                                 <td>@contract.Origin</td>
                                 <td>@contract.Destination</td>
                                 <td>@contract.Cycle</td>
                                 <td>@contract.StartDate</td>
                                 <td>@contract.EndDate</td>
-                                <td><button type="button" class="edit-button" onclick="toggleEditContract(this)" data-contractId="@contract.ContractId">🖊️</button>
+                                <td><button type="button" class="edit-button" onclick="editContract(event, this)"
+                                        data-contractId="@contract.ContractId" data-type="@contract.Type"
+                                        data-amount="@contract.Amount" data-category="@contract.Category"
+                                        data-cycle="@contract.Cycle" data-startDate="@contract.StartDate.ToString("s")"
+                                        data-endDate="@contract.EndDate?.ToString("s")" data-accountId="@contract.AccountID"
+                                        data-origin="@contract.Origin" data-destination="@contract.Destination">🖊️</button>
                                 </td>
                             </tr>
                         }
@@ -237,20 +244,170 @@
 
             <div class="edit-contract-background" id="edit-contract-background">
                 <div class="edit-contract-container">
-                    <button type="button" class="closeEditMenu" onclick="toggleEditContract()">X</button>
+                    <button type="button" class="closeEditMenu" onclick="closeEditContract()">X</button>
                     <form method="post">
-                        <input type="hidden" name="ContractID" >
 
-                        <input type="text" >
+                        <input type="hidden" name="ContractID" id="contract-id">
+                        <input type="hidden" name="ContractAccID" id="contract-acc-id">
+
+                        <label for="contract-type-slct">Type</label>
+                        <select name="Type" id="contract-type-slct" required>
+                            <option value="" disabled selected></option>
+                            <option value="Income">Income</option>
+                            <option value="Expense">Expense</option>
+                            <option value="Transfer">Transfer</option>
+                        </select>
+
+                        <label for="contract-category-slct">Category</label>
+                        <select name="Category" id="contract-category-slct" required>
+                            <option value="" disabled selected></option>
+                            <option value="Salary" data-type="Income">Salary</option>
+                            <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
+                            </option>
+                            <option value="Investments" data-type="Income">Investments</option>
+                            <option value="Rental Income" data-type="Income">Rental Income</option>
+                            <option value="Business Income" data-type="Income">Business Income</option>
+                            <option value="Bonuses" data-type="Income">Bonuses</option>
+                            <option value="Gifts" data-type="Income">Gifts</option>
+                            <option value="Interest Earned" data-type="Income">Interest Earned</option>
+                            <option value="Dividends" data-type="Income">Dividends</option>
+                            <option value="Other Income" data-type="Income">Other Income</option>
+
+                            <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
+                            <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
+                                (Electricity, Water, Gas)</option>
+                            <option value="Groceries" data-type="Expense">Groceries</option>
+                            <option value="Dining Out" data-type="Expense">Dining Out</option>
+                            <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
+                                Transportation (Fuel, Public Transport)</option>
+                            <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
+                                Car, Home)</option>
+                            <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
+                            <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
+                                Books)</option>
+                            <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
+                                (Movies, Events)</option>
+                            <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
+                                (Netflix, Gym)</option>
+                            <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
+                                Hotels)</option>
+                            <option value="Clothing" data-type="Expense">Clothing</option>
+                            <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
+                                (Haircuts, Spa)</option>
+                            <option value="Household Supplies" data-type="Expense">Household Supplies</option>
+                            <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
+                                (Credit Card, Loans)</option>
+                            <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
+                            <option value="Charitable Donations" data-type="Expense">Charitable Donations
+                            </option>
+                            <option value="Pet Care" data-type="Expense">Pet Care</option>
+                            <option value="Childcare" data-type="Expense">Childcare</option>
+                            <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
+
+                            <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
+                            <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
+                            <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
+                            <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
+                            <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
+                            <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
+                            <option value="External Transfer" data-type="Transfer">External Transfer</option>
+                            <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
+                            </option>
+                            <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
+                            <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
+                            </option>
+                            <option value="Savings to Checking" data-type="Transfer">Savings to Checking
+                            </option>
+                            <option value="Checking to Savings" data-type="Transfer">Checking to Savings
+                            </option>
+                            <option value="Investment to Savings" data-type="Transfer">Investment to Savings
+                            </option>
+                            <option value="Savings to Investment" data-type="Transfer">Savings to Investment
+                            </option>
+                        </select>
+
+                        <label for="contract-amount-inp">Amount</label>
+                        <input type="number" name="Amount" id="contract-amount-inp" class="contract-amount-inp" step="0.01"
+                            min="0" required>
+
+
+                        <div class="edit-contract-transfer-input-container">
+                            <label for="edit-contract-transf-orgin-slct">From</label>
+                            <select name="Origin" id="edit-contract-transf-orgin-slct">
+                                <option value="" disabled selected></option>
+                                <!-- Populate account options dynamically -->
+                                @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                {
+                                    <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                }
+                                @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                {
+                                    <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                }
+                                @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                {
+                                    <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                }
+                                @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                {
+                                    <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                    </option>
+                                }
+                            </select>
+
+                            <label for="edit-contract-transf-destination-slct">To</label>
+                            <select name="Destination" id="edit-contract-transf-destination-slct">
+                                <option value="" disabled selected></option>
+                                <!-- Populate account options dynamically -->
+                                @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                {
+                                    <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                }
+                                @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                {
+                                    <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                }
+                                @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                {
+                                    <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                }
+                                @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                {
+                                    <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                    </option>
+                                }
+                            </select>
+                        </div>
+
+
+                        <div class="edit-contract-cycle-slct-container">
+                            <label for="edit-contract-cycle-slct">Contract cycle</label>
+                            <select name="Cycle" id="edit-contract-cycle-slct" required>
+                                @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                {
+                                    <option value="@billingCycle">@billingCycle</option>
+                                }
+                            </select>
+                        </div>
+
+                        <label for="edit-start-date-input">Start Date</label>
+                        <input type="datetime-local" name="StartDate" class="edit-start-date-input"
+                            id="edit-start-date-input">
 
                         <label for="edit-end-date-input">EndDate</label>
                         <input type="datetime-local" name="EndDate" class="edit-end-date-input" id="edit-end-date-input">
-                        <button type="submit" class="save-contract-changes-btn" asp-page-handler="EditContract">Save Changes</button>
+
+                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
+                        
+                        <button type="submit" class="save-contract-changes-btn" asp-page-handler="EditContract">Save
+                            Changes</button>
                     </form>
                     <form method="post">
-                        <input type="hidden" name="ContractID" >
+                        <input type="hidden" name="ContractID">
+                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
                         <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
-                        <button type="submit" class="delete-contract-button" id="delete-contract-button" asp-page-handler="DeleteContract">❌</button>
+                        <button type="submit" class="delete-contract-button" id="delete-contract-button"
+                            asp-page-handler="DeleteContract">❌</button>
                     </form>
                 </div>
             </div>
@@ -454,6 +611,7 @@
                             <div class="transf-origin-container">
                                 <label for="transf-origin-slct">From:</label>
                                 <select name="Origin" id="transf-orgini-slct">
+                                    <option value="" disabled selected></option>
 
                                     @foreach (var bankaccount in Model.WebUser.BankAccounts)
                                     {
