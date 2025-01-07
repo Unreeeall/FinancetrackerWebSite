@@ -647,15 +647,19 @@ function editContract(event, button) {
         const contractEndDate = button.getAttribute('data-endDate');
         const contractAccId = button.getAttribute('data-accountId');
         const contractCycle = button.getAttribute('data-cycle');
+
+        console.log("ContractID: ", contractID);
         
 
-
+        //document.getElementsByClassName('.contract-ID').value = contractID;
         document.getElementById('contract-id').value = contractID;
+        document.getElementById('del-contract-id').value = contractID;
         document.getElementById('contract-type-slct').value = contractType;
         document.getElementById('contract-category-slct').value = contractCategory;
         document.getElementById('contract-amount-inp').value = contractAmount;
         document.getElementById('edit-contract-cycle-slct').value = contractCycle;
         document.getElementById('contract-acc-id').value = contractAccId;
+        document.getElementById('del-contract-acc-id'). value = contractAccId;
 
         // Set the date field first to ensure it always gets populated
         document.querySelector('.edit-start-date-input').value = contractStartDate;
@@ -668,6 +672,10 @@ function editContract(event, button) {
         } else {
             document.querySelector('.edit-trans-transf-input-container').style.display = "none";
         }
+
+
+        const testContractID = document.getElementById('del-contract-id').value;
+        console.log("Test ContractID: ", testContractID);
 }
 
 function closeEditContract() {

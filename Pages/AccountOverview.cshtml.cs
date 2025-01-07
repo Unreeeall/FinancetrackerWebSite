@@ -68,10 +68,10 @@ public class AccountOverviewModel : PageModel
     public required string TransID { get; set; }
 
     [BindProperty]
-    public required string ContractId { get; set; }
+    public required string ContractID { get; set; }
 
     [BindProperty]
-    public required string ContractAccId { get; set; }
+    public required string ContractAccID { get; set; }
 
 
 
@@ -329,7 +329,9 @@ public class AccountOverviewModel : PageModel
             else
             {
                 WebUser.Transactions.Remove(WebUser.GetTransactionByID(TransID));
+                Console.ForegroundColor = ConsoleColor.Yellow;
                 Console.WriteLine($"Transaction with ID: {TransID} deleted!");
+                Console.ResetColor();
             }
             return RedirectToPage("/AccountOverview", new { uuid = UuId });
         }
@@ -354,16 +356,18 @@ public class AccountOverviewModel : PageModel
             // string accountID = HttpContext.Request.Query["uuid"].ToString();
             // Console.WriteLine("Account ID from query in OnPostDeleteContract: " + accountID);
 
-            if (TransID != null)
+            if (ContractID == null)
             {
-                Console.WriteLine("TransID is null");
+                Console.WriteLine("ContractID is null");
                 return RedirectToPage("/Error");
             }
             else
             {
-                WebUser.Contracts.Remove(WebUser.GetContractByID(ContractId));
-                WebUser.DeleteAllContractTransactions(ContractId, ContractAccId);
-                Console.WriteLine($"Contract with ID: {ContractId} deleted!");
+                WebUser.DeleteAllContractTransactions(ContractID, ContractAccID);
+                WebUser.Contracts.Remove(WebUser.GetContractByID(ContractID));
+                Console.ForegroundColor = ConsoleColor.Yellow;
+                Console.WriteLine($"Contract with ID: {ContractID} deleted!");
+                Console.ResetColor();
             }
 
             return RedirectToPage("/AccountOverview", new { uuid = UuId });

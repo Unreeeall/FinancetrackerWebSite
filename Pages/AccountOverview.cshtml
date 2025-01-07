@@ -247,7 +247,7 @@
                     <button type="button" class="closeEditMenu" onclick="closeEditContract()">X</button>
                     <form method="post">
 
-                        <input type="hidden" name="ContractID" id="contract-id">
+                        <input type="hidden" name="ContractID" id="contract-id" class="contract-ID">
                         <input type="hidden" name="ContractAccID" id="contract-acc-id">
 
                         <label for="contract-type-slct">Type</label>
@@ -398,17 +398,20 @@
                         <input type="datetime-local" name="EndDate" class="edit-end-date-input" id="edit-end-date-input">
 
                         <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
-                        
+
                         <button type="submit" class="save-contract-changes-btn" asp-page-handler="EditContract">Save
                             Changes</button>
                     </form>
-                    <form method="post">
-                        <input type="hidden" name="ContractID">
-                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
-                        <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
-                        <button type="submit" class="delete-contract-button" id="delete-contract-button"
-                            asp-page-handler="DeleteContract">❌</button>
-                    </form>
+                    <div class="delete-contract-container">
+                        <form method="post">
+                            <input type="hidden" name="ContractID" id="del-contract-id" required>
+                            <input type="hidden" name="ContractAccID" id="del-contract-acc-id" required>
+                            <input type="hidden" name="UuId" value="@Model.financialAccount.ID" required>
+                            <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
+                            <button type="submit" class="delete-contract-button" id="delete-contract-button"
+                                asp-page-handler="DeleteContract">❌</button>
+                        </form>
+                    </div>
                 </div>
             </div>
 
