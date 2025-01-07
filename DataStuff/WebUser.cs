@@ -1084,16 +1084,24 @@ public class WebUser
 
     public void DeleteAllContractTransactions(string contractId, string contractAccId)
     {
-
+        List<Transaction> transactionsToDelete = [];
         foreach (var transaction in Transactions)
         {
             if(transaction.ContractId == contractId)
             {
                 if(transaction.AccountId == contractAccId)
                 {
-                    Transactions.Remove(transaction);
+                    transactionsToDelete.Add(transaction);
                 }
             }   
+        }
+
+        
+
+        foreach (var transaction in transactionsToDelete)
+        {
+            Console.WriteLine(transaction.ID);
+            Transactions.Remove(transaction);
         }
     }
 
