@@ -11,7 +11,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>AccountOverview</title>
-    <link rel="stylesheet" href="/css/DashboardStyles.css">
+    <link rel="stylesheet" href="/css/AccountOverview.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
     <script src="/js/site.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
@@ -398,6 +398,8 @@
                         <input type="datetime-local" name="EndDate" class="edit-end-date-input" id="edit-end-date-input">
 
                         <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
+
+                        <input type="checkbox" asp-for="IsFinished" id="mark-contract-as-finished-chbx">
 
                         <button type="submit" class="save-contract-changes-btn" asp-page-handler="EditContract">Save
                             Changes</button>
