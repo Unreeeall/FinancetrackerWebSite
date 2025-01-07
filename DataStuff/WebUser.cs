@@ -1105,6 +1105,27 @@ public class WebUser
         }
     }
 
+    public void UpdateAllContractTransactions(string contractId, string contractAccId, string? type = null, string? category = null, decimal? amount = null, string? destination = null, string? origin = null, string? ticker = null, CryptoCoin? coin = null)
+    {
+        foreach (var transaction in Transactions)
+        {
+            if(transaction.ContractId == contractId)
+            {
+                if(transaction.AccountId == contractAccId)
+                {
+                    if (!string.IsNullOrEmpty(type))transaction.Type = type;
+                    if (!string.IsNullOrEmpty(category))transaction.Category = category;
+                    if (amount != null)transaction.Amount = (decimal)amount;
+                    if (!string.IsNullOrEmpty(destination))transaction.Destination = destination;
+                    if (!string.IsNullOrEmpty(origin))transaction.Origin = origin;
+                    if (!string.IsNullOrEmpty(ticker))transaction.Ticker = ticker;
+                    if (coin != null)transaction.Coin = coin;
+                }
+            }
+        }
+         
+    }
+
     public class ExpenseIncomeReport
     {
         public string[]? Categories { get; set; }

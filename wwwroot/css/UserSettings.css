@@ -98,3 +98,13 @@ h1 {
     background-color: palevioletred;
 
 }
+
+
+.new-pswrd-container {
+    flex-direction: column;
+    display: none;
+}
+
+.new-pswrd-container.visible {
+    display: block;
+}

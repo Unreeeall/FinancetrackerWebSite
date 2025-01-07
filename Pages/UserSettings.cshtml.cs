@@ -32,6 +32,14 @@ public class UserSettingsModel : PageModel
     [BindProperty]
     public required string Password { get; set; }
 
+    [BindProperty]
+    public required string OldPassword { get; set; }
+
+    [BindProperty]
+    public required string NewPassword { get; set; }
+
+    [BindProperty]
+    public required string ConfirmPassword { get; set; }
 
 
     public void OnGet()
@@ -131,6 +139,33 @@ public class UserSettingsModel : PageModel
         WebUser.UpdateUser(Email, UserName, Phonenumber, Password);
 
 
+
+        return Page();
+    }
+
+    public IActionResult OnPostChangePassword()
+    {
+        WebUser = null;
+        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
+        if (sessionId == null) return RedirectToPage("/Index");
+        WebUser = WebUser.GetUserBySession(sessionId);
+        if (WebUser == null) return RedirectToPage("/Index");
+
+
+        if(Password != OldPassword)
+        {
+            Console.WriteLine($"Password does Not match OldPassword -> {Password} || {OldPassword}");
+            return Page();
+        }
+        else if(NewPassword != ConfirmPassword)
+        {   
+            Console.WriteLine($"NewPassword does Not match ConfirmPassword -> {NewPassword} || {ConfirmPassword}");
+            return Page();
+        }
+        else
+        {
+            WebUser.UpdateUser(null, null, null, NewPassword);
+        }
 
         return Page();
     }
