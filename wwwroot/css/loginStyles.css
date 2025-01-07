@@ -20,12 +20,10 @@ body {
     width: 100%;
     box-sizing: border-box;
     position: absolute;
-    
 }
 
 .logoHeader {
     margin-left: 50px;
-
 }
 
 .name-form, .pswrd-form {

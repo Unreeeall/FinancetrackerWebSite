@@ -63,6 +63,9 @@ public class AccountOverviewModel : PageModel
     [BindProperty]
     public BillingCycle Cycle { get; set; }
 
+    [BindProperty]
+    public bool IsFinished { get; set; }
+
 
     [BindProperty]
     public required string TransID { get; set; }
@@ -76,6 +79,8 @@ public class AccountOverviewModel : PageModel
     public string? Ticker { get; set; }
 
     public CryptoCoin Coin { get; set; }
+
+
 
     public IActionResult OnGet()
     {
@@ -400,6 +405,7 @@ public class AccountOverviewModel : PageModel
                     Console.WriteLine("CurrentContract is empty!");
                     return RedirectToPage("/AccountOverview", new { uuid = UuId });
                 }
+                if(IsFinished) EndDate = DateTime.Now;
                 currentContract.Type = Type;
                 currentContract.Category = Category;
                 currentContract.Amount = parsedAmount;

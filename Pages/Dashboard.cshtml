@@ -149,7 +149,7 @@
                         <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
                         <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📥</button>
-                        <a asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📤</a>
+                        <button class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📤</button>
                         
                         <div class="last-5-transaction-container">
                             <table>
@@ -168,7 +168,7 @@
                                 @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(bankAccount.ID).OrderByDescending(t => t.Date).Take(5))
                                 {
                                     <tr>
-                                        <td>@transaction.Type</td>
+                                        <td id="last-5-transaction-type-row" >@transaction.Type</td>
                                         <td>@transaction.Category</td>
                                         <td>@transaction.Amount</td>
                                         <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>

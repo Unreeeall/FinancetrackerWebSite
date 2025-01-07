@@ -4,7 +4,12 @@
     "Name": "PLUG",
     "Phonenumber": "42069",
     "Password": "kaka",
-    "Sessions": [],
+    "Sessions": [
+      {
+        "Id": "O7\u002B0kUAYnBXCTCxCL8HtUFxZM7CdGZkk7QjdwzayY60=",
+        "ExpireDate": "2025-01-08T13:09:22.6178187+01:00"
+      }
+    ],
     "Transactions": [
       {
         "Type": "Income",
@@ -6688,20 +6693,130 @@
     "Email": "gaga@gugu",
     "Name": "Test30000000",
     "Phonenumber": "9999000999",
-    "Password": "123456789",
+    "Password": "haha",
     "Sessions": [
       {
         "Id": "NtPpZel8AD74bsBf2eWzdHfk2nPtloMpxNFTLTaq2Yk=",
         "ExpireDate": "2025-01-08T07:41:52.8242568+01:00"
       }
     ],
-    "Transactions": [],
-    "Contracts": [],
+    "Transactions": [
+      {
+        "Type": "Income",
+        "Date": "2025-01-01T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "e06d45d2-17e3-4175-8d67-8c9ee8519f99",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-02T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "dd4e8ae1-097c-49d1-b41b-daeb60a4e425",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-03T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "283a1f33-b8fb-4b93-adb1-dd0af1243f23",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-04T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "ef87742d-8973-42a2-8ee6-7f4853594883",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-05T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "b6e43f22-623c-4bf1-9f0e-b31b99b70a2b",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-06T11:55:00",
+        "Amount": 10,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "52c828c8-0945-4576-8a4f-a4418be0bc9f",
+        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Ticker": null,
+        "Coin": 0
+      }
+    ],
+    "Contracts": [
+      {
+        "ContractId": "6f41192a-9f15-4eb4-b527-bc577ba09360",
+        "Amount": 10,
+        "Category": "Salary",
+        "Cycle": 8,
+        "StartDate": "2025-01-01T11:55:00",
+        "EndDate": "2025-01-07T11:55:30.7929984+01:00",
+        "AccountID": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
+        "Type": "Income",
+        "Origin": "",
+        "Destination": ""
+      }
+    ],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Hilfe",
-        "Balance": 0,
+        "Balance": 60,
         "ID": "c57b131c-27ba-4e80-8f9b-50781c5faca4"
       }
     ],
