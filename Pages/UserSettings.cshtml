@@ -27,7 +27,7 @@
 
 
     <div class="user-settings-container">
-        <h1>HAHAHHAHAHAHAHAHAHAHAHAHHAHA</h1>
+        <h1>Seddings</h1>
 
 
         <div class="account-creditials-container">
@@ -61,8 +61,29 @@
                     <label for="acc-cred-pswrd-field">Password</label>
                     <input type="password" id="acc-cred-pswrd-field" name="Password" value="@Model.WebUser?.Password"
                         disabled>
+                    <button type="button" id="change-pswrd" class="edit-btn" onclick="togglePswrdChange()">🖊️</button>
                 </div>
             </form>
+            <form method="post">
+                <input type="hidden" name="Password" value="@Model.WebUser?.Password">
+                <div class="new-pswrd-container" id="new-pswrd-container">
+                    <div class="cred-group">
+                        <label for="old-pswrd-inp">Old password</label>
+                        <input type="password" id="old-pswrd-inp" name="OldPassword" required>
+                    </div>
+
+                    <div class="cred-group">
+                        <label for="new-pswrd-inp">Enter new password</label>
+                        <input type="password" id="new-pswrd-inp" name="NewPassword" required>
+                    </div>
+                    <div class="cred-group">
+                        <label for="confirm-pswrd-inp">Confirm password</label>
+                        <input type="password" id="confirm-pswrd-inp" name="ConfirmPassword" required>
+                    </div>
+                    <button type="submit" asp-page-handler="ChangePassword">Change password</button>
+                </div>
+
+            </form >
         </div>
 
         <div class="accounts-table-container">
@@ -187,6 +208,11 @@
             else {
                 editBtn.textContent = '❌'
             }
+        }
+
+
+        function togglePswrdChange() {
+            document.getElementById('new-pswrd-container').classList.toggle("visible");
         }
 
     </script>

@@ -6687,131 +6687,21 @@
   {
     "Email": "gaga@gugu",
     "Name": "Test30000000",
-    "Phonenumber": "766743476",
-    "Password": "haha",
+    "Phonenumber": "9999000999",
+    "Password": "123456789",
     "Sessions": [
       {
         "Id": "NtPpZel8AD74bsBf2eWzdHfk2nPtloMpxNFTLTaq2Yk=",
         "ExpireDate": "2025-01-08T07:41:52.8242568+01:00"
       }
     ],
-    "Transactions": [
-      {
-        "Type": "Income",
-        "Date": "2025-01-01T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "bb7147c4-bde8-40dc-8f8d-6270bbc7cf5b",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-02T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "67abd095-951d-4924-9f4d-3dc3fd4ff590",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-03T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "3e42bbd5-15db-470c-a4a0-27ec7c638ff4",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-04T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "285c4d53-b831-4912-8fe1-4add8f0162f1",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-05T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "4800ebfc-9aee-4baf-9dbd-b413f57520a3",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-06T07:42:00",
-        "Amount": 100,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Bonuses",
-        "ID": "e3753a26-fce2-4671-a0c9-3ed6e295130b",
-        "AccountId": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Ticker": null,
-        "Coin": null
-      }
-    ],
-    "Contracts": [
-      {
-        "ContractId": "56205936-dd5d-4e00-b56d-aff5edf5f3f3",
-        "Amount": 100,
-        "Category": "Bonuses",
-        "Cycle": 8,
-        "StartDate": "2025-01-01T07:42:00",
-        "EndDate": null,
-        "AccountID": "c57b131c-27ba-4e80-8f9b-50781c5faca4",
-        "Type": "Income",
-        "Origin": "",
-        "Destination": ""
-      }
-    ],
+    "Transactions": [],
+    "Contracts": [],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Hilfe",
-        "Balance": 600,
+        "Balance": 0,
         "ID": "c57b131c-27ba-4e80-8f9b-50781c5faca4"
       }
     ],

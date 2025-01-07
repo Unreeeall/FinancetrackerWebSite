@@ -73,7 +73,9 @@ public class AccountOverviewModel : PageModel
     [BindProperty]
     public required string ContractAccID { get; set; }
 
+    public string? Ticker { get; set; }
 
+    public CryptoCoin Coin { get; set; }
 
     public IActionResult OnGet()
     {
@@ -88,7 +90,7 @@ public class AccountOverviewModel : PageModel
             if (!WebUser.HasFinancialAccounts()) return RedirectToPage("/Dashboard");
 
             string accountID = HttpContext.Request.Query["uuid"].ToString();
-            if(accountID == null)
+            if (accountID == null)
             {
                 Console.WriteLine("accountID from query is EMPTY!!");
                 return RedirectToPage("/Error");
@@ -213,7 +215,7 @@ public class AccountOverviewModel : PageModel
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding Transaction: {ex.Message}");
-            return RedirectToPage("/Error"); 
+            return RedirectToPage("/Error");
         }
     }
 
@@ -319,7 +321,7 @@ public class AccountOverviewModel : PageModel
             //     Console.WriteLine("Account ID from query in OnPostDeleteTransaction: " + accountID);
             // }
 
-            
+
 
             if (TransID == null)
             {
@@ -370,6 +372,50 @@ public class AccountOverviewModel : PageModel
                 Console.ResetColor();
             }
 
+            return RedirectToPage("/AccountOverview", new { uuid = UuId });
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error deleting contract: {ex.Message}");
+            return RedirectToPage("/Error");
+        }
+    }
+
+    public IActionResult OnPostEditContract()
+    {
+        try
+        {
+            WebUser = null;
+            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
+            if (sessionId == null) return RedirectToPage("/Index");
+            WebUser = WebUser.GetUserBySession(sessionId);
+            if (WebUser == null) return RedirectToPage("/Index");
+
+
+            if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
+            {
+                var currentContract = WebUser.GetContractByID(ContractID);
+                if (currentContract == null)
+                {
+                    Console.WriteLine("CurrentContract is empty!");
+                    return RedirectToPage("/AccountOverview", new { uuid = UuId });
+                }
+                currentContract.Type = Type;
+                currentContract.Category = Category;
+                currentContract.Amount = parsedAmount;
+                currentContract.Origin = Origin;
+                currentContract.Destination = Destination;
+                currentContract.Cycle = Cycle;
+                currentContract.StartDate = Date;
+                currentContract.EndDate = EndDate;
+                currentContract.ContractId = ContractID;
+                currentContract.AccountID = ContractAccID;
+
+                //if(!string.IsNullOrEmpty(Type))
+                WebUser.DeleteContract(currentContract.ContractId);
+                WebUser.Contracts.Add(currentContract);
+                WebUser.UpdateAllContractTransactions(ContractID, ContractAccID, Type, Category, parsedAmount, Destination, Origin, Ticker, Coin);
+            }
             return RedirectToPage("/AccountOverview", new { uuid = UuId });
         }
         catch (Exception ex)
