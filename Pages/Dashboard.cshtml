@@ -14,6 +14,7 @@
     <title>Dashboard</title>
     <link rel="stylesheet" href="/css/DashboardStyles.css">
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="/js/site.js" defer></script>
@@ -55,8 +56,9 @@
 
     <div class="Dashboard">
         <div class="Total-data">
-            <h4>Total Income: @Model.Report.TotalIncome</h4>
-            <h4>Total Expense: @Model.Report.TotalExpenses</h4>
+            <h1>Accounts</h1>
+            @* <h4>Total Income: @Model.Report.TotalIncome</h4>
+            <h4>Total Expense: @Model.Report.TotalExpenses</h4> *@
         </div>
         <div class="account-wrapper">
 
@@ -113,17 +115,6 @@
             {
                 foreach (var bankAccount in Model.WebUser.BankAccounts)
                 {
-                    <div class="import-file-container" id="import-file-container">
-                            <div class="import-file-field">
-                                <button class="close-import-btn" onclick="closeImportField()">x</button>
-                                <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
-                                    <input type="file" name="file" class="import-transaction-btn" >
-                                    <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
-                                    <button type="submit" class="btn btn-primary">Import</button>
-                                </form>
-                                <div id="result"></div>
-                            </div>
-                    </div>
                     <div class="Bank-Acc-Container Acc-Container" uuid="@bankAccount.ID">
                         <h3>Bankaccount: @bankAccount.AccountName</h3>
                         <p>Balance: @bankAccount.Balance @bankAccount.Currency</p>
@@ -148,8 +139,8 @@
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📥</button>
-                        <button class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📤</button>
+                        <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
+                        <button class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📥</button>
                         
                         <div class="last-5-transaction-container">
                             <table>
@@ -596,6 +587,27 @@
 
             </script> *@
 
+        </div>
+
+        <div class="dark-overlay" id="dark-overlay"></div>
+
+        <div class="import-file-container" id="import-file-container">
+            <div class="import-file-field">
+                <button class="close-import-btn" onclick="closeImportField()">x</button>
+                <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
+                    <div class="box__input">
+                        <i class="material-icons" id="upload-icon">file_upload</i>
+                        <input type="file" name="file" id="file" class="import-transaction-btn" >
+                        <label for="file"><strong class="choose-file-text">Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                        <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
+                        <button type="submit" class="btn-primary">Import</button>
+                    </div>
+                    @* <div class="box__uploading">Uploading…</div>
+                    <div class="box__success">Done!</div>
+                    <div class="box__error">Error! <span></span>.</div> *@
+                </form>
+                <div id="result"></div>
+            </div>
         </div>
     </div>
     <footer>

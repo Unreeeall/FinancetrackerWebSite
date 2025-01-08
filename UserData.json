@@ -6586,6 +6586,54 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-07T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "6c8c1186-9801-4eb3-86cd-388e09923a90",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-07T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "b803e565-a56b-4e88-a063-20dfe5d7d80d",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-07T07:36:00",
+        "Amount": 100,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Rental Income",
+        "ID": "a8449cf5-c51a-4f78-857b-006224b7e192",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -6654,7 +6702,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 1172,
+        "Balance": 1271,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

@@ -335,12 +335,11 @@ header {
     background-color: #67367c;
     border: none;
     border-radius: 3px;
-    width: 8%;
-    height: 8%;
-    font-size: larger;
+    width: 10%;
+    height: 40px;
+    font-size: 30px;
     justify-content: center;
     display: flex;
-    align-content: right;
 }
 
 .quickadd-transaction-btn:hover {
@@ -348,18 +347,10 @@ header {
     background-color: #984fb8;
 }
 
-.toggle-import-file-btn {
-    /* width: 10%; */
-    /* height: 10%; */
-    font-size: 25px;
-    background: none;
-    border: none;
-}
 
-.toggle-import-file-btn:hover {
-    cursor: pointer;
-    background-color: #888;
-}
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .download-transactions-btn {
     font-size: 25px;
@@ -372,7 +363,7 @@ header {
     background-color: #888;
 }
 
-
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 
 .last-5-transaction-container table {
     width: 100%;
@@ -394,25 +385,102 @@ header {
     text-align: left;
 }
 
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* File import */
+
+
+.toggle-import-file-btn {
+    /* width: 10%; */
+    /* height: 10%; */
+    font-size: 25px;
+    background: none;
+    border: none;
+}
+
+.toggle-import-file-btn:hover {
+    cursor: pointer;
+    background-color: #888;
+}
+
+.close-import-btn {
+    background: none;
+    border: none;
+    font-size: 40px;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+
+.close-import-btn:hover {
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+
+
 .import-file-container {
-    background-color: #00000083;
-    color: #ddd;
-    width: 40%;
-    min-width: 600px;
-    height: 65%;
+    background-color: #4a27595d;
+    margin-top: 100px;
     position: fixed;
-    justify-content: center;
+    width: 40%;
+    height: 40%;
+    border-style: dashed;
+    border-radius: 2px;
     display: none;
-    border-style: solid;
-    border-width: 10px;
-    border-color: #3b343f;
-    border-radius: 5px;
+    top: auto;
+    color: #c7c7c7;
 }
 
 .import-file-container.visible {
     display: block;
 }
 
+#upload-icon {
+    color: #c7c7c7;
+    font-size: 86px;
+    justify-content: center;
+    display: flex;
+}
+
+.import-transaction-btn {
+    display: none;
+}
+
+.choose-file-text:hover {
+    
+}
+
+.btn-primary {
+    display: flex;
+    justify-content: center;
+}
+
+
+/* .box__dragndrop,
+.box__uploading,
+.box__success,
+.box__error {
+    display: none;
+}
+
+.box.has-advanced-upload {
+    background-color: white;
+    outline: 2px dashed black;
+    outline-offset: -10px;
+}
+
+.box.has-advanced-upload .box__dragndrop {
+    display: inline;
+}
+
+.box.is-dragover {
+    background-color: grey;
+} */
+
+
+
+/* /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
+/* Add transaction */
 .add-transaction-container {
     background-color: #00000083;
 
@@ -462,8 +530,19 @@ header {
 
 
 
+/*Dark background overlay for every toggle box */
+.dark-overlay {
+    background-color: #00000083;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
 
-
+.dark-overlay.visible {
+    display: block;
+}
 
 canvas {
     width: 100% !important;
@@ -588,7 +667,7 @@ input[type="submit"] {
     .Cash-Acc-Container,
     .Crypto-Wallet-Container,
     .Crypto-Wallet-Container {
-    font-size: smaller;
-    min-width: 350px;
+        font-size: smaller;
+        min-width: 350px;
     }
 }
