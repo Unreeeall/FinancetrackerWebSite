@@ -100,6 +100,8 @@ public class DashboardModel : PageModel
             if (WebUser == null) return RedirectToPage("/Index");
 
             _sharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);
+            WebUser.saveJson();
+            WebUser.loadJson();
 
             return RedirectToPage("/Dashboard");
         }

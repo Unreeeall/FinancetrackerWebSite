@@ -108,3 +108,31 @@ h1 {
 .new-pswrd-container.visible {
     display: block;
 }
+
+
+.confirm-deletion-container {
+    background-color: aqua;
+    display: none;
+    width: 40%;
+    height: 20%;
+    min-width: 450px;
+    justify-self: center;
+    top: 300px;
+    position: fixed;
+    left: 50%;
+    transform: translateX(-50%);
+    
+}
+
+.deletion-content h4 {
+    color: red;
+}
+
+.del-text-container {
+    display: flex;
+    justify-items: center;
+}
+
+.confirm-deletion-container.visible {
+    display: flex;
+}

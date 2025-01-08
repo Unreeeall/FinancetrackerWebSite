@@ -12,13 +12,15 @@ function closeAccountMenu() {
 function addTransactionWindow(button, event) {
 
     event.stopPropagation();
-    document.getElementById('add-transaction-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-transaction-menu').classList.toggle("visible");
     const accountID = button.getAttribute('data-id');
     document.getElementById('account-id').value = accountID;
 }
 
 function closeTransactionWindow() {
-    document.getElementById('add-transaction-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-transaction-menu').classList.toggle("visible");
 }
 
 
@@ -29,7 +31,7 @@ function openImportField(event) {
 }
 
 function closeImportField() {
-    
+
     document.getElementById('dark-overlay').classList.toggle("visible");
     document.getElementById('import-file-container').classList.toggle("visible");
 }
