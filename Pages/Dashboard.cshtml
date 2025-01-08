@@ -28,11 +28,22 @@
             <div class="bar bar3"></div>
         </div>
 
-        <div class="menu" id="menu">
+        @* <div class="menu" id="menu">
             <a href="Dashboard">Dashboard</a>
             <a href="Investments">Investments</a>
             <a href="Budget">Budget</a>
             <a href="Transactions">Transactions</a>
+            <a href="#Contact">Contact</a>
+            <div class="Copyright-ham-footer">
+                <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
+            </div>
+        </div> *@
+
+        <div class="menu" id="menu">
+            <a href="Dashboard">Dashboard</a>
+            <a >Investments</a>
+            <a >Budget</a>
+            <a >Transactions</a>
             <a href="#Contact">Contact</a>
             <div class="Copyright-ham-footer">
                 <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
@@ -291,7 +302,26 @@
 
                 <div class="spacer"></div>
 
+                <div class="dark-overlay" id="dark-overlay"></div>
 
+                <div class="import-file-container" id="import-file-container">
+                    <div class="import-file-field">
+                        <button class="close-import-btn" onclick="closeImportField()">x</button>
+                        <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
+                            <div class="box__input">
+                                <i class="material-icons" id="upload-icon">file_upload</i>
+                                <input type="file" name="file" id="file" class="import-transaction-btn" >
+                                <label for="file"><strong class="choose-file-text">Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                                <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
+                                <button type="submit" class="btn-primary">Import</button>
+                            </div>
+                            @* <div class="box__uploading">Uploading…</div>
+                            <div class="box__success">Done!</div>
+                            <div class="box__error">Error! <span></span>.</div> *@
+                        </form>
+                        <div id="result"></div>
+                    </div>
+                </div>
 
                 <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
                     <button class="add-new-fin-acc-plus">+</button>
@@ -322,76 +352,81 @@
                     </div>
                 </div>
 
-                <div class="add-transaction-container" id="add-transaction-container">
-                    <div class="add-transaction-menu">
+               
+                 <div class="add-transaction-menu" id="add-transaction-menu">
                         <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                         <form method="post">
-
                             <input type="hidden" name="AccID" id="account-id" />
 
-
-                            <div class="trans-type-slct-container" id="trans-type-slct-container">
-
-                                <label for="trans-type-slct">Transaction Type</label>
-                                <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
-                                    <option value="" selected disabled></option>
-                                    <option value="Income">Income</option>
-                                    <option value="Expense">Expense</option>
-                                    <option value="Transfer">Transfer</option>
-                                </select>
-                            </div>
-
-                            <div class="trans-transf-input-container">
-                                <div class="transf-origin-container">
-                                    <label for="transf-origin-slct">From:</label>
-                                    <select name="Origin" id="transf-orgini-slct">
-
-                                        @foreach (var bankAccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
+                        
+                                <div class="input-group">
+                                    <div class="trans-type-slct-container" id="trans-type-slct-container">
+                                        <label for="trans-type-slct">Transaction Type</label>
+                                        <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
+                                            <option value="" selected disabled></option>
+                                            <option value="Income">Income</option>
+                                            <option value="Expense">Expense</option>
+                                            <option value="Transfer">Transfer</option>
+                                        </select>
+                                    </div>
                                 </div>
 
-                                <div class="transf-destination-container">
-                                    <label for="transf-destination-slct">To:</label>
-                                    <select name="Destination" id="transf-destination-slct">
-                                        <option value="" disabled selected></option>
-                                        @foreach (var bankAccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
+                            <hr>
+                            
+                            <div class="input-group">
+                                <div class="trans-transf-input-container">
+                                    <div class="transf-origin-container">
+                                        <label for="transf-origin-slct">From:</label>
+                                        <select name="Origin" id="transf-orgini-slct">
+
+                                            @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                                            {
+                                                <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
+                                            }
+                                            @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                            {
+                                                <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                            }
+                                            @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                            {
+                                                <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                            }
+                                            @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                            {
+                                                <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+
+                                    <div class="transf-destination-container">
+                                        <label for="transf-destination-slct">To:</label>
+                                        <select name="Destination" id="transf-destination-slct">
+                                            <option value="" disabled selected></option>
+                                            @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                                            {
+                                                <option value="@bankAccount.ID">Bankaccount: "@bankAccount.AccountName"</option>
+                                            }
+                                            @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                            {
+                                                <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                            }
+                                            @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                            {
+                                                <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                            }
+                                            @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                            {
+                                                <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                                </option>
+                                            }
+                                        </select>
+                                    </div>
+                                    <hr>
                                 </div>
                             </div>
-
-                            <div class="trans-income-expense-inputs-container">
+                            
+                            <div class="input-group">
                                 <div class="trans-category-container">
                                     <label for="trans-category-slct">Category</label>
                                     <select name="Category" id="trans-category-slct" required>
@@ -460,29 +495,44 @@
                                         <option value="Savings to Investment" data-type="Transfer">Savings to Investment
                                         </option>
                                     </select>
-                                </div>
+                                </div> 
+                                <hr>
+                            </div>
+
+
+                            
+                            <div class="input-group">
                                 <div class="trans-description-container">
                                     <label for="trans-income-description-inp">Description</label>
-                                    <input type="text" class="trans-description" id="trans-description-inp"
-                                        name="Description" required>
+                                    <input type="text" class="trans-description" id="trans-description-inp" name="Description" required>
                                 </div>
+                                <hr>
+                            </div>
+                                
+                            <div class="input-group">
                                 <div class="trans-amount-container">
                                     <label for="trans-amount-inp">Amount</label>
-                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount"
-                                        step="0.01" min="0" required>
+                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" required>
                                 </div>
-
+                                <hr>
+                            </div>
+                                
+                            <div class="input-group">
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
-                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date"
-                                        required>
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" required>
                                 </div>
-
+                                <hr>
+                            </div>
+                                
+                            <div class="input-group">
                                 <div class="trans-contract-container">
                                     <label for="trans-contract-checkbox">Contract</label>
                                     <input type="checkbox" asp-for="IsContract" id="trans-contract-checkbox">
                                 </div>
-
+                            </div>
+                                
+                            <div class="input-group">
                                 <div class="trans-contract-cycle-container">
                                     <label for="contract-cycle-slct">Contract cycle</label>
                                     <select name="Cycle" id="contract-cycle-slct" required>
@@ -492,22 +542,24 @@
                                             <option value="@billingCycle">@billingCycle</option>
                                         }
                                     </select>
-
-                                    <div class="trans-contract-enddate-container">
-                                        <label for="contract-enddate-inp">EndDate</label>
-                                        <input type="datetime-local" class="contract-enddate-inp" id="contract-enddate-inp" name="EndDate">
-                                    </div>
+                                        <div class="trans-contract-enddate-container">
+                                            <label for="contract-enddate-inp">EndDate</label>
+                                            <input type="datetime-local" class="contract-enddate-inp" id="contract-enddate-inp" name="EndDate">
+                                        </div>
+                                    <hr>
                                 </div>
-
-                                
                             </div>
-                            <div class="save-transaction-container">
+                                
+                            
+                                    
+                            <div class="input-group">
+                                <div class="save-transaction-container">
                                 <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
                                     asp-page-handler="AddTransaction">✅</button>
+                                </div>
                             </div>
                         </form>
-                    </div>
-                </div>
+                    </div>   
             }
             <script src="/js/dashboard.js"></script>
 
@@ -589,26 +641,7 @@
 
         </div>
 
-        <div class="dark-overlay" id="dark-overlay"></div>
-
-        <div class="import-file-container" id="import-file-container">
-            <div class="import-file-field">
-                <button class="close-import-btn" onclick="closeImportField()">x</button>
-                <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
-                    <div class="box__input">
-                        <i class="material-icons" id="upload-icon">file_upload</i>
-                        <input type="file" name="file" id="file" class="import-transaction-btn" >
-                        <label for="file"><strong class="choose-file-text">Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
-                        <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
-                        <button type="submit" class="btn-primary">Import</button>
-                    </div>
-                    @* <div class="box__uploading">Uploading…</div>
-                    <div class="box__success">Done!</div>
-                    <div class="box__error">Error! <span></span>.</div> *@
-                </form>
-                <div id="result"></div>
-            </div>
-        </div>
+        
     </div>
     <footer>
         <p>&copy; 2024 Budget Buddy. All rights reserved.</p>

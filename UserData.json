@@ -6,8 +6,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "O7\u002B0kUAYnBXCTCxCL8HtUFxZM7CdGZkk7QjdwzayY60=",
-        "ExpireDate": "2025-01-08T13:09:22.6178187+01:00"
+        "Id": "ga1xfx\u002BS0QRi1wqNdtlr8A4zH1A5fKJR/WHlL/NwccM=",
+        "ExpireDate": "2025-01-09T13:33:16.3955559+01:00"
       }
     ],
     "Transactions": [
@@ -6460,22 +6460,6 @@
         "Coin": null
       },
       {
-        "Type": "Income",
-        "Date": "2025-01-06T15:41:00",
-        "Amount": 1,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Salary",
-        "ID": "e883e915-ec1f-4993-a811-682d7cf808a9",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
         "Type": "Expense",
         "Date": "2025-01-06T10:33:00",
         "Amount": 2,
@@ -6634,6 +6618,22 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-06T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "69823a72-e38d-4a72-8f2e-75e5e4cc6877",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -6704,6 +6704,18 @@
         "AccountName": "Test1",
         "Balance": 1271,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
+      },
+      {
+        "Currency": 0,
+        "AccountName": "hdgfhhg",
+        "Balance": 0,
+        "ID": "12b96af7-9e93-4dbc-8a12-443d3a7dfcde"
+      },
+      {
+        "Currency": 0,
+        "AccountName": "dddddd",
+        "Balance": 0,
+        "ID": "b4c79d69-919f-4d13-abaa-2c96790bd7df"
       }
     ],
     "CashAccounts": [
@@ -6712,12 +6724,6 @@
         "AccountName": "asdas",
         "Balance": 0,
         "ID": "86fe583a-5d38-432b-9823-da9458c93f4d"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "eieieie",
-        "Balance": 0,
-        "ID": "34a301bc-daf2-4618-8528-e46c1ebbdfad"
       }
     ],
     "PortfolioAccounts": [
@@ -6742,12 +6748,7 @@
     "Name": "Test30000000",
     "Phonenumber": "9999000999",
     "Password": "haha",
-    "Sessions": [
-      {
-        "Id": "NtPpZel8AD74bsBf2eWzdHfk2nPtloMpxNFTLTaq2Yk=",
-        "ExpireDate": "2025-01-08T07:41:52.8242568+01:00"
-      }
-    ],
+    "Sessions": [],
     "Transactions": [
       {
         "Type": "Income",

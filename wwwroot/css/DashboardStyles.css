@@ -215,7 +215,8 @@ header {
 .add-new-financialAccount-field {
     background: #ffffff18;
     width: 350px;
-    height: 850px;
+    height: 240px;
+    max-height: 250px;
     border-radius: 10px;
     border-style: dotted;
     border-color: #c7c7c7;
@@ -228,8 +229,7 @@ header {
 .add-new-financialAccount-field:hover {
     cursor: pointer;
     border-color: #fff;
-    width: 370px;
-    height: 870px;
+    padding: 5px;
 }
 
 .add-new-fin-acc-plus {
@@ -334,12 +334,11 @@ header {
 .quickadd-transaction-btn {
     background-color: #67367c;
     border: none;
-    border-radius: 3px;
-    width: 10%;
-    height: 40px;
+    border-radius: 6px;
+    width: 42px;
+    height: 42px;
     font-size: 30px;
-    justify-content: center;
-    display: flex;
+    
 }
 
 .quickadd-transaction-btn:hover {
@@ -481,24 +480,13 @@ header {
 
 /* /////////////////////////////////////////////////////////////////////////////////////////////////////////////// */
 /* Add transaction */
-.add-transaction-container {
-    background-color: #00000083;
 
-    position: fixed;
-    width: 100%;
-    height: 2000px;
-    display: none;
-}
 
-.add-transaction-container.visible {
-    display: block;
-}
 
-.add-transaction-menu,
 .edit-contract-container {
     width: 50%;
     height: 65%;
-    background-color: #ff00dd;
+    background-color:#67367c;
     justify-self: center;
     position: fixed;
     top: 25%;
@@ -507,6 +495,373 @@ header {
     transform: translate(-50%, 0);
     border-radius: 10px;
 }
+
+
+.add-transaction-menu {
+    width: 50%;
+    min-width: 350px;
+    max-width: 500px;
+    height: 65%;
+    min-height: 700px;
+    max-height: 900px;
+    background-color:#3a3a3a;
+    justify-self: center;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 20px;
+
+    
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+
+.add-transaction-menu.visible {
+    display: block;
+}
+
+.input-group {
+    padding: 10px;
+    font-size: 20px;
+    flex-direction: column;
+}
+
+
+
+/* .trans-category-container {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    max-width: 300px;
+} */
+
+.trans-category-container label, .trans-type-slct-container label, .trans-transf-input-container label, .trans-description-container label, .trans-amount-container label, .trans-date-container label, .trans-contract-container label, .trans-contract-cycle-container label{
+    font-weight: bold;
+    font-size: 1rem;
+    color: #c7c7c7;
+    display: inline-block;
+}
+
+#trans-category-slct, #transf-destination-slct, #transf-orgini-slct, #trans-type-slct {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    background-color:#000000;
+    color: #c7c7c7;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(51, 51, 51)" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/> </svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    cursor: pointer;
+}
+
+#trans-category-slct:focus, #transf-destination-slct:focus, #transf-orgini-slct:focus, #trans-type-slct:focus {
+    outline: none;
+    border-color: #c5016d;
+    box-shadow: 0 0 5px rgba(183, 0, 255, 0.5);
+}
+
+#trans-category-slct option, #transf-destination-slct option, #transf-orgini-slct option, #trans-type-slct option {
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: #c7c7c7;
+}
+
+/* Test for new Category dropdown select */
+/* * {
+    user-select: none;
+}
+
+*:focus {
+    outline: none;
+}
+
+.fx {
+    display: flex;
+}
+
+.fx-justify-between {
+    justify-content: space-between;
+}
+
+.trans-category-container {
+    position: relative;
+    width: 300px;
+    margin: 20px auto;
+}
+
+#select-btn {
+    position: relative;
+    height: 16px;
+    padding: 12px 14px;
+    background-color: #fff;
+    border-radius: 4px;
+    cursor: pointer;
+    border: 1px solid #e2eded;
+    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+}
+
+#options-checkbox-btn {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+    z-index: 3;
+}
+
+#selected-value {
+    font-size: 16px;
+    line-height: 1;
+    margin-right: 26px;
+}
+
+.option i {
+    width: 16px;
+    height: 16px;
+}
+
+.option,
+.option-label {
+    color: #2d3667;
+    font-size: 16px;
+}
+
+#chevrons i {
+    display: block;
+    height: 50%;
+    color: #d1dede;
+    font-size: 12px;
+}
+
+#options-checkbox-btn:checked + #select-btn #chevrons i {
+    color: #2d3667;
+}
+
+#options {
+    position: absolute;
+    top: 42px;
+    right: 0;
+    left: 0;
+    width: 298px;
+    margin: 0 auto;
+    background-color: #fff;
+    border-radius: 4px;
+}
+
+#options-checkbox-btn:checked ~ #options {
+    border: 1px solid #e2eded;
+    border-color: #eaf1f1 #e4eded #dbe7e7 #e4eded;
+}
+
+.option {
+    position: relative;
+    line-height: 1;
+    transition: 0.3s ease all;
+    z-index: 2;
+}
+
+.option i {
+    position: absolute;
+    left: 14px;
+    padding: 0;
+    display: none;
+}
+
+#options-checkbox-btn:checked ~ #options .option i {
+    display: block;
+    padding: 12px 0;
+}
+
+.option-label {
+    display: none;
+    padding: 0;
+    margin-left: 27px;
+}
+
+#options-checkbox-btn:checked ~ #options .option-label {
+    display: block;
+    padding: 12px 14px;
+}
+
+.option-radio-btn {
+    position: absolute;
+    left: 0;
+    width: 100%;
+    height: 50%;
+}
+
+.option-radio-btn.top {
+    top: 0;
+}
+
+.option-radio-btn.bottom {
+    bottom: 0;
+}
+
+input[type="radio"] {
+    position: absolute;
+    right: 0;
+    left: 0;
+    width: 100%;
+    height: 50%;
+    margin: 0;
+    opacity: 0;
+    cursor: pointer;
+}
+
+.option-radio-btn:hover ~ i {
+    color: #fff;
+    opacity: 0;
+}
+
+.option-radio-btn:hover {
+    height: 100%;
+    z-index: 1;
+}
+
+.option-radio-btn.bottom:hover + i {
+    bottom: -25px;
+    animation: moveup 0.3s ease 0.1s forwards;
+}
+
+.option-radio-btn.top:hover ~ i {
+    top: -25px;
+    animation: movedown 0.3s ease 0.1s forwards;
+}
+
+@keyframes moveup {
+    0% {
+        bottom: -25px;
+        opacity: 0;
+    }
+    100% {
+        bottom: 0;
+        opacity: 1;
+    }
+}
+
+@keyframes movedown {
+    0% {
+        top: -25px;
+        opacity: 0;
+    }
+    100% {
+        top: 0;
+        opacity: 1;
+    }
+}
+
+.option-label {
+    transition: 0.3s ease all;
+}
+
+.option-value {
+    position: absolute;
+    left: 14px;
+    width: 217px;
+    height: 21px;
+    opacity: 0;
+    background-color: #fff;
+    transform: scale(0);
+}
+
+.option input[type="radio"]:checked ~ .option-value {
+    opacity: 1;
+    transform: scale(1);
+}
+
+.option input[type="radio"]:checked ~ i {
+    top: 0;
+    bottom: auto;
+    opacity: 1;
+    animation: unset;
+}
+
+.option input[type="radio"]:checked ~ i,
+.option input[type="radio"]:checked ~ .option-label {
+    color: #fff;
+}
+
+.option input[type="radio"]:checked ~ .option-label:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: -1;
+}
+
+#options-checkbox-btn:not(:checked)
+    ~ #options
+    .option
+    input[type="radio"]:checked
+    ~ .option-value {
+    top: -30px;
+}
+
+#option-bg {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 40px;
+    transition: 0.3s ease all;
+    z-index: 1;
+    display: none;
+}
+
+#options-checkbox-btn:checked ~ #options #option-bg {
+    display: block;
+}
+
+.option:hover .option-label {
+    color: #fff;
+}
+
+.option:nth-child(1):hover ~ #option-bg {
+    top: 0;
+    background-color: #000;
+    border-radius: 4px 4px 0 0;
+}
+
+.option:nth-child(2):hover ~ #option-bg {
+    top: 40px;
+    background-color: #ea4c89;
+}
+
+.option:nth-child(3):hover ~ #option-bg {
+    top: 80px;
+    background-color: #0057ff;
+}
+
+.option:nth-child(4):hover ~ #option-bg {
+    top: 120px;
+    background-color: #32c766;
+}
+
+.option:nth-child(5):hover ~ #option-bg {
+    top: 160px;
+    background-color: #f48024;
+}
+
+.option:nth-child(6):hover ~ #option-bg {
+    top: 200px;
+    background-color: #006400;
+    border-radius: 0 0 4px 4px;
+} */
 
 .Total-data {
     color: #c7c7c7;
@@ -669,5 +1024,14 @@ input[type="submit"] {
     .Crypto-Wallet-Container {
         font-size: smaller;
         min-width: 350px;
+    }
+}
+
+@media (max-height: 950px) {
+
+
+    .add-transaction-menu {
+        color: #ffffff;
+        background-color: #984fb8;
     }
 }
