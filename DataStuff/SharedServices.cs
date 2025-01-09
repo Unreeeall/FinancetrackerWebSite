@@ -33,6 +33,9 @@ public class SharedServices
             newBankAccount.ID = System.Guid.NewGuid().ToString();
 
             webUser?.BankAccounts.Add(newBankAccount);
+            WebUser.AccountLookup.Add(newBankAccount.ID, newBankAccount);
+
+            WebUser.saveJson();
         }
         else if (AccountType == "Cash")
         {
@@ -45,6 +48,9 @@ public class SharedServices
             newCashAccount.ID = System.Guid.NewGuid().ToString();
 
             webUser?.CashAccounts.Add(newCashAccount);
+            WebUser.AccountLookup.Add(newCashAccount.ID, newCashAccount);
+
+            WebUser.saveJson();
 
         }
         else if (AccountType == "Portfolio")
@@ -57,6 +63,9 @@ public class SharedServices
             newPortfolio.ID = System.Guid.NewGuid().ToString();
 
             webUser?.PortfolioAccounts.Add(newPortfolio);
+            WebUser.AccountLookup.Add(newPortfolio.ID, newPortfolio);
+
+            WebUser.saveJson();
         }
         else if (AccountType == "CryptoWallet")
         {
@@ -68,6 +77,11 @@ public class SharedServices
             newCryptoWallet.ID = System.Guid.NewGuid().ToString();
 
             webUser?.CryptoWallets.Add(newCryptoWallet);
+            WebUser.AccountLookup.Add(newCryptoWallet.ID, newCryptoWallet);
+
+            WebUser.saveJson();
         }
+
+
     }
 }
