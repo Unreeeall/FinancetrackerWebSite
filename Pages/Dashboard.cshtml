@@ -152,36 +152,39 @@
                             onclick="addTransactionWindow(this, event)">+</button>
                         <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
                         <button class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📥</button>
+                        @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
+                        {
+                            <div class="last-5-transaction-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Origin</th>
+                                            <th>Destination</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(bankAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                    {
+                                        <tr>
+                                            <td id="last-5-transaction-type-row" >@transaction.Type</td>
+                                            <td>@transaction.Category</td>
+                                            <td>@transaction.Amount</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                            <td>@transaction.Description</td>
+                                            <td>@transaction.Date</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                </table>
+                            </div>
+                        }
                         
-                        <div class="last-5-transaction-container">
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th>Type</th>
-                                        <th>Category</th>
-                                        <th>Amount</th>
-                                        <th>Origin</th>
-                                        <th>Destination</th>
-                                        <th>Description</th>
-                                        <th>Date</th>
-                                    </tr>
-                                </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(bankAccount.ID).OrderByDescending(t => t.Date).Take(5))
-                                {
-                                    <tr>
-                                        <td id="last-5-transaction-type-row" >@transaction.Type</td>
-                                        <td>@transaction.Category</td>
-                                        <td>@transaction.Amount</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
-                                        <td>@transaction.Description</td>
-                                        <td>@transaction.Date</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
-                        </div>
                     </div>
                 }
                 foreach (var cashAccount in Model.WebUser.CashAccounts)
@@ -192,34 +195,38 @@
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@cashAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cashAccount.ID).OrderByDescending(t => t.Date).Take(5))
-                                {
-                                    <tr>
-                                        <td>@transaction.Type</td>
-                                        <td>@transaction.Category</td>
-                                        <td>@transaction.Amount</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
-                                        <td>@transaction.Description</td>
-                                        <td>@transaction.Date</td>
-                                    </tr>
-
-                                }
-                            </tbody>
-                        </table>
+                        @if(Model.WebUser.GetTransactionsByAccID(cashAccount.ID).Count != 0)
+                        {
+                            <div class="last-5-transaction-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Origin</th>
+                                            <th>Destination</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cashAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                    {
+                                        <tr>
+                                            <td id="last-5-transaction-type-row" >@transaction.Type</td>
+                                            <td>@transaction.Category</td>
+                                            <td>@transaction.Amount</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                            <td>@transaction.Description</td>
+                                            <td>@transaction.Date</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                </table>
+                            </div>
+                        }
                     </div>
                 }
 
@@ -231,34 +238,38 @@
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@cryptoWallet.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cryptoWallet.ID).OrderByDescending(t => t.Date).Take(5))
-                                {
-                                    <tr>
-                                        <td>@transaction.Type</td>
-                                        <td>@transaction.Category</td>
-                                        <td>@transaction.Amount</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
-                                        <td>@transaction.Description</td>
-                                        <td>@transaction.Date</td>
-                                    </tr>
-
-                                }
-                            </tbody>
-                        </table>
+                        @if(Model.WebUser.GetTransactionsByAccID(cryptoWallet.ID).Count != 0)
+                        {
+                            <div class="last-5-transaction-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Origin</th>
+                                            <th>Destination</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(cryptoWallet.ID).OrderByDescending(t => t.Date).Take(5))
+                                    {
+                                        <tr>
+                                            <td id="last-5-transaction-type-row" >@transaction.Type</td>
+                                            <td>@transaction.Category</td>
+                                            <td>@transaction.Amount</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                            <td>@transaction.Description</td>
+                                            <td>@transaction.Date</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                </table>
+                            </div>
+                        }
                     </div>
                 }
 
@@ -270,33 +281,38 @@
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@portfolioAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <table>
-                            <thead>
-                                <tr>
-                                    <th>Type</th>
-                                    <th>Category</th>
-                                    <th>Amount</th>
-                                    <th>Origin</th>
-                                    <th>Destination</th>
-                                    <th>Description</th>
-                                    <th>Date</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(portfolioAccount.ID).OrderByDescending(t => t.Date).Take(5))
-                                {
-                                    <tr>
-                                        <td>@transaction.Type</td>
-                                        <td>@transaction.Category</td>
-                                        <td>@transaction.Amount</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
-                                        <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
-                                        <td>@transaction.Description</td>
-                                        <td>@transaction.Date</td>
-                                    </tr>
-                                }
-                            </tbody>
-                        </table>
+                        @if(Model.WebUser.GetTransactionsByAccID(portfolioAccount.ID).Count != 0)
+                        {
+                            <div class="last-5-transaction-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Type</th>
+                                            <th>Category</th>
+                                            <th>Amount</th>
+                                            <th>Origin</th>
+                                            <th>Destination</th>
+                                            <th>Description</th>
+                                            <th>Date</th>
+                                        </tr>
+                                    </thead>
+                                <tbody>
+                                    @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(portfolioAccount.ID).OrderByDescending(t => t.Date).Take(5))
+                                    {
+                                        <tr>
+                                            <td id="last-5-transaction-type-row" >@transaction.Type</td>
+                                            <td>@transaction.Category</td>
+                                            <td>@transaction.Amount</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
+                                            <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
+                                            <td>@transaction.Description</td>
+                                            <td>@transaction.Date</td>
+                                        </tr>
+                                    }
+                                </tbody>
+                                </table>
+                            </div>
+                        }
                     </div>
                 }
 
