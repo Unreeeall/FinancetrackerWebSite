@@ -25,7 +25,7 @@ namespace FinanceTracker.Controllers
                 return BadRequest("No file uploaded or the file is empty.");
             }
 
-            List<Transaction> importedTransactions;
+            List<Transaction>? importedTransactions;
             using (var stream = new MemoryStream())
             {
                 await file.CopyToAsync(stream);

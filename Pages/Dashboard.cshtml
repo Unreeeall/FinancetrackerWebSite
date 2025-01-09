@@ -151,7 +151,7 @@
                         <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
                         <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
-                        <button class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation()>📥</button>
+                        <a class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation() >📥</a>
                         @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
                         {
                             <div class="last-5-transaction-container">

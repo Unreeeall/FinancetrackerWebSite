@@ -124,7 +124,7 @@ public class WebUser
         }
     }
 
-    public static List<Transaction> GetCurrentUserTransactions(WebUser webUser)
+    public static List<Transaction> GetCurrentUserTransactions(WebUser? webUser)
     {
         if (webUser != null)
         {
@@ -195,7 +195,7 @@ public class WebUser
         IdDict.Remove(session);
     }
 
-    public Transaction? GetTransactionByID(string transactionID)
+    public Transaction? GetTransactionByID(string? transactionID)
     {
         foreach (var transaction in Transactions)
         {
@@ -210,7 +210,7 @@ public class WebUser
     }
 
 
-    public List<Transaction> GetTransactionsByAccID(string accountID)
+    public List<Transaction> GetTransactionsByAccID(string? accountID)
     {
         List<Transaction> accountTransactions = [];
         foreach (var transaction in Transactions)
@@ -224,7 +224,7 @@ public class WebUser
     }
 
 
-    public Contract? GetContractByID(string contractId)
+    public Contract? GetContractByID(string? contractId)
     {
         foreach (var contract in Contracts)
         {
@@ -241,24 +241,35 @@ public class WebUser
         saveJson();
     }
 
-    public void UpdateBankAccount(BankAccount bankAccount, string? name)
+    public void UpdateBankAccount(BankAccount? bankAccount, string? name)
     {
+        if(bankAccount != null)
         if (!string.IsNullOrEmpty(name)) bankAccount.AccountName = name;
     }
 
-    public void UpdateCashAccount(CashAccount cashAccount, string? name)
+    public void UpdateCashAccount(CashAccount? cashAccount, string? name)
     {
+        if(cashAccount != null)
         if (!string.IsNullOrEmpty(name)) cashAccount.AccountName = name;
     }
 
-    public void UpdatePortfolioAccount(PortfolioAccount portfolioAccount, string? name)
+    public void UpdatePortfolioAccount(PortfolioAccount? portfolioAccount, string? name)
     {
+        if(portfolioAccount != null)
         if (!string.IsNullOrEmpty(name)) portfolioAccount.AccountName = name;
     }
 
-    public void UpdateCryptoWallet(CryptoWallet cryptoWallet, string? name)
+    public void UpdateCryptoWallet(CryptoWallet? cryptoWallet, string? name)
     {
+        if(cryptoWallet == null) 
+        { 
+            Console.WriteLine("UpdateCryptoWallet -> CryptoWallet Is emtpy");
+        } 
+        else
         if (!string.IsNullOrEmpty(name)) cryptoWallet.AccountName = name;
+        
+        
+        
     }
 
 
@@ -271,7 +282,7 @@ public class WebUser
         else return true;
     }
 
-    public BankAccount? GetBankAccountByID(string accountID)
+    public BankAccount? GetBankAccountByID(string? accountID)
     {
         foreach (var bankAccount in BankAccounts)
         {
@@ -285,7 +296,7 @@ public class WebUser
         return null;
     }
 
-    public CashAccount? GetCashAccountByID(string accountID)
+    public CashAccount? GetCashAccountByID(string? accountID)
     {
         foreach (var cashAccount in CashAccounts)
         {
@@ -299,7 +310,7 @@ public class WebUser
         return null;
     }
 
-    public PortfolioAccount? GetPortfolioAccountByID(string accountID)
+    public PortfolioAccount? GetPortfolioAccountByID(string? accountID)
     {
         foreach (var portfolioAccount in PortfolioAccounts)
         {
@@ -313,7 +324,7 @@ public class WebUser
         return null;
     }
 
-    public CryptoWallet? GetCryptoWalletByID(string accountID)
+    public CryptoWallet? GetCryptoWalletByID(string? accountID)
     {
         foreach (var cryptoWallet in CryptoWallets)
         {
@@ -502,9 +513,6 @@ public class WebUser
 
         decimal[] monthlyBalances = new decimal[12];
         int monthOfYear = 0;
-        int monthsSinceCurrentMonth;
-
-
 
         foreach (var transaction in sortedTransactions)
         {
@@ -1078,7 +1086,10 @@ public class WebUser
 
     public void DeleteContract(string contractId)
     {
-        Contracts.Remove(GetContractByID(contractId));
+        var contractToRemove = GetContractByID(contractId);
+        if(contractToRemove == null) Console.WriteLine("DeleteContract -> contractToRemove is null!");
+        else
+            Contracts.Remove(contractToRemove);
     }
 
 
@@ -1119,7 +1130,7 @@ public class WebUser
                     if (!string.IsNullOrEmpty(destination))transaction.Destination = destination;
                     if (!string.IsNullOrEmpty(origin))transaction.Origin = origin;
                     if (!string.IsNullOrEmpty(ticker))transaction.Ticker = ticker;
-                    if (coin != null)transaction.Coin = coin;
+                    if (coin != null)transaction.Coin = (CryptoCoin)coin;
                 }
             }
         }

@@ -26,7 +26,7 @@ public class Transaction
     public string? Origin { get; set; }
     public string? Destination { get; set; }
     public string? Description { get; set; }
-    public string? Category { get; set; }
+    public string Category { get; set; }
     public string ID { get; set; }
     public string AccountId { get; set; }
     public bool IsContract { get; set; }
@@ -44,15 +44,16 @@ public class Transaction
         Origin = null;
         Destination = null;
         Description = null;
-        Category = null;
+        Category = "null";
         ID = "null";
         AccountId = "null";
         // IsContract = false;
         Cycle = (BillingCycle)1;
         ContractId = null;
+        Ticker = "null";
     }
     //Constructor for everything
-    public Transaction(string type, DateTime date, decimal amount, string? origin, string? destination, string? description, string? category, string id, string accountId, bool iscontract, BillingCycle cycle, string? contractId = null)
+    public Transaction(string type, DateTime date, decimal amount, string? origin, string? destination, string? description, string category, string id, string accountId, bool iscontract, BillingCycle cycle, string? contractId = null)
     {
         Type = type;
         Category = category;
@@ -69,24 +70,24 @@ public class Transaction
     }
 
     // Constructor for stock transactions
-    public Transaction(string type, DateTime date, decimal amount, string ticker, string accountId)
-    {
-        Type = type;
-        Date = date;
-        Amount = amount;
-        Ticker = ticker;
-        AccountId = accountId;
-    }
+    // public Transaction(string type, DateTime date, decimal amount, string ticker, string accountId)
+    // {
+    //     Type = type;
+    //     Date = date;
+    //     Amount = amount;
+    //     Ticker = ticker;
+    //     AccountId = accountId;
+    // }
 
     // Constructor for crypto transactions
-    public Transaction(string type, DateTime date, decimal amount, CryptoCoin coin, string accountId)
-    {
-        Type = type;
-        Date = date;
-        Amount = amount;
-        Coin = coin;
-        AccountId = accountId;
-    }
+    // public Transaction(string type, DateTime date, decimal amount, CryptoCoin coin, string accountId)
+    // {
+    //     Type = type;
+    //     Date = date;
+    //     Amount = amount;
+    //     Coin = coin;
+    //     AccountId = accountId;
+    // }
 }
 
 public class Contract

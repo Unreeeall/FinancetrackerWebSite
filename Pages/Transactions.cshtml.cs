@@ -187,12 +187,15 @@ public class TransactionsModel : PageModel
             WebUser = WebUser.GetUserBySession(sessionId);
             if (WebUser == null) return RedirectToPage("/Index");
 
-            if (Trans_ID != null)
+            if (Trans_ID == null) Console.WriteLine("OnPostDeleteTransaction -> Trans_ID is null!");
+            else
             {
-                WebUser.Transactions.Remove(WebUser.GetTransactionByID(Trans_ID));
-                Console.WriteLine($"Transaction with ID: {Trans_ID} deleted!");
+                var transactionToDelete = WebUser.GetTransactionByID(Trans_ID);
+                if(transactionToDelete == null) Console.WriteLine("OnPostDeleteTransaction -> transactionToDelete is null!");
+                else
+                    WebUser.Transactions.Remove(transactionToDelete);
+                    Console.WriteLine($"Transaction with ID: {Trans_ID} deleted!");
             }
-
             return Page();
         }
         catch (Exception ex)

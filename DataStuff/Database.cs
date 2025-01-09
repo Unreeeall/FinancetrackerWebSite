@@ -15,6 +15,8 @@ using System.Data.SqlTypes;
 using System.Globalization;
 
 
+
+
 public class Session(string id, DateTime expiredate)
 {
     public string Id { get; set; } = id;

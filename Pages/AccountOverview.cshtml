@@ -144,8 +144,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach (var transaction in
-                       Model.WebUser.GetTransactionsByAccID(Model.financialAccount?.ID).OrderByDescending(t => t.Date))
+                        
+                        @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(Model?.financialAccount?.ID).OrderByDescending(t => t.Date))
                         {
                             <tr>
                                 <td>@transaction.Type</td>
@@ -163,21 +163,21 @@
                                         }
                                     </style>
                                 </td>
-                                <td>@Model.WebUser.GetAccountNameById(transaction?.Origin)</td>
-                                <td>@Model.WebUser.GetAccountNameById(transaction?.Destination)</td>
-                                <td>@transaction.Description</td>
-                                <td>@transaction.Date</td>
+                                <td>@Model?.WebUser.GetAccountNameById(transaction?.Origin)</td>
+                                <td>@Model?.WebUser.GetAccountNameById(transaction?.Destination)</td>
+                                <td>@transaction?.Description</td>
+                                <td>@transaction?.Date</td>
                                 <td class="edit-buttons">
 
-                                    <button type="button" onclick="editTransactionWindow(event, this)" data-id="@transaction.ID"
-                                        data-type="@transaction.Type" data-category="@transaction.Category"
-                                        data-amount="@transaction.Amount" data-origin="@transaction.Origin"
-                                        data-destination="@transaction.Destination" data-date="@transaction.Date.ToString("s")"
-                                        data-description="@transaction.Description" data-iscontract="@transaction.IsContract"
-                                        data-cycle="@transaction.Cycle">🖊️</button>
+                                    <button type="button" onclick="editTransactionWindow(event, this)" data-id="@transaction?.ID"
+                                        data-type="@transaction?.Type" data-category="@transaction?.Category"
+                                        data-amount="@transaction?.Amount" data-origin="@transaction?.Origin"
+                                        data-destination="@transaction?.Destination" data-date="@transaction?.Date.ToString("s")"
+                                        data-description="@transaction?.Description" data-iscontract="@transaction?.IsContract"
+                                        data-cycle="@transaction?.Cycle">🖊️</button>
                                     <form method="post">
-                                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
-                                        <input type="hidden" name="TransID" value="@transaction.ID" />
+                                        <input type="hidden" name="UuId" value="@Model?.financialAccount?.ID">
+                                        <input type="hidden" name="TransID" value="@transaction?.ID" />
                                         <button type="submit" class="delete-button"
                                             asp-page-handler="DeleteTransaction">❌</button>
                                     </form>
@@ -201,7 +201,7 @@
                             <th>Cycle</th>
                             <th>Since</th>
                             <th>Till</th>
-                            <th><button type="button" data-id="@Model.financialAccount?.ID"
+                            <th><button type="button" data-id="@Model?.financialAccount?.ID"
                                     onclick="addTransactionWindow(this)">+</button></th>
                         </tr>
                     </thead>
@@ -397,7 +397,7 @@
                         <label for="edit-end-date-input">EndDate</label>
                         <input type="datetime-local" name="EndDate" class="edit-end-date-input" id="edit-end-date-input">
 
-                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
+                        <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
 
                         <input type="checkbox" asp-for="IsFinished" id="mark-contract-as-finished-chbx">
 
@@ -408,7 +408,7 @@
                         <form method="post">
                             <input type="hidden" name="ContractID" id="del-contract-id" required>
                             <input type="hidden" name="ContractAccID" id="del-contract-acc-id" required>
-                            <input type="hidden" name="UuId" value="@Model.financialAccount.ID" required>
+                            <input type="hidden" name="UuId" value="@Model.financialAccount?.ID" required>
                             <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
                             <button type="submit" class="delete-contract-button" id="delete-contract-button"
                                 asp-page-handler="DeleteContract">❌</button>
@@ -422,7 +422,7 @@
                     <button class="exit-btn" onclick="closeEditMenu()">X</button>
                     <form method="post">
                         <input type="hidden" name="TransID" id="edit-Trans-ID" />
-                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount.ID" />
+                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
                         <div class="edit-type-select-container">
                             <label for="edit-type-select">Type</label>
                             <select name="Type" id="edit-type-select" class="edit-type-select" required>
@@ -585,7 +585,7 @@
                                 }
                             </select>
                         </div>
-                        <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
+                        <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
                         <button type="submit" asp-page-handler="EditTransaction">Save</button>
                     </form>
                 </div>
@@ -598,7 +598,7 @@
                     <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                     <form method="post">
 
-                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount.ID" />
+                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
 
 
                         <div class="trans-type-slct-container" id="trans-type-slct-container">
@@ -768,7 +768,7 @@
                         </div>
 
                         <div class="save-transaction-container">
-                            <input type="hidden" name="UuId" value="@Model.financialAccount.ID">
+                            <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
                             <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
                                 asp-page-handler="AddTransaction">Save</button>
                         </div>
@@ -784,8 +784,8 @@
 
 
     <script>
-        const userEmail = '@Model.WebUser.Email';
-        const accID = '@Model.financialAccount.ID';
+        const userEmail = '@Model.WebUser?.Email';
+        const accID = '@Model.financialAccount?.ID';
         console.log("User Email:", userEmail);
         console.log("Account ID:", accID);
     </script>

@@ -283,9 +283,14 @@ public class AccountOverviewModel : PageModel
                         currentTransaction.IsContract = IsContract;
                         currentTransaction.Cycle = Cycle;
 
-                        WebUser.Transactions.Remove(WebUser.GetTransactionByID(TransID));
-                        WebUser.Transactions.Add(currentTransaction);
-                        Console.WriteLine($"Transaction with ID: {TransID} deleted!");
+                        var transactionToRemove = WebUser.GetTransactionByID(TransID);
+                        if(transactionToRemove == null)Console.WriteLine("OnPostEditTransaction -> transactionToRemove is null!");
+                        else
+                        {
+                            WebUser.Transactions.Remove(transactionToRemove);
+                            WebUser.Transactions.Add(currentTransaction);
+                            Console.WriteLine($"Transaction with ID: {TransID} deleted!");
+                        }   
                     }
                 }
             }
@@ -335,10 +340,14 @@ public class AccountOverviewModel : PageModel
             }
             else
             {
-                WebUser.Transactions.Remove(WebUser.GetTransactionByID(TransID));
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Transaction with ID: {TransID} deleted!");
-                Console.ResetColor();
+                
+                var transactionToRemove = WebUser.GetTransactionByID(TransID);
+                if(transactionToRemove == null)Console.WriteLine("OnPostDeleteTransaction -> transactionToRemove is null!");
+                else
+                {
+                    WebUser.Transactions.Remove(transactionToRemove);
+                    Console.WriteLine($"Transaction with ID: {TransID} deleted!");
+                }
             }
             return RedirectToPage("/AccountOverview", new { uuid = UuId });
         }
@@ -370,13 +379,15 @@ public class AccountOverviewModel : PageModel
             }
             else
             {
-                WebUser.DeleteAllContractTransactions(ContractID, ContractAccID);
-                WebUser.Contracts.Remove(WebUser.GetContractByID(ContractID));
-                Console.ForegroundColor = ConsoleColor.Yellow;
-                Console.WriteLine($"Contract with ID: {ContractID} deleted!");
-                Console.ResetColor();
+                var contractToRemove = WebUser.GetContractByID(TransID);
+                if(contractToRemove == null)Console.WriteLine("OnPostDeleteContract -> transactionToRemove is null!");
+                else
+                {
+                    WebUser.DeleteAllContractTransactions(ContractID, ContractAccID);
+                    WebUser.Contracts.Remove(contractToRemove);
+                    Console.WriteLine($"Contract with ID: {ContractID} deleted!");
+                }
             }
-
             return RedirectToPage("/AccountOverview", new { uuid = UuId });
         }
         catch (Exception ex)

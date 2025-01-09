@@ -12,16 +12,11 @@ public class ErrorModel : PageModel
 {
     public string? RequestId { get; set; }
     public bool ShowRequestId => !string.IsNullOrEmpty(RequestId);
-    public string ErrorMessage { get; set; }
+    public required string ErrorMessage { get; set; }
 
-    public string ErrorText { get; set; }
+    public required string ErrorText { get; set; }
 
-    private readonly ILogger<ErrorModel> _logger;
 
-    public ErrorModel(ILogger<ErrorModel> logger)
-    {
-        _logger = logger;
-    }
 
     public void OnGet()
     {
