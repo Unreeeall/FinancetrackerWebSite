@@ -248,30 +248,41 @@ header {
 }
 
 
-.add-new-acc-background {
-    background-color: #00000083;
-    position: absolute;
-    width: 100%;
-    height: 2000px;
-    display: none;
-}
-
-.add-new-acc-background.visible {
-    display: block;
-}
-
-
 .add-new-acc-menu {
-    width: 50%;
-    height: 65%;
-    background-color: #ff00dd;
+    width: 20%;
+    min-width: 350px;
+    max-width: 500px;
+    height: 20%;
+    background-color:#3a3a3a;
     justify-self: center;
     position: fixed;
     top: 25%;
     left: 50%;
     padding: 20px;
     transform: translate(-50%, 0);
-    border-radius: 10px;
+    border-radius: 20px;
+
+    
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+
+#add-new-acc-btn {
+    margin-top: 20px;
+    display: grid;
+    justify-self: center;
+    scale: 150%;
+    border: none;
+}
+
+#add-new-acc-btn:hover {
+    cursor: pointer;
+    background-color: rgb(100, 160, 11);
+}
+
+.add-new-acc-menu.visible {
+    display: grid;
 }
 
 

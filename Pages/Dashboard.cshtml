@@ -343,8 +343,8 @@
                     <button class="add-new-fin-acc-plus">+</button>
                 </div>
 
-                <div class="add-new-acc-background" id="new-acc-menu">
-                    <div class="add-new-acc-menu">
+                
+                    <div class="add-new-acc-menu" id="add-new-acc-menu">
                         <button class="exit-btn" onclick="closeAccountMenu()">X</button>
                         <form method="post">
                             <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
@@ -363,12 +363,10 @@
                                     <option value="@currency">@currency</option>
                                 }
                             </select>
-                            <input type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount">
+                            <button type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount" id="add-new-acc-btn">Add new Account</button>
                         </form>
                     </div>
-                </div>
 
-               
                  <div class="add-transaction-menu" id="add-transaction-menu">
                         <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                         <form method="post">
