@@ -171,6 +171,7 @@ const accountDivs = document.getElementsByClassName('Acc-Container')
 Array.prototype.forEach.call(accountDivs, element => {
     const uuid = element.getAttribute("uuid");
     element.addEventListener("click", event => {
+        event.stopPropagation();
         window.location.href = "AccountOverview?uuid=" + uuid;
     })
 })

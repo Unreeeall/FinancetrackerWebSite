@@ -9,22 +9,12 @@ using System.Globalization;
 
 namespace FinanceTracker.Pages;
 
-public class DashboardModel : PageModel
+public class DashboardModel(SharedServices sharedServices) : PageModel
 {
     public WebUser? WebUser { get; set; }
-    public WebUser.FinancialReport Report { get; set; }
+    public required WebUser.FinancialReport Report { get; set; }
 
-    private readonly SharedServices _sharedServices;
-
-    public DashboardModel(SharedServices sharedServices)
-    {
-        _sharedServices = sharedServices;
-    }
-
-
-
-
-
+    private readonly SharedServices _sharedServices = sharedServices;
 
     [BindProperty]
     public required string AccountType { get; set; }
@@ -184,23 +174,23 @@ public class DashboardModel : PageModel
     }
 
 
-    [HttpGet]
-    [Route("download-transactions")]
-    public IActionResult DownloadTransactions()
-    {
-        // Get the current user's transactions
-        var transactions = WebUser.GetCurrentUserTransactions(WebUser);
+    // [HttpGet]
+    // [Route("download-transactions")]
+    // public IActionResult DownloadTransactions()
+    // {
+    //     // Get the current user's transactions
+    //     var transactions = WebUser.GetCurrentUserTransactions(WebUser);
 
-        // Serialize the transactions to JSON
-        string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
+    //     // Serialize the transactions to JSON
+    //     string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
 
-        // Convert the JSON string to a byte array
-        var fileBytes = System.Text.Encoding.UTF8.GetBytes(transactionsJson);
-        var fileName = "transactions.json";
+    //     // Convert the JSON string to a byte array
+    //     var fileBytes = System.Text.Encoding.UTF8.GetBytes(transactionsJson);
+    //     var fileName = "transactions.json";
 
-        // Return the file for download
-        return File(fileBytes, "Financetracker/json", fileName);
-    }
+    //     // Return the file for download
+    //     return File(fileBytes, "Financetracker/json", fileName);
+    // }
 
 
 

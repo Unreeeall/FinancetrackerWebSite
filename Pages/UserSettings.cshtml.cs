@@ -53,7 +53,7 @@ public class UserSettingsModel : PageModel
     }
 
 
-    public IActionResult OnPostEditFinancialAccount(string AccountType, string ID)
+    public IActionResult OnPostEditFinancialAccount()
     {
         WebUser = null;
         if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
@@ -87,7 +87,7 @@ public class UserSettingsModel : PageModel
 
 
 
-    public IActionResult OnPostDeleteFinacialAccount(string AccountType, string ID)
+    public IActionResult OnPostDeleteFinacialAccount()
     {
         WebUser = null;
         if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
@@ -95,36 +95,59 @@ public class UserSettingsModel : PageModel
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
 
-        Console.WriteLine("EIER1");
-
-        if (ID != null)
+        if (ID == null)
         {
+            return Page();
 
-            Console.WriteLine("EIER2");
+        }
+        else
+        {
             if (AccountType == "BankAccount")
             {
-                WebUser.BankAccounts.Remove(WebUser.GetBankAccountByID(ID));
-                Console.WriteLine("EIER3");
+                var accToRemove = WebUser.GetBankAccountByID(ID);
+                if (accToRemove == null)
+                {
+                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
+                }
+                else
+                    WebUser.BankAccounts.Remove(accToRemove);
                 return Page();
             }
             else if (AccountType == "Cash")
             {
-                WebUser.CashAccounts.Remove(WebUser.GetCashAccountByID(ID));
+                var accToRemove = WebUser.GetCashAccountByID(ID);
+                if (accToRemove == null)
+                {
+                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
+                }
+                else
+                    WebUser.CashAccounts.Remove(accToRemove);
                 return Page();
             }
             else if (AccountType == "Portfolio")
             {
-                WebUser.PortfolioAccounts.Remove(WebUser.GetPortfolioAccountByID(ID));
+                var accToRemove = WebUser.GetPortfolioAccountByID(ID);
+                if (accToRemove == null)
+                {
+                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
+                }
+                else
+                    WebUser.PortfolioAccounts.Remove(accToRemove);
                 return Page();
             }
             else if (AccountType == "CryptoWallet")
             {
-                WebUser.CryptoWallets.Remove(WebUser.GetCryptoWalletByID(ID));
+                var accToRemove = WebUser.GetCryptoWalletByID(ID);
+                if (accToRemove == null)
+                {
+                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
+                }
+                else
+                    WebUser.CryptoWallets.Remove(accToRemove);
                 return Page();
             }
             else return Page();
         }
-        return Page();
     }
 
 
@@ -152,13 +175,13 @@ public class UserSettingsModel : PageModel
         if (WebUser == null) return RedirectToPage("/Index");
 
 
-        if(Password != OldPassword)
+        if (Password != OldPassword)
         {
             Console.WriteLine($"Password does Not match OldPassword -> {Password} || {OldPassword}");
             return Page();
         }
-        else if(NewPassword != ConfirmPassword)
-        {   
+        else if (NewPassword != ConfirmPassword)
+        {
             Console.WriteLine($"NewPassword does Not match ConfirmPassword -> {NewPassword} || {ConfirmPassword}");
             return Page();
         }
