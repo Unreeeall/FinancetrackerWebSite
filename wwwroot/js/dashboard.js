@@ -1,11 +1,11 @@
 function addAccountWindow() {
-    document.getElementById('new-acc-menu').classList.toggle("visible");
-
-
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-new-acc-menu').classList.toggle("visible");
 }
 
 function closeAccountMenu() {
-    document.getElementById('new-acc-menu').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-new-acc-menu').classList.toggle("visible");
 }
 
 

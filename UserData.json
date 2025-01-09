@@ -4,7 +4,12 @@
     "Name": "PLUG",
     "Phonenumber": "42069",
     "Password": "kaka",
-    "Sessions": [],
+    "Sessions": [
+      {
+        "Id": "Mbywe5aFJScc1HXlG3wtAju2FsWk9XGBJNkSO\u002BL1R\u002Bk=",
+        "ExpireDate": "2025-01-10T09:16:41.784171+01:00"
+      }
+    ],
     "Transactions": [
       {
         "Type": "Income",
@@ -6763,48 +6768,6 @@
         "AccountName": "Test1",
         "Balance": 1350,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "hdgfhhg",
-        "Balance": 0,
-        "ID": "12b96af7-9e93-4dbc-8a12-443d3a7dfcde"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "dddddd",
-        "Balance": 0,
-        "ID": "b4c79d69-919f-4d13-abaa-2c96790bd7df"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "apapapapapapapapa",
-        "Balance": 0,
-        "ID": "4db57aa5-baed-4924-8722-f023f90d57f2"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "lalalalalalaa",
-        "Balance": 0,
-        "ID": "37c83d57-f9ec-45b7-8a32-0ea10661ccaa"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "khhjkljlkjkljkljkl",
-        "Balance": 0,
-        "ID": "b26069d8-6bd7-49ea-8e72-1bc6abc45bd2"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "Eier",
-        "Balance": 0,
-        "ID": "61f37e57-b9da-47bb-878d-fe363492f39f"
-      },
-      {
-        "Currency": 0,
-        "AccountName": "eeieieieie",
-        "Balance": 0,
-        "ID": "3c6d87c6-f45d-4d6e-bbc2-6afe9fde85c8"
       }
     ],
     "CashAccounts": [
@@ -6964,10 +6927,6 @@
       {
         "Id": "bdFAltm6vmDcGIIfO3eboEslBJnXZo\u002BELQAfjo2yNeo=",
         "ExpireDate": "2025-01-10T07:29:30.0465026+01:00"
-      },
-      {
-        "Id": "jEupYURBWInGobDXfeDWBddxFOaIvo9e9kt/wBqWl14=",
-        "ExpireDate": "2025-01-10T07:29:52.8039655+01:00"
       }
     ],
     "Transactions": [],
