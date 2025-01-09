@@ -4,12 +4,7 @@
     "Name": "PLUG",
     "Phonenumber": "42069",
     "Password": "kaka",
-    "Sessions": [
-      {
-        "Id": "ga1xfx\u002BS0QRi1wqNdtlr8A4zH1A5fKJR/WHlL/NwccM=",
-        "ExpireDate": "2025-01-09T13:33:16.3955559+01:00"
-      }
-    ],
+    "Sessions": [],
     "Transactions": [
       {
         "Type": "Income",
@@ -6958,6 +6953,35 @@
     ],
     "CashAccounts": [],
     "PortfolioAccounts": [],
+    "CryptoWallets": []
+  },
+  {
+    "Email": "hihi@haha",
+    "Name": "HAHAHA",
+    "Phonenumber": "123",
+    "Password": "gaga",
+    "Sessions": [
+      {
+        "Id": "bdFAltm6vmDcGIIfO3eboEslBJnXZo\u002BELQAfjo2yNeo=",
+        "ExpireDate": "2025-01-10T07:29:30.0465026+01:00"
+      },
+      {
+        "Id": "jEupYURBWInGobDXfeDWBddxFOaIvo9e9kt/wBqWl14=",
+        "ExpireDate": "2025-01-10T07:29:52.8039655+01:00"
+      }
+    ],
+    "Transactions": [],
+    "Contracts": [],
+    "BankAccounts": [],
+    "CashAccounts": [],
+    "PortfolioAccounts": [
+      {
+        "Investments": [],
+        "AccountName": "ggfgfgfgfg",
+        "Balance": 0,
+        "ID": "20e693d5-9d8a-4607-b356-f3bb7797faf8"
+      }
+    ],
     "CryptoWallets": []
   }
 ]
