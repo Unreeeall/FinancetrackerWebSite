@@ -111,28 +111,79 @@ h1 {
 
 
 .confirm-deletion-container {
-    background-color: aqua;
+    background-color: #3a3a3a;
     display: none;
     width: 40%;
-    height: 20%;
+    height: 30%;
     min-width: 450px;
     justify-self: center;
     top: 300px;
     position: fixed;
     left: 50%;
     transform: translateX(-50%);
+    color: #fcfafa;
+    border-radius: 10px;
     
 }
 
 .deletion-content h4 {
+    margin: 0;
     color: red;
 }
 
 .del-text-container {
-    display: flex;
+    display: grid;
     justify-items: center;
 }
 
+.del-text-container h3 {
+    margin: 0;
+}
+
 .confirm-deletion-container.visible {
-    display: flex;
+    display: grid;
+}
+
+
+.del-btn-container {
+    display: grid;
+}
+
+#confirm-del-btn {
+    justify-self: center;
+    margin-top: 10px;
+
+    color: rgb(199, 0, 0);
+    background-color: #585858;
+    border: none
+}
+
+#confirm-del-btn:hover {
+    background-color: #3a3a3a;
+    color: rgb(255, 0, 0);
+    cursor: pointer;
+}
+
+
+
+
+
+
+/* Exit Button */
+.exit-btn {
+    display: grid;
+    justify-self: right;
+    
+    scale: 125%;
+    background: none;
+    border: none;
+    font-size: 25px;
+    padding: 0;
+    color: #fcfafa;
+
+}
+
+.exit-btn:hover {
+    cursor: pointer;
+    color: crimson;
 }

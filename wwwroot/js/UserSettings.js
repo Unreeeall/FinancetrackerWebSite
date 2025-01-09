@@ -46,3 +46,7 @@ function toggleConfirmDeletion(event, button) {
     document.getElementById('acc-id-data-field').value = accID;
     document.getElementById('acc-name').innerHTML = accName;
 }
+
+function closeDeleteMenu() {
+    document.getElementById('confirm-deletion-container').classList.toggle("visible");
+}

@@ -157,6 +157,7 @@
     </div>
 
     <div class="confirm-deletion-container" id="confirm-deletion-container">
+        <button class="exit-btn" onclick="closeDeleteMenu()">X</button>
         <div class="deletion-content">
             <div class="del-text-container">
                 <h3>Are you shure you want to delete this Account?</h3>
@@ -168,7 +169,7 @@
                 <input type="hidden" name="ID" id="acc-id-data-field"  />
                 <input type="hidden" name="AccountType" id="acc-type-data-field" >
                 <div class="del-btn-container">
-                    <button type="submit" class="delete-button" asp-page-handler="DeleteFinacialAccount">❌</button>
+                    <button type="submit" class="delete-button" id="confirm-del-btn" asp-page-handler="DeleteFinacialAccount">Confirm Deletion</button>
                 </div>
                 
             </form>
