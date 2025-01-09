@@ -429,14 +429,15 @@ async function fetchYearlyExpense(date) {
 
 
 function addTransactionWindow(button) {
-
-    document.getElementById('add-transaction-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-transaction-menu').classList.toggle("visible");
     const accountID = button.getAttribute('data-id');
     document.getElementById('account-id').value = accountID;
 }
 
 function closeTransactionWindow() {
-    document.getElementById('add-transaction-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('add-transaction-menu').classList.toggle("visible");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -513,7 +514,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 function editTransactionWindow(event, button) {
     try {
-        document.getElementById('edit-popup').classList.toggle("visible");
+        document.getElementById('dark-overlay').classList.toggle("visible");
+        document.getElementById('edit-menu-container').classList.toggle("visible");
         const transactionID = button.getAttribute('data-id');
         const transactionType = button.getAttribute('data-type');
         const transactionCategory = button.getAttribute('data-category');
@@ -558,7 +560,8 @@ function editTransactionWindow(event, button) {
 }
 
 function closeEditMenu() {
-    document.getElementById('edit-popup').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('edit-menu-container').classList.toggle("visible");
 }
 
 document.addEventListener("DOMContentLoaded", function () {
@@ -635,7 +638,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
 
 function editContract(event, button) {
-    document.getElementById('edit-contract-background').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('edit-contract-container').classList.toggle("visible");
 
     const contractID = button.getAttribute('data-contractId');
         const contractType = button.getAttribute('data-type');
@@ -679,7 +683,8 @@ function editContract(event, button) {
 }
 
 function closeEditContract() {
-    document.getElementById('edit-contract-background').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('edit-contract-container').classList.toggle("visible");
 }
 
 // function editTransactionWindow(event, button) {
