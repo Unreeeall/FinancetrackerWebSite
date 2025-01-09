@@ -6798,14 +6798,7 @@
         "ID": "9d978255-24bc-4cc6-97c2-60ac8ff55b2f"
       }
     ],
-    "CryptoWallets": [
-      {
-        "CryptoHoldings": [],
-        "AccountName": "asd",
-        "Balance": 0,
-        "ID": "5079dd38-d921-445b-8d3a-ace80de54fd2"
-      }
-    ]
+    "CryptoWallets": []
   },
   {
     "Email": "gaga@gugu",
