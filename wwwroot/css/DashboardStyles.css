@@ -538,14 +538,19 @@ header {
     max-width: 300px;
 } */
 
-.trans-category-container label, .trans-type-slct-container label, .trans-transf-input-container label, .trans-description-container label, .trans-amount-container label, .trans-date-container label, .trans-contract-container label, .trans-contract-cycle-container label{
+.trans-category-container label, .trans-type-slct-container label, 
+.trans-transf-input-container label, .trans-description-container label, 
+.trans-amount-container label, .trans-date-container label, 
+.trans-contract-container label, .trans-contract-cycle-container label{
     font-weight: bold;
     font-size: 1rem;
     color: #c7c7c7;
     display: inline-block;
 }
 
-#trans-category-slct, #transf-destination-slct, #transf-orgini-slct, #trans-type-slct {
+#trans-category-slct, #transf-destination-slct, 
+#transf-orgini-slct, #trans-type-slct,
+#contract-cycle-slct {
     padding: 0.5rem;
     font-size: 1rem;
     border: 2px solid #000000;
@@ -561,13 +566,20 @@ header {
     cursor: pointer;
 }
 
-#trans-category-slct:focus, #transf-destination-slct:focus, #transf-orgini-slct:focus, #trans-type-slct:focus {
+#trans-category-slct:focus, #transf-destination-slct:focus, 
+#transf-orgini-slct:focus, #trans-type-slct:focus, 
+#trans-description-inp:focus, #trans-amount-inp:focus, 
+#trans-date-inp:focus, #trans-contract-checkbox:focus, 
+#contract-cycle-slct:focus, #contract-enddate-inp:focus, 
+#save-transaction-btn:focus  {
     outline: none;
-    border-color: #c5016d;
+    border-color: #67367c;
     box-shadow: 0 0 5px rgba(183, 0, 255, 0.5);
 }
 
-#trans-category-slct option, #transf-destination-slct option, #transf-orgini-slct option, #trans-type-slct option {
+#trans-category-slct option, #transf-destination-slct option, 
+#transf-orgini-slct option, #trans-type-slct option , 
+#contract-cycle-slct option {
     font-size: 1rem;
     padding: 0.5rem;
     color: #c7c7c7;
@@ -883,7 +895,20 @@ input[type="radio"] {
 
 
 
+/* Exit Button */
+.exit-btn {
+    display: flex;
+    justify-self: right;
+    scale: 125%;
+    background: none;
+    border: none;
+    font-size: 25px;
+}
 
+.exit-btn:hover {
+    cursor: pointer;
+    color: crimson;
+}
 
 /*Dark background overlay for every toggle box */
 .dark-overlay {
@@ -1032,6 +1057,6 @@ input[type="submit"] {
 
     .add-transaction-menu {
         color: #ffffff;
-        background-color: #984fb8;
+        /* background-color: #984fb8; */
     }
 }
