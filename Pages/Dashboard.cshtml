@@ -28,6 +28,28 @@
             <div class="bar bar3"></div>
         </div>
 
+        <div class="menu" id="menu">
+            <div class="menu-top-spacer"></div>
+            <div class="menu-dashbard-box">
+                <a href="Dashboard">Dashboard</a>
+            </div>
+            <div class="menu-Investment-box">
+                <a >Investments</a>
+            </div>
+            <div class="menu-budget-box">
+                <a >Budget</a>
+            </div>
+            <div class="menu-transaction-box">
+                <a >Transactions</a>    
+            </div>
+            <div class="menu-contact-box">
+                <a href="#Contact">Contact</a>
+            </div>
+            <div class="Copyright-ham-footer">
+                <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
+            </div>
+        </div>
+
         @* <div class="menu" id="menu">
             <a href="Dashboard">Dashboard</a>
             <a href="Investments">Investments</a>
@@ -39,27 +61,24 @@
             </div>
         </div> *@
 
-        <div class="menu" id="menu">
-            <a href="Dashboard">Dashboard</a>
-            <a >Investments</a>
-            <a >Budget</a>
-            <a >Transactions</a>
-            <a href="#Contact">Contact</a>
-            <div class="Copyright-ham-footer">
-                <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
-            </div>
-        </div>
+        
 
         <div class="user-options">
             <div class="login-button">
                 <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser?.Name</span>
             </div>
             <div class="dropdown">
-                <span id="settings">Options</span>
+                <span id="settings" onmouseover="" onclick="toggleSettingsDropDown()">Options</span>
                 <div class="dropdown-content">
-                    <a href="/UserSettings">Profile</a>
-                    <a href="#settings">Settings</a>
-                    <a href="/Logout">Logout</a>
+                    <div class="profile-drop-box">
+                        <a href="/UserSettings">Profile</a>
+                    </div>
+                    <div class="settings-drop-box">
+                        <a href="#settings">Settings</a>
+                    </div>
+                    <div class="logout-drop-box">
+                        <a href="/Logout">Logout</a>
+                    </div>
                 </div>
             </div>
         </div>
