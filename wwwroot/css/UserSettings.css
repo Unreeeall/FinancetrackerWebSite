@@ -3,30 +3,41 @@ body {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    height: 100vh;
-    background: linear-gradient(to bottom, #000000, #15025E);
-    background-position: fixed;
+    height: 100%;
+    background: #2b2b2b;
+    display: flex;
+    flex-direction: column;
+    min-width: 270px;
 }
 
 h1 {
     color: floralwhite;
 }
 
+header {
+    display: flex;
+    justify-content: center;
+    background-color: #1a1a1a;
+    box-shadow: inset 0px -13px 14px -8px rgba(0,0,0,0.8);
+    
+}
+
 .user-settings-container {
     display: flex;
     flex-direction: column;
     align-items: center;
-    min-height: 100vh;
 }
 
 .account-creditials-container {
     color: aliceblue;
-    border-color: yellow;
-    border-style: dashed;
     display: flex;
     align-items: center;
     flex-direction: column;
     position: relative;
+    background-color: #1f1f1f;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.8);
 }
 
 .account-creditials-container form{
@@ -49,13 +60,17 @@ h1 {
 }
 
 .accounts-table-container {
-    margin: auto;
+    margin-top: 40px;
     display: flex;
     flex-direction: column;
     align-items: center;
     position: relative;
-    border-color: yellow;
-    border-style: dashed;
+    background-color: #1f1f1f;
+    padding: 50px;
+    border-radius: 10px;
+    box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.8);
+    color: aliceblue;
+    /* min-width: 310px; */
 }
 
 .accounts-table-container h3 {
@@ -67,12 +82,13 @@ h1 {
 }
 
 .accounts-table-container th {
-    background-color: aqua;
+    background-color: #8b00a7;
 }
 
 .accounts-table-container td {
     text-align: center;
     padding: 10px;
+    background-color: #3a3a3a;
 }
 
 .edit-buttons {
@@ -82,48 +98,40 @@ h1 {
 }
 
 
-.edit-fin-acc-background {
-    background-color: #00000083;
-    position: absolute;
-    width: 100%;
-    height: 2000px;
-    display: none;
-}
-
-.edit-menu-background.visible {
-    display: block;
-}
-
-.edit-fin-acc-window {
-    background-color: palevioletred;
-
-}
-
-
 .new-pswrd-container {
     flex-direction: column;
     display: none;
 }
 
+.new-pswrd-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.new-pswrd-container label {
+    justify-content: left;
+}
+
 .new-pswrd-container.visible {
-    display: block;
+    display: flex;
 }
 
 
 .confirm-deletion-container {
     background-color: #3a3a3a;
     display: none;
-    width: 40%;
-    height: 30%;
-    min-width: 450px;
     justify-self: center;
     top: 300px;
     position: fixed;
-    left: 50%;
-    transform: translateX(-50%);
     color: #fcfafa;
     border-radius: 10px;
-    
+    padding: 25px;
+}
+
+.confirm-deletion-container.visible {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 .deletion-content h4 {
@@ -132,30 +140,40 @@ h1 {
 }
 
 .del-text-container {
-    display: grid;
-    justify-items: center;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
 }
 
 .del-text-container h3 {
     margin: 0;
 }
 
-.confirm-deletion-container.visible {
-    display: grid;
-}
+
 
 
 .del-btn-container {
-    display: grid;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
 }
 
 #confirm-del-btn {
     justify-self: center;
+    align-self: center;
     margin-top: 10px;
 
-    color: rgb(199, 0, 0);
-    background-color: #585858;
-    border: none
+    color: #fcfafa;
+    background-color: #2b2b2b;
+    border: none;
+    border-radius: 8px;
+    width: 15%;
+    
+}
+
+#confirm-del-btn button {
+    width: 10%;
 }
 
 #confirm-del-btn:hover {
@@ -164,26 +182,100 @@ h1 {
     cursor: pointer;
 }
 
-
+.exit-btn-container {
+    display: flex;
+    justify-content: right; 
+}
 
 
 
 
 /* Exit Button */
 .exit-btn {
-    display: grid;
-    justify-self: right;
-    
-    scale: 125%;
     background: none;
     border: none;
-    font-size: 25px;
-    padding: 0;
+    font-size: 30px;
+    margin-right: 15px;
     color: #fcfafa;
-
 }
 
 .exit-btn:hover {
     cursor: pointer;
     color: crimson;
+}
+
+.edit-fin-acc-window {
+    background-color: #3a3a3a;
+    display: none;
+    justify-self: center;
+    top: 300px;
+    position: fixed;
+    color: #fcfafa;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.edit-fin-acc-window.visible {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.exit-btn-container {
+    display: flex;
+    justify-content: right; 
+}
+
+.edit-fin-acc-content {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.submit-fin-acc-edit {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+#confirm-name-edit-btn {
+    justify-self: center;
+    align-self: center;
+    margin-top: 10px;
+
+    color: #fcfafa;
+    background-color: #2b2b2b;
+    border: none;
+    border-radius: 8px;
+}
+
+
+
+#confirm-name-edit-btn:hover {
+    background-color: #3a3a3a;
+    color: rgb(60, 255, 0);
+    cursor: pointer;
+}
+
+
+/*Dark background overlay for every toggle box */
+.dark-overlay {
+    background-color: #00000083;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
+
+.dark-overlay.visible {
+    display: flex;
+}
+
+
+@media (max-width: 370px) {
+    .cred-group {
+        display: block;
+    }
 }

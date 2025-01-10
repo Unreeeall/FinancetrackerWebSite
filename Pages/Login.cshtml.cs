@@ -18,6 +18,9 @@ public class LoginModel : PageModel
     [BindProperty]
     public bool SaveData { get; set; }
 
+
+    public bool WrongPassword { get; set; }
+
     public void OnGet()
     {
 
@@ -58,7 +61,7 @@ public class LoginModel : PageModel
                     else
                     {
                         Console.WriteLine("Login Failed: Wrong Password");
-                        TempData["WrongLogin"] = true;
+                        WrongPassword = true;
                         return Page();
                     }
                 }

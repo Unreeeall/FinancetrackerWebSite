@@ -6,8 +6,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "Mbywe5aFJScc1HXlG3wtAju2FsWk9XGBJNkSO\u002BL1R\u002Bk=",
-        "ExpireDate": "2025-01-10T09:16:41.784171+01:00"
+        "Id": "9U5StDmEYakYFVOG9btBJKuQOan3gtq4uUXuG\u002BsTKu8=",
+        "ExpireDate": "2025-01-11T09:58:55.9165917+01:00"
       }
     ],
     "Transactions": [
@@ -6698,6 +6698,54 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-09T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "5286f97f-b399-41b5-99cb-d5b9a262fa95",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-09T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "3f3923f2-2d48-462e-8b23-856d7463e0d3",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-09T07:36:00",
+        "Amount": 100,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Rental Income",
+        "ID": "fd61d159-1b39-497a-9862-6330d2fa165f",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -6766,7 +6814,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 1350,
+        "Balance": 1449,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
@@ -6781,7 +6829,7 @@
     "PortfolioAccounts": [
       {
         "Investments": [],
-        "AccountName": "asd",
+        "AccountName": "EIEIEIEIEIE",
         "Balance": 0,
         "ID": "9d978255-24bc-4cc6-97c2-60ac8ff55b2f"
       }
@@ -6923,12 +6971,7 @@
     "Name": "HAHAHA",
     "Phonenumber": "123",
     "Password": "gaga",
-    "Sessions": [
-      {
-        "Id": "bdFAltm6vmDcGIIfO3eboEslBJnXZo\u002BELQAfjo2yNeo=",
-        "ExpireDate": "2025-01-10T07:29:30.0465026+01:00"
-      }
-    ],
+    "Sessions": [],
     "Transactions": [],
     "Contracts": [],
     "BankAccounts": [
