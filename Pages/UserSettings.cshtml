@@ -39,7 +39,7 @@
                     <input type="text" id="acc-cred-email-field" name="Email" value="@Model.WebUser?.Email" disabled>
                     <button type="button" id="edit-email-btn" class="edit-btn"
                         onclick="toggleEdit('acc-cred-email-field', 'edit-email-btn')">🖊️</button>
-                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                    <button type="submit" id="submit-change-btn1" class="submit-change-btn"
                         asp-page-handler="ChangeAccountCredentials">✅</button>
                 </div>
                 <div class="cred-group">
@@ -47,7 +47,7 @@
                     <input type="text" id="acc-cred-name-field" name="UserName" value="@Model.WebUser?.Name" disabled>
                     <button type="button" id="edit-name-btn" class="edit-btn"
                         onclick="toggleEdit('acc-cred-name-field', 'edit-name-btn')">🖊️</button>
-                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                    <button type="submit" id="submit-change-btn2" class="submit-change-btn"
                         asp-page-handler="ChangeAccountCredentials">✅</button>
                 </div>
                 <div class="cred-group">
@@ -56,19 +56,20 @@
                         disabled>
                     <button type="button" id="edit-phone-btn" class="edit-btn"
                         onclick="toggleEdit('acc-cred-phone-field', 'edit-phone-btn')">🖊️</button>
-                    <button type="submit" id="submit-change-btn" class="submit-change-btn"
+                    <button type="submit" id="submit-change-btn3" class="submit-change-btn"
                         asp-page-handler="ChangeAccountCredentials">✅</button>
                 </div>
                 <div class="cred-group">
                     <label for="acc-cred-pswrd-field">Password</label>
                     <input type="password" id="acc-cred-pswrd-field" name="Password" value="@Model.WebUser?.Password"
                         disabled>
-                    <button type="button" id="change-pswrd" class="edit-btn" onclick="togglePswrdChange()">🖊️</button>
+                    <button type="button" id="change-pswrd" class="edit-pswrd-btn" onclick="togglePswrdChange()" onclick="toggleEdit('', 'edit-pswrd-btn')">🖊️</button>
                 </div>
             </form>
-            <form method="post">
-                <input type="hidden" name="Password" value="@Model.WebUser?.Password">
-                <div class="new-pswrd-container" id="new-pswrd-container">
+            <div class="new-pswrd-container" id="new-pswrd-container">
+                <form method="post">
+                    <input type="hidden" name="Password" value="@Model.WebUser?.Password">
+
                     <div class="cred-group">
                         <label for="old-pswrd-inp">Old password</label>
                         <input type="password" id="old-pswrd-inp" name="OldPassword" required>
@@ -83,9 +84,8 @@
                         <input type="password" id="confirm-pswrd-inp" name="ConfirmPassword" required>
                     </div>
                     <button type="submit" asp-page-handler="ChangePassword">Change password</button>
-                </div>
-
-            </form>
+                </form>
+            </div>
         </div>
 
         <div class="accounts-table-container">
@@ -106,9 +106,10 @@
                             <td>@bankAccount.AccountName</td>
                             <td class="edit-buttons">
                                 <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@bankAccount.ID">🖊️</button>
+                                    data-id="@bankAccount.ID"  data-acc-name="@bankAccount.AccountName" data-acc-type="BankAccount">🖊️</button>
                                 <button type="button" class="delete-button" data-acc-type="BankAccount"
-                                    data-acc-id="@bankAccount.ID" data-acc-name="@bankAccount.AccountName" onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                    data-acc-id="@bankAccount.ID" data-acc-name="@bankAccount.AccountName"
+                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
                             </td>
                         </tr>
                     }
@@ -119,9 +120,10 @@
                             <td>@cashAccount.AccountName</td>
                             <td class="edit-buttons">
                                 <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@cashAccount.ID">🖊️</button>
+                                    data-id="@cashAccount.ID"  data-acc-name="@cashAccount.AccountName" data-acc-type="Cash">🖊️</button>
                                 <button type="button" class="delete-button" data-acc-type="Cash"
-                                    data-acc-id="@cashAccount.ID" data-acc-name="@cashAccount.AccountName" onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                    data-acc-id="@cashAccount.ID" data-acc-name="@cashAccount.AccountName"
+                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
                             </td>
                         </tr>
                     }
@@ -132,9 +134,10 @@
                             <td>@porfolioAccount.AccountName</td>
                             <td class="edit-buttons">
                                 <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@porfolioAccount.ID">🖊️</button>
+                                    data-id="@porfolioAccount.ID"  data-acc-name="@porfolioAccount.AccountName" data-acc-type="Portfolio">🖊️</button>
                                 <button type="button" class="delete-button" data-acc-type="Portfolio"
-                                    data-acc-id="@porfolioAccount.ID" data-acc-name="@porfolioAccount.AccountName" onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                    data-acc-id="@porfolioAccount.ID" data-acc-name="@porfolioAccount.AccountName"
+                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
                             </td>
                         </tr>
                     }
@@ -145,43 +148,64 @@
                             <td>@cryptoWallet.AccountName</td>
                             <td class="edit-buttons">
                                 <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@cryptoWallet.ID">🖊️</button>
+                                    data-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName" data-acc-type="CryptoWallet">🖊️</button>
                                 <button type="button" class="delete-button" data-acc-type="CryptoWallet"
-                                    data-acc-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName" onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                    data-acc-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName"
+                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
                             </td>
                         </tr>
                     }
                 </tbody>
             </table>
         </div>
-    </div>
 
-    <div class="confirm-deletion-container" id="confirm-deletion-container">
-        <button class="exit-btn" onclick="closeDeleteMenu()">X</button>
-        <div class="deletion-content">
-            <div class="del-text-container">
-                <h3>Are you shure you want to delete this Account?</h3>
-                <p id="acc-name"></p>
-                <h4>Note: This CANT be undone!</h4>
+        <div class="dark-overlay" id="dark-overlay"></div>
+
+        <div class="confirm-deletion-container" id="confirm-deletion-container">
+            <div class="exit-btn-container">
+                <button class="exit-btn" onclick="closeDeleteMenu()">X</button>
             </div>
-            
-            <form method="post">
-                <input type="hidden" name="ID" id="acc-id-data-field"  />
-                <input type="hidden" name="AccountType" id="acc-type-data-field" >
-                <div class="del-btn-container">
-                    <button type="submit" class="delete-button" id="confirm-del-btn" asp-page-handler="DeleteFinacialAccount">Confirm Deletion</button>
+            <div class="deletion-content">
+                <div class="del-text-container">
+                    <h3>Are you shure you want to delete this Account?</h3>
+                    <p id="acc-name"></p>
+                    <h4>Note: This CANT be undone!</h4>
                 </div>
-                
-            </form>
-        </div>
 
-        <div class="edit-fin-acc-background" id="edit-container">
-            <div class="edit-fin-acc-window">
-                <button class="exit-btn" onclick="closeEditMenu()">X</button>
-                <input type="text" name="AccountName" required>
+                <form method="post">
+                    <input type="hidden" name="ID" id="acc-id-data-field" />
+                    <input type="hidden" name="AccountType" id="acc-type-data-field">
+                    <div class="del-btn-container">
+                        <button type="submit" class="delete-button" id="confirm-del-btn"
+                            asp-page-handler="DeleteFinacialAccount">Confirm Deletion</button>
+                    </div>
+                </form>
             </div>
         </div>
+
+        <div class="edit-fin-acc-window" id="edit-fin-acc-window">
+            <div class="exit-btn-container">
+                <button class="exit-btn" onclick="closeEditMenu()">X</button>
+            </div>
+            <div class="edit-fin-acc-content">
+                <div class="edit-fin-acc-text">
+                    <h4>Input new name</h4>
+                </div>
+                <form method="post">
+                    <input type="text" name="AccountName" id="acc-name-inp" required>
+                    <input type="hidden" name="ID" id="acc-ID">
+                    <input type="hidden" name="AccountType" id="acc-Type">
+                    <div class="submit-fin-acc-edit">
+                        <button type="submit" id="confirm-name-edit-btn"
+                            asp-page-handler="EditFinancialAccount">Confirm</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+
     </div>
+
+
 </body>
 
 </html>

@@ -1,9 +1,20 @@
 function editAccountWindow(event, button) {
-    document.getElementById('edit-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('edit-fin-acc-window').classList.toggle("visible");
+
+    const accNameForInp = button.getAttribute('data-acc-name');
+    const accID = button.getAttribute('data-id');
+    const accType = button.getAttribute('data-acc-type');
+
+
+    document.getElementById('acc-name-inp').value = accNameForInp;
+    document.getElementById('acc-ID').value = accID;
+    document.getElementById('acc-Type').value = accType;
 }
 
 function closeEditMenu() {
-    document.getElementById('edit-container').classList.toggle("visible");
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('edit-fin-acc-window').classList.toggle("visible");
 }
 
 
@@ -34,6 +45,7 @@ function togglePswrdChange() {
 
 
 function toggleConfirmDeletion(event, button) {
+    document.getElementById('dark-overlay').classList.toggle("visible");
     document.getElementById('confirm-deletion-container').classList.toggle("visible");
 
     const accType = button.getAttribute('data-acc-type');
@@ -48,5 +60,6 @@ function toggleConfirmDeletion(event, button) {
 }
 
 function closeDeleteMenu() {
+    document.getElementById('dark-overlay').classList.toggle("visible");
     document.getElementById('confirm-deletion-container').classList.toggle("visible");
 }
