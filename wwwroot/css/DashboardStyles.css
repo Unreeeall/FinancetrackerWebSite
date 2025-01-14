@@ -7,10 +7,11 @@ body {
     padding: 0;
     box-sizing: border-box;
     height: 100%;
-    background: #3a3153;
+    background: #2E073F;
     display: flex;
     flex-direction: column;
     min-width: 270px;
+    color: #EBD3F8;
 }
 
 
@@ -26,7 +27,7 @@ body {
 
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #3a3153;
+    background: #7A1CAC;
     border-radius: 6px;
 }
 
@@ -35,12 +36,45 @@ body {
     background: #555;
 }
 
+/* Exit Button */
+.exit-btn {
+    background: none;
+    border: none;
+    font-size: 50px;
+}
+
+.exit-btn:hover {
+    cursor: pointer;
+    color: crimson;
+}
+
+/*Dark background overlay for every toggle box */
+.dark-overlay {
+    background-color: #00000083;
+    top: 0;
+    position: fixed;
+    width: 100%;
+    height: 2000px;
+    display: none;
+}
+
+.dark-overlay.visible {
+    display: block;
+}
+
+
+footer {
+    color: #c7c7c7;
+    text-align: center;
+    padding: 0rem;
+    width: 100%;
+}
 
 
 /* Header */
 header {
-    background: #5f43b2;
-    color: aliceblue;
+    background: #2E073F;
+    color: #EBD3F8;
     padding: 0rem 2rem;
     position: fixed;
     width: 100%;
@@ -60,24 +94,27 @@ header {
 .dropdown {
     display: flex;
     align-items: center;
+    flex-direction: column;
     cursor: pointer;
-    background-color: #3a3153;
+    background-color: #7A1CAC;
     border-radius: 10px;
     font-size: 20px;
-    padding: 0px 15px;
+    padding: 10px 15px;
+    
 
 }
 
 .dropdown-content {
-    right: 50%;
     top: 100%;
-    display: flex;
-    position: relative;
-    background-color: #393f72;
-    /* min-width: 14px; */
+    display: none;
+    position: absolute;
+    background-color: #7A1CAC;
     box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
     cursor: pointer;
     flex-direction: column;
+    /* right: inherit; */
+    padding: inherit;
+    border-radius: 10px;
 }
 
 
@@ -92,7 +129,7 @@ header {
 .profile-drop-box a,
 .settings-drop-box a,
 .logout-drop-box a {
-    color: aliceblue;
+    color: #EBD3F8;
     text-decoration: none;
 }
 
@@ -120,7 +157,7 @@ header {
     display: flex;
     align-items: center;
     flex-direction: column;
-} 
+}
 
 
 
@@ -137,7 +174,7 @@ header {
 .bar {
     width: 100%;
     height: 5px;
-    background-color: #c7c7c7;
+    background-color: #EBD3F8;
     position: absolute;
     transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
 }
@@ -173,10 +210,10 @@ header {
     position: fixed;
     flex-direction: column;
     align-items: center;
-    
+
     left: -250px;
     height: 100%;
-    background-color: #2A2E54;
+    background-color: #7A1CAC;
     /* padding: 30px; */
     box-sizing: border-box;
     transition: left 0.3s ease;
@@ -204,8 +241,17 @@ header {
     width: inherit;
 }
 
+.menu-dashbard-box:hover,
+.menu-Investment-box:hover,
+.menu-budget-box:hover,
+.menu-transaction-box:hover,
+.menu-contact-box:hover {
+    cursor: pointer;
+    background-color: #AD49E1;
+}
+
 .menu a {
-    color: aliceblue;
+    color: #EBD3F8;
     text-decoration: none;
     padding: 20px 0;
 
@@ -213,7 +259,7 @@ header {
 
 .menu p {
     display: block;
-    color: #fff;
+    color: #EBD3F8;
     text-decoration: none;
     padding: 10px 0;
 }
@@ -226,5 +272,396 @@ header {
 }
 
 
+/* General Dashboard */
+.Dashboard {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 77px;
+    gap: 20px;
+    padding: 20px;
+    flex-grow: 1;
+    min-height: 100vh;
+}
 
 /* Acc divs */
+
+.account-wrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    width: 100%;
+    min-height: 100vh;
+    /* Ensure the wrapper takes full height of the viewport */
+    padding-bottom: 100px;
+    /* Ensure the wrapper takes full height of the viewport */
+}
+
+
+.spacer {
+    flex-grow: 1;
+    /* This will push the add-new-financialAccount-field to the bottom */
+}
+
+
+
+.Bank-Acc-Container,
+.Cash-Acc-Container,
+.Crypto-Wallet-Container,
+.Crypto-Wallet-Container {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    min-width: 500px;
+    height: auto;
+    padding: 20px;
+    /* background-color: #3c3a3d; */
+    background-color:#61168a;
+    border-radius: 10px;
+    color: #EBD3F8;
+    margin-bottom: 20px;
+    text-align: center;
+
+}
+
+.Bank-Acc-Container:hover,
+.Cash-Acc-Container:hover,
+.Crypto-Wallet-Container:hover,
+.Crypto-Wallet-Container:hover {
+    cursor: pointer;
+    padding: 25px;
+}
+
+
+
+.income-values {
+    color: greenyellow;
+}
+
+
+.expense-values {
+    color: red;
+}
+
+.monthly-plus-minus-container {
+    gap: 20px;
+    text-align: center;
+}
+
+.other-data-container {
+    display: flex;
+    justify-content: space-between;
+}
+
+.in-out-data-container {
+    display: block;
+    text-align: left;
+}
+
+.transf-data-contianer {
+    display: block;
+    text-align: right;
+    top: 20px;
+}
+
+.quickadd-transaction-btn-container {
+    display: flex;
+    justify-content: center;
+}
+
+
+.quickadd-transaction-btn {
+    background-color: #67367c;
+    border: none;
+    border-radius: 6px;
+    width: 42px;
+    height: 42px;
+    font-size: 30px;
+
+}
+
+.quickadd-transaction-btn:hover {
+    cursor: pointer;
+    background-color: #984fb8;
+}
+
+.download-transactions-btn {
+    font-size: 25px;
+    background: none;
+    border: none;
+}
+
+.download-transactions-btn:hover {
+    cursor: pointer;
+    background-color: #888;
+}
+
+
+.toggle-import-file-btn {
+    font-size: 25px;
+    background: none;
+    border: none;
+}
+
+.toggle-import-file-btn:hover {
+    cursor: pointer;
+    background-color: #888;
+}
+
+.close-import-btn {
+    background: none;
+    border: none;
+    font-size: 40px;
+    top: 10px;
+    right: 10px;
+    position: absolute;
+}
+
+.close-import-btn:hover {
+    cursor: pointer;
+    border: 1px solid #ddd;
+}
+
+
+
+.import-file-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    position: fixed;
+
+    background-color: #000000b7;
+    margin-top: 100px;
+
+    border-style: dashed;
+    border-radius: 2px;
+
+    top: auto;
+    color: #EBD3F8;
+}
+
+.import-file-container.visible {
+    display: flex;
+}
+
+.close-import-btn-container {
+    display: flex;
+    justify-content: flex-end;
+    margin-right: 20px;
+    margin-top: 20px;
+}
+
+.import-form-container,
+.input-container {
+    display: flex;
+    flex-direction: column;
+    align-content: center;
+}
+
+.import-transaction-btn-container {
+    display: none;
+    flex-direction: column;
+    align-items: center;
+    width: 300px;
+    height: 200px;
+}
+
+.import-transaction-btn-label-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+}
+
+.btn-label-box {
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    margin-left: 160px;
+    margin-right: 160px;
+    margin-top: 80px;
+    margin-bottom: 40px;
+}
+
+#upload-icon {
+    font-size: 100px;
+}
+
+.submit-button-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 10px;
+}
+
+
+
+/* Last 5 Transactions Container */
+
+.last-5-transaction-container table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+.last-5-transaction-container thead {
+    background-color: #4A2759;
+}
+
+.last-5-transaction-container th,
+.last-5-transaction-container td {
+
+    text-align: center;
+    border-bottom: 1px solid #ddd;
+}
+
+#last-5-transaction-type-row {
+    text-align: left;
+}
+
+
+
+
+
+
+/* Add new financial acc */
+
+.add-new-financialAccount-field {
+    background: #ffffff18;
+    width: 350px;
+    height: 240px;
+    /* max-height: 250px; */
+    border-radius: 10px;
+    border-style: dotted;
+    border-color: #c7c7c7;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 0 auto;
+}
+
+.add-new-financialAccount-field:hover {
+    cursor: pointer;
+    border-color: #fff;
+    padding: 5px;
+}
+
+.add-new-fin-acc-plus {
+    background-color: #4A2759;
+    border: none;
+    border-radius: 6px;
+    width: 42px;
+    height: 42px;
+    font-size: 30px;
+    justify-self: center;
+    color: #EBD3F8;
+}
+
+.add-new-fin-acc-plus:hover {
+    cursor: pointer;
+    background-color: #67367c;
+}
+
+.add-new-acc-menu {
+    width: 20%;
+    min-width: 350px;
+    max-width: 500px;
+    height: 20%;
+    background-color: #3a3a3a;
+    justify-self: center;
+    position: fixed;
+    top: 25%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 20px;
+
+
+    justify-content: center;
+    flex-direction: column;
+    display: none;
+}
+
+#add-new-acc-btn {
+    margin-top: 20px;
+    display: grid;
+    justify-self: center;
+    scale: 150%;
+    border: none;
+}
+
+#add-new-acc-btn:hover {
+    cursor: pointer;
+    background-color: rgb(100, 160, 11);
+}
+
+.add-new-acc-menu.visible {
+    display: grid;
+}
+
+/* Add Transaction */
+.add-transaction-menu {
+    width: 50%;
+    min-width: 350px;
+    max-width: 500px;
+    height: 65%;
+    min-height: 700px;
+    max-height: 900px;
+    background-color:#3a3a3a;
+    top: 15%;
+    left: 50%;
+    padding: 20px;
+    transform: translate(-50%, 0);
+    border-radius: 20px;
+
+    display: none;
+    position: fixed;
+}
+
+.add-transaction-menu.visible {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-transaction-menu-exit-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+
+.add-new-acc-menu form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.input-group {
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+    width: inherit;
+
+}
+
+@media (max-width: 440px) {
+
+    .Bank-Acc-Container,
+    .Cash-Acc-Container,
+    .Crypto-Wallet-Container,
+    .Crypto-Wallet-Container {
+        width: 420px;
+        max-width: 430px;
+        min-width: 420px;
+    }
+
+    .last-5-transaction-container {
+        font-size: 10px;
+    }
+
+    .menu {
+        width: 150px;
+        justify-content:flex-start;
+    }
+}
