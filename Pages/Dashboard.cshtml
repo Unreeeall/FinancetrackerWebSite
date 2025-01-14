@@ -166,11 +166,14 @@
                         
                         
                         
-
-                        <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
+                        <div class="quickadd-transaction-btn-container">
+                            <button type="button" class="quickadd-transaction-btn" data-id="@bankAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
-                        <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
-                        <a class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation() >📥</a>
+                        
+                            <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
+                            <a class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation() >📥</a>
+                        </div>
+                        
                         @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
                         {
                             <div class="last-5-transaction-container">
@@ -202,8 +205,7 @@
                                 </tbody>
                                 </table>
                             </div>
-                        }
-                        
+                        }   
                     </div>
                 }
                 foreach (var cashAccount in Model.WebUser.CashAccounts)
@@ -211,6 +213,7 @@
                     <div class="Cash-Acc-Container Acc-Container" uuid="@cashAccount.ID">
                         <h3>Cashstash @cashAccount.AccountName</h3>
                         <p>Balance: @cashAccount.Balance @cashAccount.Currency</p>
+
 
                         <button type="button" class="quickadd-transaction-btn" data-id="@cashAccount.ID"
                             onclick="addTransactionWindow(this, event)">+</button>
@@ -340,22 +343,31 @@
                 <div class="dark-overlay" id="dark-overlay"></div>
 
                 <div class="import-file-container" id="import-file-container">
-                    <div class="import-file-field">
-                        <button class="close-import-btn" onclick="closeImportField()">x</button>
+                    
                         <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
-                            <div class="box__input">
-                                <i class="material-icons" id="upload-icon">file_upload</i>
-                                <input type="file" name="file" id="file" class="import-transaction-btn" >
-                                <label for="file"><strong class="choose-file-text">Choose a file</strong><span class="box__dragndrop"> or drag it here</span>.</label>
+                            <div class="input-container">
+                                <div class="close-import-btn-container">
+                                    <button class="exit-btn" onclick="closeImportField()">x</button>
+                                </div>
+                                <div class="import-transaction-btn-container">
+                                    <input type="file" name="file" id="file" class="import-transaction-btn" >
+                                </div>
+                                <div class="import-transaction-btn-label-container">
+                                    <label for="file" class="import-transaction-btn-label">
+                                        <div class="btn-label-box">
+                                            <i class="material-icons" id="upload-icon">file_upload</i>
+                                            <strong class="choose-file-text">Choose a file</strong>
+                                            <span class="box__dragndrop"> or drag it here</span>
+                                        </div>
+                                    .</label>
+                                </div>
+                                
+                                <div class="submit-button-container">
+                                    <button type="submit" class="btn-primary">Import</button>
+                                </div>
                                 <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
-                                <button type="submit" class="btn-primary">Import</button>
                             </div>
-                            @* <div class="box__uploading">Uploading…</div>
-                            <div class="box__success">Done!</div>
-                            <div class="box__error">Error! <span></span>.</div> *@
                         </form>
-                        <div id="result"></div>
-                    </div>
                 </div>
 
                 <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
@@ -386,23 +398,23 @@
                         </form>
                     </div>
 
-                 <div class="add-transaction-menu" id="add-transaction-menu">
-                        <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
+                <div class="add-transaction-menu" id="add-transaction-menu">
+                        <div class="add-transaction-menu-exit-btn-container">
+                            <button class="exit-btn" id="exit-transaction-btn" onclick="closeTransactionWindow()">x</button>
+                        </div>
                         <form method="post">
                             <input type="hidden" name="AccID" id="account-id" />
-
-                        
-                                <div class="input-group">
-                                    <div class="trans-type-slct-container" id="trans-type-slct-container">
-                                        <label for="trans-type-slct">Transaction Type</label>
-                                        <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
-                                            <option value="" selected disabled></option>
-                                            <option value="Income">Income</option>
-                                            <option value="Expense">Expense</option>
-                                            <option value="Transfer">Transfer</option>
-                                        </select>
-                                    </div>
+                            <div class="input-group">
+                                <div class="trans-type-slct-container" id="trans-type-slct-container">
+                                    <label for="trans-type-slct">Transaction Type</label>
+                                    <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
+                                        <option value="" selected disabled></option>
+                                        <option value="Income">Income</option>
+                                        <option value="Expense">Expense</option>
+                                        <option value="Transfer">Transfer</option>
+                                    </select>
                                 </div>
+                            </div>
 
                             <hr>
                             
@@ -455,9 +467,11 @@
                                             }
                                         </select>
                                     </div>
-                                    <hr>
+                                    
                                 </div>
                             </div>
+
+                            <hr>
                             
                             <div class="input-group">
                                 <div class="trans-category-container">
@@ -528,35 +542,37 @@
                                         <option value="Savings to Investment" data-type="Transfer">Savings to Investment
                                         </option>
                                     </select>
-                                </div> 
-                                <hr>
+                                </div>    
                             </div>
 
-
+                            <hr>
                             
                             <div class="input-group">
                                 <div class="trans-description-container">
                                     <label for="trans-income-description-inp">Description</label>
                                     <input type="text" class="trans-description" id="trans-description-inp" name="Description" required>
                                 </div>
-                                <hr>
                             </div>
-                                
+
+                            <hr>
+
                             <div class="input-group">
                                 <div class="trans-amount-container">
                                     <label for="trans-amount-inp">Amount</label>
                                     <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" required>
-                                </div>
-                                <hr>
+                                </div>   
                             </div>
+
+                            <hr>
                                 
                             <div class="input-group">
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
                                     <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" required>
                                 </div>
-                                <hr>
                             </div>
+
+                            <hr>
                                 
                             <div class="input-group">
                                 <div class="trans-contract-container">
@@ -591,8 +607,9 @@
                                     asp-page-handler="AddTransaction">✅</button>
                                 </div>
                             </div>
-                        </form>
-                    </div>   
+                        </form>   
+                </div>
+                    
             }
             <script src="/js/dashboard.js"></script>
 
