@@ -44,7 +44,7 @@
                 </div>
                 <div class="cred-group">
                     <label for="acc-cred-name-field">Name</label>
-                    <input type="text" id="acc-cred-name-field" name="UserName" value="@Model.WebUser?.Name" disabled>
+                    <input type="text" id="acc-cred-name-field" name="UserName" minlength="3" maxlength="10" value="@Model.WebUser?.Name" disabled>
                     <button type="button" id="edit-name-btn" class="edit-btn"
                         onclick="toggleEdit('acc-cred-name-field', 'edit-name-btn')">🖊️</button>
                     <button type="submit" id="submit-change-btn2" class="submit-change-btn"
