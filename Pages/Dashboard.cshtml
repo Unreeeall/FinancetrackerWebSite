@@ -116,9 +116,11 @@
                     <button class="add-new-fin-acc-plus">+</button>
                 </div>
 
-                <div class="add-new-acc-background" id="new-acc-menu">
-                    <div class="add-new-acc-menu">
-                        <button class="exit-btn" onclick="closeAccountMenu()">X</button>
+                    @* <div class="add-new-acc-menu">
+                        <div class="add-new-acc-exit-btn-box">
+                            <button class="exit-btn" onclick="closeAccountMenu()">x</button>
+                        </div>
+                        
                         <form method="post">
                             <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
                                 <option value="" disabled selected></option>
@@ -138,8 +140,7 @@
                             </select>
                             <input type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount">
                         </form>
-                    </div>
-                </div>
+                    </div> *@
             }
             else
             {
@@ -343,31 +344,30 @@
                 <div class="dark-overlay" id="dark-overlay"></div>
 
                 <div class="import-file-container" id="import-file-container">
-                    
-                        <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
-                            <div class="input-container">
-                                <div class="close-import-btn-container">
-                                    <button class="exit-btn" onclick="closeImportField()">x</button>
-                                </div>
-                                <div class="import-transaction-btn-container">
-                                    <input type="file" name="file" id="file" class="import-transaction-btn" >
-                                </div>
-                                <div class="import-transaction-btn-label-container">
-                                    <label for="file" class="import-transaction-btn-label">
-                                        <div class="btn-label-box">
-                                            <i class="material-icons" id="upload-icon">file_upload</i>
-                                            <strong class="choose-file-text">Choose a file</strong>
-                                            <span class="box__dragndrop"> or drag it here</span>
-                                        </div>
-                                    .</label>
-                                </div>
-                                
-                                <div class="submit-button-container">
-                                    <button type="submit" class="btn-primary">Import</button>
-                                </div>
-                                <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
+                    <form id="importForm" class="importForm" asp-controller="Transaction" asp-action="ImportTransactions" method="post" enctype="multipart/form-data">
+                        <div class="input-container">
+                            <div class="close-import-btn-container">
+                                <button class="exit-btn" onclick="closeImportField()">x</button>
                             </div>
-                        </form>
+                            <div class="import-transaction-btn-container">
+                                <input type="file" name="file" id="file" class="import-transaction-btn" >
+                            </div>
+                            <div class="import-transaction-btn-label-container">
+                                <label for="file" class="import-transaction-btn-label">
+                                    <div class="btn-label-box">
+                                        <i class="material-icons" id="upload-icon">file_upload</i>
+                                        <strong class="choose-file-text">Choose a file</strong>
+                                        <span class="box__dragndrop"> or drag it here</span>
+                                    </div>
+                                .</label>
+                            </div>
+                            
+                            <div class="submit-button-container">
+                                <button type="submit" class="btn-primary">Import</button>
+                            </div>
+                            <input type="hidden" name="userEmail" value="@Model.WebUser.Email" required />
+                        </div>
+                    </form>
                 </div>
 
                 <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
@@ -375,28 +375,41 @@
                 </div>
 
                 
-                    <div class="add-new-acc-menu" id="add-new-acc-menu">
+                <div class="add-new-acc-menu" id="add-new-acc-menu">
+                    <div class="add-new-acc-exit-btn-box">
                         <button class="exit-btn" onclick="closeAccountMenu()">X</button>
-                        <form method="post">
-                            <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
+                    </div>
+                    <form method="post">
+                        <div class="acc-type-slc-container">
+                            <label for="Account-Type-slc">Account Type</label>
+                            <select name="AccountType" id="Account-Type-slc" class="Account-Type-Select" required>
                                 <option value="" disabled selected></option>
                                 <option value="BankAccount">Bank Account</option>
                                 <option value="Cash">Cash</option>
                                 <option value="Portfolio">Portfolio</option>
                                 <option value="CryptoWallet">Crypto Wallet</option>
                             </select>
+                        </div>
 
-                            <input type="text" name="AccountName" class="Account-Name-Input" required>
-
+                        <div class="acc-name-slc-container">
+                            <label for="acc-name-inp">Name</label>
+                            <input type="text" name="AccountName" id="acc-name-inp" class="Account-Name-Input" required>
+                        </div>
+                        
+                        <div class="acc-currency-slc-container">
+                            <label for="Currency-Select">Currency</label>
                             <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
                                 @foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
                                 {
                                     <option value="@currency">@currency</option>
                                 }
                             </select>
+                        </div>
+                        <div class="submit-fin-acc-btn-container">
                             <button type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount" id="add-new-acc-btn">Add new Account</button>
-                        </form>
-                    </div>
+                        </div>
+                    </form>
+                </div>
 
                 <div class="add-transaction-menu" id="add-transaction-menu">
                         <div class="add-transaction-menu-exit-btn-container">
@@ -412,14 +425,14 @@
                                         <option value="Income">Income</option>
                                         <option value="Expense">Expense</option>
                                         <option value="Transfer">Transfer</option>
-                                    </select>
+                                    </select>                                    
                                 </div>
                             </div>
 
                             <hr>
                             
-                            <div class="input-group">
-                                <div class="trans-transf-input-container">
+                            <div class="input-group">                                
+                                <div class="trans-transf-input-container">                                    
                                     <div class="transf-origin-container">
                                         <label for="transf-origin-slct">From:</label>
                                         <select name="Origin" id="transf-orgini-slct">

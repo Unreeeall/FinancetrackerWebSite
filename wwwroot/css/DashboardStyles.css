@@ -81,6 +81,7 @@ header {
     box-sizing: border-box;
     z-index: 1000;
     display: flex;
+    /* margin-top: 20px; */
 }
 
 .user-options {
@@ -88,6 +89,7 @@ header {
     margin-left: auto;
     justify-content: right;
     gap: 1.5rem;
+    margin-top: 1.5rem;
 }
 
 .login-button,
@@ -115,6 +117,7 @@ header {
     /* right: inherit; */
     padding: inherit;
     border-radius: 10px;
+
 }
 
 
@@ -124,6 +127,7 @@ header {
     display: flex;
     align-items: center;
     flex-direction: column;
+    margin-bottom: 5px;
 }
 
 .profile-drop-box a,
@@ -167,7 +171,8 @@ header {
     cursor: pointer;
     position: absolute;
     align-self: center;
-    margin-top: 0.6rem;
+    margin-top: 1.5rem;
+    margin-left: 1.5rem;
     z-index: 999;
 }
 
@@ -563,10 +568,8 @@ header {
 }
 
 .add-new-acc-menu {
-    width: 20%;
     min-width: 350px;
     max-width: 500px;
-    height: 20%;
     background-color: #3a3a3a;
     justify-self: center;
     position: fixed;
@@ -576,16 +579,50 @@ header {
     transform: translate(-50%, 0);
     border-radius: 20px;
 
-
-    justify-content: center;
-    flex-direction: column;
     display: none;
+}
+
+.add-new-acc-menu.visible {
+    display: flex;
+    flex-direction: column;
+}
+
+.add-new-acc-exit-btn-box {
+    display: flex;
+    justify-content: end;
+}
+
+.acc-type-slc-container,
+.acc-name-slc-container,
+.acc-currency-slc-container,
+.submit-fin-acc-btn-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.acc-type-slc-container select,
+.acc-name-slc-container input,
+.acc-currency-slc-container select {
+    background-color: #2E073F;
+    color: #EBD3F8;
+    border: none;
+    border-radius: 4px;
+    height: 20px;
+    font-size: 1rem;
+}
+
+#Account-Type-slc:focus,
+#acc-name-inp:focus,
+#Curreny-Select:focus {
+    outline: none;
+    border-color: #67367c;
+    box-shadow: 0 0 5px rgba(183, 0, 255, 0.5);
 }
 
 #add-new-acc-btn {
     margin-top: 20px;
-    display: grid;
-    justify-self: center;
     scale: 150%;
     border: none;
 }
@@ -595,16 +632,17 @@ header {
     background-color: rgb(100, 160, 11);
 }
 
-.add-new-acc-menu.visible {
-    display: grid;
-}
+
+
+
+
 
 /* Add Transaction */
 .add-transaction-menu {
-    width: 50%;
+    /* width: 50%; */
     min-width: 350px;
     max-width: 500px;
-    height: 65%;
+    /* height: 65%; */
     min-height: 700px;
     max-height: 900px;
     background-color:#3a3a3a;
@@ -616,6 +654,8 @@ header {
 
     display: none;
     position: fixed;
+    align-self: center;
+    justify-self: center;
 }
 
 .add-transaction-menu.visible {
@@ -642,10 +682,102 @@ header {
     display: flex;
     margin-bottom: 20px;
     width: inherit;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input-group select, input{
+    background-color: #2E073F;
+    color: #EBD3F8;
+    border: none;
+    border-radius: 4px;
+    height: 20px;
+    font-size: 1rem;
 
 }
 
-@media (max-width: 440px) {
+.input-group option:hover {
+    background-color: #4A2759;
+}
+
+.save-transaction-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.save-transaction-btn {
+    font-size: 35px;
+    border: none;
+    background: none;
+
+}
+.save-transaction-btn:hover {
+    cursor: pointer;
+}
+
+.trans-type-slct-container,
+.trans-category-container,
+.trans-description-container,
+.trans-amount-container,
+.trans-date-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
+.trans-category-container label, .trans-type-slct-container label, 
+.trans-transf-input-container label, .trans-description-container label, 
+.trans-amount-container label, .trans-date-container label, 
+.trans-contract-container label, .trans-contract-cycle-container label{
+    font-weight: bold;
+    font-size: 1rem;
+    color: #EBD3F8;
+    /* display: inline-block; */
+}
+
+/* #trans-category-slct, #transf-destination-slct, 
+#transf-orgini-slct, #trans-type-slct,
+#contract-cycle-slct {
+    padding: 0.5rem;
+    font-size: 1rem;
+    border: 2px solid #000000;
+    border-radius: 5px;
+    color: #c7c7c7;
+    appearance: none;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background-image: url('data:image/svg+xml;charset=US-ASCII,<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="rgb(51, 51, 51)" class="bi bi-chevron-down" viewBox="0 0 16 16"> <path fill-rule="evenodd" d="M1.646 4.646a.5.5 0 0 1 .708 0L8 10.293l5.646-5.647a.5.5 0 0 1 .708.708l-6 6a.5.5 0 0 1-.708 0l-6-6a.5.5 0 0 1 0-.708z"/> </svg>');
+    background-repeat: no-repeat;
+    background-position: right 0.75rem center;
+    cursor: pointer;
+} */
+
+#trans-category-slct:focus, #transf-destination-slct:focus, 
+#transf-orgini-slct:focus, #trans-type-slct:focus, 
+#trans-description-inp:focus, #trans-amount-inp:focus, 
+#trans-date-inp:focus, #trans-contract-checkbox:focus, 
+#contract-cycle-slct:focus, #contract-enddate-inp:focus, 
+#save-transaction-btn:focus  {
+    outline: none;
+    border-color: #67367c;
+    box-shadow: 0 0 5px rgba(183, 0, 255, 0.5);
+}
+
+#trans-category-slct option, #transf-destination-slct option, 
+#transf-orgini-slct option, #trans-type-slct option , 
+#contract-cycle-slct option {
+    font-size: 1rem;
+    padding: 0.5rem;
+    color: #c7c7c7;
+    text-align: center;
+}
+
+
+/* Mobile  */
+@media (max-width: 440px) { 
 
     .Bank-Acc-Container,
     .Cash-Acc-Container,
