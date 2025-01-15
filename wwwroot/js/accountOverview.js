@@ -1,5 +1,6 @@
 document.addEventListener('DOMContentLoaded', (event) => {
     // Create the Chart.js charts.
+    console.log("HI1");
     const ctx1 = document.getElementById('accountBalanceChart').getContext('2d');
     const accountBalanceChart = new Chart(ctx1, {
         type: 'line',
@@ -317,6 +318,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Initial call to set the income
     updateTimeframe();
     updateIncomeAndExpense();
+    console.log("HI2");
 });
 
 
