@@ -6945,22 +6945,6 @@
       },
       {
         "Type": "Income",
-        "Date": "2025-01-14T14:18:00",
-        "Amount": 0.42,
-        "Origin": "",
-        "Destination": "",
-        "Description": "23232332",
-        "Category": "Rental Income",
-        "ID": "05631e35-784b-43c4-bd92-70c942cc0846",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": false,
-        "Cycle": 0,
-        "ContractId": null,
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
         "Date": "2025-01-14T15:41:00",
         "Amount": 1,
         "Origin": "",
@@ -7052,6 +7036,22 @@
         "IsContract": true,
         "Cycle": 8,
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-14T14:18:00",
+        "Amount": 0.02,
+        "Origin": "",
+        "Destination": "",
+        "Description": "23232332",
+        "Category": "Rental Income",
+        "ID": "05631e35-784b-43c4-bd92-70c942cc0846",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
         "Ticker": null,
         "Coin": null
       }

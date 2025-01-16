@@ -749,7 +749,7 @@ header {
 .contract-table-container {
     margin-top: 150px;
     width: 900px;
-    height: 800px;
+    height: auto;
     color: #ffff;
     display: flex;
     align-content: center;
