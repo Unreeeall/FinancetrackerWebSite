@@ -497,6 +497,9 @@ header {
 }
 
 
+
+
+
 /* .edit-type-select {
     width: 20%;
     height: 10%;
@@ -597,7 +600,6 @@ header {
 }
 
 
-
 .input-group {
     font-size: 20px;
     align-items: center;
@@ -633,10 +635,11 @@ header {
     font-size: 35px;
     border: none;
     background: none;
-
 }
 .save-transaction-btn:hover {
     cursor: pointer;
+    background-color: #555;
+    border-radius: 10px;
 }
 
 .trans-type-slct-container,
@@ -682,7 +685,15 @@ header {
 #trans-description-inp:focus, #trans-amount-inp:focus, 
 #trans-date-inp:focus, #trans-contract-checkbox:focus, 
 #contract-cycle-slct:focus, #contract-enddate-inp:focus, 
-#save-transaction-btn:focus  {
+#save-transaction-btn:focus,
+#edit-type-select:focus,
+#edit-transf-orgin-slct:focus,
+#edit-transf-destination-slct:focus,
+#edit-category-Dropdown:focus,
+#edit-trans-description-inp:focus,
+#edit-trans-amount-inp:focus,
+#edit-trans-date-inp:focus
+{
     outline: none;
     border-color: #67367c;
     box-shadow: 0 0 5px rgba(183, 0, 255, 0.5);
@@ -690,7 +701,11 @@ header {
 
 #trans-category-slct option, #transf-destination-slct option, 
 #transf-orgini-slct option, #trans-type-slct option , 
-#contract-cycle-slct option {
+#contract-cycle-slct option,
+#edit-type-select option,
+#edit-transf-orgin-slct option,
+#edit-transf-destination-slct option,
+#edit-category-Dropdown option {
     font-size: 1rem;
     padding: 0.5rem;
     color: #c7c7c7;
@@ -756,6 +771,7 @@ header {
     justify-content: center;
     border-radius: 10px;
     overflow: hidden;
+    
     /* Add this to prevent overflow issues */
 }
 
@@ -764,6 +780,7 @@ header {
     background-color: #221f1f;
     width: 100%;
     border-collapse: collapse;
+    text-align: center;
 }
 
 /* Add this block to make the tbody scrollable */
@@ -774,6 +791,8 @@ header {
     /* Adjust the height as needed */
     overflow-y: auto;
     width: 100%;
+    /* box-shadow: inset 0px -4px 19px 0px #000000; */
+    box-shadow: inset 0px -15px 20px -10px #000000;
 }
 
 /* Add this block to keep the thead fixed */
@@ -802,11 +821,11 @@ header {
     background-color: #555;
 }
 
-.transaction-table-container thead th,
-.transaction-table-container tbody td .contract-table-container thead th,
-.contract-table-container tbody td {
+.transaction-table-container th,
+.transaction-table-container td .contract-table-container th,
+.contract-table-container td {
     padding: 10px;
-    text-align: left;
+    text-align: center;
 }
 
 

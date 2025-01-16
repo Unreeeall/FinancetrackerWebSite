@@ -576,9 +576,9 @@ function closeEditMenu() {
 document.addEventListener("DOMContentLoaded", function () {
     const edittransactionTypeSelect = document.getElementById('edit-type-select');
     const editcategorySelect = document.getElementById('edit-category-Dropdown');
-    const edittransferInputContainer = document.querySelector('.edit-trans-transf-input-container');
-    const editcontractCheckbox = document.getElementById('edit-trans-contract-checkbox');
-    const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
+    const edittransferInputContainer = document.querySelector('.trans-transf-input-container');
+    // const editcontractCheckbox = document.getElementById('edit-trans-contract-checkbox');
+    // const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
     const edittransferOriginSelect = document.getElementById('edit-transf-orgin-slct');
     const edittransferDestinationSelect = document.getElementById('edit-transf-destination-slct');
 
