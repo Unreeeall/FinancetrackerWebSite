@@ -166,7 +166,7 @@
                                 <td>@transaction.Category</td>
                                 <td>
                                     <p class="trans-amount @((transaction.Type == "Expense") ? "expense" : "income")">
-                                        @transaction.Amount</p>
+                                        @transaction.Amount.ToString().Replace(",", ".")</p>
                                     <style>
                                         .trans-amount.expense {
                                             color: red;
@@ -185,7 +185,7 @@
 
                                     <button type="button" onclick="editTransactionWindow(event, this)" data-id="@transaction?.ID"
                                         data-type="@transaction?.Type" data-category="@transaction?.Category"
-                                        data-amount="@transaction?.Amount" data-origin="@transaction?.Origin"
+                                        data-amount="@transaction?.Amount.ToString().Replace(",", ".")" data-origin="@transaction?.Origin"
                                         data-destination="@transaction?.Destination" data-date="@transaction?.Date.ToString("s")"
                                         data-description="@transaction?.Description" data-iscontract="@transaction?.IsContract"
                                         data-cycle="@transaction?.Cycle">🖊️</button>
@@ -227,7 +227,7 @@
                                 <td>@contract.Category</td>
                                 <td>
                                     <p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
-                                        @contract.Amount</p>
+                                        @contract.Amount.ToString().Replace(",", ".")</p>
                                     <style>
                                         .trans-amount.expense {
                                             color: red;
@@ -245,7 +245,7 @@
                                 <td>@contract.EndDate</td>
                                 <td><button type="button" class="edit-button" onclick="editContract(event, this)"
                                         data-contractId="@contract.ContractId" data-type="@contract.Type"
-                                        data-amount="@contract.Amount" data-category="@contract.Category"
+                                        data-amount="@contract.Amount.ToString().Replace(",", ".")" data-category="@contract.Category"
                                         data-cycle="@contract.Cycle" data-startDate="@contract.StartDate.ToString("s")"
                                         data-endDate="@contract.EndDate?.ToString("s")" data-accountId="@contract.AccountID"
                                         data-origin="@contract.Origin" data-destination="@contract.Destination">🖊️</button>

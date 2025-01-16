@@ -521,23 +521,30 @@ function editTransactionWindow(event, button) {
         const transactionID = button.getAttribute('data-id');
         const transactionType = button.getAttribute('data-type');
         const transactionCategory = button.getAttribute('data-category');
-        const transactionAmount = button.getAttribute('data-amount');
+        var transactionAmount = button.getAttribute('data-amount');
         const transactionOrigin = button.getAttribute('data-origin');
         const transactionDestination = button.getAttribute('data-destination');
         const transactionDate = button.getAttribute('data-date');
         const transactionDescription = button.getAttribute('data-description');
-        const transactionIsContract = button.getAttribute('data-iscontract');
+        //const transactionIsContract = button.getAttribute('data-iscontract');
+
+        
+        // console.log("Transaction Amount (raw):", transactionAmount);
+        // console.log("Parsed as float:", parseFloat(transactionAmount));
+        
+        document.getElementById('edit-trans-amount-inp').value = transactionAmount;
+    
 
 
         document.getElementById('edit-Trans-ID').value = transactionID;
         document.getElementById('edit-type-select').value = transactionType;
         document.getElementById('edit-category-Dropdown').value = transactionCategory;
-        document.querySelector('.edit-trans-amount-inp').value = transactionAmount;
+        // document.getElementById('edit-trans-amount-inp').value = transactionAmount;
 
-        // Set the date field first to ensure it always gets populated
+
         document.querySelector('.edit-trans-date-inp').value = transactionDate;
 
-        document.querySelector('.edit-trans-description-inp').value = transactionDescription;
+        document.getElementById('edit-trans-description-inp').value = transactionDescription;
 
         if (transactionType === "Transfer") {
             document.getElementById('edit-transf-orgin-slct').value = transactionOrigin;
@@ -547,15 +554,15 @@ function editTransactionWindow(event, button) {
             document.querySelector('.edit-trans-transf-input-container').style.display = "none";
         }
 
-        document.getElementById('edit-trans-contract-checkbox').checked = transactionIsContract === "true";
-        document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract === "true" ? transactionIsContract : "";
+        // document.getElementById('edit-trans-contract-checkbox').checked = transactionIsContract === "true";
+        // document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract === "true" ? transactionIsContract : "";
 
         // Show or hide contract cycle based on the contract checkbox
-        if (transactionIsContract === "true") {
-            document.querySelector('.edit-trans-contract-cycle-container').style.display = "block";
-        } else {
-            document.querySelector('.edit-trans-contract-cycle-container').style.display = "none";
-        }
+        // if (transactionIsContract === "true") {
+        //     document.querySelector('.edit-trans-contract-cycle-container').style.display = "block";
+        // } else {
+        //     document.querySelector('.edit-trans-contract-cycle-container').style.display = "none";
+        // }
     } catch (error) {
         console.error("Error setting transaction data: ", error);
     }
@@ -644,44 +651,44 @@ function editContract(event, button) {
     document.getElementById('edit-contract-container').classList.toggle("visible");
 
     const contractID = button.getAttribute('data-contractId');
-        const contractType = button.getAttribute('data-type');
-        const contractCategory = button.getAttribute('data-category');
-        const contractAmount = button.getAttribute('data-amount');
-        const contractOrigin = button.getAttribute('data-origin');
-        const contractDestination = button.getAttribute('data-destination');
-        const contractStartDate = button.getAttribute('data-startDate');
-        const contractEndDate = button.getAttribute('data-endDate');
-        const contractAccId = button.getAttribute('data-accountId');
-        const contractCycle = button.getAttribute('data-cycle');
+    const contractType = button.getAttribute('data-type');
+    const contractCategory = button.getAttribute('data-category');
+    const contractAmount = button.getAttribute('data-amount');
+    const contractOrigin = button.getAttribute('data-origin');
+    const contractDestination = button.getAttribute('data-destination');
+    const contractStartDate = button.getAttribute('data-startDate');
+    const contractEndDate = button.getAttribute('data-endDate');
+    const contractAccId = button.getAttribute('data-accountId');
+    const contractCycle = button.getAttribute('data-cycle');
 
-        console.log("ContractID: ", contractID);
-        
-
-        //document.getElementsByClassName('.contract-ID').value = contractID;
-        document.getElementById('contract-id').value = contractID;
-        document.getElementById('del-contract-id').value = contractID;
-        document.getElementById('contract-type-slct').value = contractType;
-        document.getElementById('contract-category-slct').value = contractCategory;
-        document.getElementById('contract-amount-inp').value = contractAmount;
-        document.getElementById('edit-contract-cycle-slct').value = contractCycle;
-        document.getElementById('contract-acc-id').value = contractAccId;
-        document.getElementById('del-contract-acc-id'). value = contractAccId;
-
-        // Set the date field first to ensure it always gets populated
-        document.querySelector('.edit-start-date-input').value = contractStartDate;
-        document.querySelector('.edit-end-date-input').value = contractEndDate;
-
-        if (contractType === "Transfer") {
-            document.getElementById('edit-contract-transf-orgin-slct').value = contractOrigin;
-            document.getElementById('edit-contract-transf-destination-slct').value = contractDestination;
-            document.querySelector('.edit-contract-transfer-input-container').style.display = "block";
-        } else {
-            document.querySelector('.edit-trans-transf-input-container').style.display = "none";
-        }
+    console.log("ContractID: ", contractID);
 
 
-        const testContractID = document.getElementById('del-contract-id').value;
-        console.log("Test ContractID: ", testContractID);
+    //document.getElementsByClassName('.contract-ID').value = contractID;
+    document.getElementById('contract-id').value = contractID;
+    document.getElementById('del-contract-id').value = contractID;
+    document.getElementById('contract-type-slct').value = contractType;
+    document.getElementById('contract-category-slct').value = contractCategory;
+    document.getElementById('contract-amount-inp').value = contractAmount;
+    document.getElementById('edit-contract-cycle-slct').value = contractCycle;
+    document.getElementById('contract-acc-id').value = contractAccId;
+    document.getElementById('del-contract-acc-id').value = contractAccId;
+
+    // Set the date field first to ensure it always gets populated
+    document.querySelector('.edit-start-date-input').value = contractStartDate;
+    document.querySelector('.edit-end-date-input').value = contractEndDate;
+
+    if (contractType === "Transfer") {
+        document.getElementById('edit-contract-transf-orgin-slct').value = contractOrigin;
+        document.getElementById('edit-contract-transf-destination-slct').value = contractDestination;
+        document.querySelector('.edit-contract-transfer-input-container').style.display = "block";
+    } else {
+        document.querySelector('.edit-trans-transf-input-container').style.display = "none";
+    }
+
+
+    const testContractID = document.getElementById('del-contract-id').value;
+    console.log("Test ContractID: ", testContractID);
 }
 
 function closeEditContract() {
