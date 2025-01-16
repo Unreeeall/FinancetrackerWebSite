@@ -5548,22 +5548,6 @@
         "Coin": null
       },
       {
-        "Type": "Expense",
-        "Date": "2024-12-08T07:50:00",
-        "Amount": 20,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Insurance (Health, Car, Home)",
-        "ID": "226c1a26-3476-4447-a580-f0fb2b4be16a",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": true,
-        "Cycle": 5,
-        "ContractId": "070bc2f9-10b4-47fb-a017-d7e103728df3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
         "Type": null,
         "Date": "2024-12-16T13:51:00",
         "Amount": 10,
@@ -6653,22 +6637,6 @@
       },
       {
         "Type": "Expense",
-        "Date": "2025-01-08T07:50:00",
-        "Amount": 20,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Insurance (Health, Car, Home)",
-        "ID": "1124a87d-09cd-4e1b-abaf-3e42ab8a9382",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": true,
-        "Cycle": 5,
-        "ContractId": "070bc2f9-10b4-47fb-a017-d7e103728df3",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Expense",
         "Date": "2025-01-08T10:33:00",
         "Amount": 2,
         "Origin": "",
@@ -7018,6 +6986,22 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-15T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "ef4aaa52-e7ef-4ddc-bb75-323bc6395f32",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -7030,18 +7014,6 @@
         "EndDate": null,
         "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
         "Type": "Income",
-        "Origin": "",
-        "Destination": ""
-      },
-      {
-        "ContractId": "070bc2f9-10b4-47fb-a017-d7e103728df3",
-        "Amount": 20,
-        "Category": "Insurance (Health, Car, Home)",
-        "Cycle": 5,
-        "StartDate": "2024-12-08T07:50:00",
-        "EndDate": null,
-        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "Type": "Expense",
         "Origin": "",
         "Destination": ""
       },
@@ -7086,7 +7058,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 2043.02,
+        "Balance": 2083,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

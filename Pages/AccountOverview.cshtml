@@ -437,15 +437,31 @@
                         Changes</button>
                 </form>
                 <div class="delete-contract-container">
-                    <form method="post">
-                        <input type="hidden" name="ContractID" id="del-contract-id" required>
-                        <input type="hidden" name="ContractAccID" id="del-contract-acc-id" required>
-                        <input type="hidden" name="UuId" value="@Model.financialAccount?.ID" required>
-                        <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
-                        <button type="submit" class="delete-contract-button" id="delete-contract-button"
-                            asp-page-handler="DeleteContract">❌</button>
-                    </form>
+                    <label for="delete-contract-button">Delete Contract(With all past Transactions)</label>
+                    <button type="button" class="delete-contract-button" id="delete-contract-button"
+                    onclick="confirmDeleteContract()">❌</button>
                 </div>
+            </div>
+
+
+            <div class="confirm-del-contract-container" id="confirm-del-contract-container">
+                <div>
+                    <div class="close-confirm-del-btn-container">
+                        <button type="button" class="exit-btn" onclick="closeDeleteContract()">X</button>
+                    </div>
+                </div>
+                <div class="confirm-del-text-container">
+                    <h3>Are you shure you want to delete this Transaction?</h3>
+                    <h4>Note: This CANT be undone!</h4>
+                </div>
+                <form method="post">
+                    <input type="text" name="ContractID" id="del-contract-id" required>
+                    <input type="text" name="ContractAccID" id="del-contract-acc-id" required>
+                    <input type="text" name="UuId" value="@Model.financialAccount?.ID" required>
+                    
+                    <button type="submit" class="delete-contract-button" id="delete-contract-button"
+                        asp-page-handler="DeleteContract">❌</button>
+                </form>
             </div>
 
 
