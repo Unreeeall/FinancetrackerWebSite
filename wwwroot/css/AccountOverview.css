@@ -213,9 +213,9 @@ header {
 
     left: -250px;
     height: 100%;
-    width: 15%;
+    width: fit-content;
     background-color: #000000;
-    padding: 20px;
+    padding: 40px;
     box-sizing: border-box;
     transition: left 0.3s ease;
 }
@@ -237,7 +237,7 @@ header {
     flex-direction: column;
     align-items: center;
     text-align: center;
-    width: inherit;
+    width: 100%;
 }
 
 .menu-dashbard-box:hover,
@@ -281,7 +281,7 @@ header {
     justify-content: space-between;
 
 
-    margin-top: 10%;
+    margin-top: 150px;
     gap: 20px;
     padding: 20px;
     flex-grow: 1;
@@ -305,6 +305,7 @@ header {
     flex-direction: column;
     align-items: center;
     height: auto;
+    width: 60%;
 }
 
 .in-ex-charts-container {
@@ -312,7 +313,7 @@ header {
     justify-content: center;
     align-items: flex-start;
 
-    /* width: 100%; */
+    width: 100%;
     color: #ddd;
     
 }
@@ -322,7 +323,8 @@ header {
     display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top: 150px;
+    margin-top: 250px;
+    width: 60%;
 }
 
 
@@ -546,46 +548,97 @@ header {
 }
 
 
+/* Add Transaction */
 .add-transaction-menu {
-    width: 50%;
+    /* width: 50%; */
     min-width: 350px;
     max-width: 500px;
-    height: 65%;
-    min-height: 700px;
+    height: auto; 
+    /* min-height: 700px; */
     max-height: 900px;
     background-color:#3a3a3a;
-    justify-self: center;
-    position: fixed;
-    top: 25%;
+    margin-top: auto;
     left: 50%;
     padding: 20px;
     transform: translate(-50%, 0);
     border-radius: 20px;
 
-    
-    justify-content: center;
-    flex-direction: column;
     display: none;
+    position: fixed;
+    align-self: center;
+    justify-self: center;
 }
 
 .add-transaction-menu.visible {
-    display: block;
-}
-
-.input-group {
-    padding: 10px;
-    font-size: 20px;
-    flex-direction: column;
-}
-
-
-
-/* .trans-category-container {
     display: flex;
     flex-direction: column;
-    gap: 0.5rem;
-    max-width: 300px;
-} */
+
+}
+
+.add-transaction-menu-exit-btn-container {
+    display: flex;
+    justify-content: end;
+}
+
+
+.add-new-acc-menu form {
+    display: flex;
+    flex-direction: column;
+}
+
+
+
+.input-group {
+    font-size: 20px;
+    align-items: center;
+    display: flex;
+    margin-bottom: 20px;
+    width: inherit;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.input-group select, input{
+    background-color: #2E073F;
+    color: #EBD3F8;
+    border: none;
+    border-radius: 4px;
+    height: 20px;
+    font-size: 1rem;
+
+}
+
+.input-group option:hover {
+    background-color: #4A2759;
+}
+
+.save-transaction-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.save-transaction-btn {
+    font-size: 35px;
+    border: none;
+    background: none;
+
+}
+.save-transaction-btn:hover {
+    cursor: pointer;
+}
+
+.trans-type-slct-container,
+.trans-category-container,
+.trans-description-container,
+.trans-amount-container,
+.trans-date-container {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
 
 .trans-category-container label, .trans-type-slct-container label, 
 .trans-transf-input-container label, .trans-description-container label, 
@@ -593,18 +646,17 @@ header {
 .trans-contract-container label, .trans-contract-cycle-container label{
     font-weight: bold;
     font-size: 1rem;
-    color: #c7c7c7;
-    display: inline-block;
+    color: #EBD3F8;
+    /* display: inline-block; */
 }
 
-#trans-category-slct, #transf-destination-slct, 
+/* #trans-category-slct, #transf-destination-slct, 
 #transf-orgini-slct, #trans-type-slct,
 #contract-cycle-slct {
     padding: 0.5rem;
     font-size: 1rem;
     border: 2px solid #000000;
     border-radius: 5px;
-    background-color:#000000;
     color: #c7c7c7;
     appearance: none;
     -webkit-appearance: none;
@@ -613,7 +665,7 @@ header {
     background-repeat: no-repeat;
     background-position: right 0.75rem center;
     cursor: pointer;
-}
+} */
 
 #trans-category-slct:focus, #transf-destination-slct:focus, 
 #transf-orgini-slct:focus, #trans-type-slct:focus, 
@@ -632,6 +684,7 @@ header {
     font-size: 1rem;
     padding: 0.5rem;
     color: #c7c7c7;
+    text-align: center;
 }
 
 
@@ -830,6 +883,30 @@ input[type="submit"] {
         width: auto;
         height: auto;
     }
+
+    .in-ex-charts-container {
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .expensesByCategoryChart-container,
+    .incomeByCategoryChart-container {
+        width: auto;
+        
+    }
+
+    .expensesByCategoryChart-container {
+        margin-top: 40px;
+    }
+
+    .incomeByCategoryChart-container {
+        margin-top: 200px;
+    }
+
+    .income-to-expense-chart-contianer {
+        width: auto;
+    }
 }
 
 @media (max-width: 625px) {
@@ -846,6 +923,39 @@ input[type="submit"] {
         font-size: 11px;
     }
 }
+
+@media (max-height: 710px) {
+    .add-transaction-menu {
+        font-size: 5px;
+    }
+
+    .input-group {
+        margin-bottom: 15px;
+    }
+}
+
+@media (max-height: 685px) {
+    .input-group {
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-height: 650px) {
+    .input-group {
+        margin-bottom: 5px;
+    }
+}
+
+@media (max-height: 612px) {
+    .add-transaction-menu {
+        margin-top: 0px;
+    }
+
+    .input-group {
+        margin-bottom: 0px;
+    }
+}
+
 
 
 
