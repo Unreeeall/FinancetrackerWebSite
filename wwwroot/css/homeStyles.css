@@ -72,9 +72,8 @@ header {
     background: #000000;
     color: #fff;
     padding: 1rem 2rem;
-    margin-left: auto;
-    margin-right: auto;
-    margin-left: auto;
+
+    display: flex;
 }
 
 nav {
@@ -117,39 +116,32 @@ p {
 .nav-links {
     list-style: none;
     display: flex;
-    gap: 4rem;
+    
+    justify-content: space-between;
 
     align-items: center; /* Ensures all items are vertically aligned */
     padding: 0; /* Removes any default padding */
     margin: 0; /* Removes any default margin */
-    margin-left: 4rem;
+    /* margin: 4px; */
 }
 
-.nav-links li a {
-    color: #c7c7c7;
-    text-decoration: none;
-    font-size: 1rem;
-    /* align-items: baseline; */
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers the image and text */
-    gap: 0.5rem; /* Adds space between the image and text */
-    padding: 0; /* Removes any padding */
-    margin: 0; /* Removes any margin */
-    line-height: 1; /* Adjusts line-height to match the font size */
-    text-align: center;
-    
-
-}
-
-.nav-links li a p {
-    margin: 0; /* Removes any margin from the paragraph */
-    padding: 0; /* Removes any padding from the paragraph */
-    width: 100%;
-}
 
 .nav-links li a:hover {
     text-decoration: none;
+}
+
+.income-analysis-nav-container a,
+.investment-analysis-nav-container a,
+.contact-nav-container a {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    text-decoration: none;
+    gap: 0.5rem;
+    font-size: 1rem;
+    color: #c7c7c7;
+    line-height: 1;
 }
 
 .user-options {
@@ -170,8 +162,8 @@ p {
 
 /* Add this to your styles.css file */
 .user-options {
-    position: relative;
-    display: inline-flex;
+    display: flex;
+
 }
 
 .login-button {
@@ -319,6 +311,14 @@ btn:hover.btn.shiny::after {
     color: #c7c7c7;
 }
 
+nav {
+    display: flex;
+    justify-content: space-between;
+    flex-direction: row;
+    
+    width: 100%;
+}
+
 canvas {
     width: 100% !important;
     height: 100% !important;
@@ -384,5 +384,56 @@ footer {
     text-align: center;
     padding: 1rem;
 }
+
+
+@media (max-width: 955px) {
+    .user-options {
+        display: block;
+        margin-left: 4px;
+    }
+    .example-linechart,
+    .example-piechart {
+        width: auto;
+    }
+
+}
+
+@media (max-width: 730px) {
+    .income-analysis-nav-container,
+    .investment-analysis-nav-container,
+    .contact-nav-container {
+        display: none;
+    }
+
+    
+
+}
+
+@media (max-width: 450px){
+    nav {
+        flex-direction: column;
+
+    }
+    .user-options {
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
+    .login-button,
+    .register-button {
+        width: 100%;
+        font-size: 2rem;
+        text-align: center;
+    }
+
+}
+
+
+
+
+
+
 
 
