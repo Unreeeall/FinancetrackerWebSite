@@ -152,9 +152,9 @@
                             <th>Destination</th>
                             <th>Description</th>
                             <th>Date</th>
-                            <th>Action</th>
-                            <th><button type="button" class="add-transaction-btn" data-id="@Model.financialAccount?.ID"
+                            <th>Action <button type="button" class="add-transaction-btn" data-id="@Model.financialAccount?.ID"
                                     onclick="addTransactionWindow(this)">+</button></th>
+                            @* <th></th> *@
                         </tr>
                     </thead>
                     <tbody>
@@ -442,7 +442,7 @@
                         <input type="hidden" name="TransID" id="edit-Trans-ID" />
                         <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
                         <div class="input-group">
-                            <div class="edit-type-select-container">
+                            <div class="trans-type-slct-container">
                                 <label for="edit-type-select">Type</label>
                                 <select name="Type" id="edit-type-select" class="edit-type-select" required>
                                     <option value="" disabled selected></option>
@@ -454,8 +454,8 @@
                         </div>
 
                         <div class="input-group">
-                            <div class="edit-trans-transf-input-container">
-                                <div class="edit-transf-orgin-slct-container">
+                            <div class="trans-transf-input-container">
+                                <div class="transf-orgin-slct-container">
                                     <label for="edit-transf-orgin-slct">From</label>
                                     <select name="Origin" id="edit-transf-orgin-slct">
                                         <!-- Populate account options dynamically -->
@@ -479,7 +479,7 @@
                                     </select>
                                 </div>
 
-                                <div class="edit-transf-destination-slct-contianer">
+                                <div class="transf-destination-slct-contianer">
                                     <label for="edit-transf-destination-slct">To</label>
                                     <select name="Destination" id="edit-transf-destination-slct">
                                         <!-- Populate account options dynamically -->
@@ -506,7 +506,7 @@
                         </div>
                         
                         <div class="input-group">
-                            <div class="edit-category-Dropdown-container">
+                            <div class="trans-category-container">
                                 <label for="edit-category-Dropdown">Category</label>
                                 <select id="edit-category-Dropdown" class="edit-category-drop" name="Category" required>
                                     <option value="" disabled selected></option>
@@ -581,7 +581,7 @@
                         
 
                         <div class="input-group">
-                            <div class="edit-trans-description-container">
+                            <div class="trans-description-container">
                                 <label for="edit-trans-description-inp">Description</label>
                                 <input type="text" class="edit-trans-description" id="edit-trans-description-inp"
                                     name="Description" required>
@@ -590,7 +590,7 @@
                         
 
                         <div class="input-group">
-                            <div class="edit-trans-amount-container">
+                            <div class="trans-amount-container">
                                 <label for="edit-trans-amount-inp">Amount</label>
                                 <input type="number" class="edit-trans-amount-inp" id="edit-trans-amount-inp" name="Amount"
                                     step="0.01" min="0" required>
@@ -599,7 +599,7 @@
                         
 
                         <div class="input-group">
-                             <div class="edit-trans-date-container">
+                             <div class="trans-date-container">
                                 <label for="edit-trans-date-inp">Date</label>
                                 <input type="datetime-local" class="edit-trans-date-inp" id="edit-trans-date-inp" name="Date"
                                     required>
@@ -630,7 +630,7 @@
                         <div class="input-group">
                             <div class="save-transaction-changes-btn-container">
                                 <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
-                                <button type="submit" asp-page-handler="EditTransaction">Save</button>
+                                <button type="submit" class="save-transaction-btn" asp-page-handler="EditTransaction">Save</button>
                             </div>
                         </div>
                     </form>
