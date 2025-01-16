@@ -15,7 +15,6 @@
     <link rel="icon" type="image/png" sizes="32x24" href="..\images\BudgedBuddyTranspSmol32pxWide.png">
     <script src="/js/site.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="js/analysisCharts.js"></script>
     <script src="/js/accountOverview.js"></script>
 </head>
 
@@ -189,12 +188,12 @@
                                         data-destination="@transaction?.Destination" data-date="@transaction?.Date.ToString("s")"
                                         data-description="@transaction?.Description" data-iscontract="@transaction?.IsContract"
                                         data-cycle="@transaction?.Cycle">🖊️</button>
-                                    <form method="post">
-                                        <input type="hidden" name="UuId" value="@Model?.financialAccount?.ID">
-                                        <input type="hidden" name="TransID" value="@transaction?.ID" />
-                                        <button type="submit" class="delete-button"
-                                            asp-page-handler="DeleteTransaction">❌</button>
-                                    </form>
+                        
+                                    <button type="button" onclick="confirmDeleteTransaction(event, this)"
+                                            class="delete-button"
+                                            data-uuid="@Model?.financialAccount?.ID" 
+                                            data-transid="@transaction?.ID"
+                                    >❌</button>                      
                                 </td>
                             </tr>
                         }
@@ -258,6 +257,22 @@
 
             <div class="dark-overlay" id="dark-overlay"></div>
 
+            <div class="confirm-del-transaction-box" id="confirm-del-transaction-box">
+                <div class="close-confirm-del-btn-container">
+                    <button type="button" class="exit-btn" onclick="closeDeleteTransaction()">X</button>
+                </div>
+                <div class="confirm-del-text-container">
+                    <h3>Are you shure you want to delete this Transaction?</h3>
+                    <h4>Note: This CANT be undone!</h4>
+                </div>
+                <form method="post">
+                    <input type="hidden" name="UuId" id="confirm-del-uuid">
+                    <input type="hidden" name="TransID"  id="confirm-del-transid"/>
+
+                    <button type="submit" class="delete-button"
+                    asp-page-handler="DeleteTransaction">❌</button>
+                </form>
+            </div>
             
             <div class="edit-contract-container" id="edit-contract-container">
                 <button type="button" class="exit-btn" onclick="closeEditContract()">X</button>
@@ -859,7 +874,7 @@
         console.log("User Email:", userEmail);
         console.log("Account ID:", accID);
     </script>
-
+    <script src="/js/accountOverview.js"></script>
 </body>
 
 </html>

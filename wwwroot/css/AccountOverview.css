@@ -459,6 +459,36 @@ header {
 
 
 
+.confirm-del-transaction-box {
+    background-color: #3a3a3a;
+    display: none;
+    justify-self: center;
+    top: 300px;
+    position: fixed;
+    color: #fcfafa;
+    border-radius: 10px;
+    padding: 25px;
+}
+
+.confirm-del-transaction-box.visible {
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.confirm-del-text-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.confirm-del-transaction-box form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+
 
 .edit-menu-container {
     /* width: 50%; */
