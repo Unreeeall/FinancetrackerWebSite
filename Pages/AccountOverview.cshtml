@@ -449,417 +449,417 @@
             </div>
 
 
-                <div class="edit-menu-container" id="edit-menu-container">
-                    <div class="edit-transaction-exit-btn-container">
-                        <button class="exit-btn" onclick="closeEditMenu()">X</button>
+            <div class="edit-menu-container" id="edit-menu-container">
+                <div class="edit-transaction-exit-btn-container">
+                    <button class="exit-btn" onclick="closeEditMenu()">X</button>
+                </div>
+                <form method="post">
+                    <input type="hidden" name="TransID" id="edit-Trans-ID" />
+                    <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
+                    <div class="input-group">
+                        <div class="trans-type-slct-container">
+                            <label for="edit-type-select">Type</label>
+                            <select name="Type" id="edit-type-select" class="edit-type-select" required>
+                                <option value="" disabled selected></option>
+                                <option value="Income">Income</option>
+                                <option value="Expense">Expense</option>
+                                <option value="Transfer">Transfer</option>
+                            </select>
+                        </div>
                     </div>
-                    <form method="post">
-                        <input type="hidden" name="TransID" id="edit-Trans-ID" />
-                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
-                        <div class="input-group">
-                            <div class="trans-type-slct-container">
-                                <label for="edit-type-select">Type</label>
-                                <select name="Type" id="edit-type-select" class="edit-type-select" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="Income">Income</option>
-                                    <option value="Expense">Expense</option>
-                                    <option value="Transfer">Transfer</option>
-                                </select>
-                            </div>
-                        </div>
 
-                        <div class="input-group">
-                            <div class="trans-transf-input-container">
-                                <div class="transf-orgin-slct-container">
-                                    <label for="edit-transf-orgin-slct">From</label>
-                                    <select name="Origin" id="edit-transf-orgin-slct">
-                                        <!-- Populate account options dynamically -->
-                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="transf-destination-slct-contianer">
-                                    <label for="edit-transf-destination-slct">To</label>
-                                    <select name="Destination" id="edit-transf-destination-slct">
-                                        <!-- Populate account options dynamically -->
-                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
-                        </div>
-                        
-                        <div class="input-group">
-                            <div class="trans-category-container">
-                                <label for="edit-category-Dropdown">Category</label>
-                                <select id="edit-category-Dropdown" class="edit-category-drop" name="Category" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="Salary" data-type="Income">Salary</option>
-                                    <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
-                                    </option>
-                                    <option value="Investments" data-type="Income">Investments</option>
-                                    <option value="Rental Income" data-type="Income">Rental Income</option>
-                                    <option value="Business Income" data-type="Income">Business Income</option>
-                                    <option value="Bonuses" data-type="Income">Bonuses</option>
-                                    <option value="Gifts" data-type="Income">Gifts</option>
-                                    <option value="Interest Earned" data-type="Income">Interest Earned</option>
-                                    <option value="Dividends" data-type="Income">Dividends</option>
-                                    <option value="Other Income" data-type="Income">Other Income</option>
-
-                                    <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
-                                    <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
-                                        (Electricity, Water, Gas)</option>
-                                    <option value="Groceries" data-type="Expense">Groceries</option>
-                                    <option value="Dining Out" data-type="Expense">Dining Out</option>
-                                    <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
-                                        Transportation (Fuel, Public Transport)</option>
-                                    <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
-                                        Car, Home)</option>
-                                    <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
-                                    <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
-                                        Books)</option>
-                                    <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
-                                        (Movies, Events)</option>
-                                    <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
-                                        (Netflix, Gym)</option>
-                                    <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
-                                        Hotels)</option>
-                                    <option value="Clothing" data-type="Expense">Clothing</option>
-                                    <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
-                                        (Haircuts, Spa)</option>
-                                    <option value="Household Supplies" data-type="Expense">Household Supplies</option>
-                                    <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
-                                        (Credit Card, Loans)</option>
-                                    <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
-                                    <option value="Charitable Donations" data-type="Expense">Charitable Donations
-                                    </option>
-                                    <option value="Pet Care" data-type="Expense">Pet Care</option>
-                                    <option value="Childcare" data-type="Expense">Childcare</option>
-                                    <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
-
-                                    <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
-                                    <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
-                                    <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
-                                    <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
-                                    <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
-                                    <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
-                                    <option value="External Transfer" data-type="Transfer">External Transfer</option>
-                                    <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
-                                    </option>
-                                    <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
-                                    <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
-                                    </option>
-                                    <option value="Savings to Checking" data-type="Transfer">Savings to Checking
-                                    </option>
-                                    <option value="Checking to Savings" data-type="Transfer">Checking to Savings
-                                    </option>
-                                    <option value="Investment to Savings" data-type="Transfer">Investment to Savings
-                                    </option>
-                                    <option value="Savings to Investment" data-type="Transfer">Savings to Investment
-                                    </option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        
-                        
-
-                        <div class="input-group">
-                            <div class="trans-description-container">
-                                <label for="edit-trans-description-inp">Description</label>
-                                <input type="text" class="edit-trans-description" id="edit-trans-description-inp"
-                                    name="Description" required>
-                            </div>
-                        </div>
-                        
-
-                        <div class="input-group">
-                            <div class="trans-amount-container">
-                                <label for="edit-trans-amount-inp">Amount</label>
-                                <input type="number" class="edit-trans-amount-inp" id="edit-trans-amount-inp" name="Amount"
-                                    step="0.01" min="0" required>
-                            </div>
-                        </div>
-                        
-
-                        <div class="input-group">
-                             <div class="trans-date-container">
-                                <label for="edit-trans-date-inp">Date</label>
-                                <input type="datetime-local" class="edit-trans-date-inp" id="edit-trans-date-inp" name="Date"
-                                    required>
-                            </div>
-                        </div>
-                       
-
-                        @* <div class="input-group">
-                            <div class="edit-trans-contract-checkbox-container">
-                                <label for="edit-trans-contract-checkbox">Contract</label>
-                                <input type="checkbox" asp-for="IsContract" id="edit-trans-contract-checkbox">
-                            </div>
-                        </div> *@
-                        
-
-                        @* <div class="input-group">
-                            <div class="edit-contract-cycle-slct-container">
-                                <label for="edit-contract-cycle-slct">Contract cycle</label>
-                                <select name="Cycle" id="edit-contract-cycle-slct" required>
-                                    @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                    <div class="input-group">
+                        <div class="trans-transf-input-container">
+                            <div class="transf-orgin-slct-container">
+                                <label for="edit-transf-orgin-slct">From</label>
+                                <select name="Origin" id="edit-transf-orgin-slct">
+                                    <!-- Populate account options dynamically -->
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
                                     {
-                                        <option value="@billingCycle">@billingCycle</option>
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
                                     }
                                 </select>
                             </div>
-                        </div> *@
-                        
-                        <div class="input-group">
-                            <div class="save-transaction-changes-btn-container">
-                                <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
-                                <button type="submit" class="save-transaction-btn" asp-page-handler="EditTransaction">Save</button>
+
+                            <div class="transf-destination-slct-contianer">
+                                <label for="edit-transf-destination-slct">To</label>
+                                <select name="Destination" id="edit-transf-destination-slct">
+                                    <!-- Populate account options dynamically -->
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                    {
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
+                                    }
+                                </select>
                             </div>
                         </div>
-                    </form>
-                </div>
-
-
-
-                <div class="add-transaction-menu" id="add-transaction-menu">
-                    <div class="add-transaction-menu-exit-btn-container">
-                        <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                     </div>
-                    <form method="post">
-                        <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
-                        <div class="input-group">
-                            <div class="trans-type-slct-container" id="trans-type-slct-container">
-                                <label for="trans-type-slct">Transaction Type</label>
-                                <select class="trans-type-slct" id="trans-type-slct" name="Type" required>
-                                    <option value="" selected disabled></option>
-                                    <option value="Income">Income</option>
-                                    <option value="Expense">Expense</option>
-                                    <option value="Transfer">Transfer</option>
-                                </select>
-                            </div>
+                    
+                    <div class="input-group">
+                        <div class="trans-category-container">
+                            <label for="edit-category-Dropdown">Category</label>
+                            <select id="edit-category-Dropdown" class="edit-category-drop" name="Category" required>
+                                <option value="" disabled selected></option>
+                                <option value="Salary" data-type="Income">Salary</option>
+                                <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
+                                </option>
+                                <option value="Investments" data-type="Income">Investments</option>
+                                <option value="Rental Income" data-type="Income">Rental Income</option>
+                                <option value="Business Income" data-type="Income">Business Income</option>
+                                <option value="Bonuses" data-type="Income">Bonuses</option>
+                                <option value="Gifts" data-type="Income">Gifts</option>
+                                <option value="Interest Earned" data-type="Income">Interest Earned</option>
+                                <option value="Dividends" data-type="Income">Dividends</option>
+                                <option value="Other Income" data-type="Income">Other Income</option>
+
+                                <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
+                                <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
+                                    (Electricity, Water, Gas)</option>
+                                <option value="Groceries" data-type="Expense">Groceries</option>
+                                <option value="Dining Out" data-type="Expense">Dining Out</option>
+                                <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
+                                    Transportation (Fuel, Public Transport)</option>
+                                <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
+                                    Car, Home)</option>
+                                <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
+                                <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
+                                    Books)</option>
+                                <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
+                                    (Movies, Events)</option>
+                                <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
+                                    (Netflix, Gym)</option>
+                                <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
+                                    Hotels)</option>
+                                <option value="Clothing" data-type="Expense">Clothing</option>
+                                <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
+                                    (Haircuts, Spa)</option>
+                                <option value="Household Supplies" data-type="Expense">Household Supplies</option>
+                                <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
+                                    (Credit Card, Loans)</option>
+                                <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
+                                <option value="Charitable Donations" data-type="Expense">Charitable Donations
+                                </option>
+                                <option value="Pet Care" data-type="Expense">Pet Care</option>
+                                <option value="Childcare" data-type="Expense">Childcare</option>
+                                <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
+
+                                <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
+                                <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
+                                <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
+                                <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
+                                <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
+                                <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
+                                <option value="External Transfer" data-type="Transfer">External Transfer</option>
+                                <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
+                                </option>
+                                <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
+                                <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
+                                </option>
+                                <option value="Savings to Checking" data-type="Transfer">Savings to Checking
+                                </option>
+                                <option value="Checking to Savings" data-type="Transfer">Checking to Savings
+                                </option>
+                                <option value="Investment to Savings" data-type="Transfer">Investment to Savings
+                                </option>
+                                <option value="Savings to Investment" data-type="Transfer">Savings to Investment
+                                </option>
+                            </select>
                         </div>
-                        
-                        <hr>
+                    </div>
+                    
+                    
+                    
 
-                        <div class="input-group">
-                            <div class="trans-transf-input-container">
-                                <div class="transf-origin-container">
-                                    <label for="transf-origin-slct">From:</label>
-                                    <select name="Origin" id="transf-orgini-slct">
-
-                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-
-                                <div class="transf-destination-container">
-                                    <label for="transf-destination-slct">To:</label>
-                                    <select name="Destination" id="transf-destination-slct">
-                                        <option value="" disabled selected></option>
-                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                        {
-                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                        }
-                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                        {
-                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                        }
-                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                        {
-                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                        }
-                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                        {
-                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                            </option>
-                                        }
-                                    </select>
-                                </div>
-                            </div>
+                    <div class="input-group">
+                        <div class="trans-description-container">
+                            <label for="edit-trans-description-inp">Description</label>
+                            <input type="text" class="edit-trans-description" id="edit-trans-description-inp"
+                                name="Description" required>
                         </div>
-                        
+                    </div>
+                    
 
-                        <div class="input-group">
-                            <div class="trans-category-container">
-                                <label for="trans-category-slct">Category</label>
-                                <select name="Category" id="trans-category-slct" required>
-                                    <option value="" disabled selected></option>
-                                    <option value="Salary" data-type="Income">Salary</option>
-                                    <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
-                                    </option>
-                                    <option value="Investments" data-type="Income">Investments</option>
-                                    <option value="Rental Income" data-type="Income">Rental Income</option>
-                                    <option value="Business Income" data-type="Income">Business Income</option>
-                                    <option value="Bonuses" data-type="Income">Bonuses</option>
-                                    <option value="Gifts" data-type="Income">Gifts</option>
-                                    <option value="Interest Earned" data-type="Income">Interest Earned</option>
-                                    <option value="Dividends" data-type="Income">Dividends</option>
-                                    <option value="Other Income" data-type="Income">Other Income</option>
-
-                                    <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
-                                    <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
-                                        (Electricity, Water, Gas)</option>
-                                    <option value="Groceries" data-type="Expense">Groceries</option>
-                                    <option value="Dining Out" data-type="Expense">Dining Out</option>
-                                    <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
-                                        Transportation (Fuel, Public Transport)</option>
-                                    <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
-                                        Car, Home)</option>
-                                    <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
-                                    <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
-                                        Books)</option>
-                                    <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
-                                        (Movies, Events)</option>
-                                    <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
-                                        (Netflix, Gym)</option>
-                                    <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
-                                        Hotels)</option>
-                                    <option value="Clothing" data-type="Expense">Clothing</option>
-                                    <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
-                                        (Haircuts, Spa)</option>
-                                    <option value="Household Supplies" data-type="Expense">Household Supplies</option>
-                                    <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
-                                        (Credit Card, Loans)</option>
-                                    <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
-                                    <option value="Charitable Donations" data-type="Expense">Charitable Donations
-                                    </option>
-                                    <option value="Pet Care" data-type="Expense">Pet Care</option>
-                                    <option value="Childcare" data-type="Expense">Childcare</option>
-                                    <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
-
-                                    <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
-                                    <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
-                                    <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
-                                    <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
-                                    <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
-                                    <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
-                                    <option value="External Transfer" data-type="Transfer">External Transfer</option>
-                                    <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
-                                    </option>
-                                    <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
-                                    <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
-                                    </option>
-                                    <option value="Savings to Checking" data-type="Transfer">Savings to Checking
-                                    </option>
-                                    <option value="Checking to Savings" data-type="Transfer">Checking to Savings
-                                    </option>
-                                    <option value="Investment to Savings" data-type="Transfer">Investment to Savings
-                                    </option>
-                                    <option value="Savings to Investment" data-type="Transfer">Savings to Investment
-                                    </option>
-                                </select>
-                            </div>
+                    <div class="input-group">
+                        <div class="trans-amount-container">
+                            <label for="edit-trans-amount-inp">Amount</label>
+                            <input type="number" class="edit-trans-amount-inp" id="edit-trans-amount-inp" name="Amount"
+                                step="0.01" min="0" required>
                         </div>
+                    </div>
+                    
 
-                        <hr>
-                            
-                        <div class="input-group">
-                            <div class="trans-description-container">
-                                <label for="trans-income-description-inp">Description</label>
-                                <input type="text" class="trans-description" id="trans-description-inp" name="Description"
-                                    required>
-                            </div>
-                        </div>
-
-                        <hr>
-
-                        <div class="input-group">
-                            <div class="trans-amount-container">
-                                <label for="trans-amount-inp">Amount</label>
-                                <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount"
-                                    step="0.01" min="0" required>
-                            </div>
-                        </div>
-
+                    <div class="input-group">
                             <div class="trans-date-container">
-                                <label for="trans-date-inp">Date</label>
-                                <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date"
-                                    required>
-                            </div>
-
-                        <hr>
-                                
-                        <div class="input-group">
-                            <div class="trans-contract-container">
-                                <label for="trans-contract-checkbox">Contract</label>
-                                <input type="checkbox" asp-for="IsContract" id="trans-contract-checkbox">
-                            </div>
+                            <label for="edit-trans-date-inp">Date</label>
+                            <input type="datetime-local" class="edit-trans-date-inp" id="edit-trans-date-inp" name="Date"
+                                required>
                         </div>
+                    </div>
+                    
 
-                        <div class="input-group">
-                            <div class="trans-contract-cycle-container">
-                                <label for="contract-cycle-slct">Contract cycle</label>
-                                <select name="Cycle" id="contract-cycle-slct" required>
+                    @* <div class="input-group">
+                        <div class="edit-trans-contract-checkbox-container">
+                            <label for="edit-trans-contract-checkbox">Contract</label>
+                            <input type="checkbox" asp-for="IsContract" id="edit-trans-contract-checkbox">
+                        </div>
+                    </div> *@
+                    
 
-                                    @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                    @* <div class="input-group">
+                        <div class="edit-contract-cycle-slct-container">
+                            <label for="edit-contract-cycle-slct">Contract cycle</label>
+                            <select name="Cycle" id="edit-contract-cycle-slct" required>
+                                @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                {
+                                    <option value="@billingCycle">@billingCycle</option>
+                                }
+                            </select>
+                        </div>
+                    </div> *@
+                    
+                    <div class="input-group">
+                        <div class="save-transaction-changes-btn-container">
+                            <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
+                            <button type="submit" class="save-transaction-btn" asp-page-handler="EditTransaction">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+
+
+            <div class="add-transaction-menu" id="add-transaction-menu">
+                <div class="add-transaction-menu-exit-btn-container">
+                    <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
+                </div>
+                <form method="post">
+                    <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
+                    <div class="input-group">
+                        <div class="trans-type-slct-container" id="trans-type-slct-container">
+                            <label for="trans-type-slct">Transaction Type</label>
+                            <select class="trans-type-slct" id="trans-type-slct" name="Type" required>
+                                <option value="" selected disabled></option>
+                                <option value="Income">Income</option>
+                                <option value="Expense">Expense</option>
+                                <option value="Transfer">Transfer</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                    <hr>
+
+                    <div class="input-group">
+                        <div class="trans-transf-input-container">
+                            <div class="transf-origin-container">
+                                <label for="transf-origin-slct">From:</label>
+                                <select name="Origin" id="transf-orgini-slct">
+
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
                                     {
-                                        <option value="@billingCycle">@billingCycle</option>
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
                                     }
                                 </select>
-                                    <div class="trans-contract-enddate-container">
-                                        <label for="contract-enddate-inp">EndDate</label>
-                                        <input type="datetime-local" class="contract-enddate-inp" id="contract-enddate-inp" name="EndDate">
-                                    </div>
-                                <hr>
                             </div>
+
+                            <div class="transf-destination-container">
+                                <label for="transf-destination-slct">To:</label>
+                                <select name="Destination" id="transf-destination-slct">
+                                    <option value="" disabled selected></option>
+                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                    {
+                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                    }
+                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                    {
+                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                    }
+                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                    {
+                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                    }
+                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                    {
+                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                        </option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    
+
+                    <div class="input-group">
+                        <div class="trans-category-container">
+                            <label for="trans-category-slct">Category</label>
+                            <select name="Category" id="trans-category-slct" required>
+                                <option value="" disabled selected></option>
+                                <option value="Salary" data-type="Income">Salary</option>
+                                <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
+                                </option>
+                                <option value="Investments" data-type="Income">Investments</option>
+                                <option value="Rental Income" data-type="Income">Rental Income</option>
+                                <option value="Business Income" data-type="Income">Business Income</option>
+                                <option value="Bonuses" data-type="Income">Bonuses</option>
+                                <option value="Gifts" data-type="Income">Gifts</option>
+                                <option value="Interest Earned" data-type="Income">Interest Earned</option>
+                                <option value="Dividends" data-type="Income">Dividends</option>
+                                <option value="Other Income" data-type="Income">Other Income</option>
+
+                                <option value="Rent/Mortgage" data-type="Expense">Rent/Mortgage</option>
+                                <option value="Utilities (Electricity, Water, Gas)" data-type="Expense">Utilities
+                                    (Electricity, Water, Gas)</option>
+                                <option value="Groceries" data-type="Expense">Groceries</option>
+                                <option value="Dining Out" data-type="Expense">Dining Out</option>
+                                <option value="Transportation (Fuel, Public Transport)" data-type="Expense">
+                                    Transportation (Fuel, Public Transport)</option>
+                                <option value="Insurance (Health, Car, Home)" data-type="Expense">Insurance (Health,
+                                    Car, Home)</option>
+                                <option value="Medical/Healthcare" data-type="Expense">Medical/Healthcare</option>
+                                <option value="Education (Tuition, Books)" data-type="Expense">Education (Tuition,
+                                    Books)</option>
+                                <option value="Entertainment (Movies, Events)" data-type="Expense">Entertainment
+                                    (Movies, Events)</option>
+                                <option value="Subscriptions (Netflix, Gym)" data-type="Expense">Subscriptions
+                                    (Netflix, Gym)</option>
+                                <option value="Travel (Flights, Hotels)" data-type="Expense">Travel (Flights,
+                                    Hotels)</option>
+                                <option value="Clothing" data-type="Expense">Clothing</option>
+                                <option value="Personal Care (Haircuts, Spa)" data-type="Expense">Personal Care
+                                    (Haircuts, Spa)</option>
+                                <option value="Household Supplies" data-type="Expense">Household Supplies</option>
+                                <option value="Debt Payments (Credit Card, Loans)" data-type="Expense">Debt Payments
+                                    (Credit Card, Loans)</option>
+                                <option value="Savings/Investments" data-type="Expense">Savings/Investments</option>
+                                <option value="Charitable Donations" data-type="Expense">Charitable Donations
+                                </option>
+                                <option value="Pet Care" data-type="Expense">Pet Care</option>
+                                <option value="Childcare" data-type="Expense">Childcare</option>
+                                <option value="Miscellaneous" data-type="Expense">Miscellaneous</option>
+
+                                <option value="Bank Transfer" data-type="Transfer">Bank Transfer</option>
+                                <option value="Cash Withdrawal" data-type="Transfer">Cash Withdrawal</option>
+                                <option value="Cash Deposit" data-type="Transfer">Cash Deposit</option>
+                                <option value="Crypto Purchase" data-type="Transfer">Crypto Purchase</option>
+                                <option value="Crypto Sale" data-type="Transfer">Crypto Sale</option>
+                                <option value="Internal Transfer" data-type="Transfer">Internal Transfer</option>
+                                <option value="External Transfer" data-type="Transfer">External Transfer</option>
+                                <option value="Credit Card Payment" data-type="Transfer">Credit Card Payment
+                                </option>
+                                <option value="Loan Payment" data-type="Transfer">Loan Payment</option>
+                                <option value="Peer-to-Peer Transfer" data-type="Transfer">Peer-to-Peer Transfer
+                                </option>
+                                <option value="Savings to Checking" data-type="Transfer">Savings to Checking
+                                </option>
+                                <option value="Checking to Savings" data-type="Transfer">Checking to Savings
+                                </option>
+                                <option value="Investment to Savings" data-type="Transfer">Investment to Savings
+                                </option>
+                                <option value="Savings to Investment" data-type="Transfer">Savings to Investment
+                                </option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <hr>
+                        
+                    <div class="input-group">
+                        <div class="trans-description-container">
+                            <label for="trans-income-description-inp">Description</label>
+                            <input type="text" class="trans-description" id="trans-description-inp" name="Description"
+                                required>
+                        </div>
+                    </div>
+
+                    <hr>
+
+                    <div class="input-group">
+                        <div class="trans-amount-container">
+                            <label for="trans-amount-inp">Amount</label>
+                            <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount"
+                                step="0.01" min="0" required>
+                        </div>
+                    </div>
+
+                        <div class="trans-date-container">
+                            <label for="trans-date-inp">Date</label>
+                            <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date"
+                                required>
                         </div>
 
-                        <div class="input-group">
-                            <div class="save-transaction-container">
-                                <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
-                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
-                                    asp-page-handler="AddTransaction">Save</button>
-                            </div>
+                    <hr>
+                            
+                    <div class="input-group">
+                        <div class="trans-contract-container">
+                            <label for="trans-contract-checkbox">Contract</label>
+                            <input type="checkbox" asp-for="IsContract" id="trans-contract-checkbox">
                         </div>
-                    </form>
-                </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="trans-contract-cycle-container">
+                            <label for="contract-cycle-slct">Contract cycle</label>
+                            <select name="Cycle" id="contract-cycle-slct" required>
+
+                                @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                {
+                                    <option value="@billingCycle">@billingCycle</option>
+                                }
+                            </select>
+                                <div class="trans-contract-enddate-container">
+                                    <label for="contract-enddate-inp">EndDate</label>
+                                    <input type="datetime-local" class="contract-enddate-inp" id="contract-enddate-inp" name="EndDate">
+                                </div>
+                            <hr>
+                        </div>
+                    </div>
+
+                    <div class="input-group">
+                        <div class="save-transaction-container">
+                            <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
+                            <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
+                                asp-page-handler="AddTransaction">Save</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         }
     </div>
 
