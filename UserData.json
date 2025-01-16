@@ -6,8 +6,8 @@
     "Password": "kaka",
     "Sessions": [
       {
-        "Id": "Tf4sa7zsVMSkGC2S2Lyky53n87zqx1RI1xX0GoCh7PA=",
-        "ExpireDate": "2025-01-17T07:27:12.4825437+01:00"
+        "Id": "1OSFODv1Tse5OJp\u002Bd3AZbmfF0zytT78BBZeEAAKjXY8=",
+        "ExpireDate": "2025-01-17T09:59:39.8450795+01:00"
       }
     ],
     "Transactions": [
@@ -6988,22 +6988,6 @@
         "Coin": null
       },
       {
-        "Type": "Income",
-        "Date": "2025-01-15T15:41:00",
-        "Amount": 1,
-        "Origin": "",
-        "Destination": "",
-        "Description": "Contract Payment",
-        "Category": "Salary",
-        "ID": "2e4b7350-7f0c-4b1b-812c-3a25956ae9c0",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": true,
-        "Cycle": 8,
-        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
         "Type": "Expense",
         "Date": "2025-01-15T10:33:00",
         "Amount": 2,
@@ -7032,22 +7016,6 @@
         "IsContract": true,
         "Cycle": 8,
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
-        "Ticker": null,
-        "Coin": null
-      },
-      {
-        "Type": "Income",
-        "Date": "2025-01-14T14:18:00",
-        "Amount": 0.02,
-        "Origin": "",
-        "Destination": "",
-        "Description": "23232332",
-        "Category": "Rental Income",
-        "ID": "05631e35-784b-43c4-bd92-70c942cc0846",
-        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
-        "IsContract": false,
-        "Cycle": 0,
-        "ContractId": null,
         "Ticker": null,
         "Coin": null
       }

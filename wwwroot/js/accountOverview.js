@@ -696,6 +696,24 @@ function closeEditContract() {
     document.getElementById('edit-contract-container').classList.toggle("visible");
 }
 
+
+function confirmDeleteTransaction(event, button) {
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('confirm-del-transaction-box').classList.toggle("visible");
+
+    const uuid = button.getAttribute('data-uuid');
+    const transid = button.getAttribute('data-transid');
+
+    document.getElementById('confirm-del-uuid').value = uuid;
+    document.getElementById('confirm-del-transid').value = transid;
+    
+}
+
+function closeDeleteTransaction() {
+    document.getElementById('dark-overlay').classList.toggle("visible");
+    document.getElementById('confirm-del-transaction-box').classList.toggle("visible");
+}
+
 // function editTransactionWindow(event, button) {
 //     const editPopup = document.getElementById('edit-popup');
 //     editPopup.classList.toggle("visible");
