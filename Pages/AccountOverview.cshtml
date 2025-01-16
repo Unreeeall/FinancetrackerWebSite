@@ -455,9 +455,9 @@
                     <h4>Note: This CANT be undone!</h4>
                 </div>
                 <form method="post">
-                    <input type="text" name="ContractID" id="del-contract-id" required>
-                    <input type="text" name="ContractAccID" id="del-contract-acc-id" required>
-                    <input type="text" name="UuId" value="@Model.financialAccount?.ID" required>
+                    <input type="hidden" name="ContractID" id="del-contract-id" required>
+                    <input type="hidden" name="ContractAccID" id="del-contract-acc-id" required>
+                    <input type="hidden" name="UuId" value="@Model.financialAccount?.ID" required>
                     
                     <button type="submit" class="delete-contract-button" id="delete-contract-button"
                         asp-page-handler="DeleteContract">❌</button>
