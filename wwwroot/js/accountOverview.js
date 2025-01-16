@@ -714,6 +714,17 @@ function closeDeleteTransaction() {
     document.getElementById('confirm-del-transaction-box').classList.toggle("visible");
 }
 
+
+function confirmDeleteContract() {
+
+    document.getElementById('confirm-del-contract-container').classList.toggle("visible");
+}
+
+function closeDeleteContract() {
+
+    document.getElementById('confirm-del-contract-container').classList.toggle("visible");
+}
+
 // function editTransactionWindow(event, button) {
 //     const editPopup = document.getElementById('edit-popup');
 //     editPopup.classList.toggle("visible");

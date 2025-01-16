@@ -377,8 +377,8 @@ public class AccountOverviewModel : PageModel
             }
             else
             {
-                var contractToRemove = WebUser.GetContractByID(TransID);
-                if(contractToRemove == null)Console.WriteLine("OnPostDeleteContract -> transactionToRemove is null!");
+                var contractToRemove = WebUser.GetContractByID(ContractID);
+                if(contractToRemove == null)Console.WriteLine("OnPostDeleteContract -> contractToRemove is null!");
                 else
                 {
                     WebUser.DeleteAllContractTransactions(ContractID, ContractAccID);

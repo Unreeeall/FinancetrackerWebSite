@@ -459,7 +459,8 @@ header {
 
 
 
-.confirm-del-transaction-box {
+.confirm-del-transaction-box,
+.confirm-del-contract-container {
     background-color: #3a3a3a;
     display: none;
     justify-self: center;
@@ -470,7 +471,8 @@ header {
     padding: 25px;
 }
 
-.confirm-del-transaction-box.visible {
+.confirm-del-transaction-box.visible,
+.confirm-del-contract-container.visible {
     display: flex;
     justify-content: center;
     flex-direction: column;
@@ -482,11 +484,16 @@ header {
     align-items: center;
 }
 
-.confirm-del-transaction-box form {
+.confirm-del-transaction-box form,
+.confirm-del-contract-container form {
     display: flex;
     flex-direction: column;
     align-items: center;
 }
+
+
+
+
 
 
 
