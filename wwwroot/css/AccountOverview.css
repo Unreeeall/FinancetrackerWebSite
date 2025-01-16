@@ -42,7 +42,7 @@ header {
     padding: 1rem 2rem;
     position: fixed;
     width: 100%;
-    /* max-width: 100vw; */
+    max-width: 100vw;
     box-sizing: border-box;
     z-index: 1000;
     display: flex;
@@ -158,14 +158,11 @@ header {
 
 /* SIDEBAR MENU ////////////////////////////////////////////////////////////////////////////////////// */
 
-.menu-icon {
-    /* align-self: center; */
+/* .menu-icon {
     width: 35px;
     height: 30px;
     cursor: pointer;
     position: relative;
-    /* align-self: center; */
-    /* margin-left: 1.5rem; */
     z-index: 999;
     margin: auto 25px;
 }
@@ -174,6 +171,24 @@ header {
     width: 100%;
     height: 5px;
     background-color: #c7c7c7;
+    position: absolute;
+    transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
+} */
+
+.menu-icon {
+    width: 35px;
+    height: 30px;
+    cursor: pointer;
+    position: absolute;
+    align-self: center;
+    margin: auto;
+    z-index: 999;
+}
+
+.bar {
+    width: 100%;
+    height: 5px;
+    background-color: #EBD3F8;
     position: absolute;
     transition: transform 0.3s ease, top 0.3s ease, opacity 0.3s ease;
 }
@@ -286,7 +301,7 @@ header {
     padding: 20px;
     flex-grow: 1;
     min-height: 100vh;
-    min-width: 430px;
+    /* min-width: 430px; */
 }
 
 .accountOverview-container {
@@ -306,6 +321,7 @@ header {
     align-items: center;
     height: auto;
     width: 60%;
+    margin: 10px;
 }
 
 .in-ex-charts-container {
@@ -937,6 +953,10 @@ input[type="submit"] {
 
 
 @media (max-width: 899px) {
+
+    /* header {
+        width: auto;
+    } */
     .transaction-table-container,
     .contract-table-container {
         /* font-size: 13px; */
@@ -947,7 +967,7 @@ input[type="submit"] {
 
     .accountBlanceChart-Container {
         width: auto;
-        height: auto;
+        /* margin-right: 100px; */
     }
 
     .in-ex-charts-container {
@@ -971,7 +991,7 @@ input[type="submit"] {
     }
 
     .income-to-expense-chart-contianer {
-        width: auto;
+        width: 100%;
     }
 }
 
@@ -987,6 +1007,9 @@ input[type="submit"] {
     .transaction-table-container,
     .contract-table-container {
         font-size: 11px;
+    }
+    footer {
+        width: auto;
     }
 }
 
