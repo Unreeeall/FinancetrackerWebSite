@@ -461,29 +461,39 @@ header {
 
 
 .edit-menu-container {
-    width: 50%;
+    /* width: 50%; */
     min-width: 350px;
     max-width: 500px;
-    height: 65%;
-    min-height: 700px;
+    /* height: 65%; */
+    /* min-height: 700px; */
     max-height: 900px;
     background-color:#3a3a3a;
-    justify-self: center;
-    position: fixed;
-    top: 25%;
+    margin-top: auto;
     left: 50%;
     padding: 20px;
     transform: translate(-50%, 0);
     border-radius: 20px;
 
-    
-    justify-content: center;
-    flex-direction: column;
     display: none;
+    position: fixed;
+    align-self: center;
+    justify-self: center;
+    flex-direction: column;
 }
 
 .edit-menu-container.visible {
-    display: grid;
+    display: flex;
+    
+}
+
+.edit-menu-container form {
+    display: flex;
+    flex-direction: column;
+}
+
+.edit-transaction-exit-btn-container {
+    display: flex;
+    justify-content: end;
 }
 
 
