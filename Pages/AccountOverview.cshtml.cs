@@ -248,50 +248,48 @@ public class AccountOverviewModel : PageModel
             {
                 if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
                 {
-                    if (IsContract)
-                    {
-                        var currentContract = WebUser.GetContractByID(currentTransaction.ContractId);
-                        if (currentContract == null)
-                        {
-                            Console.WriteLine("CurrentContract is empty!");
-                            return RedirectToPage("/AccountOverview", new { uuid = UuId });
-                        }
-                        currentContract.Type = Type;
-                        currentContract.Category = Category;
-                        currentContract.Amount = parsedAmount;
-                        currentContract.AccountID = AccID;
-                        currentContract.Cycle = Cycle;
-                        currentContract.StartDate = Date;
-                        currentContract.Origin = Origin;
-                        currentContract.Destination = Destination;
-                        currentContract.ContractId = currentContract.ContractId;
+                    
+                        // var currentContract = WebUser.GetContractByID(currentTransaction.ContractId);
+                        // if (currentContract == null)
+                        // {
+                        //     Console.WriteLine("CurrentContract is empty!");
+                        //     return RedirectToPage("/AccountOverview", new { uuid = UuId });
+                        // }
+                        // currentContract.Type = Type;
+                        // currentContract.Category = Category;
+                        // currentContract.Amount = parsedAmount;
+                        // currentContract.AccountID = AccID;
+                        // currentContract.Cycle = Cycle;
+                        // currentContract.StartDate = Date;
+                        // currentContract.Origin = Origin;
+                        // currentContract.Destination = Destination;
+                        // currentContract.ContractId = currentContract.ContractId;
 
-                        WebUser.DeleteContract(currentContract.ContractId);
-                        WebUser.Contracts.Add(currentContract);
-                    }
+                        // WebUser.DeleteContract(currentContract.ContractId);
+                        // WebUser.Contracts.Add(currentContract);
+                    
+                    
+                    currentTransaction.Type = Type;
+                    currentTransaction.Date = Date;
+                    currentTransaction.Amount = parsedAmount;
+                    currentTransaction.Origin = Origin;
+                    currentTransaction.Destination = Destination;
+                    currentTransaction.Description = Description;
+                    currentTransaction.Category = Category;
+                    currentTransaction.ID = TransID;
+                    currentTransaction.AccountId = AccID;
+                    currentTransaction.IsContract = IsContract;
+                    currentTransaction.Cycle = Cycle;
+
+                    var transactionToRemove = WebUser.GetTransactionByID(TransID);
+                    if(transactionToRemove == null)Console.WriteLine("OnPostEditTransaction -> transactionToRemove is null!");
                     else
                     {
-                        currentTransaction.Type = Type;
-                        currentTransaction.Date = Date;
-                        currentTransaction.Amount = parsedAmount;
-                        currentTransaction.Origin = Origin;
-                        currentTransaction.Destination = Destination;
-                        currentTransaction.Description = Description;
-                        currentTransaction.Category = Category;
-                        currentTransaction.ID = TransID;
-                        currentTransaction.AccountId = AccID;
-                        currentTransaction.IsContract = IsContract;
-                        currentTransaction.Cycle = Cycle;
-
-                        var transactionToRemove = WebUser.GetTransactionByID(TransID);
-                        if(transactionToRemove == null)Console.WriteLine("OnPostEditTransaction -> transactionToRemove is null!");
-                        else
-                        {
-                            WebUser.Transactions.Remove(transactionToRemove);
-                            WebUser.Transactions.Add(currentTransaction);
-                            Console.WriteLine($"Transaction with ID: {TransID} deleted!");
-                        }   
-                    }
+                        WebUser.Transactions.Remove(transactionToRemove);
+                        WebUser.Transactions.Add(currentTransaction);
+                        Console.WriteLine($"Transaction with ID: {TransID} deleted!");
+                    }   
+                    
                 }
             }
         }

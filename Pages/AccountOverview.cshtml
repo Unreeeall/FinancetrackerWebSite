@@ -609,74 +609,79 @@
 
 
                 <div class="add-transaction-menu" id="add-transaction-menu">
-                    <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
+                    <div class="add-transaction-menu-exit-btn-container">
+                        <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
+                    </div>
                     <form method="post">
-
                         <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
-
-                        <div class="trans-type-slct-container" id="trans-type-slct-container">
-
-                            <label for="trans-type-slct">Transaction Type</label>
-                            <select class="trans-type-slct" id="trans-type-slct" name="Type" required>
-                                <option value="" selected disabled></option>
-                                <option value="Income">Income</option>
-                                <option value="Expense">Expense</option>
-                                <option value="Transfer">Transfer</option>
-                            </select>
-                        </div>
-
-                        <div class="trans-transf-input-container">
-                            <div class="transf-origin-container">
-                                <label for="transf-origin-slct">From:</label>
-                                <select name="Origin" id="transf-orgini-slct">
-                                    <option value="" disabled selected></option>
-
-                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                    {
-                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                    }
-                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                    {
-                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                    }
-                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                    {
-                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                    }
-                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                    {
-                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                        </option>
-                                    }
-                                </select>
-                            </div>
-
-                            <div class="transf-destination-container">
-                                <label for="transf-destination-slct">To:</label>
-                                <select name="Destination" id="transf-destination-slct">
-                                    <option value="" disabled selected></option>
-                                    @foreach (var bankaccount in Model.WebUser.BankAccounts)
-                                    {
-                                        <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
-                                    }
-                                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                                    {
-                                        <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
-                                    }
-                                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                                    {
-                                        <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
-                                    }
-                                    @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
-                                    {
-                                        <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
-                                        </option>
-                                    }
+                        <div class="input-group">
+                            <div class="trans-type-slct-container" id="trans-type-slct-container">
+                                <label for="trans-type-slct">Transaction Type</label>
+                                <select class="trans-type-slct" id="trans-type-slct" name="Type" required>
+                                    <option value="" selected disabled></option>
+                                    <option value="Income">Income</option>
+                                    <option value="Expense">Expense</option>
+                                    <option value="Transfer">Transfer</option>
                                 </select>
                             </div>
                         </div>
+                        
+                        <hr>
 
-                        <div class="trans-income-expense-inputs-container">
+                        <div class="input-group">
+                            <div class="trans-transf-input-container">
+                                <div class="transf-origin-container">
+                                    <label for="transf-origin-slct">From:</label>
+                                    <select name="Origin" id="transf-orgini-slct">
+
+                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                        {
+                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                        }
+                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                        {
+                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                        {
+                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                        }
+                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                        {
+                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+
+                                <div class="transf-destination-container">
+                                    <label for="transf-destination-slct">To:</label>
+                                    <select name="Destination" id="transf-destination-slct">
+                                        <option value="" disabled selected></option>
+                                        @foreach (var bankaccount in Model.WebUser.BankAccounts)
+                                        {
+                                            <option value="@bankaccount.ID">Bankaccount: "@bankaccount.AccountName"</option>
+                                        }
+                                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                                        {
+                                            <option value="@cashAccount.ID">Cash: "@cashAccount.AccountName"</option>
+                                        }
+                                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                                        {
+                                            <option value="@cryptoWallet.ID">Cryptowallet: "@cryptoWallet.AccountName"</option>
+                                        }
+                                        @foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
+                                        {
+                                            <option value="@portfolioAccount.ID">Portfolio: "@portfolioAccount.AccountName"
+                                            </option>
+                                        }
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        
+
+                        <div class="input-group">
                             <div class="trans-category-container">
                                 <label for="trans-category-slct">Category</label>
                                 <select name="Category" id="trans-category-slct" required>
@@ -746,16 +751,27 @@
                                     </option>
                                 </select>
                             </div>
+                        </div>
+
+                        <hr>
+                            
+                        <div class="input-group">
                             <div class="trans-description-container">
                                 <label for="trans-income-description-inp">Description</label>
                                 <input type="text" class="trans-description" id="trans-description-inp" name="Description"
                                     required>
                             </div>
+                        </div>
+
+                        <hr>
+
+                        <div class="input-group">
                             <div class="trans-amount-container">
                                 <label for="trans-amount-inp">Amount</label>
                                 <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount"
                                     step="0.01" min="0" required>
                             </div>
+                        </div>
 
                             <div class="trans-date-container">
                                 <label for="trans-date-inp">Date</label>
@@ -763,11 +779,16 @@
                                     required>
                             </div>
 
+                        <hr>
+                                
+                        <div class="input-group">
                             <div class="trans-contract-container">
                                 <label for="trans-contract-checkbox">Contract</label>
                                 <input type="checkbox" asp-for="IsContract" id="trans-contract-checkbox">
                             </div>
+                        </div>
 
+                        <div class="input-group">
                             <div class="trans-contract-cycle-container">
                                 <label for="contract-cycle-slct">Contract cycle</label>
                                 <select name="Cycle" id="contract-cycle-slct" required>
@@ -777,13 +798,20 @@
                                         <option value="@billingCycle">@billingCycle</option>
                                     }
                                 </select>
+                                    <div class="trans-contract-enddate-container">
+                                        <label for="contract-enddate-inp">EndDate</label>
+                                        <input type="datetime-local" class="contract-enddate-inp" id="contract-enddate-inp" name="EndDate">
+                                    </div>
+                                <hr>
                             </div>
                         </div>
 
-                        <div class="save-transaction-container">
-                            <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
-                            <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
-                                asp-page-handler="AddTransaction">Save</button>
+                        <div class="input-group">
+                            <div class="save-transaction-container">
+                                <input type="hidden" name="UuId" value="@Model.financialAccount?.ID">
+                                <button type="submit" class="save-transaction-btn" id="save-transaction-btn"
+                                    asp-page-handler="AddTransaction">Save</button>
+                            </div>
                         </div>
                     </form>
                 </div>
