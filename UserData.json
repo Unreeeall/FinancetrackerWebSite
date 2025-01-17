@@ -7114,6 +7114,86 @@
         "ContractId": null,
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-16T08:36:00",
+        "Amount": 12,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Eier",
+        "Category": "Salary",
+        "ID": "decc1936-e51b-495e-8f5e-3df7d9954fba",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-16T08:36:00",
+        "Amount": 12,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Business Income",
+        "ID": "2a735f7f-e925-4daf-95e1-2e70776eb668",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 0,
+        "ContractId": "a24d444e-0564-4d41-b861-31cc5fb1dc08",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-16T08:55:00",
+        "Amount": 12,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "49ea57e3-ab98-4aa9-a015-2c423fa0aa5d",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 1,
+        "ContractId": "f5982eb4-b151-472f-b165-01683f0934d2",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2025-01-16T09:02:00",
+        "Amount": 123,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": "Cash Withdrawal",
+        "ID": "7b1f2afa-fe8c-42c5-8b72-6e255a2a0e85",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 4,
+        "ContractId": "b58471eb-0fc8-49c5-9998-5c3167e15fbc",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Transfer",
+        "Date": "2025-01-16T09:35:00",
+        "Amount": 123,
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d",
+        "Description": "Contract Payment",
+        "Category": "Cash Withdrawal",
+        "ID": "116f861a-1083-4684-ae8f-ceac53555d51",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 7,
+        "ContractId": "7902710d-ad10-42e1-8d13-3b9700089fd9",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -7164,13 +7244,25 @@
         "Type": "Income",
         "Origin": "",
         "Destination": ""
+      },
+      {
+        "ContractId": "7902710d-ad10-42e1-8d13-3b9700089fd9",
+        "Amount": 123,
+        "Category": "Cash Withdrawal",
+        "Cycle": 7,
+        "StartDate": "2025-01-16T09:35:00",
+        "EndDate": null,
+        "AccountID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Type": "Transfer",
+        "Origin": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "Destination": "86fe583a-5d38-432b-9823-da9458c93f4d"
       }
     ],
     "BankAccounts": [
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 1763.89,
+        "Balance": 1553.89,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
@@ -7178,7 +7270,7 @@
       {
         "Currency": 0,
         "AccountName": "asdas",
-        "Balance": 0,
+        "Balance": 246,
         "ID": "86fe583a-5d38-432b-9823-da9458c93f4d"
       }
     ],
