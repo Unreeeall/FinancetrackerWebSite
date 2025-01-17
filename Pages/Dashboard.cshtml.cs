@@ -163,6 +163,11 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
                     WebUser.Transactions.Add(newTransaction);
                 } 
             }
+
+
+            // if(TransactionType == "Expense"){
+            //     ClientScript
+            // }
             return RedirectToPage("/Dashboard");
 
         }

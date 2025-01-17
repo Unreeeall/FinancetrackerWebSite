@@ -7050,6 +7050,70 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-16T06:20:00",
+        "Amount": 25,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Nom Nom",
+        "Category": "Dining Out",
+        "ID": "8e1b5fe1-431b-4664-8c80-e0dffeb5244e",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-16T06:21:00",
+        "Amount": 343,
+        "Origin": "",
+        "Destination": "",
+        "Description": "HAHAHHaHAHHA",
+        "Category": "Dining Out",
+        "ID": "400e27d8-70ba-44f8-99de-fbd04e62fabd",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-17T06:23:00",
+        "Amount": 50,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Lecka",
+        "Category": "Groceries",
+        "ID": "471aecbb-f4bc-49aa-882a-04e120a35cc0",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-15T06:32:00",
+        "Amount": 0.11,
+        "Origin": "",
+        "Destination": "",
+        "Description": "adsa",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "31891413-d3ba-431a-bd9b-c07f979098c1",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -7106,7 +7170,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 2182,
+        "Balance": 1763.89,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
