@@ -36,6 +36,26 @@ function closeImportField() {
     document.getElementById('import-file-container').classList.toggle("visible");
 }
 
+function showAlert() {
+    const type = document.getElementById('trans-type-slct').value;
+
+
+    console.log(type);
+
+    if(type === "Expense"){
+        alert("Expense added successfully!");
+    }
+    else if(type === "Income"){
+        alert("Income added successfully!");
+    }
+    else if(type === "Transfer"){
+        alert("Transfer added successfully!");
+    }
+    else {
+        alert("Error. Unknown Transaction Type");
+    }
+}
+
 
 // var isAdvancedUpload = function () {
 //     var div = document.createElement('div');

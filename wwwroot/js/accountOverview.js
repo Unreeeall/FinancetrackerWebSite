@@ -576,7 +576,7 @@ function closeEditMenu() {
 document.addEventListener("DOMContentLoaded", function () {
     const edittransactionTypeSelect = document.getElementById('edit-type-select');
     const editcategorySelect = document.getElementById('edit-category-Dropdown');
-    const edittransferInputContainer = document.querySelector('.trans-transf-input-container');
+    const edittransferInputContainer = document.getElementById('edit-transf-input-container');
     // const editcontractCheckbox = document.getElementById('edit-trans-contract-checkbox');
     // const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
     const edittransferOriginSelect = document.getElementById('edit-transf-orgin-slct');
@@ -725,6 +725,31 @@ function closeDeleteContract() {
     document.getElementById('confirm-del-contract-container').classList.toggle("visible");
 }
 
+
+function showAlert() {
+    const type = document.getElementById('trans-type-slct').value;
+
+
+    console.log(type);
+
+    if(type === "Expense"){
+        alert("Expense added successfully!");
+    }
+    else if(type === "Income"){
+        alert("Income added successfully!");
+    }
+    else if(type === "Transfer"){
+        alert("Transfer added successfully!");
+    }
+    else {
+        alert("Error. Unknown Transaction Type");
+    }
+}
+
+
+function showEditAlert() {
+    alert("Changes Saved Successfully!");
+}
 // function editTransactionWindow(event, button) {
 //     const editPopup = document.getElementById('edit-popup');
 //     editPopup.classList.toggle("visible");

@@ -276,7 +276,7 @@
             
             <div class="edit-contract-container" id="edit-contract-container">
                 <button type="button" class="exit-btn" onclick="closeEditContract()">X</button>
-                <form method="post">
+                <form method="post" onsubmit="showEditAlert()">
 
                     <input type="hidden" name="ContractID" id="contract-id" class="contract-ID">
                     <input type="hidden" name="ContractAccID" id="contract-acc-id">
@@ -469,7 +469,7 @@
                 <div class="edit-transaction-exit-btn-container">
                     <button class="exit-btn" onclick="closeEditMenu()">X</button>
                 </div>
-                <form method="post">
+                <form method="post" onsubmit="showEditAlert()">
                     <input type="hidden" name="TransID" id="edit-Trans-ID" />
                     <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
                     <div class="input-group">
@@ -485,7 +485,7 @@
                     </div>
 
                     <div class="input-group">
-                        <div class="trans-transf-input-container">
+                        <div class="edit-transf-input-container">
                             <div class="transf-orgin-slct-container">
                                 <label for="edit-transf-orgin-slct">From</label>
                                 <select name="Origin" id="edit-transf-orgin-slct">
@@ -673,7 +673,7 @@
                 <div class="add-transaction-menu-exit-btn-container">
                     <button class="exit-btn" onclick="closeTransactionWindow()">X</button>
                 </div>
-                <form method="post">
+                <form method="post" onsubmit="showAlert()">
                     <input type="hidden" name="AccID" id="account-id" value="@Model.financialAccount?.ID" />
                     <div class="input-group">
                         <div class="trans-type-slct-container" id="trans-type-slct-container">
