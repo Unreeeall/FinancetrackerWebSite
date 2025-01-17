@@ -7194,6 +7194,22 @@
         "ContractId": "7902710d-ad10-42e1-8d13-3b9700089fd9",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-01-17T10:06:00",
+        "Amount": 12,
+        "Origin": "",
+        "Destination": "",
+        "Description": "12",
+        "Category": "Salary",
+        "ID": "2f0c838a-6760-4dd0-9795-a771f67243fb",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -7262,7 +7278,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 1553.89,
+        "Balance": 1565.89,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

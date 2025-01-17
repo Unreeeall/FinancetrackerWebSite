@@ -175,11 +175,14 @@
                             <button type="button" class="toggle-import-file-btn" onclick="openImportField(event)">📤</button>
                             <a class="download-transactions-btn" asp-controller="Download" asp-action="DownloadTransactions" asp-route-userEmail="@Model.WebUser.Email" event.stopPropagation() >📥</a>
                         </div>
+
+                        <input type="hidden" id="bankaccId" value="@bankAccount.ID">
+                        <input type="hidden" id="userEmail" value="@Model.WebUser.Email">
                         
-                        @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
-                        {
+                        @* @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
+                        { *@
                             <div class="last-5-transaction-container">
-                                <table>
+                                <table id="transaction-table">
                                     <thead>
                                         <tr>
                                             <th>Type</th>
@@ -191,23 +194,12 @@
                                             <th>Date</th>
                                         </tr>
                                     </thead>
-                                <tbody>
-                                    @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(bankAccount.ID).OrderByDescending(t => t.Date).Take(5))
-                                    {
-                                        <tr>
-                                            <td id="last-5-transaction-type-row" >@transaction.Type</td>
-                                            <td>@transaction.Category</td>
-                                            <td>@transaction.Amount</td>
-                                            <td>@Model.WebUser.GetAccountNameById(transaction.Origin)</td>
-                                            <td>@Model.WebUser.GetAccountNameById(transaction.Destination)</td>
-                                            <td>@transaction.Description</td>
-                                            <td>@transaction.Date</td>
-                                        </tr>
-                                    }
-                                </tbody>
+                                    <tbody>
+                                        <!-- Rows will be populated here by JavaScript -->
+                                    </tbody>
                                 </table>
                             </div>
-                        }   
+                        @* }    *@
                     </div>
                 }
                 foreach (var cashAccount in Model.WebUser.CashAccounts)
