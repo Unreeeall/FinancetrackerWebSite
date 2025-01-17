@@ -54,15 +54,15 @@ function showAlert() {
     console.log(baseFieldsFilled, contractFieldsFilled, transferFieldsFilled);
 
     if(type != "Transfer"){
-        if(!baseFieldsFilled){
-            alert("Please fillout all fields!");
-            return false;
-        }
-        else if(baseFieldsFilled && !contractFieldsFilled){
-            alert("Please fillout all fields!");
-            return false;
-        }
-        else{
+        // if(!baseFieldsFilled){
+        //     alert("Please fillout all fields!");
+        //     return false;
+        // }
+        // else if(baseFieldsFilled && !contractFieldsFilled){
+        //     alert("Please fillout all fields!");
+        //     return false;
+        // }
+        // else{
             if(type === "Expense"){
                 alert("Expense added successfully!");
                 return true;
@@ -79,14 +79,14 @@ function showAlert() {
                 alert("Error. Unknown Transaction Type");
                 return true;
             }
-        }
+        // }
     }
     else{
-        if(!transferFieldsFilled){
-            alert("Please fillout all fields!");
-            return false;
-        }
-        else{
+        // if(!transferFieldsFilled){
+        //     alert("Please fillout all fields!");
+        //     return false;
+        // }
+        // else{
             if(type === "Expense"){
                 alert("Expense added successfully!");
                 return true;
@@ -103,7 +103,7 @@ function showAlert() {
                 alert("Error. Unknown Transaction Type");
                 return true;
             }
-        }
+        // }
     }
     
     
@@ -152,6 +152,31 @@ function showAlert() {
 
     
 }
+
+
+document.addEventListener('DOMContentLoaded', function() {
+    const accountId = document.getElementById('bankaccId').value;
+    const userEmail = document.getElementById('userEmail').value;
+    fetch(`api/Analysis/get-last-five-transactions?userEmail=${userEmail}&accId=${accountId}`)
+        .then(response => response.json())
+        .then(transactions => {
+            const tbody = document.querySelector('#transaction-table tbody');
+            transactions.forEach(transaction => {
+                const row = document.createElement('tr');
+                row.innerHTML = `
+                    <td>${transaction.type}</td>
+                    <td>${transaction.category}</td>
+                    <td>${transaction.amount}</td>
+                    <td>${transaction.originName}</td>
+                    <td>${transaction.destinationName}</td>
+                    <td>${transaction.description}</td>
+                    <td>${new Date(transaction.date).toLocaleDateString()}</td>
+                `;
+                tbody.appendChild(row);
+            });
+        })
+        .catch(error => console.error('Error fetching transactions:', error));
+});
 
 
 // var isAdvancedUpload = function () {
