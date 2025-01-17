@@ -38,22 +38,119 @@ function closeImportField() {
 
 function showAlert() {
     const type = document.getElementById('trans-type-slct').value;
+    const category = document.getElementById('trans-category-slct').value;
+    const transfOrigin = document.getElementById('transf-orgini-slct').value;
+    const transfDestination = document.getElementById('transf-destination-slct').value;
+    const description = document.getElementById('trans-description-inp').value;
+    const amount = document.getElementById('trans-amount-inp').value;
+    const date = document.getElementById('trans-date-inp').value;
+    const isContract = document.getElementById('trans-contract-checkbox').checked;
+    const cycle = document.getElementById('contract-cycle-slct').value;
+
+    const baseFieldsFilled = (type != "") && (category != "") && (description != "") && (amount != "") && (date != "");
+    const contractFieldsFilled = isContract && cycle != "";
+    const transferFieldsFilled = transfOrigin != "" && transfDestination != "";
+
+    console.log(baseFieldsFilled, contractFieldsFilled, transferFieldsFilled);
+
+    if(type != "Transfer"){
+        if(!baseFieldsFilled){
+            alert("Please fillout all fields!");
+            return false;
+        }
+        else if(baseFieldsFilled && !contractFieldsFilled){
+            alert("Please fillout all fields!");
+            return false;
+        }
+        else{
+            if(type === "Expense"){
+                alert("Expense added successfully!");
+                return true;
+            }
+            else if(type === "Income"){
+                alert("Income added successfully!");
+                return true;
+            }
+            else if(type === "Transfer"){
+                alert("Transfer added successfully!");
+                return true;
+            }
+            else {
+                alert("Error. Unknown Transaction Type");
+                return true;
+            }
+        }
+    }
+    else{
+        if(!transferFieldsFilled){
+            alert("Please fillout all fields!");
+            return false;
+        }
+        else{
+            if(type === "Expense"){
+                alert("Expense added successfully!");
+                return true;
+            }
+            else if(type === "Income"){
+                alert("Income added successfully!");
+                return true;
+            }
+            else if(type === "Transfer"){
+                alert("Transfer added successfully!");
+                return true;
+            }
+            else {
+                alert("Error. Unknown Transaction Type");
+                return true;
+            }
+        }
+    }
+    
+    
+    
 
 
-    console.log(type);
+    // if(type != null && category != null && description != null && amount != null && date != null){
+    //     if(isContract && cycle == null){
+    //         alert("Please fillout all fields!");
+    //         return false;
+    //     }
 
-    if(type === "Expense"){
-        alert("Expense added successfully!");
-    }
-    else if(type === "Income"){
-        alert("Income added successfully!");
-    }
-    else if(type === "Transfer"){
-        alert("Transfer added successfully!");
-    }
-    else {
-        alert("Error. Unknown Transaction Type");
-    }
+    //     if(type === "Expense"){
+    //         alert("Expense added successfully!");
+    //         return true;
+    //     }
+    //     else if(type === "Income"){
+    //         alert("Income added successfully!");
+    //         return true;
+    //     }
+    //     else if(type === "Transfer"){
+    //         alert("Transfer added successfully!");
+    //         return true;
+    //     }
+    //     else {
+    //         alert("Error. Unknown Transaction Type");
+    //         return true;
+    //     }
+
+    // }
+    // else {
+    //     alert("Please fillout all fields!");
+    //     return false;
+    // }
+     
+    //     if(type === "Transfer"){
+    //         if(transfOrigin != null && transfDestination != null){
+
+    //         }
+    //     }
+        
+    
+
+
+    // console.log(type);
+
+    
 }
 
 

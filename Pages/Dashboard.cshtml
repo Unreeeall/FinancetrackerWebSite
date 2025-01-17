@@ -416,12 +416,12 @@
                         <div class="add-transaction-menu-exit-btn-container">
                             <button class="exit-btn" id="exit-transaction-btn" onclick="closeTransactionWindow()">x</button>
                         </div>
-                        <form method="post" onsubmit="showAlert()">
+                        <form method="post" onsubmit="return showAlert()">
                             <input type="hidden" name="AccID" id="account-id" />
                             <div class="input-group">
                                 <div class="trans-type-slct-container" id="trans-type-slct-container">
                                     <label for="trans-type-slct">Transaction Type</label>
-                                    <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" required>
+                                    <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" > @*required*@
                                         <option value="" selected disabled></option>
                                         <option value="Income">Income</option>
                                         <option value="Expense">Expense</option>
@@ -490,7 +490,7 @@
                             <div class="input-group">
                                 <div class="trans-category-container">
                                     <label for="trans-category-slct">Category</label>
-                                    <select name="Category" id="trans-category-slct" required>
+                                    <select name="Category" id="trans-category-slct" > @*required*@
                                         <option value="" disabled selected></option>
                                         <option value="Salary" data-type="Income">Salary</option>
                                         <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
@@ -564,7 +564,7 @@
                             <div class="input-group">
                                 <div class="trans-description-container">
                                     <label for="trans-income-description-inp">Description</label>
-                                    <input type="text" class="trans-description" id="trans-description-inp" name="Description" required>
+                                    <input type="text" class="trans-description" id="trans-description-inp" name="Description" > @*required*@
                                 </div>
                             </div>
 
@@ -573,7 +573,7 @@
                             <div class="input-group">
                                 <div class="trans-amount-container">
                                     <label for="trans-amount-inp">Amount</label>
-                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" required>
+                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" > @*required*@
                                 </div>   
                             </div>
 
@@ -582,7 +582,7 @@
                             <div class="input-group">
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
-                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" required>
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" > @*required*@
                                 </div>
                             </div>
 
@@ -598,10 +598,11 @@
                             <div class="input-group">
                                 <div class="trans-contract-cycle-container">
                                     <label for="contract-cycle-slct">Contract cycle</label>
-                                    <select name="Cycle" id="contract-cycle-slct" required>
+                                    <select name="Cycle" id="contract-cycle-slct" > @*required*@
 
                                         @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
                                         {
+                                            <option value="" disabled selected></option>
                                             <option value="@billingCycle">@billingCycle</option>
                                         }
                                     </select>
