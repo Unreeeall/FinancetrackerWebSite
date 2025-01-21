@@ -36,7 +36,17 @@ function closeImportField() {
     document.getElementById('import-file-container').classList.toggle("visible");
 }
 
+/*
 function addTransaction() {
+  
+}
+*/
+
+var addTransactionForm = document.getElementById('add-Transaction-Form');
+
+addTransactionForm.addEventListener('submit', function(e){
+    e.preventDefault()
+
 
     console.log("EYYOOOOO");
     const accountId = document.getElementById('bankaccId').value;
@@ -114,17 +124,13 @@ function addTransaction() {
                 Date: date,
                 Origin: transfOrigin,
                 Destination: transfDestination,
-                EndDate: endDate,
+                EndDate: endDate == "" ? null : endDate,
                 Description: description
             })
         })
-        .then(response => response.json())
-        .then(data => console.log(data))
         .catch(error => console.error('Error:', error));
     }
-    
-  
-}
+});
 
 
 document.addEventListener('DOMContentLoaded', function() {

@@ -408,7 +408,7 @@
                         <div class="add-transaction-menu-exit-btn-container">
                             <button class="exit-btn" id="exit-transaction-btn" onclick="closeTransactionWindow()">x</button>
                         </div>
-                        @*<form method="post" onsubmit="return showAlert()">*@
+                        <form method="post" id="add-Transaction-Form">
                             <input type="hidden" name="AccID" id="account-id" />
                             <div class="input-group">
                                 <div class="trans-type-slct-container" id="trans-type-slct-container">
@@ -594,7 +594,6 @@
 
                                         @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
                                         {
-                                            <option value="" disabled selected></option>
                                             <option value="@billingCycle">@billingCycle</option>
                                         }
                                     </select>
@@ -610,10 +609,10 @@
                                     
                             <div class="input-group">
                                 <div class="save-transaction-container">
-                                <button  type="button"  class="save-transaction-btn" id="save-transaction-btn" onclick="addTransaction()">✅</button>
+                                <button  type="submit"  class="save-transaction-btn" id="save-transaction-btn" @*onclick="addTransaction()"*@ >✅</button>
                                 </div>
                             </div>
-                        @*</form>*@   
+                        </form>  
                 </div>
                     
             }

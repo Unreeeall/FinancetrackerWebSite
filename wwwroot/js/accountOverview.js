@@ -526,21 +526,13 @@ function editTransactionWindow(event, button) {
         const transactionDestination = button.getAttribute('data-destination');
         const transactionDate = button.getAttribute('data-date');
         const transactionDescription = button.getAttribute('data-description');
-        //const transactionIsContract = button.getAttribute('data-iscontract');
 
-        
-        // console.log("Transaction Amount (raw):", transactionAmount);
-        // console.log("Parsed as float:", parseFloat(transactionAmount));
         
         document.getElementById('edit-trans-amount-inp').value = transactionAmount;
     
-
-
         document.getElementById('edit-Trans-ID').value = transactionID;
         document.getElementById('edit-type-select').value = transactionType;
         document.getElementById('edit-category-Dropdown').value = transactionCategory;
-        // document.getElementById('edit-trans-amount-inp').value = transactionAmount;
-
 
         document.querySelector('.edit-trans-date-inp').value = transactionDate;
 
@@ -553,16 +545,7 @@ function editTransactionWindow(event, button) {
         } else {
             document.querySelector('.edit-trans-transf-input-container').style.display = "none";
         }
-
-        // document.getElementById('edit-trans-contract-checkbox').checked = transactionIsContract === "true";
-        // document.querySelector('.edit-contract-cycle-slct').value = transactionIsContract === "true" ? transactionIsContract : "";
-
-        // Show or hide contract cycle based on the contract checkbox
-        // if (transactionIsContract === "true") {
-        //     document.querySelector('.edit-trans-contract-cycle-container').style.display = "block";
-        // } else {
-        //     document.querySelector('.edit-trans-contract-cycle-container').style.display = "none";
-        // }
+        
     } catch (error) {
         console.error("Error setting transaction data: ", error);
     }

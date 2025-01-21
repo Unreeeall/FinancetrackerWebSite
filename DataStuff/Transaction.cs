@@ -145,6 +145,6 @@ public class TransactionRequest
     public DateTime Date { get; set; }
     public string? Origin { get; set; }
     public string? Destination { get; set; }
-    public DateTime EndDate { get; set; }
+    public DateTime? EndDate { get; set; }
     public required string Description { get; set; }
 }
