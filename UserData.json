@@ -7466,6 +7466,54 @@
         "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-21T11:22:00",
+        "Amount": 213,
+        "Origin": "",
+        "Destination": "",
+        "Description": "TESTO24",
+        "Category": "Childcare",
+        "ID": "213d08a5-fb04-4fee-836f-392f02fff81c",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-21T11:23:00",
+        "Amount": 123,
+        "Origin": "",
+        "Destination": "",
+        "Description": "TESTO24",
+        "Category": "Childcare",
+        "ID": "8ed9a93f-ec4f-429e-a060-488a50902256",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-01-21T11:23:00",
+        "Amount": 123,
+        "Origin": "",
+        "Destination": "",
+        "Description": "TESTO",
+        "Category": "Childcare",
+        "ID": "f97a39c4-2991-46d1-a9d7-6de718147275",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": false,
+        "Cycle": 0,
+        "ContractId": null,
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -7534,7 +7582,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 4016.85,
+        "Balance": 3557.85,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],
