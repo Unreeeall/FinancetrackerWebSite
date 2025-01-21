@@ -36,7 +36,12 @@ function closeImportField() {
     document.getElementById('import-file-container').classList.toggle("visible");
 }
 
-function showAlert() {
+function addTransaction() {
+
+    console.log("EYYOOOOO");
+    const accountId = document.getElementById('bankaccId').value;
+    const userEmail = document.getElementById('userEmail').value;
+
     const type = document.getElementById('trans-type-slct').value;
     const category = document.getElementById('trans-category-slct').value;
     const transfOrigin = document.getElementById('transf-orgini-slct').value;
@@ -46,111 +51,79 @@ function showAlert() {
     const date = document.getElementById('trans-date-inp').value;
     const isContract = document.getElementById('trans-contract-checkbox').checked;
     const cycle = document.getElementById('contract-cycle-slct').value;
+    const endDate = document.getElementById('contract-enddate-inp').value;
 
     const baseFieldsFilled = (type != "") && (category != "") && (description != "") && (amount != "") && (date != "");
     const contractFieldsFilled = isContract && cycle != "";
     const transferFieldsFilled = transfOrigin != "" && transfDestination != "";
-
+    
+    var validTransaction = Boolean;
     console.log(baseFieldsFilled, contractFieldsFilled, transferFieldsFilled);
 
-    if(type != "Transfer"){
-        // if(!baseFieldsFilled){
-        //     alert("Please fillout all fields!");
-        //     return false;
-        // }
-        // else if(baseFieldsFilled && !contractFieldsFilled){
-        //     alert("Please fillout all fields!");
-        //     return false;
-        // }
-        // else{
-            if(type === "Expense"){
-                alert("Expense added successfully!");
-                return true;
-            }
-            else if(type === "Income"){
-                alert("Income added successfully!");
-                return true;
-            }
-            else if(type === "Transfer"){
-                alert("Transfer added successfully!");
-                return true;
-            }
-            else {
-                alert("Error. Unknown Transaction Type");
-                return true;
-            }
-        // }
-    }
-    else{
-        // if(!transferFieldsFilled){
-        //     alert("Please fillout all fields!");
-        //     return false;
-        // }
-        // else{
-            if(type === "Expense"){
-                alert("Expense added successfully!");
-                return true;
-            }
-            else if(type === "Income"){
-                alert("Income added successfully!");
-                return true;
-            }
-            else if(type === "Transfer"){
-                alert("Transfer added successfully!");
-                return true;
-            }
-            else {
-                alert("Error. Unknown Transaction Type");
-                return true;
-            }
-        // }
+    if (!baseFieldsFilled) {
+        alert("Please fill out all base fields!");
+        validTransaction = false;
+        // return false;
     }
     
+    if (isContract && !contractFieldsFilled) {
+        alert("Please fill out all contract fields!");
+        validTransaction = false;
+        // return false;
+    }
     
+    if (type === "Transfer" && !transferFieldsFilled) {
+        alert("Please fill out all transfer fields!");
+        validTransaction = false;
+        // return false;
+    }
     
-
-
-    // if(type != null && category != null && description != null && amount != null && date != null){
-    //     if(isContract && cycle == null){
-    //         alert("Please fillout all fields!");
-    //         return false;
-    //     }
-
-    //     if(type === "Expense"){
-    //         alert("Expense added successfully!");
-    //         return true;
-    //     }
-    //     else if(type === "Income"){
-    //         alert("Income added successfully!");
-    //         return true;
-    //     }
-    //     else if(type === "Transfer"){
-    //         alert("Transfer added successfully!");
-    //         return true;
-    //     }
-    //     else {
-    //         alert("Error. Unknown Transaction Type");
-    //         return true;
-    //     }
-
-    // }
-    // else {
-    //     alert("Please fillout all fields!");
-    //     return false;
-    // }
-     
-    //     if(type === "Transfer"){
-    //         if(transfOrigin != null && transfDestination != null){
-
-    //         }
-    //     }
-        
+    switch (type) {
+        case "Expense":
+            alert("Expense added successfully!");
+            validTransaction = true;
+            break;
+        case "Income":
+            alert("Income added successfully!");
+            validTransaction = true;
+            break;
+        case "Transfer":
+            alert("Transfer added successfully!");
+            validTransaction = true;
+            break;
+        default:
+            alert("Error. Unknown Transaction Type");
+            validTransaction = false;
+            break;
+    }
     
-
-
-    // console.log(type);
-
+    if(validTransaction){
+        fetch('api/TransactionTable/add-Transaction', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                UserEmail: userEmail,
+                Amount: amount,
+                IsContract: isContract,
+                TransactionType: type,
+                Category: category,
+                AccID: accountId,
+                Cycle: cycle,
+                Date: date,
+                Origin: transfOrigin,
+                Destination: transfDestination,
+                EndDate: endDate,
+                Description: description
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(error => console.error('Error:', error));
+    }
     
+  
 }
 
 
@@ -177,7 +150,6 @@ document.addEventListener('DOMContentLoaded', function() {
         })
         .catch(error => console.error('Error fetching transactions:', error));
 });
-
 
 // var isAdvancedUpload = function () {
 //     var div = document.createElement('div');

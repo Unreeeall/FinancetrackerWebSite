@@ -132,3 +132,19 @@ public enum BillingCycle
     Weekly,
     Daily
 }
+
+public class TransactionRequest
+{
+    public required string UserEmail { get; set; }
+    public required string Amount { get; set; }
+    public bool IsContract { get; set; }
+    public required string TransactionType { get; set; }
+    public required string Category { get; set; }
+    public required string AccID { get; set; }
+    public BillingCycle Cycle { get; set; }
+    public DateTime Date { get; set; }
+    public string? Origin { get; set; }
+    public string? Destination { get; set; }
+    public DateTime EndDate { get; set; }
+    public required string Description { get; set; }
+}
