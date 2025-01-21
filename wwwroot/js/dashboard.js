@@ -157,7 +157,7 @@ function showAlert() {
 document.addEventListener('DOMContentLoaded', function() {
     const accountId = document.getElementById('bankaccId').value;
     const userEmail = document.getElementById('userEmail').value;
-    fetch(`api/Analysis/get-last-five-transactions?userEmail=${userEmail}&accId=${accountId}`)
+    fetch(`api/TransactionTable/get-last-five-transactions?userEmail=${userEmail}&accId=${accountId}`)
         .then(response => response.json())
         .then(transactions => {
             const tbody = document.querySelector('#transaction-table tbody');
