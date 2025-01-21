@@ -79,24 +79,24 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
     }
 
 
-    public IActionResult OnPostAddFinanceAccount()
+    public void OnPostAddFinanceAccount()
     {
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) //return RedirectToPage("/Index");
+            if (sessionId == null) //return RedirectToPage("/Index");
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) //return RedirectToPage("/Index");
 
             _sharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);
 
-            return RedirectToPage("/Dashboard");
+            // return RedirectToPage("/Dashboard");
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding FinancialAccount: {ex.Message}");
-            return RedirectToPage("/Error"); // Handle error appropriately
+            // return RedirectToPage("/Error"); // Handle error appropriately
         }
     }
 
