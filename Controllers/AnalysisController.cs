@@ -1,10 +1,4 @@
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
-using System.Text.Json;
-using System.Text;
-using System.Collections.Generic;
-using System.IO;
-using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FinanceTracker.Controllers
 {
