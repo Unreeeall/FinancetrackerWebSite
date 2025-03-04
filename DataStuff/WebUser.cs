@@ -1,17 +1,4 @@
-using System;
-using System.ComponentModel.DataAnnotations;
-using System.IO;
-using System.Reflection.Metadata;
 using System.Text.Json;
-using System.Web;
-using Microsoft.AspNetCore.Http;
-using System.Security.Cryptography;
-using System.ComponentModel;
-using FinanceTracker.Pages;
-using System.Security.Cryptography.X509Certificates;
-using System.Threading.Tasks;
-using System.Security.Claims;
-using System.Data.SqlTypes;
 using System.Globalization;
 
 
