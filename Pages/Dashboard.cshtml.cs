@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
-using Microsoft.AspNetCore.SignalR;
-using System.Text.Json;
 using System.Globalization;
 
 
