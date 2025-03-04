@@ -1,8 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using Microsoft.AspNetCore.Http;
-using System.Text.Json;
-using Microsoft.Extensions.FileSystemGlobbing.Internal.PathSegments;
 
 namespace FinanceTracker.Pages;
 
