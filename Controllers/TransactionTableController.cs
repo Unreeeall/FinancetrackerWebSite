@@ -1,5 +1,7 @@
+using FinanceUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Globalization;
+using Transactions;
 
 
 namespace FinanceTracker.Controllers
