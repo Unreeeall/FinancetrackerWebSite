@@ -54,26 +54,6 @@ namespace Transactions
             Cycle = cycle;
             ContractId = contractId;
         }
-
-        // Constructor for stock transactions
-        // public Transaction(string type, DateTime date, decimal amount, string ticker, string accountId)
-        // {
-        //     Type = type;
-        //     Date = date;
-        //     Amount = amount;
-        //     Ticker = ticker;
-        //     AccountId = accountId;
-        // }
-
-        // Constructor for crypto transactions
-        // public Transaction(string type, DateTime date, decimal amount, CryptoCoin coin, string accountId)
-        // {
-        //     Type = type;
-        //     Date = date;
-        //     Amount = amount;
-        //     Coin = coin;
-        //     AccountId = accountId;
-        // }
     }
 
     public class Contract
