@@ -6,8 +6,8 @@
     "Password": "haha",
     "Sessions": [
       {
-        "Id": "UV\u002BTqmVtPc4O8ahRMYr30\u002B0LiVLaIIoP3dw03Tk12FA=",
-        "ExpireDate": "2025-03-04T13:39:40.8774402+01:00"
+        "Id": "wVPMS3AOvD2e0Z1QeJpScCEWmM09LwrHA7YpTdHB8fw=",
+        "ExpireDate": "2025-03-05T12:06:30.1280234+01:00"
       }
     ],
     "Transactions": [
@@ -9578,6 +9578,54 @@
         "ContractId": "7902710d-ad10-42e1-8d13-3b9700089fd9",
         "Ticker": null,
         "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-03-03T15:41:00",
+        "Amount": 1,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Salary",
+        "ID": "957eb9aa-08b4-4852-924e-f592351a8fe3",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "21750c6b-bf77-41c4-b9a2-da75fad97e3f",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Expense",
+        "Date": "2025-03-03T10:33:00",
+        "Amount": 2,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Travel (Flights, Hotels)",
+        "ID": "621feaeb-8a0a-4469-8c19-74af9eb978fa",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "3386c06d-e4b2-4ffb-a042-d5c8ea3e1737",
+        "Ticker": null,
+        "Coin": null
+      },
+      {
+        "Type": "Income",
+        "Date": "2025-03-03T07:36:00",
+        "Amount": 100,
+        "Origin": "",
+        "Destination": "",
+        "Description": "Contract Payment",
+        "Category": "Rental Income",
+        "ID": "42032a55-9d82-4970-8b81-a12e9af07379",
+        "AccountId": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98",
+        "IsContract": true,
+        "Cycle": 8,
+        "ContractId": "facb6ccb-bfc9-42b9-83cc-dd50c0ba054f",
+        "Ticker": null,
+        "Coin": null
       }
     ],
     "Contracts": [
@@ -9646,7 +9694,7 @@
       {
         "Currency": 0,
         "AccountName": "Test1",
-        "Balance": 6878.85,
+        "Balance": 6977.85,
         "ID": "12ec4c0e-5fb9-4fcc-824c-9837afb21a98"
       }
     ],

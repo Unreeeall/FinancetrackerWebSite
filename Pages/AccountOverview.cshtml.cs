@@ -1,6 +1,9 @@
+using Database;
+using FinanceUser;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using System.Globalization;
+using Transactions;
 
 namespace FinanceTracker.Pages;
 
