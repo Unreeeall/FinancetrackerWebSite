@@ -52,19 +52,6 @@
             </div>
         </div>
 
-        @* <div class="menu" id="menu">
-            <a href="Dashboard">Dashboard</a>
-            <a href="Investments">Investments</a>
-            <a href="Budget">Budget</a>
-            <a href="Transactions">Transactions</a>
-            <a href="#Contact">Contact</a>
-            <div class="Copyright-ham-footer">
-                <p>&copy; 2024 Budget Buddy. All rights reserved.</p>
-            </div>
-        </div> *@
-
-        
-
         <div class="user-options">
             <div class="login-button">
                 <span onclick='onclick=location.href = "/UserSettings"' tabIndex="-1" role="button">@Model.WebUser?.Name</span>
@@ -89,23 +76,8 @@
     <div class="Dashboard">
         <div class="Total-data">
             <h1>Accounts</h1>
-            @* <h4>Total Income: @Model.Report.TotalIncome</h4>
-            <h4>Total Expense: @Model.Report.TotalExpenses</h4> *@
         </div>
         <div class="account-wrapper">
-
-
-            @* <div class="Chart-Container">
-            <div class="expense-Chart">
-            <canvas id="expensePieChart"></canvas>
-            </div>
-            <div class="Investment-Chart">
-            <canvas id="investmentLineChart"></canvas>
-            </div>
-            </div>
-            <div class="Transaction-History-Chart">
-            <canvas id="transactionBarChart"></canvas>
-            </div> *@
 
             @if (Model.WebUser == null || !Model.WebUser.HasFinancialAccounts())
             {
@@ -117,32 +89,6 @@
                 <div class="add-new-financialAccount-field" onclick="addAccountWindow()" tabIndex="-3" role="button">
                     <button class="add-new-fin-acc-plus">+</button>
                 </div>
-
-                    @* <div class="add-new-acc-menu">
-                        <div class="add-new-acc-exit-btn-box">
-                            <button class="exit-btn" onclick="closeAccountMenu()">x</button>
-                        </div>
-                        
-                        <form method="post">
-                            <select name="AccountType" id="Account-Type" class="Account-Type-Select" required>
-                                <option value="" disabled selected></option>
-                                <option value="BankAccount">Bank Account</option>
-                                <option value="Cash">Cash</option>
-                                <option value="Portfolio">Portfolio</option>
-                                <option value="CryptoWallet">Crypto Wallet</option>
-                            </select>
-
-                            <input type="text" name="AccountName" class="Account-Name-Input" required>
-
-                            <select name="Currency" id="Curreny-Select" class="Currency-Select" required>
-                                @foreach (CurrencyType currency in Enum.GetValues(typeof(CurrencyType)))
-                                {
-                                    <option value="@currency">@currency</option>
-                                }
-                            </select>
-                            <input type="submit" class="submit-Financial-Account-btn" asp-page-handler="AddFinanceAccount">
-                        </form>
-                    </div> *@
             }
             else
             {
@@ -180,8 +126,6 @@
                         <input type="hidden" id="bankaccId" value="@bankAccount.ID">
                         <input type="hidden" id="userEmail" value="@Model.WebUser.Email">
                         
-                        @* @if(Model.WebUser.GetTransactionsByAccID(bankAccount.ID).Count != 0)
-                        { *@
                             <div class="last-5-transaction-container">
                                 <table id="transaction-table">
                                     <thead>
@@ -200,7 +144,6 @@
                                     </tbody>
                                 </table>
                             </div>
-                        @* }    *@
                     </div>
                 }
                 foreach (var cashAccount in Model.WebUser.CashAccounts)
@@ -606,11 +549,10 @@
                                 </div>
                             </div>
                                 
-                            @* data-type="@Model.TransactionType" onclick="showAlert(event, this)" *@
                                     
                             <div class="input-group">
                                 <div class="save-transaction-container">
-                                <button  type="submit"  class="save-transaction-btn" id="save-transaction-btn" @*onclick="addTransaction()"*@ >✅</button>
+                                <button  type="submit"  class="save-transaction-btn" id="save-transaction-btn"  >✅</button>
                                 </div>
                             </div>
                         </form>  
@@ -618,83 +560,6 @@
                     
             }
             <script src="/js/dashboard.js"></script>
-
-            @* <script>
-
-
-
-            expenseChart();
-
-            investmentChart();
-
-
-            var ctx = document.getElementById('transactionBarChart').getContext('2d');
-            var transactionBarChart = new Chart(ctx, {
-            type: 'bar',
-            data: {
-            labels: ['Groceries', 'Rent', 'Utilities', 'Entertainment', 'Dining', 'Miscellaneous'],
-            datasets: [{
-            label: 'Transactions',
-            data: [300, 500, 100, 200, 150, 80],
-            backgroundColor: [
-            'rgba(255, 99, 132, 0.2)',
-            'rgba(54, 162, 235, 0.2)',
-            'rgba(255, 206, 86, 0.2)',
-            'rgba(75, 192, 192, 0.2)',
-            'rgba(153, 102, 255, 0.2)',
-            'rgba(255, 159, 64, 0.2)'
-            ],
-            borderColor: [
-            'rgba(255, 99, 132, 1)',
-            'rgba(54, 162, 235, 1)',
-            'rgba(255, 206, 86, 1)',
-            'rgba(75, 192, 192, 1)',
-            'rgba(153, 102, 255, 1)',
-            'rgba(255, 159, 64, 1)'
-            ],
-            borderWidth: 1
-            }]
-            },
-            options: {
-            responsive: true,
-            maintainAspectRatio: false,
-            plugins: {
-            legend: {
-            display: true,
-            position: 'bottom',
-            labels: {
-            color: '#ffffff'
-            }
-            },
-            scales: {
-            x: {
-            ticks: {
-            color: '#ffffff'
-            }
-            },
-            y: {
-            ticks: {
-            color: '#ffffff'
-            }
-            }
-            }
-            }
-            }
-            });
-
-
-
-
-            function addAccountWindow() {
-            document.getElementById('new-acc-menu').classList.toggle("visible");
-            }
-
-            function closeAccountMenu() {
-            document.getElementById('new-acc-menu').classList.toggle("visible");
-            }
-
-            </script> *@
-
         </div>
 
         
