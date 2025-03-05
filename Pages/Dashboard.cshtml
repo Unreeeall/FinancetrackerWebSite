@@ -235,7 +235,7 @@
 
                 foreach (var portfolioAccount in Model.WebUser.PortfolioAccounts)
                 {
-                    <div class="Crypto-Wallet-Container Acc-Container" uuid="@portfolioAccount.ID">
+                    <div class="stock-Container Acc-Container" uuid="@portfolioAccount.ID">
                         <h3>Stockportoflio: @portfolioAccount.AccountName</h3>
                         <p>Balance: @portfolioAccount.Balance</p>
 
@@ -357,7 +357,7 @@
                             <div class="input-group">
                                 <div class="trans-type-slct-container" id="trans-type-slct-container">
                                     <label for="trans-type-slct">Transaction Type</label>
-                                    <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" > @*required*@
+                                    <select class="trans-type-slct" id="trans-type-slct" name="TransactionType" > 
                                         <option value="" selected disabled></option>
                                         <option value="Income">Income</option>
                                         <option value="Expense">Expense</option>
@@ -426,7 +426,7 @@
                             <div class="input-group">
                                 <div class="trans-category-container">
                                     <label for="trans-category-slct">Category</label>
-                                    <select name="Category" id="trans-category-slct" > @*required*@
+                                    <select name="Category" id="trans-category-slct" > 
                                         <option value="" disabled selected></option>
                                         <option value="Salary" data-type="Income">Salary</option>
                                         <option value="Freelance/Consulting" data-type="Income">Freelance/Consulting
@@ -500,7 +500,7 @@
                             <div class="input-group">
                                 <div class="trans-description-container">
                                     <label for="trans-income-description-inp">Description</label>
-                                    <input type="text" class="trans-description" id="trans-description-inp" name="Description" > @*required*@
+                                    <input type="text" class="trans-description" id="trans-description-inp" name="Description" > 
                                 </div>
                             </div>
 
@@ -509,7 +509,7 @@
                             <div class="input-group">
                                 <div class="trans-amount-container">
                                     <label for="trans-amount-inp">Amount</label>
-                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" > @*required*@
+                                    <input type="number" class="trans-amount-inp" id="trans-amount-inp" name="Amount" step="0.01" min="0" > 
                                 </div>   
                             </div>
 
@@ -518,7 +518,7 @@
                             <div class="input-group">
                                 <div class="trans-date-container">
                                     <label for="trans-date-inp">Date</label>
-                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" > @*required*@
+                                    <input type="datetime-local" class="trans-date-inp" id="trans-date-inp" name="Date" > 
                                 </div>
                             </div>
 
@@ -534,7 +534,7 @@
                             <div class="input-group">
                                 <div class="trans-contract-cycle-container">
                                     <label for="contract-cycle-slct">Contract cycle</label>
-                                    <select name="Cycle" id="contract-cycle-slct" > @*required*@
+                                    <select name="Cycle" id="contract-cycle-slct" >
 
                                         @foreach (Transactions.BillingCycle billingCycle in Enum.GetValues(typeof(Transactions.BillingCycle)))
                                         {

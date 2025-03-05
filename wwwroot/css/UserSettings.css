@@ -69,7 +69,6 @@ header {
     border-radius: 10px;
     box-shadow: 0px 0px 14px 0px rgba(0,0,0,0.8);
     color: aliceblue;
-    /* min-width: 310px; */
 }
 
 .accounts-table-container h3 {
@@ -220,10 +219,6 @@ header {
     flex-direction: column;
 }
 
-.exit-btn-container {
-    display: flex;
-    justify-content: right; 
-}
 
 .edit-fin-acc-content {
     display: flex;
@@ -278,9 +273,6 @@ header {
     .cred-group {
         flex-direction: column;
         align-items: center;
-    }
-    .account-creditials-container {
-        /* padding: 10px; */
     }
     .accounts-table-container {
         padding: 10px;
