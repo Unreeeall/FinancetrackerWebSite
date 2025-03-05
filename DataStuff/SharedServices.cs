@@ -1,72 +1,78 @@
 
 
 
-public class SharedServices
+using Database;
+using FinanceUser;
+
+namespace Services
 {
-    public void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
+    public class SharedServices
     {
-
-
-        if (AccountType == "BankAccount")
+        public void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
         {
-            var newBankAccount = new BankAccount
-            (
-                AccountName,
-                currency
-            );
 
-            newBankAccount.ID = System.Guid.NewGuid().ToString();
 
-            webUser?.BankAccounts.Add(newBankAccount);
-            WebUser.AccountLookup.Add(newBankAccount.ID, newBankAccount);
+            if (AccountType == "BankAccount")
+            {
+                var newBankAccount = new BankAccount
+                (
+                    AccountName,
+                    currency
+                );
 
-            WebUser.saveJson();
+                newBankAccount.ID = System.Guid.NewGuid().ToString();
+
+                webUser?.BankAccounts.Add(newBankAccount);
+                WebUser.AccountLookup.Add(newBankAccount.ID, newBankAccount);
+
+                WebUser.saveJson();
+            }
+            else if (AccountType == "Cash")
+            {
+                var newCashAccount = new CashAccount
+                (
+                    AccountName,
+                    currency
+                );
+
+                newCashAccount.ID = System.Guid.NewGuid().ToString();
+
+                webUser?.CashAccounts.Add(newCashAccount);
+                WebUser.AccountLookup.Add(newCashAccount.ID, newCashAccount);
+
+                WebUser.saveJson();
+
+            }
+            else if (AccountType == "Portfolio")
+            {
+                var newPortfolio = new PortfolioAccount
+                (
+                    AccountName
+                );
+
+                newPortfolio.ID = System.Guid.NewGuid().ToString();
+
+                webUser?.PortfolioAccounts.Add(newPortfolio);
+                WebUser.AccountLookup.Add(newPortfolio.ID, newPortfolio);
+
+                WebUser.saveJson();
+            }
+            else if (AccountType == "CryptoWallet")
+            {
+                var newCryptoWallet = new CryptoWallet
+                (
+                    AccountName
+                );
+
+                newCryptoWallet.ID = System.Guid.NewGuid().ToString();
+
+                webUser?.CryptoWallets.Add(newCryptoWallet);
+                WebUser.AccountLookup.Add(newCryptoWallet.ID, newCryptoWallet);
+
+                WebUser.saveJson();
+            }
+
+
         }
-        else if (AccountType == "Cash")
-        {
-            var newCashAccount = new CashAccount
-            (
-                AccountName,
-                currency
-            );
-
-            newCashAccount.ID = System.Guid.NewGuid().ToString();
-
-            webUser?.CashAccounts.Add(newCashAccount);
-            WebUser.AccountLookup.Add(newCashAccount.ID, newCashAccount);
-
-            WebUser.saveJson();
-
-        }
-        else if (AccountType == "Portfolio")
-        {
-            var newPortfolio = new PortfolioAccount
-            (
-                AccountName
-            );
-
-            newPortfolio.ID = System.Guid.NewGuid().ToString();
-
-            webUser?.PortfolioAccounts.Add(newPortfolio);
-            WebUser.AccountLookup.Add(newPortfolio.ID, newPortfolio);
-
-            WebUser.saveJson();
-        }
-        else if (AccountType == "CryptoWallet")
-        {
-            var newCryptoWallet = new CryptoWallet
-            (
-                AccountName
-            );
-
-            newCryptoWallet.ID = System.Guid.NewGuid().ToString();
-
-            webUser?.CryptoWallets.Add(newCryptoWallet);
-            WebUser.AccountLookup.Add(newCryptoWallet.ID, newCryptoWallet);
-
-            WebUser.saveJson();
-        }
-
-
     }
 }

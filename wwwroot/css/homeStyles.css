@@ -267,7 +267,7 @@ p {
     transition: transform 0.5s;
 }
 
-btn:hover.btn.shiny::after {
+.btn:hover.btn.shiny::after {
     transform: translateX(200%) rotate(45deg);
 }
 

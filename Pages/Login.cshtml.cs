@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using FinanceUser;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 
 namespace FinanceTracker.Pages;
@@ -50,7 +51,7 @@ public class LoginModel : PageModel
                             expiretime = new TimeSpan(1, 0, 0, 0);
                         }
                             string sessionString = user.CreateSession(DateTime.Now + expiretime);
-                            Response.Cookies.Append("SessionCookie", sessionString, new CookieOptions{ HttpOnly = true, Expires = DateTime.UtcNow.Add(expiretime)});
+                            Response.Cookies.Append("SessionCookie", sessionString, new CookieOptions{ HttpOnly = true, Expires = DateTime.UtcNow.Add(expiretime), Secure = true});
                         WebUser.saveJson();
                         Console.WriteLine($"Login from user: {user.Name} {user.Email}");
                         return RedirectToPage("Index");

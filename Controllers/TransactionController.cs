@@ -1,5 +1,7 @@
+using FinanceUser;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.Json;
+using Transactions;
 
 
 namespace FinanceTracker.Controllers
@@ -11,6 +13,7 @@ namespace FinanceTracker.Controllers
         [Route("import-transactions")]
         public async Task<IActionResult> ImportTransactions(IFormFile file, string userEmail)
         {
+            if(!ModelState.IsValid) return BadRequest("Model is not valid.");
             var webUser = WebUser.getUserByEmail(userEmail);
             if (webUser == null)
             {
