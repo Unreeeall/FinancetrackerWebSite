@@ -40,7 +40,7 @@ app.MapControllers();
 Stopwatch stopwatch = new Stopwatch();
 stopwatch.Start();
 WebUser.loadJson();
-app.Run();
+await Task.Run(() => app.Run());
 WebUser.saveJson();
 stopwatch.Stop();
 TimeSpan ts = stopwatch.Elapsed;
