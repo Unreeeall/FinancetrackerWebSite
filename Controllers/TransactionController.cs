@@ -6,6 +6,8 @@ using Transactions;
 
 namespace FinanceTracker.Controllers
 {
+    [ApiController]
+    [Route("api/[controller]")]
     public class TransactionController : Controller
     {
 

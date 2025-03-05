@@ -42,10 +42,14 @@ namespace FinanceUser
 
         public static void loadJson()
         {
-            if (System.IO.File.Exists(filePath))
+            if (!File.Exists(filePath))
+            {
+                return;
+            }
+            else
             {
                 // Read the existing JSON data from the file
-                string existingJson = System.IO.File.ReadAllText(filePath);
+                string existingJson = File.ReadAllText(filePath);
 
                 // Try to deserialize the existing JSON data into a list of User objects
                 userList = JsonSerializer.Deserialize<List<WebUser>>(existingJson) ?? new List<WebUser>();
@@ -74,7 +78,6 @@ namespace FinanceUser
                     {
                         AccountLookup[cryptoWallet.ID] = cryptoWallet;
                     }
-                    // user.CalculateAccountBalances();
                     user.ApplyContracts();
                 }
 
