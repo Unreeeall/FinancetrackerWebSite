@@ -1032,20 +1032,21 @@ namespace FinanceUser
                             bool transactionExists = Transactions.Any(t => t.ContractId == contract.ContractId && t.Date == nextDate);
                             if (!transactionExists)
                             {
-                                var newTransaction = new Transaction(
-                                    contract.Type,
-                                    nextDate,
-                                    contract.Amount,
-                                    contract.Origin,
-                                    contract.Destination,
-                                    "Contract Payment",
-                                    contract.Category,
-                                    Guid.NewGuid().ToString(),
-                                    contract.AccountID,
-                                    true,
-                                    contract.Cycle,
-                                    contract.ContractId
-                                );
+                                var newTransaction = new Transaction
+                                {
+                                    Type = contract.Type,
+                                    Date = nextDate,
+                                    Amount = contract.Amount,
+                                    Origin = contract.Origin,
+                                    Destination = contract.Destination,
+                                    Description = "Contract Payment",
+                                    Category = contract.Category,
+                                    ID = Guid.NewGuid().ToString(),
+                                    AccountId = contract.AccountID,
+                                    IsContract = true,
+                                    Cycle = contract.Cycle,
+                                    ContractId = contract.ContractId
+                                };
                                 Transactions.Add(newTransaction);
                             }
                         }
