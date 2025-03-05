@@ -1,6 +1,5 @@
 @page
 @using Database
-@using FinanceTracker.Pages
 @model DashboardModel
 @{
     ViewData["Title"] = "Dashboard";
@@ -70,7 +69,7 @@
                 <span onclick='onclick=location.href = "/UserSettings"' tabIndex="-1" role="button">@Model.WebUser?.Name</span>
             </div>
             <div class="dropdown">
-                <span id="settings" onmouseover="" onclick="toggleSettingsDropDown()">Options</span>
+                <span id="settings" onmouseover="" onclick="toggleSettingsDropDown()" tabIndex="-2" role="button">Options</span>
                 <div class="dropdown-content">
                     <div class="profile-drop-box">
                         <a href="/UserSettings">Profile</a>
@@ -114,7 +113,7 @@
                     <p>Try adding a Bank account, Wallet, cash etc.</p>
                 </div>
 
-                <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
+                <div class="add-new-financialAccount-field" onclick="addAccountWindow()" tabIndex="-3" role="button">
                     <button class="add-new-fin-acc-plus">+</button>
                 </div>
 
@@ -364,7 +363,7 @@
                     </form>
                 </div>
 
-                <div class="add-new-financialAccount-field" onclick="addAccountWindow()">
+                <div class="add-new-financialAccount-field" onclick="addAccountWindow()" tabIndex="-3" role="button">
                     <button class="add-new-fin-acc-plus">+</button>
                 </div>
 
