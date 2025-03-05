@@ -82,11 +82,7 @@ nav {
     align-items: center;
     
 }
-/*
-li {
-    align-self: baseline;
-}
-*/
+
 a {
     display: flex;
     flex-direction: column;
@@ -94,7 +90,6 @@ a {
 }
 
 p {
-    /* padding: 0; */
     font-family: Arial, Helvetica, sans-serif;
     text-indent: 1%;
     font-size: large;
@@ -122,7 +117,7 @@ p {
     align-items: center; /* Ensures all items are vertically aligned */
     padding: 0; /* Removes any default padding */
     margin: 0; /* Removes any default margin */
-    /* margin: 4px; */
+
 }
 
 
