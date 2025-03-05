@@ -4,12 +4,7 @@
     "Name": "Hallo",
     "Phonenumber": "42069",
     "Password": "haha",
-    "Sessions": [
-      {
-        "Id": "wVPMS3AOvD2e0Z1QeJpScCEWmM09LwrHA7YpTdHB8fw=",
-        "ExpireDate": "2025-03-05T12:06:30.1280234+01:00"
-      }
-    ],
+    "Sessions": [],
     "Transactions": [
       {
         "Type": "Income",
