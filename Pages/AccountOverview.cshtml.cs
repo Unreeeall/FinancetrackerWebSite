@@ -102,9 +102,8 @@ public class AccountOverviewModel : PageModel
                 Console.WriteLine("accountID from query is EMPTY!!");
                 return RedirectToPage("/Error");
             }
-            //UuId = accountID;
             Console.WriteLine("Account ID from query: " + accountID);
-            // UuId = accountID;
+
 
             financialAccount = WebUser.GetAccountByID(accountID);
             if (financialAccount == null)
@@ -160,25 +159,8 @@ public class AccountOverviewModel : PageModel
             WebUser = WebUser.GetUserBySession(sessionId);
             if (WebUser == null) return RedirectToPage("/Index");
 
-            // string accountID = HttpContext.Request.Query["uuid"].ToString();
-            // Console.WriteLine("Account ID from query in OnPostAddTransaction: " + accountID);
-
-
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
             {
-                // Console.WriteLine($"AccID: {AccID}");
-
-                // Console.WriteLine($"TransactionType: {TransactionType}");
-                // Console.WriteLine($"Origin: {Origin}");
-                // Console.WriteLine($"Destination: {Destination}");
-                // Console.WriteLine($"Category: {Category}");
-                // Console.WriteLine($"Description: {Description}");
-                // Console.WriteLine($"Date: {Date}");
-                // Console.WriteLine($"Amount: {Amount}");
-                // Console.WriteLine($"IsContract: {IsContract}");
-                // Console.WriteLine($"Cycle: {Cycle}");
-
-
 
                 if (IsContract)
                 {
@@ -235,8 +217,6 @@ public class AccountOverviewModel : PageModel
         WebUser = WebUser.GetUserBySession(sessionId);
         if (WebUser == null) return RedirectToPage("/Index");
 
-        // string accountID = HttpContext.Request.Query["uuid"].ToString();
-        // Console.WriteLine("Account ID from query in OnPostEditTransaction: " + accountID);
 
         if (TransID != null)
         {
@@ -251,27 +231,7 @@ public class AccountOverviewModel : PageModel
             {
                 if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
                 {
-                    
-                        // var currentContract = WebUser.GetContractByID(currentTransaction.ContractId);
-                        // if (currentContract == null)
-                        // {
-                        //     Console.WriteLine("CurrentContract is empty!");
-                        //     return RedirectToPage("/AccountOverview", new { uuid = UuId });
-                        // }
-                        // currentContract.Type = Type;
-                        // currentContract.Category = Category;
-                        // currentContract.Amount = parsedAmount;
-                        // currentContract.AccountID = AccID;
-                        // currentContract.Cycle = Cycle;
-                        // currentContract.StartDate = Date;
-                        // currentContract.Origin = Origin;
-                        // currentContract.Destination = Destination;
-                        // currentContract.ContractId = currentContract.ContractId;
-
-                        // WebUser.DeleteContract(currentContract.ContractId);
-                        // WebUser.Contracts.Add(currentContract);
-                    
-                    
+                                       
                     currentTransaction.Type = Type;
                     currentTransaction.Date = Date;
                     currentTransaction.Amount = parsedAmount;
@@ -312,27 +272,6 @@ public class AccountOverviewModel : PageModel
 
             Console.WriteLine("UUID: " + UuId);
 
-            // string accountID = HttpContext.Request.Query["uuid"].ToString();
-            // if(accountID == null)
-            // {
-            //     Console.WriteLine("account ID from query is EMPTY!");
-            //     if(UuId == null)
-            //     {
-            //         Console.WriteLine("account ID from query is EMPTY!");
-            //         return RedirectToPage("/Error");
-            //     }
-            //     else
-            //     {
-            //         accountID = UuId;
-            //         Console.WriteLine("Account ID from UuId in OnPostDeleteTransaction: " + accountID);
-            //     }
-            // }
-            // else
-            // {
-            //     Console.WriteLine("Account ID from query in OnPostDeleteTransaction: " + accountID);
-            // }
-
-
 
             if (TransID == null)
             {
@@ -369,9 +308,6 @@ public class AccountOverviewModel : PageModel
             if (sessionId == null) return RedirectToPage("/Index");
             WebUser = WebUser.GetUserBySession(sessionId);
             if (WebUser == null) return RedirectToPage("/Index");
-
-            // string accountID = HttpContext.Request.Query["uuid"].ToString();
-            // Console.WriteLine("Account ID from query in OnPostDeleteContract: " + accountID);
 
             if (ContractID == null)
             {
@@ -429,7 +365,6 @@ public class AccountOverviewModel : PageModel
                 currentContract.ContractId = ContractID;
                 currentContract.AccountID = ContractAccID;
 
-                //if(!string.IsNullOrEmpty(Type))
                 WebUser.DeleteContract(currentContract.ContractId);
                 WebUser.Contracts.Add(currentContract);
                 WebUser.UpdateAllContractTransactions(ContractID, ContractAccID, Type, Category, parsedAmount, Destination, Origin, Ticker, Coin);
