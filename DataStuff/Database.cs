@@ -14,13 +14,6 @@ namespace Database
 
 public class SessionUser(Session session, WebUser user)
 {
-    // private WebUser webUser;
-
-    // public SessionUser(Session session, WebUser webUser)
-    // {
-    //     Session = session;
-    //     this.webUser = webUser;
-    // }
 
     public WebUser User { get; set; } = user;
     public Session Session { get; set; } = session;
