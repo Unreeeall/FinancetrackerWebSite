@@ -450,11 +450,9 @@ namespace FinanceUser
             int dayOfMonth = 0;
             TimeSpan daySinceFirstDayOfMonth;
 
-            // long weekNumber = firstDateOfMonth.Ticks / 6048000000000;
 
             foreach (var transaction in sortedTransactions)
             {
-                // long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                 daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
 
                 for (; (transaction.Date.Month >= firstDateOfMonth.Month || transaction.Date.Year > firstDateOfMonth.Year) && dayOfMonth < daySinceFirstDayOfMonth.Days && dayOfMonth < daysInMonth; dayOfMonth++)
@@ -548,30 +546,6 @@ namespace FinanceUser
 
             return monthlyBalances;
         }
-
-
-
-
-
-        // public void EIER()
-        // {
-        //     var report = FinancialReport.GenerateReport(userList);
-
-        //     Console.WriteLine($"Total Income: {report.TotalIncome}");
-        //     Console.WriteLine($"Total Expenses: {report.TotalExpenses}");
-
-        //     Console.WriteLine("Income by Category:");
-        //     foreach (var category in report.IncomeByCategory)
-        //     {
-        //         Console.WriteLine($"{category.Key}: {category.Value}");
-        //     }
-
-        //     Console.WriteLine("Expenses by Category:");
-        //     foreach (var category in report.ExpensesByCategory)
-        //     {
-        //         Console.WriteLine($"{category.Key}: {category.Value}");
-        //     }
-        // }
 
         public void CalculateAccountBalances()
         {
@@ -1148,12 +1122,6 @@ namespace FinanceUser
             public Dictionary<string, decimal> IncomeByCategory { get; set; } = new Dictionary<string, decimal>();
             public Dictionary<string, decimal> ExpensesByCategory { get; set; } = new Dictionary<string, decimal>();
 
-            // public static void SplitExpensesByCategory()
-            // {
-            //     Categories = ExpensesByCategory.Keys.ToArray();
-            //     Expenses = ExpensesByCategory.Values.ToArray();
-            // }
-
 
             public static FinancialReport GenerateReport()
             {
@@ -1227,8 +1195,6 @@ namespace FinanceUser
                         {
                             if (transaction.Category == null) continue;
 
-                            // Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
-
                             if (!expensesByCategory.ContainsKey(transaction.Category))
                             {
                                 expensesByCategory[transaction.Category] = 0;
@@ -1280,8 +1246,6 @@ namespace FinanceUser
                     if (isInTimeframe && transaction.Type == "Income")
                     {
                         if (transaction.Category == null) continue;
-
-                        // Console.WriteLine($"Processing transaction for category: {transaction.Category}, Amount: {transaction.Amount}");
 
                         if (!incomeByCategory.ContainsKey(transaction.Category))
                         {
