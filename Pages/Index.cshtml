@@ -53,26 +53,26 @@
     <header>
         <nav>
             <div class="logoHeader">
-                <a href="/Index">
+                <a href="/Index" tabIndex="0" role="button">
                 <img src="../images/BudgedBuddyTransp.png" alt="logo not found" width="220px">
                 </a>
             </div>
 
             <div class="income-analysis-nav-container">
-                <a href="#income-analysis">
+                <a href="#income-analysis" tabIndex="-1" role="button">
                     <img src="../images/ExppenseAnalysisTranspCutCut.png" alt="ExppenseAnalysisTransp.png"
                         width="48px">
                     <p>Income Analysis</p>
                 </a>
             </div>
             <div class="investment-analysis-nav-container">
-                <a href="#investment-analysis">
+                <a href="#investment-analysis" tabIndex="-2" role="button">
                     <img src="../images/InvAnalysisTranspCutCut.png" alt="income-analysis.png" width="80px">
                     <p>Investment Analysis</p>
                 </a>
             </div>
             <div class="contact-nav-container">
-                <a href="#contact">
+                <a href="#contact" tabIndex="-3" role="button">
                     <img src="../images/contact.png" alt="contact.png" width="75px">
                     <p>Contact</p>
                 </a>
@@ -82,24 +82,22 @@
                 <div class="login-button">
                     @if (Model.WebUser == null)
                     {
-                        <span onclick='location.href = "/login"'>Login</span> 
-                        @* <button onclick='onclick=location.href = "/login"'>Login</button> *@
+                        <span onclick='location.href = "/login"' tabIndex="-4" role="button">Login</span> 
                     }
                     else
                     {
-                        @* <span onclick='location.href = "/UserSettings"'> @Model.user.Name </span> *@
-                        <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser.Name</span>
+                        <span onclick='onclick=location.href = "/UserSettings"' tabIndex="-4" role="button">@Model.WebUser.Name</span>
                     }
                 </div>
                 <div class="register-button">
                     
                     @if (Model.WebUser == null)
                         {
-                            <span onclick='onclick=location.href = "/Register"'>Register</span>
+                            <span onclick='onclick=location.href = "/Register"' tabIndex="-5" role="button">Register</span>
                         }
                         else
                         { 
-                            <span href="/Logout">Logout</span>
+                            <span href="/Logout" tabIndex="-6" role="button">Logout</span>
                         }
                 </div>
             </div>
