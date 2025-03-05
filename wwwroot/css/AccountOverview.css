@@ -404,7 +404,6 @@ header {
 .type-select {
     width: 180px;
     height: 75px;
-    font-size: 1rem;
     background-color: #221f1f;
     color: #fff;
     border: 1px solid #ddd;
@@ -659,7 +658,6 @@ header {
     display: flex;
     margin-bottom: 20px;
     width: inherit;
-    display: flex;
     justify-content: center;
     flex-direction: column;
 }
@@ -852,7 +850,6 @@ header {
 /* Add this block to keep the thead fixed */
 .transaction-table-container thead,
 .contract-table-container thead {
-    display: block;
     width: 100%;
     text-align: center;
     border-bottom: 1px solid #ddd;

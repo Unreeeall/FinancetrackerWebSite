@@ -85,19 +85,13 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) //return RedirectToPage("/Index");
-            if (sessionId == null) //return RedirectToPage("/Index");
-            WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) //return RedirectToPage("/Index");
-
-            _sharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);
-
-            // return RedirectToPage("/Dashboard");
+            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId))
+            if (sessionId != null) WebUser = WebUser.GetUserBySession(sessionId);
+            if (WebUser == null) _sharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);  
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding FinancialAccount: {ex.Message}");
-            // return RedirectToPage("/Error"); // Handle error appropriately
         }
     }
 

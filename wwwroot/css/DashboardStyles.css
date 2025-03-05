@@ -685,7 +685,6 @@ header {
     display: flex;
     margin-bottom: 20px;
     width: inherit;
-    display: flex;
     justify-content: center;
     flex-direction: column;
 }
