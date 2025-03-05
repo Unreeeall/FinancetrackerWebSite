@@ -16,7 +16,7 @@ namespace FinanceTracker.Controllers
         public IActionResult GetLastFiveTransactions([FromQuery] string userEmail, [FromQuery] string accId)
         {
             var webUser = WebUser.getUserByEmail(userEmail);
-            var transactions = webUser.GetTransactionsByAccID(accId)
+            var transactions = webUser?.GetTransactionsByAccID(accId)
                 .OrderByDescending(t => t.Date)
                 .Take(5)
                 .Select(t => new
