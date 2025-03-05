@@ -28,7 +28,6 @@ namespace FinanceTracker.Controllers
                 string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
 
                 // Debugging output
-                // Console.WriteLine(transactionsJson);
 
                 // Convert the JSON string to a byte array
                 var fileBytes = Encoding.UTF8.GetBytes(transactionsJson);
