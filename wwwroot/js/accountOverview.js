@@ -150,7 +150,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         switch (timeframe) {
             case 'week':
                 const startOfWeek = new Date(date);
-                // startOfWeek.setDate(date.getDate() - date.getDay());
                 for (let i = 0; i < 7; i++) {
                     let currentDate = new Date(startOfWeek);
                     currentDate.setDate(startOfWeek.getDate() + i);
@@ -248,7 +247,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
         switch (rangeType) {
             case 'week':
                 const startOfWeek = date;
-                // startOfWeek.setDate(date.getDate() - date.getDay());
                 const endOfWeek = new Date(startOfWeek);
                 endOfWeek.setDate(startOfWeek.getDate() + 6);
                 return `${startOfWeek.toLocaleDateString(undefined, options)} - ${endOfWeek.toLocaleDateString(undefined, options)}`;
@@ -560,8 +558,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const edittransactionTypeSelect = document.getElementById('edit-type-select');
     const editcategorySelect = document.getElementById('edit-category-Dropdown');
     const edittransferInputContainer = document.getElementById('edit-transf-input-container');
-    // const editcontractCheckbox = document.getElementById('edit-trans-contract-checkbox');
-    // const editcontractCycleDiv = document.querySelector('.edit-trans-contract-cycle-container');
     const edittransferOriginSelect = document.getElementById('edit-transf-orgin-slct');
     const edittransferDestinationSelect = document.getElementById('edit-transf-destination-slct');
 
@@ -733,23 +729,7 @@ function showAlert() {
 function showEditAlert() {
     alert("Changes Saved Successfully!");
 }
-// function editTransactionWindow(event, button) {
-//     const editPopup = document.getElementById('edit-popup');
-//     editPopup.classList.toggle("visible");
 
-//     const fields = ['id', 'type', 'category', 'amount', 'origin', 'destination', 'date', 'description', 'iscontract', 'cycle'];
-//     fields.forEach(field => {
-//         const value = button.getAttribute(`data-${field}`);
-//         const element = document.getElementById(`edit-${field.replace('id', 'Trans-ID')}`);
-//         if (element) {
-//             element.value = value;
-//         }
-//     });
-// }
-
-// function closeEditMenu() {
-//     document.getElementById('edit-popup').classList.toggle("visible");
-// }
 
 
 
