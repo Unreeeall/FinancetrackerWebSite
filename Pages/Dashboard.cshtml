@@ -593,7 +593,7 @@
                                     <label for="contract-cycle-slct">Contract cycle</label>
                                     <select name="Cycle" id="contract-cycle-slct" > @*required*@
 
-                                        @foreach (BillingCycle billingCycle in Enum.GetValues(typeof(BillingCycle)))
+                                        @foreach (Transactions.BillingCycle billingCycle in Enum.GetValues(typeof(Transactions.BillingCycle)))
                                         {
                                             <option value="@billingCycle">@billingCycle</option>
                                         }

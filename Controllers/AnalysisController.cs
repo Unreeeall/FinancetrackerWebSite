@@ -1,3 +1,4 @@
+using FinanceUser;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceTracker.Controllers

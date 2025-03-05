@@ -1,5 +1,7 @@
 using System.Diagnostics;
 using System.Text.Json.Serialization;
+using FinanceUser;
+using Services;
 
 var builder = WebApplication.CreateBuilder(args);
 
