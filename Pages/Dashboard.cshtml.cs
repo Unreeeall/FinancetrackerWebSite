@@ -108,19 +108,6 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
 
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
             {
-                // Console.WriteLine($"AccID: {AccID}");
-
-                // Console.WriteLine($"TransactionType: {TransactionType}");
-                // Console.WriteLine($"Origin: {Origin}");
-                // Console.WriteLine($"Destination: {Destination}");
-                // Console.WriteLine($"Category: {Category}");
-                // Console.WriteLine($"Description: {Description}");
-                // Console.WriteLine($"Date: {Date}");
-                // Console.WriteLine($"Amount: {Amount}");
-                // Console.WriteLine($"IsContract: {IsContract}");
-                // Console.WriteLine($"Cycle: {Cycle}");
-
-
 
                 if (IsContract)
                 {
@@ -160,10 +147,6 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
                 } 
             }
 
-
-            // if(TransactionType == "Expense"){
-            //     ClientScript
-            // }
             return RedirectToPage("/Dashboard");
 
         }
@@ -173,26 +156,4 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
             return RedirectToPage("/Error"); // Handle error appropriately
         }
     }
-
-
-    // [HttpGet]
-    // [Route("download-transactions")]
-    // public IActionResult DownloadTransactions()
-    // {
-    //     // Get the current user's transactions
-    //     var transactions = WebUser.GetCurrentUserTransactions(WebUser);
-
-    //     // Serialize the transactions to JSON
-    //     string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
-
-    //     // Convert the JSON string to a byte array
-    //     var fileBytes = System.Text.Encoding.UTF8.GetBytes(transactionsJson);
-    //     var fileName = "transactions.json";
-
-    //     // Return the file for download
-    //     return File(fileBytes, "Financetracker/json", fileName);
-    // }
-
-
-
 }
