@@ -132,35 +132,36 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
                 {
 
                     var newContract = new Contract
-                    (
-                        TransactionType,
-                        Category,
-                        parsedAmount,
-                        AccID,
-                        Cycle,
-                        Date,
-                        Origin,
-                        Destination,
-                        EndDate
-                    );
+                    {
+                        ContractId = Guid.NewGuid().ToString(),
+                        Type = TransactionType,
+                        Category = Category,
+                        Amount = parsedAmount,
+                        AccountID = AccID,
+                        Cycle = Cycle,
+                        StartDate = Date,
+                        Origin = Origin,
+                        Destination = Destination,
+                        EndDate = EndDate
+                    };
                     WebUser.Contracts.Add(newContract);
                 }
                 else
                 {
                     var newTransaction = new Transaction
-                    (
-                    TransactionType,
-                    Date,
-                    parsedAmount,
-                    Origin,
-                    Destination,
-                    Description,
-                    Category,
-                    System.Guid.NewGuid().ToString(),
-                    AccID,
-                    IsContract,
-                    Cycle
-                    );
+                    {
+                        Type = TransactionType,
+                        Date = Date,
+                        Amount = parsedAmount,
+                        Origin = Origin,
+                        Destination = Destination,
+                        Description = Description,
+                        Category = Category,
+                        ID = System.Guid.NewGuid().ToString(),
+                        AccountId = AccID,
+                        IsContract = IsContract,
+                        Cycle = Cycle
+                    };
                     WebUser.Transactions.Add(newTransaction);
                 } 
             }

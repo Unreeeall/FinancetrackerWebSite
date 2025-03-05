@@ -49,35 +49,36 @@ namespace FinanceTracker.Controllers
                     {
 
                         var newContract = new Contract
-                        (
-                            request.TransactionType,
-                            request.Category,
-                            parsedAmount,
-                            request.AccID,
-                            request.Cycle,
-                            request.Date,
-                            request.Origin,
-                            request.Destination,
-                            request.EndDate
-                        );
+                        {
+                            ContractId = Guid.NewGuid().ToString(),
+                            Type = request.TransactionType,
+                            Category = request.Category,
+                            Amount = parsedAmount,
+                            AccountID = request.AccID,
+                            Cycle = (BillingCycle)request.Cycle,
+                            StartDate = request.Date,
+                            Origin = request.Origin,
+                            Destination = request.Destination,
+                            EndDate = request.EndDate
+                        };
                         webUser?.Contracts.Add(newContract);
                     }
                     else
                     {
                         var newTransaction = new Transaction
-                        (
-                        request.TransactionType,
-                        request.Date,
-                        parsedAmount,
-                        request.Origin,
-                        request.Destination,
-                        request.Description,
-                        request.Category,
-                        System.Guid.NewGuid().ToString(),
-                        request.AccID,
-                        request.IsContract,
-                        request.Cycle
-                        );
+                        {
+                        Type = request.TransactionType,
+                        Date = request.Date,
+                        Amount = parsedAmount,
+                        Origin = request.Origin,
+                        Destination = request.Destination,
+                        Description = request.Description,
+                        Category = request.Category,
+                        ID = System.Guid.NewGuid().ToString(),
+                        AccountId = request.AccID,
+                        IsContract = request.IsContract,
+                        Cycle = request.Cycle
+                        };
                         webUser?.Transactions.Add(newTransaction);
                     }
                 }
