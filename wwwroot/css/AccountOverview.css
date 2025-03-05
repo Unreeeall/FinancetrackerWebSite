@@ -389,20 +389,6 @@ header {
     font-size: 1.3rem;
 }
 
-.usecase-field,
-.Amount-field,
-.Origin-field,
-.Destination-field,
-.Date-field {
-    width: 180px;
-    height: 50px;
-    font-size: 1.3rem;
-    background-color: #221f1f;
-    box-shadow: none;
-    border: none;
-    color: #fff;
-}
-
 .Budget-income-Chart {
     display: grid;
     justify-content: center;
@@ -411,18 +397,6 @@ header {
     width: 60%;
 }
 
-
-.usecase-field,
-.Amount-field,
-.Origin-field,
-.Destination-field,
-.Date-field {
-    width: 100%;
-    padding: 10px;
-    margin: 5px 0;
-    border: 1px solid #ddd;
-    border-radius: 5px;
-}
 
 .submit-button {
     background-color: transparent !important;

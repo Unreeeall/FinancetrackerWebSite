@@ -80,7 +80,9 @@ nav {
     display: flex;
     justify-content: left;
     align-items: center;
-    
+    justify-content: space-between;
+    flex-direction: row;
+    width: 100%;
 }
 
 a {
@@ -142,7 +144,7 @@ p {
 .user-options {
     display: flex;
     gap: 1rem;
-    margin-left: auto; /* This ensures the user-options are pushed to the far right */
+    margin-left: auto; 
 }
 
 .user-options span {
@@ -153,12 +155,6 @@ p {
 
 .user-options span:hover {
     text-decoration: none;
-}
-
-/* Add this to your styles.css file */
-.user-options {
-    display: flex;
-
 }
 
 .login-button {
@@ -305,13 +301,6 @@ p {
     color: #c7c7c7;
 }
 
-nav {
-    display: flex;
-    justify-content: space-between;
-    flex-direction: row;
-    
-    width: 100%;
-}
 
 canvas {
     width: 100% !important;
@@ -423,11 +412,3 @@ footer {
     }
 
 }
-
-
-
-
-
-
-
-

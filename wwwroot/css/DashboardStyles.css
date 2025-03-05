@@ -296,7 +296,7 @@ header {
 
 .Bank-Acc-Container,
 .Cash-Acc-Container,
-.Crypto-Wallet-Container,
+.stock-Container,
 .Crypto-Wallet-Container {
     display: flex;
     flex-direction: column;
@@ -314,7 +314,7 @@ header {
 
 .Bank-Acc-Container:hover,
 .Cash-Acc-Container:hover,
-.Crypto-Wallet-Container:hover,
+.stock-Container:hover,
 .Crypto-Wallet-Container:hover {
     cursor: pointer;
     padding: 25px;
@@ -740,7 +740,7 @@ header {
 
     .Bank-Acc-Container,
     .Cash-Acc-Container,
-    .Crypto-Wallet-Container,
+    .stock-Container,
     .Crypto-Wallet-Container {
         max-width: 100vw;
     }

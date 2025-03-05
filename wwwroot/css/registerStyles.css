@@ -28,10 +28,6 @@ body {
 
 }
 
-.logoHeader {
-    margin-left: 50px;
-
-}
 
 .email-form, .name-form, .tel-form, .pswrd-form {
     position: relative;
@@ -88,15 +84,13 @@ body {
     border-width: 3px;
     border-image: linear-gradient(to right, primary, secondary);
     border-image-slice: 1;
-}
-
-.email-field, .name-field, .tel-field, .pswrd-field {
 
     &:required,
     &:invalid {
         box-shadow: none;
     }
 }
+
 
 .submit-button {
     

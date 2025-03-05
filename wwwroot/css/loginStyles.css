@@ -54,6 +54,11 @@ body {
         cursor: text;
         top: 20px;
     }
+
+    &:required,
+    &:invalid {
+        box-shadow: none;
+    }
 }
 
 .name-label, .pswrd-label {
@@ -81,14 +86,6 @@ body {
     border-width: 3px;
     border-image: linear-gradient(to right, primary, secondary);
     border-image-slice: 1;
-}
-
-.name-field, .pswrd-field {
-
-    &:required,
-    &:invalid {
-        box-shadow: none;
-    }
 }
 
 
