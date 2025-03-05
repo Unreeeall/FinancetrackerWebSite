@@ -6,8 +6,12 @@ using FinanceUser;
 
 namespace FinanceTracker.Controllers
 {
+    
+    [ApiController]
+    [Route("api/[controller]")]
     public class DownloadController : Controller
     {
+        public JsonSerializerOptions jsonSerializerOption = new JsonSerializerOptions { WriteIndented = true };
         [HttpGet]
         [Route("download-transactions")]
         public IActionResult DownloadTransactions(string userEmail)
@@ -25,7 +29,7 @@ namespace FinanceTracker.Controllers
                 var transactions = WebUser.GetCurrentUserTransactions(webUser);
 
                 // Serialize the transactions to JSON
-                string transactionsJson = JsonSerializer.Serialize(transactions, new JsonSerializerOptions { WriteIndented = true });
+                string transactionsJson = JsonSerializer.Serialize(transactions, jsonSerializerOption);
 
                 // Debugging output
 
