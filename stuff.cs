@@ -14,8 +14,6 @@ namespace SuperUsefullOrSo
             }
             return Convert.ToBase64String(randomBytes);
         }
-
-        // CultureInfo englishCulture = new CultureInfo("en-US");
         public static string MonthToWord(int month)
         {
             CultureInfo englishCulture = new CultureInfo("en-US");

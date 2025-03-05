@@ -144,28 +144,6 @@ p {
     transition: all 0.3s ease;
 }
 
-/* Text Input Specific Styles 
-input[type="text"] {
-    background-color: #fafafa;
-}
-
-input[type="text"]:focus {
-    border-color: #333;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-
-input[type="password"] {
-    background-color: #fafafa;
-    
-}
-
-input[type="password"]:focus {
-    border-color: #333;
-    outline: none;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
-}
-*/
 /* Button Specific Styles */
 input[type="button"] {
     background-color: #15025E;
