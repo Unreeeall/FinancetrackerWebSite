@@ -33,7 +33,7 @@
         <div class="menu" id="menu">
             <div class="menu-top-spacer"></div>
             <div class="menu-dashbard-box">
-                <a href="Dashboard">Dashboard</a>
+                <a href="Dashboard" >Dashboard</a>
             </div>
             <div class="menu-Investment-box">
                 <a >Investments</a>
@@ -67,7 +67,7 @@
 
         <div class="user-options">
             <div class="login-button">
-                <span onclick='onclick=location.href = "/UserSettings"'>@Model.WebUser?.Name</span>
+                <span onclick='onclick=location.href = "/UserSettings"' tabIndex="-1" role="button">@Model.WebUser?.Name</span>
             </div>
             <div class="dropdown">
                 <span id="settings" onmouseover="" onclick="toggleSettingsDropDown()">Options</span>
