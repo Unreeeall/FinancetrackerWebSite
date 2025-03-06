@@ -35,7 +35,9 @@ namespace FinanceUser
 
         private static readonly List<string> TransactionsTypes = new() { "Income", "Expense", "Transfer" };
 
-        private const string Week = "week";   
+
+
+        private const string Week = "week";
         private const string Month = "month";
         private const string Year = "year";
 
@@ -174,8 +176,8 @@ namespace FinanceUser
         }
 
         public static WebUser? GetUserBySession(string session)
-        {   
-            
+        {
+
             if (!IdDict.TryGetValue(session, out SessionUser? sessionuser)) return null;
             if (sessionuser.Session.ExpireDate < DateTime.Now) return null;
             return sessionuser.User;
@@ -237,7 +239,7 @@ namespace FinanceUser
 
         public void UpdateBankAccount(BankAccount? bankAccount, string? name)
         {
-            if (bankAccount != null && !string.IsNullOrEmpty(name)) bankAccount.AccountName = name;    
+            if (bankAccount != null && !string.IsNullOrEmpty(name)) bankAccount.AccountName = name;
         }
 
         public void UpdateCashAccount(CashAccount? cashAccount, string? name)
@@ -404,7 +406,7 @@ namespace FinanceUser
                 if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
                     totalBalance += transaction.Amount;
-                } 
+                }
                 else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                 {
                     totalBalance -= transaction.Amount;
@@ -514,7 +516,7 @@ namespace FinanceUser
                 else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                 {
                     totalBalance -= transaction.Amount;
-                }         
+                }
                 // Transfer
                 else if (transaction.Origin == accID)
                 {
@@ -524,7 +526,7 @@ namespace FinanceUser
                 {
                     totalBalance += transaction.Amount;
                 }
-                
+
             }
             while (monthOfYear < 12)
             {
@@ -578,12 +580,12 @@ namespace FinanceUser
             // Recalculate balances based on transactions
             foreach (var transaction in Transactions)
             {
-                if(transaction.AccountId == null) continue;
+                if (transaction.AccountId == null) continue;
                 var account = GetAccountByID(transaction.AccountId);
-                if (account == null) continue; 
+                if (account == null) continue;
                 // Income
                 if (transaction.Type == TransactionsTypes[0])
-                {             
+                {
                     account.Balance += transaction.Amount;
                 }
                 // Expense
@@ -795,7 +797,7 @@ namespace FinanceUser
 
         public decimal[]? GetDailyAccExpense(DateTime date, string accID)
         {
-            
+
 
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
             decimal[] dailyExpense = new decimal[7];
@@ -1015,7 +1017,124 @@ namespace FinanceUser
                     else if (coin != null) transaction.Coin = (CryptoCoin)coin;
                 }
             }
+
         }
+
+        public FinancialReport GenerateReport()
+        {
+            var report = new FinancialReport();
+
+            foreach (var transaction in Transactions)
+            {
+                if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
+                if (transaction.Type == TransactionsTypes[0])
+                {
+                    report.TotalIncome += transaction.Amount;
+
+                    if (!report.IncomeByCategory.ContainsKey(transaction.Category))
+                    {
+                        report.IncomeByCategory[transaction.Category] = 0;
+                    }
+                    report.IncomeByCategory[transaction.Category] += transaction.Amount;
+                }
+                else if (transaction.Type == TransactionsTypes[2])
+                {
+                    report.TotalExpenses += transaction.Amount;
+
+                    if (!report.ExpensesByCategory.ContainsKey(transaction.Category))
+                    {
+                        report.ExpensesByCategory[transaction.Category] = 0;
+                    }
+                    report.ExpensesByCategory[transaction.Category] += transaction.Amount;
+                }
+            }
+            return report;
+        }
+
+
+        public Dictionary<string, decimal>? GenerateAccountExpenseReport(string userEmail, string accID, DateTime date, string timeframe)
+        {
+            Dictionary<string, decimal> expensesByCategory = new Dictionary<string, decimal>();
+            var webUser = getUserByEmail(userEmail);
+            if (webUser == null) return null;
+
+            long weekNumber = date.Ticks / 6048000000000;
+
+            bool isInTimeframe;
+            foreach (var transaction in webUser.Transactions)
+            {
+                if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
+                switch (timeframe.ToLower())
+                {
+                    case Week:
+                        long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                        isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                        break;
+                    case Month:
+                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                        break;
+                    case Year:
+                        isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                        break;
+                    default:
+                        InvalidTimeFramePrint();
+                        return null;
+                }
+                if (isInTimeframe && transaction.Type == TransactionsTypes[2])
+                {
+                    if (!expensesByCategory.ContainsKey(transaction.Category))
+                    {
+                        expensesByCategory[transaction.Category] = 0;
+                    }
+                    expensesByCategory[transaction.Category] += transaction.Amount;
+                }
+            }
+            return expensesByCategory;
+        }
+
+        public Dictionary<string, decimal>? GenerateAccountIncomeReport(string userEmail, string accID, DateTime date, string timeframe)
+        {
+            Dictionary<string, decimal> incomeByCategory = new Dictionary<string, decimal>();
+
+            long weekNumber = date.Ticks / 6048000000000;
+
+            Console.WriteLine($"Calculating Income by Category for Account: {accID} with starting date: {date} (Timeframe: {timeframe})");
+            bool isInTimeframe;
+            foreach (var transaction in Transactions)
+            {
+                if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
+                switch (timeframe.ToLower())
+                {
+                    case Week:
+                        long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
+                        isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
+                        break;
+                    case Month:
+                        isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                        break;
+                    case Year:
+                        isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
+                        break;
+                    default:
+                        InvalidTimeFramePrint();
+                        return null;
+                }
+
+                if (isInTimeframe && transaction.Type == TransactionsTypes[0])
+                {
+                    if (!incomeByCategory.ContainsKey(transaction.Category))
+                    {
+                        incomeByCategory[transaction.Category] = 0;
+                    }
+                    incomeByCategory[transaction.Category] += transaction.Amount;
+                }
+            }
+
+            Console.WriteLine($"Final categorized Income: {string.Join(", ", incomeByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
+
+            return incomeByCategory;
+        }
+    }
 
         public class ExpenseIncomeReport
         {
@@ -1033,142 +1152,5 @@ namespace FinanceUser
             public Dictionary<string, decimal> IncomeByCategory { get; set; } = new Dictionary<string, decimal>();
             public Dictionary<string, decimal> ExpensesByCategory { get; set; } = new Dictionary<string, decimal>();
 
-            public static FinancialReport GenerateReport()
-            {
-                var report = new FinancialReport();
-
-                foreach (var user in userList)
-                {
-                    foreach (var transaction in user.Transactions)
-                    {
-                        if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
-                        if (transaction.Type == TransactionsTypes[0])
-                        {
-                            report.TotalIncome += transaction.Amount;
-                        
-                            if (!report.IncomeByCategory.ContainsKey(transaction.Category))
-                            {
-                                report.IncomeByCategory[transaction.Category] = 0;
-                            }
-                            report.IncomeByCategory[transaction.Category] += transaction.Amount;
-                        }
-                        else if (transaction.Type == TransactionsTypes[2])
-                        {
-                            report.TotalExpenses += transaction.Amount;
-                        
-                            if (!report.ExpensesByCategory.ContainsKey(transaction.Category))
-                            {
-                                report.ExpensesByCategory[transaction.Category] = 0;
-                            }
-                            report.ExpensesByCategory[transaction.Category] += transaction.Amount;
-                        }
-                    }
-                }
-
-                return report;
-            }
-
-
-            public static Dictionary<string, decimal>? GenerateAccountExpenseReport(string userEmail, string accID, DateTime date, string timeframe)
-            {
-                Dictionary<string, decimal> expensesByCategory = new Dictionary<string, decimal>();
-                var webUser = WebUser.getUserByEmail(userEmail);
-                if (webUser == null) return null;
-
-                long weekNumber = date.Ticks / 6048000000000;
-
-
-                foreach (var transaction in webUser.Transactions)
-                {
-                    bool isInTimeframe = false;
-
-                    switch (timeframe.ToLower())
-                    {
-                        case Week:
-                            long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-                            isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
-                            break;
-                        case Month:
-                            isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
-                            break;
-                        case Year:
-                            isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
-                            break;
-                        default:
-                            Console.WriteLine("Invalid timeframe specified.");
-                            return null;
-                    }
-                    if (isInTimeframe && transaction.Type == TransactionsTypes[2])
-                    {
-                        if (transaction.Category == null) continue;
-
-                        if (!expensesByCategory.ContainsKey(transaction.Category))
-                        {
-                            expensesByCategory[transaction.Category] = 0;
-                        }
-                        expensesByCategory[transaction.Category] += transaction.Amount;
-                    }
-                }
-
-                if (expensesByCategory == null)
-                {
-                    Console.WriteLine("EIER");
-                }
-
-                return expensesByCategory;
-            }
-
-            public static Dictionary<string, decimal>? GenerateAccountIncomeReport(string userEmail, string accID, DateTime date, string timeframe)
-            {
-                Dictionary<string, decimal> incomeByCategory = new Dictionary<string, decimal>();
-                var webUser = WebUser.getUserByEmail(userEmail);
-                if (webUser == null) return null;
-
-                long weekNumber = date.Ticks / 6048000000000;
-
-                Console.WriteLine($"Calculating Income by Category for Account: {accID} with starting date: {date} (Timeframe: {timeframe})");
-
-                foreach (var transaction in webUser.Transactions)
-                {
-                    bool isInTimeframe = false;
-
-                    switch (timeframe.ToLower())
-                    {
-                        case Week:
-                            long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
-                            isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
-                            break;
-                        case Month:
-                            isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
-                            break;
-                        case Year:
-                            isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
-                            break;
-                        default:
-                            Console.WriteLine("Invalid timeframe specified.");
-                            return null;
-                    }
-
-                    if (isInTimeframe && transaction.Type == TransactionsTypes[0])
-                    {
-                        if (transaction.Category == null) continue;
-
-                        if (!incomeByCategory.ContainsKey(transaction.Category))
-                        {
-                            incomeByCategory[transaction.Category] = 0;
-                        }
-                        incomeByCategory[transaction.Category] += transaction.Amount;
-                    }
-                }
-
-                Console.WriteLine($"Final categorized Income: {string.Join(", ", incomeByCategory.Select(kvp => $"{kvp.Key}: {kvp.Value}"))}");
-
-                if (incomeByCategory.Count == 0)
-                {
-                    Console.WriteLine("EIER");
-                }
-                return incomeByCategory;
-            }
         }
-    }
 }
