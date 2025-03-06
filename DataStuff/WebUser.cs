@@ -237,22 +237,22 @@ namespace FinanceUser
             saveJson();
         }
 
-        public void UpdateBankAccount(BankAccount? bankAccount, string? name)
+        public static void UpdateBankAccount(BankAccount? bankAccount, string? name)
         {
             if (bankAccount != null && !string.IsNullOrEmpty(name)) bankAccount.AccountName = name;
         }
 
-        public void UpdateCashAccount(CashAccount? cashAccount, string? name)
+        public static void UpdateCashAccount(CashAccount? cashAccount, string? name)
         {
             if (cashAccount != null && !string.IsNullOrEmpty(name)) cashAccount.AccountName = name;
         }
 
-        public void UpdatePortfolioAccount(PortfolioAccount? portfolioAccount, string? name)
+        public static void UpdatePortfolioAccount(PortfolioAccount? portfolioAccount, string? name)
         {
             if (portfolioAccount != null && !string.IsNullOrEmpty(name)) portfolioAccount.AccountName = name;
         }
 
-        public void UpdateCryptoWallet(CryptoWallet? cryptoWallet, string? name)
+        public static void UpdateCryptoWallet(CryptoWallet? cryptoWallet, string? name)
         {
             if (cryptoWallet == null)
             {
@@ -328,7 +328,7 @@ namespace FinanceUser
         }
 
 
-        public FinancialAccount? GetAccountByID(string accountID)
+        public static FinancialAccount? GetAccountByID(string accountID)
         {
             if (AccountLookup.TryGetValue(accountID, out var account))
             {
@@ -372,7 +372,7 @@ namespace FinanceUser
             return "";
         }
 
-        public int GetWeekNumber(DateTime date)
+        public static int GetWeekNumber(DateTime date)
         {
             CultureInfo ciCurr = CultureInfo.CurrentCulture;
             int weekNum = ciCurr.Calendar.GetWeekOfYear(date, CalendarWeekRule.FirstFourDayWeek, DayOfWeek.Monday);
@@ -601,7 +601,7 @@ namespace FinanceUser
             }
         }
 
-        public void InvalidTimeFramePrint()
+        public static void InvalidTimeFramePrint()
         {
             Console.WriteLine("Invalid timeframe specified.");
         }
