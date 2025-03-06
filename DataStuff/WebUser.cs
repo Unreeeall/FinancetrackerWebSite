@@ -35,6 +35,10 @@ namespace FinanceUser
 
         private static readonly List<string> TransactionsTypes = new() { "Income", "Expense", "Transfer" };
 
+        private const string Week = "week";   
+        private const string Month = "month";
+        private const string Year = "year";
+
 
         public WebUser() { Email = ""; Name = ""; Phonenumber = ""; Password = ""; userList.Add(this); }
         public WebUser(string email, string name, string? phonenumber, string password)
@@ -595,6 +599,11 @@ namespace FinanceUser
             }
         }
 
+        public void InvalidTimeFramePrint()
+        {
+            Console.WriteLine("Invalid timeframe specified.");
+        }
+
 
         public decimal CalculateAccIncomeForTimeframe(DateTime date, string accID, string timeframe)
         {
@@ -609,18 +618,18 @@ namespace FinanceUser
 
                 switch (timeframe.ToLower())
                 {
-                    case "week":
+                    case Week:
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                         isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
-                    case "month":
+                    case Month:
                         isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
-                    case "year":
+                    case Year:
                         isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
-                        Console.WriteLine("Invalid timeframe specified.");
+                        InvalidTimeFramePrint();
                         return 0;
                 }
 
@@ -645,18 +654,18 @@ namespace FinanceUser
 
                 switch (timeframe.ToLower())
                 {
-                    case "week":
+                    case Week:
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                         isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
-                    case "month":
+                    case Month:
                         isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
-                    case "year":
+                    case Year:
                         isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
-                        Console.WriteLine("Invalid timeframe specified.");
+                        InvalidTimeFramePrint();
                         return 0;
                 }
 
@@ -682,26 +691,23 @@ namespace FinanceUser
 
                 switch (timeframe.ToLower())
                 {
-                    case "week":
+                    case Week:
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                         isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
-                    case "month":
+                    case Month:
                         isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
-                    case "year":
+                    case Year:
                         isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
-                        Console.WriteLine("Invalid timeframe specified.");
+                        InvalidTimeFramePrint();
                         return 0;
                 }
-                if (isInTimeframe && transaction.Type == TransactionsTypes[2])
+                if (isInTimeframe && transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
                 {
-                    if (transaction.Destination == accID)
-                    {
-                        TotalTransferAmount += transaction.Amount;
-                    }
+                    TotalTransferAmount += transaction.Amount;
                 }
             }
             return TotalTransferAmount;
@@ -719,26 +725,23 @@ namespace FinanceUser
 
                 switch (timeframe.ToLower())
                 {
-                    case "week":
+                    case Week:
                         long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                         isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                         break;
-                    case "month":
+                    case Month:
                         isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
-                    case "year":
+                    case Year:
                         isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                         break;
                     default:
-                        Console.WriteLine("Invalid timeframe specified.");
+                        InvalidTimeFramePrint();
                         return 0;
                 }
-                if (isInTimeframe && transaction.Type == TransactionsTypes[2])
+                if (isInTimeframe && transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
                 {
-                    if (transaction.Origin == accID)
-                    {
-                        TotalTransferAmount += transaction.Amount;
-                    }
+                    TotalTransferAmount += transaction.Amount;
                 }
             }
             return TotalTransferAmount;
@@ -781,16 +784,9 @@ namespace FinanceUser
                 daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
                 dayOfWeek = (int)daySinceFirstDayOfWeek.TotalDays;
 
-                if (dayOfWeek >= 0 && dayOfWeek < 7)
+                if (dayOfWeek >= 0 && dayOfWeek < 7 && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[0] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
-                    {
-                        dailyIncome[dayOfWeek] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
-                    {
-                        dailyIncome[dayOfWeek] += transaction.Amount;
-                    }
+                    dailyIncome[dayOfWeek] += transaction.Amount;
                 }
             }
 
@@ -799,7 +795,7 @@ namespace FinanceUser
 
         public decimal[]? GetDailyAccExpense(DateTime date, string accID)
         {
-            Console.WriteLine($"Calculating WeeklyDaily Account balance for Account: {accID} with starting date: {date}");
+            
 
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
             decimal[] dailyExpense = new decimal[7];
@@ -811,25 +807,17 @@ namespace FinanceUser
                 daySinceFirstDayOfWeek = transaction.Date.Date - date.Date;
                 dayOfWeek = (int)daySinceFirstDayOfWeek.TotalDays;
 
-                if (dayOfWeek >= 0 && dayOfWeek < 7)
+                if (dayOfWeek >= 0 && dayOfWeek < 7 && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[1] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
-                    {
-                        dailyExpense[dayOfWeek] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
-                    {
-                        dailyExpense[dayOfWeek] += transaction.Amount;
-                    }
+                    dailyExpense[dayOfWeek] += transaction.Amount;
                 }
             }
-
             return dailyExpense;
         }
 
         public decimal[] GetMonthlyAccIncome(DateTime date, string accID)
         {
-            DateTime firstDateOfMonth = new DateTime(date.Year, date.Month, 1);
+            DateTime firstDateOfMonth = new(date.Year, date.Month, 1);
             Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
 
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
@@ -841,16 +829,9 @@ namespace FinanceUser
             {
                 dayOfMonth = (transaction.Date.Date - firstDateOfMonth.Date).Days;
 
-                if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
+                if (dayOfMonth >= 0 && dayOfMonth < daysInMonth && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[0] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
-                    {
-                        dailyIncome[dayOfMonth] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
-                    {
-                        dailyIncome[dayOfMonth] += transaction.Amount;
-                    }
+                    dailyIncome[dayOfMonth] += transaction.Amount;
                 }
             }
             return dailyIncome;
@@ -858,7 +839,7 @@ namespace FinanceUser
 
         public decimal[] GetMonthlyAccExpense(DateTime date, string accID)
         {
-            DateTime firstDateOfMonth = new DateTime(date.Year, date.Month, 1);
+            DateTime firstDateOfMonth = new(date.Year, date.Month, 1);
             Console.WriteLine($"Calculating MonthlyDaily Account balance for Account: {accID} with starting date: {firstDateOfMonth}");
 
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
@@ -870,16 +851,9 @@ namespace FinanceUser
             {
                 dayOfMonth = (transaction.Date.Date - firstDateOfMonth.Date).Days;
 
-                if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
+                if (dayOfMonth >= 0 && dayOfMonth < daysInMonth && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[1] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
-                    {
-                        dailyExpense[dayOfMonth] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
-                    {
-                        dailyExpense[dayOfMonth] += transaction.Amount;
-                    }
+                    dailyExpense[dayOfMonth] += transaction.Amount;
                 }
             }
             return dailyExpense;
@@ -892,21 +866,18 @@ namespace FinanceUser
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
             decimal[] monthlyIncome = new decimal[12];
             int monthOfYear;
+            bool ValidMonth;
+            bool ValidYear;
 
             foreach (var transaction in sortedTransactions)
             {
                 monthOfYear = transaction.Date.Month - 1;
+                ValidMonth = monthOfYear >= 0 && monthOfYear < 12;
+                ValidYear = transaction.Date.Year == date.Year;
 
-                if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
+                if (ValidYear && ValidMonth && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[0] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
-                    {
-                        monthlyIncome[monthOfYear] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
-                    {
-                        monthlyIncome[monthOfYear] += transaction.Amount;
-                    }
+                    monthlyIncome[monthOfYear] += transaction.Amount;
                 }
             }
             return monthlyIncome;
@@ -919,71 +890,78 @@ namespace FinanceUser
             List<Transaction> sortedTransactions = Transactions.OrderBy(o => o.Date).ToList();
             decimal[] monthlyExpense = new decimal[12];
             int monthOfYear;
+            bool ValidMonth;
+            bool ValidYear;
 
             foreach (var transaction in sortedTransactions)
             {
                 monthOfYear = transaction.Date.Month - 1;
+                ValidMonth = monthOfYear >= 0 && monthOfYear < 12;
+                ValidYear = transaction.Date.Year == date.Year;
 
-                if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
+                if (ValidMonth && ValidYear && transaction.AccountId == accID && (transaction.Type == TransactionsTypes[1] || transaction.Type == TransactionsTypes[2]))
                 {
-                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
-                    {
-                        monthlyExpense[monthOfYear] += transaction.Amount;
-                    }
-                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
-                    {
-                        monthlyExpense[monthOfYear] += transaction.Amount;
-                    }
+                    monthlyExpense[monthOfYear] += transaction.Amount;
                 }
             }
             return monthlyExpense;
         }
 
+        public void CreateTransactionForContract(Contract contract, bool transactionExists, DateTime nextDate)
+        {
+            if (!transactionExists)
+            {
+                var newTransaction = new Transaction
+                {
+                    Type = contract.Type,
+                    Date = nextDate,
+                    Amount = contract.Amount,
+                    Origin = contract.Origin,
+                    Destination = contract.Destination,
+                    Description = "Contract Payment",
+                    Category = contract.Category,
+                    ID = Guid.NewGuid().ToString(),
+                    AccountId = contract.AccountID,
+                    IsContract = true,
+                    Cycle = contract.Cycle,
+                    ContractId = contract.ContractId
+                };
+                Transactions.Add(newTransaction);
+            }
+        }
+
+        public void CycleThroughContractTimeFrame(Contract contract)
+        {
+            DateTime nextDate = contract.StartDate;
+            while (nextDate <= DateTime.Today)
+            {
+                if (nextDate >= contract.StartDate && (contract.EndDate == null || nextDate <= contract.EndDate))
+                {
+                    bool transactionExists = Transactions.Any(t => t.ContractId == contract.ContractId && t.Date == nextDate);
+                    CreateTransactionForContract(contract, transactionExists, nextDate);
+                }
+                nextDate = GetNextBillingDate(nextDate, contract.Cycle);
+            }
+        }
+
+        public void CheckContract(Contract contract)
+        {
+            if (contract.EndDate == null || contract.EndDate >= DateTime.Today)
+            {
+                CycleThroughContractTimeFrame(contract);
+            }
+        }
         public void ApplyContracts()
         {
             foreach (var contract in Contracts)
             {
-                if (contract.EndDate == null || contract.EndDate >= DateTime.Today)
-                {
-                    DateTime nextDate = contract.StartDate;
-                    while (nextDate <= DateTime.Today)
-                    {
-                        if (nextDate >= contract.StartDate && (contract.EndDate == null || nextDate <= contract.EndDate))
-                        {
-                            bool transactionExists = Transactions.Any(t => t.ContractId == contract.ContractId && t.Date == nextDate);
-                            if (!transactionExists)
-                            {
-                                var newTransaction = new Transaction
-                                {
-                                    Type = contract.Type,
-                                    Date = nextDate,
-                                    Amount = contract.Amount,
-                                    Origin = contract.Origin,
-                                    Destination = contract.Destination,
-                                    Description = "Contract Payment",
-                                    Category = contract.Category,
-                                    ID = Guid.NewGuid().ToString(),
-                                    AccountId = contract.AccountID,
-                                    IsContract = true,
-                                    Cycle = contract.Cycle,
-                                    ContractId = contract.ContractId
-                                };
-                                Transactions.Add(newTransaction);
-                            }
-                        }
-                        nextDate = GetNextBillingDate(nextDate, contract.Cycle);
-                    }
-                }
+                CheckContract(contract);
             }
-
             CalculateAccountBalances();
         }
 
 
-
-
-
-        private DateTime GetNextBillingDate(DateTime current, BillingCycle cycle)
+        private static DateTime GetNextBillingDate(DateTime current, BillingCycle cycle)
         {
             return cycle switch
             {
@@ -1001,8 +979,7 @@ namespace FinanceUser
         {
             var contractToRemove = GetContractByID(contractId);
             if (contractToRemove == null) Console.WriteLine("DeleteContract -> contractToRemove is null!");
-            else
-                Contracts.Remove(contractToRemove);
+            else Contracts.Remove(contractToRemove);
         }
 
 
@@ -1011,17 +988,11 @@ namespace FinanceUser
             List<Transaction> transactionsToDelete = [];
             foreach (var transaction in Transactions)
             {
-                if (transaction.ContractId == contractId)
+                if (transaction.ContractId == contractId && transaction.AccountId == contractAccId)
                 {
-                    if (transaction.AccountId == contractAccId)
-                    {
-                        transactionsToDelete.Add(transaction);
-                    }
+                    transactionsToDelete.Add(transaction);
                 }
             }
-
-
-
             foreach (var transaction in transactionsToDelete)
             {
                 Console.WriteLine(transaction.ID);
@@ -1033,29 +1004,23 @@ namespace FinanceUser
         {
             foreach (var transaction in Transactions)
             {
-                if (transaction.ContractId == contractId)
+                if (transaction.ContractId == contractId && transaction.AccountId == contractAccId)
                 {
-                    if (transaction.AccountId == contractAccId)
-                    {
-                        if (!string.IsNullOrEmpty(type)) transaction.Type = type;
-                        if (!string.IsNullOrEmpty(category)) transaction.Category = category;
-                        if (amount != null) transaction.Amount = (decimal)amount;
-                        if (!string.IsNullOrEmpty(destination)) transaction.Destination = destination;
-                        if (!string.IsNullOrEmpty(origin)) transaction.Origin = origin;
-                        if (!string.IsNullOrEmpty(ticker)) transaction.Ticker = ticker;
-                        if (coin != null) transaction.Coin = (CryptoCoin)coin;
-                    }
+                    if (!string.IsNullOrEmpty(type)) transaction.Type = type;
+                    else if (!string.IsNullOrEmpty(category)) transaction.Category = category;
+                    else if (amount != null) transaction.Amount = (decimal)amount;
+                    else if (!string.IsNullOrEmpty(destination)) transaction.Destination = destination;
+                    else if (!string.IsNullOrEmpty(origin)) transaction.Origin = origin;
+                    else if (!string.IsNullOrEmpty(ticker)) transaction.Ticker = ticker;
+                    else if (coin != null) transaction.Coin = (CryptoCoin)coin;
                 }
             }
-
         }
 
         public class ExpenseIncomeReport
         {
             public string[]? Categories { get; set; }
             public decimal[]? Expenses { get; set; }
-
-
             public ExpenseIncomeReport(string[] categories, decimal[] expenses) { Categories = categories; Expenses = expenses; }
         }
 
@@ -1068,7 +1033,6 @@ namespace FinanceUser
             public Dictionary<string, decimal> IncomeByCategory { get; set; } = new Dictionary<string, decimal>();
             public Dictionary<string, decimal> ExpensesByCategory { get; set; } = new Dictionary<string, decimal>();
 
-
             public static FinancialReport GenerateReport()
             {
                 var report = new FinancialReport();
@@ -1077,11 +1041,11 @@ namespace FinanceUser
                 {
                     foreach (var transaction in user.Transactions)
                     {
+                        if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
                         if (transaction.Type == TransactionsTypes[0])
                         {
                             report.TotalIncome += transaction.Amount;
-                            if (transaction.Category == null) continue;
-
+                        
                             if (!report.IncomeByCategory.ContainsKey(transaction.Category))
                             {
                                 report.IncomeByCategory[transaction.Category] = 0;
@@ -1091,13 +1055,11 @@ namespace FinanceUser
                         else if (transaction.Type == TransactionsTypes[2])
                         {
                             report.TotalExpenses += transaction.Amount;
-                            if (transaction.Category == null) continue;
-
-                            if (transaction.Category != null && !report.ExpensesByCategory.ContainsKey(transaction.Category))
+                        
+                            if (!report.ExpensesByCategory.ContainsKey(transaction.Category))
                             {
                                 report.ExpensesByCategory[transaction.Category] = 0;
                             }
-                            if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
                             report.ExpensesByCategory[transaction.Category] += transaction.Amount;
                         }
                     }
@@ -1122,14 +1084,14 @@ namespace FinanceUser
 
                     switch (timeframe.ToLower())
                     {
-                        case "week":
+                        case Week:
                             long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                             isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                             break;
-                        case "month":
+                        case Month:
                             isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                             break;
-                        case "year":
+                        case Year:
                             isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                             break;
                         default:
@@ -1172,14 +1134,14 @@ namespace FinanceUser
 
                     switch (timeframe.ToLower())
                     {
-                        case "week":
+                        case Week:
                             long transactionWeekNumber = transaction.Date.Ticks / 6048000000000;
                             isInTimeframe = transactionWeekNumber == weekNumber && transaction.AccountId == accID;
                             break;
-                        case "month":
+                        case Month:
                             isInTimeframe = transaction.Date.Month == date.Month && transaction.Date.Year == date.Year && transaction.AccountId == accID;
                             break;
-                        case "year":
+                        case Year:
                             isInTimeframe = transaction.Date.Year == date.Year && transaction.AccountId == accID;
                             break;
                         default:
