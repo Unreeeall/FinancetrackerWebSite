@@ -8,7 +8,7 @@ namespace FinanceTracker.Controllers
 {
     [ApiController]
     [Route("api/[controller]")]
-    public class TransactionTableController : Controller {
+    public class TransactionTableController : ControllerBase {
 
 
         [HttpGet]
@@ -48,6 +48,7 @@ namespace FinanceTracker.Controllers
                     if (request.IsContract)
                     {
 
+                        if (request.Cycle == null) throw new Exception("Request Cycle is NULL");
                         var newContract = new Contract
                         {
                             ContractId = Guid.NewGuid().ToString(),

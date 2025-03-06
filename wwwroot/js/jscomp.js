@@ -108,18 +108,20 @@ document.addEventListener('DOMContentLoaded', (event) => { // Ensure the DOM is 
     function generateLabels(timeframe, date) {
         let labels = [];
         const options = { month: 'short', day: 'numeric' };
-
+        let startOfWeek;
+        let currentDate;
+        let daysInMonth;
         switch (timeframe) {
             case 'week':
-                const startOfWeek = new Date(date);
+                startOfWeek = new Date(date);
                 for (let i = 0; i < 7; i++) {
-                    let currentDate = new Date(startOfWeek);
+                    currentDate = new Date(startOfWeek);
                     currentDate.setDate(startOfWeek.getDate() + i);
                     labels.push(currentDate.toLocaleDateString(undefined, options));
                 }
                 break;
             case 'month':
-                const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+                daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
                 for (let i = 1; i <= daysInMonth; i++) {
                     labels.push(new Date(date.getFullYear(), date.getMonth(), i).toLocaleDateString(undefined, options));
                 }
@@ -136,8 +138,8 @@ document.addEventListener('DOMContentLoaded', (event) => { // Ensure the DOM is 
     // Function to update the chart based on selected timeframe.
     async function updateChartData(timeframe, date) {
         let accountBalanceData = [];
-        let expensesByCategoryData = { categories: [], expenses: [] };
-        let incomeByCategoryData = { categories: [], expenses: [] };
+        let expensesByCategoryData;
+        let incomeByCategoryData;
         switch (timeframe) {
             case 'week':
                 accountBalanceData = await fetchWeeklyData(date);
@@ -181,7 +183,7 @@ document.addEventListener('DOMContentLoaded', (event) => { // Ensure the DOM is 
     const timeframeSpan = document.getElementById('timeframe');
     const rangeTypeSelect = document.getElementById('rangeType'); // Ensure this is defined after DOM is loaded
     let date = new Date();
-    var day = date.getDay(),
+    let day = date.getDay(),
         diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is Sunday
     let currentDate = new Date(date.setDate(diff));
 
@@ -190,10 +192,12 @@ document.addEventListener('DOMContentLoaded', (event) => { // Ensure the DOM is 
 
     function formatTimeframe(date, rangeType) {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        let startOfWeek;
+        let endOfWeek;
         switch (rangeType) {
             case 'week':
-                const startOfWeek = date;
-                const endOfWeek = new Date(startOfWeek);
+                startOfWeek = date;
+                endOfWeek = new Date(startOfWeek);
                 endOfWeek.setDate(startOfWeek.getDate() + 6);
                 return `${startOfWeek.toLocaleDateString(undefined, options)} - ${endOfWeek.toLocaleDateString(undefined, options)}`;
             case 'month':

@@ -37,7 +37,7 @@ function closeImportField() {
 }
 
 
-var addTransactionForm = document.getElementById('add-Transaction-Form');
+let addTransactionForm = document.getElementById('add-Transaction-Form');
 
 addTransactionForm.addEventListener('submit', function(e){
     e.preventDefault()
@@ -62,27 +62,9 @@ addTransactionForm.addEventListener('submit', function(e){
     const contractFieldsFilled = isContract && cycle != "";
     const transferFieldsFilled = transfOrigin != "" && transfDestination != "";
     
-    var validTransaction = Boolean;
+    let validTransaction = true;
     console.log(baseFieldsFilled, contractFieldsFilled, transferFieldsFilled);
 
-    if (!baseFieldsFilled) {
-        alert("Please fill out all base fields!");
-        validTransaction = false;
-        // return false;
-    }
-    
-    if (isContract && !contractFieldsFilled) {
-        alert("Please fill out all contract fields!");
-        validTransaction = false;
-        // return false;
-    }
-    
-    if (type === "Transfer" && !transferFieldsFilled) {
-        alert("Please fill out all transfer fields!");
-        validTransaction = false;
-        // return false;
-    }
-    
     switch (type) {
         case "Expense":
             alert("Expense added successfully!");
@@ -101,6 +83,26 @@ addTransactionForm.addEventListener('submit', function(e){
             validTransaction = false;
             break;
     }
+    
+    if (!baseFieldsFilled) {
+        alert("Please fill out all base fields!");
+        validTransaction = false;
+
+    }
+    
+    if (isContract && !contractFieldsFilled) {
+        alert("Please fill out all contract fields!");
+        validTransaction = false;
+
+    }
+    
+    if (type === "Transfer" && !transferFieldsFilled) {
+        alert("Please fill out all transfer fields!");
+        validTransaction = false;
+
+    }
+    
+
     
     if(validTransaction){
         fetch('api/TransactionTable/add-Transaction', {
@@ -228,9 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
 $(document).ready(function () {
     $('.importForm').on('submit', function (event) {
         event.preventDefault(); // Prevent the default form submission
-        var formData = new FormData(this); // Create FormData object
-        var formId = $(this).attr('id'); // Get the form ID
-        var resultId = '#result' //+ formId.split('-')[1]; // Generate the result div ID
+        let formData = new FormData(this); // Create FormData object
+        let resultId = '#result' //+ formId.split('-')[1]; // Generate the result div ID
 
         $.ajax({
             url: '/import-transactions', // Ensure this URL matches your route
