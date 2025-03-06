@@ -23,7 +23,7 @@ public class ErrorModel : PageModel
         ErrorText = GetRandomErrorText();
     }
 
-    private string GetRandomErrorMessage()
+    private static string GetRandomErrorMessage()
     {
         var messages = new List<string>
         {
@@ -64,7 +64,7 @@ public class ErrorModel : PageModel
         return messages[index];
     }
 
-    private string GetRandomErrorText()
+    private static string GetRandomErrorText()
     {
         var text = new List<string>
         {

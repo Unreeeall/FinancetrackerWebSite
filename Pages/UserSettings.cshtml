@@ -1,5 +1,4 @@
 @page
-@using FinanceTracker.Pages
 @model UserSettingsModel
 @{
     ViewData["Title"] = "User Settings";
@@ -99,61 +98,64 @@
                     </tr>
                 </thead>
                 <tbody>
-                    @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                    @if(Model.WebUser != null)
                     {
-                        <tr id="row-@bankAccount.ID">
-                            <td>Bankaccount</td>
-                            <td>@bankAccount.AccountName</td>
-                            <td class="edit-buttons">
-                                <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@bankAccount.ID"  data-acc-name="@bankAccount.AccountName" data-acc-type="BankAccount">🖊️</button>
-                                <button type="button" class="delete-button" data-acc-type="BankAccount"
-                                    data-acc-id="@bankAccount.ID" data-acc-name="@bankAccount.AccountName"
-                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
-                            </td>
-                        </tr>
-                    }
-                    @foreach (var cashAccount in Model.WebUser.CashAccounts)
-                    {
-                        <tr id="row-@cashAccount.ID">
-                            <td>Cash</td>
-                            <td>@cashAccount.AccountName</td>
-                            <td class="edit-buttons">
-                                <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@cashAccount.ID"  data-acc-name="@cashAccount.AccountName" data-acc-type="Cash">🖊️</button>
-                                <button type="button" class="delete-button" data-acc-type="Cash"
-                                    data-acc-id="@cashAccount.ID" data-acc-name="@cashAccount.AccountName"
-                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
-                            </td>
-                        </tr>
-                    }
-                    @foreach (var porfolioAccount in Model.WebUser.PortfolioAccounts)
-                    {
-                        <tr id="row-@porfolioAccount.ID">
-                            <td>Portfolio</td>
-                            <td>@porfolioAccount.AccountName</td>
-                            <td class="edit-buttons">
-                                <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@porfolioAccount.ID"  data-acc-name="@porfolioAccount.AccountName" data-acc-type="Portfolio">🖊️</button>
-                                <button type="button" class="delete-button" data-acc-type="Portfolio"
-                                    data-acc-id="@porfolioAccount.ID" data-acc-name="@porfolioAccount.AccountName"
-                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
-                            </td>
-                        </tr>
-                    }
-                    @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
-                    {
-                        <tr id="row-@cryptoWallet.ID">
-                            <td>Cryptowallet</td>
-                            <td>@cryptoWallet.AccountName</td>
-                            <td class="edit-buttons">
-                                <button type="button" onclick="editAccountWindow(event, this)"
-                                    data-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName" data-acc-type="CryptoWallet">🖊️</button>
-                                <button type="button" class="delete-button" data-acc-type="CryptoWallet"
-                                    data-acc-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName"
-                                    onclick="toggleConfirmDeletion(event, this)">❌</button>
-                            </td>
-                        </tr>
+                        @foreach (var bankAccount in Model.WebUser.BankAccounts)
+                        {
+                            <tr id="row-@bankAccount.ID">
+                                <td>Bankaccount</td>
+                                <td>@bankAccount.AccountName</td>
+                                <td class="edit-buttons">
+                                    <button type="button" onclick="editAccountWindow(event, this)"
+                                        data-id="@bankAccount.ID"  data-acc-name="@bankAccount.AccountName" data-acc-type="BankAccount">🖊️</button>
+                                    <button type="button" class="delete-button" data-acc-type="BankAccount"
+                                        data-acc-id="@bankAccount.ID" data-acc-name="@bankAccount.AccountName"
+                                        onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var cashAccount in Model.WebUser.CashAccounts)
+                        {
+                            <tr id="row-@cashAccount.ID">
+                                <td>Cash</td>
+                                <td>@cashAccount.AccountName</td>
+                                <td class="edit-buttons">
+                                    <button type="button" onclick="editAccountWindow(event, this)"
+                                        data-id="@cashAccount.ID"  data-acc-name="@cashAccount.AccountName" data-acc-type="Cash">🖊️</button>
+                                    <button type="button" class="delete-button" data-acc-type="Cash"
+                                        data-acc-id="@cashAccount.ID" data-acc-name="@cashAccount.AccountName"
+                                        onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var porfolioAccount in Model.WebUser.PortfolioAccounts)
+                        {
+                            <tr id="row-@porfolioAccount.ID">
+                                <td>Portfolio</td>
+                                <td>@porfolioAccount.AccountName</td>
+                                <td class="edit-buttons">
+                                    <button type="button" onclick="editAccountWindow(event, this)"
+                                        data-id="@porfolioAccount.ID"  data-acc-name="@porfolioAccount.AccountName" data-acc-type="Portfolio">🖊️</button>
+                                    <button type="button" class="delete-button" data-acc-type="Portfolio"
+                                        data-acc-id="@porfolioAccount.ID" data-acc-name="@porfolioAccount.AccountName"
+                                        onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                </td>
+                            </tr>
+                        }
+                        @foreach (var cryptoWallet in Model.WebUser.CryptoWallets)
+                        {
+                            <tr id="row-@cryptoWallet.ID">
+                                <td>Cryptowallet</td>
+                                <td>@cryptoWallet.AccountName</td>
+                                <td class="edit-buttons">
+                                    <button type="button" onclick="editAccountWindow(event, this)"
+                                        data-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName" data-acc-type="CryptoWallet">🖊️</button>
+                                    <button type="button" class="delete-button" data-acc-type="CryptoWallet"
+                                        data-acc-id="@cryptoWallet.ID" data-acc-name="@cryptoWallet.AccountName"
+                                        onclick="toggleConfirmDeletion(event, this)">❌</button>
+                                </td>
+                            </tr>
+                        }
                     }
                 </tbody>
             </table>

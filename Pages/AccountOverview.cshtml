@@ -158,7 +158,7 @@
                     </thead>
                     <tbody>
                         
-                        @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(Model?.financialAccount?.ID).OrderByDescending(t => t.Date))
+                        @foreach (var transaction in Model.WebUser.GetTransactionsByAccID(Model.financialAccount?.ID).OrderByDescending(t => t.Date))
                         {
                             <tr>
                                 <td>@transaction.Type</td>
@@ -220,38 +220,41 @@
                     </thead>
                     <tbody>
                         @if (Model != null)
-                        @foreach (var contract in Model.WebUser.Contracts)
                         {
-                            <tr>
-                                <td>@contract.Type</td>
-                                <td>@contract.Category</td>
-                                <td>
-                                    <p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
-                                        @contract.Amount.ToString().Replace(",", ".")</p>
-                                    <style>
-                                        .trans-amount.expense {
-                                            color: red;
-                                        }
+                            @foreach (var contract in Model.WebUser.Contracts)
+                            {
+                                <tr>
+                                    <td>@contract.Type</td>
+                                    <td>@contract.Category</td>
+                                    <td>
+                                        <p class="trans-amount @((contract.Type == "Expense") ? "expense" : "income")">
+                                            @contract.Amount.ToString().Replace(",", ".")</p>
+                                        <style>
+                                            .trans-amount.expense {
+                                                color: red;
+                                            }
 
-                                        .trans-amount.income {
-                                            color: greenyellow;
-                                        }
-                                    </style>
-                                </td>
-                                <td>@contract.Origin</td>
-                                <td>@contract.Destination</td>
-                                <td>@contract.Cycle</td>
-                                <td>@contract.StartDate</td>
-                                <td>@contract.EndDate</td>
-                                <td><button type="button" class="edit-button" onclick="editContract(event, this)"
-                                        data-contractId="@contract.ContractId" data-type="@contract.Type"
-                                        data-amount="@contract.Amount.ToString().Replace(",", ".")" data-category="@contract.Category"
-                                        data-cycle="@contract.Cycle" data-startDate="@contract.StartDate.ToString("s")"
-                                        data-endDate="@contract.EndDate?.ToString("s")" data-accountId="@contract.AccountID"
-                                        data-origin="@contract.Origin" data-destination="@contract.Destination">🖊️</button>
-                                </td>
-                            </tr>
+                                            .trans-amount.income {
+                                                color: greenyellow;
+                                            }
+                                        </style>
+                                    </td>
+                                    <td>@contract.Origin</td>
+                                    <td>@contract.Destination</td>
+                                    <td>@contract.Cycle</td>
+                                    <td>@contract.StartDate</td>
+                                    <td>@contract.EndDate</td>
+                                    <td><button type="button" class="edit-button" onclick="editContract(event, this)"
+                                            data-contractId="@contract.ContractId" data-type="@contract.Type"
+                                            data-amount="@contract.Amount.ToString().Replace(",", ".")" data-category="@contract.Category"
+                                            data-cycle="@contract.Cycle" data-startDate="@contract.StartDate.ToString("s")"
+                                            data-endDate="@contract.EndDate?.ToString("s")" data-accountId="@contract.AccountID"
+                                            data-origin="@contract.Origin" data-destination="@contract.Destination">🖊️</button>
+                                    </td>
+                                </tr>
+                            }
                         }
+                        
                     </tbody>
                 </table>
             </div>

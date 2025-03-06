@@ -558,7 +558,7 @@ namespace FinanceUser
             }
         }
 
-        public void AddTransferForAccBlance(Transaction transaction)
+        public static void AddTransferForAccBlance(Transaction transaction)
         {
             if (transaction.Origin != null)
             {
@@ -1052,7 +1052,7 @@ namespace FinanceUser
         }
 
 
-        public Dictionary<string, decimal>? GenerateAccountExpenseReport(string userEmail, string accID, DateTime date, string timeframe)
+        public static Dictionary<string, decimal>? GenerateAccountExpenseReport(string userEmail, string accID, DateTime date, string timeframe)
         {
             Dictionary<string, decimal> expensesByCategory = new Dictionary<string, decimal>();
             var webUser = getUserByEmail(userEmail);

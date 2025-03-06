@@ -15,11 +15,6 @@ namespace FinanceTracker.Pages
         [BindProperty]
         public required string Password { get; set; }
 
-        public void OnGet()
-        {
-            
-        }
-
         public IActionResult OnPost()
         {
             Console.WriteLine(Password);
@@ -33,7 +28,7 @@ namespace FinanceTracker.Pages
 
 
             // Create a new User object with the form data
-            var newUser = new WebUser
+            _ = new WebUser
             (
                 Email,
                 Name,

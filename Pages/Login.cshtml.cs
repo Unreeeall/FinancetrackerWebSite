@@ -19,10 +19,6 @@ public class LoginModel : PageModel
 
     public bool WrongPassword { get; set; }
 
-    public void OnGet()
-    {
-
-    }
 
     public IActionResult OnPost()
     {

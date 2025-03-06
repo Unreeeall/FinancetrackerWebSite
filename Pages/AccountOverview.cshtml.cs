@@ -18,7 +18,11 @@ public class AccountOverviewModel : PageModel
     [BindProperty]
     public string? UuId { get; set; }
 
+    private readonly string SessionCookieName = "SessionCookie";
+    private readonly string IndexPage = "/Index";
+    private readonly string ErrorPage = "/Error";
 
+    private readonly string AccountOverviewPage = "/AccountOverview";
 
 
 
@@ -90,17 +94,17 @@ public class AccountOverviewModel : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
             if (!WebUser.HasFinancialAccounts()) return RedirectToPage("/Dashboard");
 
             string accountID = HttpContext.Request.Query["uuid"].ToString();
             if (accountID == null)
             {
                 Console.WriteLine("accountID from query is EMPTY!!");
-                return RedirectToPage("/Error");
+                return RedirectToPage(ErrorPage);
             }
             Console.WriteLine("Account ID from query: " + accountID);
 
@@ -109,7 +113,7 @@ public class AccountOverviewModel : PageModel
             if (financialAccount == null)
             {
                 Console.WriteLine("FinancialAccount is empty!!");
-                return RedirectToPage("/Error");
+                return RedirectToPage(ErrorPage);
             }
             else
             {
@@ -128,7 +132,7 @@ public class AccountOverviewModel : PageModel
                         financialAccount = WebUser.GetPortfolioAccountByID(accountID);
                         break;
                     default:
-                        return RedirectToPage("/Error");
+                        return RedirectToPage(ErrorPage);
                 }
             }
 
@@ -142,7 +146,7 @@ public class AccountOverviewModel : PageModel
         catch (Exception ex)
         {
             Console.WriteLine($"Error in OnGet: {ex.Message}");
-            return RedirectToPage("/Error");
+            return RedirectToPage(ErrorPage);
         }
 
 
@@ -154,10 +158,10 @@ public class AccountOverviewModel : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
 
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
             {
@@ -199,23 +203,23 @@ public class AccountOverviewModel : PageModel
                     WebUser.Transactions.Add(newTransaction);
                 }
             }
-            return RedirectToPage("/AccountOverview", new { uuid = UuId });
+            return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
 
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding Transaction: {ex.Message}");
-            return RedirectToPage("/Error");
+            return RedirectToPage(ErrorPage);
         }
     }
 
     public IActionResult OnPostEditTransaction()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
 
 
         if (TransID != null)
@@ -225,7 +229,7 @@ public class AccountOverviewModel : PageModel
             if (currentTransaction == null)
             {
                 Console.WriteLine("CurrentTransaction is empty!");
-                return RedirectToPage("/AccountOverview", new { uuid = UuId });
+                return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
             }
             else
             {
@@ -256,7 +260,7 @@ public class AccountOverviewModel : PageModel
                 }
             }
         }
-        return RedirectToPage("/AccountOverview", new { uuid = UuId });
+        return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
     }
 
 
@@ -265,10 +269,10 @@ public class AccountOverviewModel : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
 
             Console.WriteLine("UUID: " + UuId);
 
@@ -276,7 +280,7 @@ public class AccountOverviewModel : PageModel
             if (TransID == null)
             {
                 Console.WriteLine("TransID is null");
-                return RedirectToPage("/Error");
+                return RedirectToPage(ErrorPage);
             }
             else
             {
@@ -289,12 +293,12 @@ public class AccountOverviewModel : PageModel
                     Console.WriteLine($"Transaction with ID: {TransID} deleted!");
                 }
             }
-            return RedirectToPage("/AccountOverview", new { uuid = UuId });
+            return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error deleting transaction: {ex.Message}");
-            return RedirectToPage("/Error");
+            return RedirectToPage(ErrorPage);
         }
     }
 
@@ -304,15 +308,15 @@ public class AccountOverviewModel : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
 
             if (ContractID == null)
             {
                 Console.WriteLine("ContractID is null");
-                return RedirectToPage("/Error");
+                return RedirectToPage(ErrorPage);
             }
             else
             {
@@ -325,12 +329,12 @@ public class AccountOverviewModel : PageModel
                     Console.WriteLine($"Contract with ID: {ContractID} deleted!");
                 }
             }
-            return RedirectToPage("/AccountOverview", new { uuid = UuId });
+            return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error deleting contract: {ex.Message}");
-            return RedirectToPage("/Error");
+            return RedirectToPage(ErrorPage);
         }
     }
 
@@ -339,10 +343,10 @@ public class AccountOverviewModel : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
 
 
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
@@ -351,7 +355,7 @@ public class AccountOverviewModel : PageModel
                 if (currentContract == null)
                 {
                     Console.WriteLine("CurrentContract is empty!");
-                    return RedirectToPage("/AccountOverview", new { uuid = UuId });
+                    return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
                 }
                 if(IsFinished) EndDate = DateTime.Now;
                 currentContract.Type = Type;
@@ -369,12 +373,12 @@ public class AccountOverviewModel : PageModel
                 WebUser.Contracts.Add(currentContract);
                 WebUser.UpdateAllContractTransactions(ContractID, ContractAccID, Type, Category, parsedAmount, Destination, Origin, Ticker, Coin);
             }
-            return RedirectToPage("/AccountOverview", new { uuid = UuId });
+            return RedirectToPage(AccountOverviewPage, new { uuid = UuId });
         }
         catch (Exception ex)
         {
             Console.WriteLine($"Error deleting contract: {ex.Message}");
-            return RedirectToPage("/Error");
+            return RedirectToPage(ErrorPage);
         }
     }
 }

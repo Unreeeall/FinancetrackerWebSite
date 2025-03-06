@@ -62,7 +62,7 @@ addTransactionForm.addEventListener('submit', function(e){
     const contractFieldsFilled = isContract && cycle != "";
     const transferFieldsFilled = transfOrigin != "" && transfDestination != "";
     
-    let validTransaction = true;
+    let validTransaction;
     console.log(baseFieldsFilled, contractFieldsFilled, transferFieldsFilled);
 
     switch (type) {

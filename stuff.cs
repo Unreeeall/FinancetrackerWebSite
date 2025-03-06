@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace SuperUsefullOrSo
 {
-    public class Stuff
+    public static class Stuff
     {
         public static string GenerateRandomBase64String(int length)
         {
