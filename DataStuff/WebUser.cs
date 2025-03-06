@@ -583,48 +583,6 @@ namespace FinanceUser
                         destinationAccount.Balance += transaction.Amount;
                     }
                 }
-                else if (transaction.Type == "Stock")
-                {
-                    var portfolioAccount = PortfolioAccounts.FirstOrDefault(a => a.ID == transaction.AccountId);
-                    if (portfolioAccount != null)
-                    {
-                        var investment = portfolioAccount.Investments.FirstOrDefault(i => i.Ticker == transaction.Ticker);
-                        if (investment != null)
-                        {
-                            investment.Quantity += (int)transaction.Amount;
-                        }
-                        else
-                        {
-                            if (transaction.Ticker == null) throw new Exception("transaction.Ticker is NULL");
-                            portfolioAccount.Investments.Add(new Investment
-                            {
-                                Ticker = transaction.Ticker,
-                                Quantity = (int)transaction.Amount,
-                                PurchasePrice = transaction.Amount
-                            });
-                        }
-                    }
-                }
-                else if (transaction.Type == "Crypto")
-                {
-                    if(transaction.Coin == null) throw new Exception("transaction.Coin is NULL");
-                    var cryptoWallet = CryptoWallets.FirstOrDefault(a => a.ID == transaction.AccountId);
-                    if (cryptoWallet == null)
-                    {
-                        continue;  
-                    }
-                    var holding = cryptoWallet.CryptoHoldings.FirstOrDefault(h => h.Coin == transaction.Coin);
-                    if (holding == null)
-                    {
-                        cryptoWallet.CryptoHoldings.Add(new CryptoHolding
-                        {
-                            Coin = (CryptoCoin)transaction.Coin,
-                            Amount = transaction.Amount
-                        });
-                        
-                    }
-                    else holding.Amount += transaction.Amount;                  
-                }
             }
         }
 
