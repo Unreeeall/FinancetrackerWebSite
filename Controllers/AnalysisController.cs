@@ -7,12 +7,13 @@ namespace FinanceTracker.Controllers
     [Route("api/[controller]")]
     public class AnalysisController : Controller
     {
+        private readonly string UserNotFound = "User not found.";
         [HttpGet]
         [Route("fetch-weekly-data")]
         public IActionResult GetWeeklyBalance([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
         {
             var webUser = WebUser.getUserByEmail(userEmail);
-            if (webUser == null) return NotFound("User not found.");
+            if (webUser == null) return NotFound(UserNotFound);
 
             decimal[] weeklyAccBalance = webUser.CalculateWeeklyDailyAccountBalance(firstDateOfWeek, accID);
 
@@ -24,7 +25,7 @@ namespace FinanceTracker.Controllers
         public IActionResult GetMonthylBalance([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
         {
             var webUser = WebUser.getUserByEmail(userEmail);
-            if (webUser == null) return NotFound("User not found.");
+            if (webUser == null) return NotFound(UserNotFound);
 
             decimal[] monthlyAccBalance = webUser.CalculateMonthlyDailyAccountBalance(firstDateOfWeek, accID);
 
@@ -37,7 +38,7 @@ namespace FinanceTracker.Controllers
         public IActionResult GetYearlyBalance([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID)
         {
             var webUser = WebUser.getUserByEmail(userEmail);
-            if (webUser == null) return NotFound("User not found.");
+            if (webUser == null) return NotFound(UserNotFound);
 
             decimal[] yearlyAccBalance = webUser.CalculateYearlyMonthlyAccountBalance(firstDateOfWeek, accID);
 
@@ -50,9 +51,9 @@ namespace FinanceTracker.Controllers
         [Route("fetch-category-expense-data")]
         public IActionResult GetCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID, [FromQuery] string timeFrame)
         {
-
-            Console.WriteLine("EIER 1");
-            Dictionary<string, decimal>? weekylExpensesByCategory = WebUser.FinancialReport.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return NotFound(UserNotFound);
+            Dictionary<string, decimal>? weekylExpensesByCategory = webUser.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
 
 
             if (weekylExpensesByCategory == null)
@@ -63,7 +64,7 @@ namespace FinanceTracker.Controllers
             string[] Categories = weekylExpensesByCategory.Keys.ToArray();
             decimal[] Expenses = weekylExpensesByCategory.Values.ToArray();
 
-            var newExpenseReport = new WebUser.ExpenseIncomeReport(
+            var newExpenseReport = new ExpenseIncomeReport(
                 Categories,
                 Expenses
             );
@@ -75,9 +76,10 @@ namespace FinanceTracker.Controllers
         [Route("fetch-category-income-data")]
         public IActionResult GetCategoryIncome([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID, [FromQuery] string timeFrame)
         {
-            Console.WriteLine("EIER 2");
+            var webUser = WebUser.getUserByEmail(userEmail);
+            if (webUser == null) return NotFound(UserNotFound);
 
-            Dictionary<string, decimal>? weekylIncomeByCategory = WebUser.FinancialReport.GenerateAccountIncomeReport(userEmail, accID, firstDateOfWeek, timeFrame);
+            Dictionary<string, decimal>? weekylIncomeByCategory = webUser.GenerateAccountIncomeReport(userEmail, accID, firstDateOfWeek, timeFrame);
 
 
 
@@ -89,7 +91,7 @@ namespace FinanceTracker.Controllers
             string[] Categories = weekylIncomeByCategory.Keys.ToArray();
             decimal[] Expenses = weekylIncomeByCategory.Values.ToArray();
 
-            var newIncomeReport = new WebUser.ExpenseIncomeReport(
+            var newIncomeReport = new ExpenseIncomeReport(
                 Categories,
                 Expenses
             );

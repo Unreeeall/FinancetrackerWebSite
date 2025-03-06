@@ -13,7 +13,7 @@ namespace FinanceTracker.Pages;
 public class DashboardModel() : PageModel
 {
     public WebUser? WebUser { get; set; }
-    public required WebUser.FinancialReport Report { get; set; }
+    public required FinancialReport Report { get; set; }
 
 
     [BindProperty]
@@ -72,7 +72,7 @@ public class DashboardModel() : PageModel
 
 
         WebUser.ApplyContracts();
-        Report = WebUser.FinancialReport.GenerateReport();
+        Report = WebUser.GenerateReport();
 
 
         return Page();
