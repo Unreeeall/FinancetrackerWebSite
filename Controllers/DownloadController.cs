@@ -9,9 +9,9 @@ namespace FinanceTracker.Controllers
     
     [ApiController]
     [Route("api/[controller]")]
-    public class DownloadController : Controller
+    public class DownloadController : ControllerBase
     {
-        public JsonSerializerOptions jsonSerializerOption = new JsonSerializerOptions { WriteIndented = true };
+        private static JsonSerializerOptions jsonSerializerOption = new JsonSerializerOptions { WriteIndented = true };
         [HttpGet]
         [Route("download-transactions")]
         public IActionResult DownloadTransactions(string userEmail)

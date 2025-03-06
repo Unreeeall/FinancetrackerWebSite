@@ -22,7 +22,7 @@ namespace FinanceUser
 
         static Dictionary<string, SessionUser> IdDict { get; set; } = [];
 
-        public static Dictionary<string, FinancialAccount> AccountLookup = new Dictionary<string, FinancialAccount>();
+        public static Dictionary<string, FinancialAccount> AccountLookup { get; private set; } = new Dictionary<string, FinancialAccount>();
 
         public List<Transaction> Transactions { get; set; } = [];
         public List<Contract> Contracts { get; set; } = [];
@@ -32,8 +32,11 @@ namespace FinanceUser
         public List<CryptoWallet> CryptoWallets { get; set; } = [];
 
         private static string filePath = Path.Combine(Directory.GetCurrentDirectory(), "UserData.json");
+        private static JsonSerializerOptions jsonSerializerOption = new JsonSerializerOptions { WriteIndented = true };
 
         private static List<WebUser> userList = new List<WebUser>();
+
+        private static readonly List<string> TransactionsTypes = new List<string> { "Income", "Expense", "Transfer" };
 
 
         public WebUser() { Email = ""; Name = ""; Phonenumber = ""; Password = ""; userList.Add(this); }
@@ -46,41 +49,37 @@ namespace FinanceUser
             {
                 return;
             }
-            else
+            // Read the existing JSON data from the file
+            string existingJson = File.ReadAllText(filePath);
+
+            // Try to deserialize the existing JSON data into a list of User objects
+            userList = JsonSerializer.Deserialize<List<WebUser>>(existingJson) ?? new List<WebUser>();
+            foreach (var user in userList)
             {
-                // Read the existing JSON data from the file
-                string existingJson = File.ReadAllText(filePath);
-
-                // Try to deserialize the existing JSON data into a list of User objects
-                userList = JsonSerializer.Deserialize<List<WebUser>>(existingJson) ?? new List<WebUser>();
-                foreach (var user in userList)
+                foreach (var session in user.Sessions)
                 {
-                    foreach (var session in user.Sessions)
-                    {
-                        IdDict.Add(session.Id, new SessionUser(session, user));
-                    }
-                    foreach (var bankAccount in user.BankAccounts)
-                    {
-                        AccountLookup[bankAccount.ID] = bankAccount;
-                    }
-
-                    foreach (var cashAccount in user.CashAccounts)
-                    {
-                        AccountLookup[cashAccount.ID] = cashAccount;
-                    }
-
-                    foreach (var portfolioAccount in user.PortfolioAccounts)
-                    {
-                        AccountLookup[portfolioAccount.ID] = portfolioAccount;
-                    }
-
-                    foreach (var cryptoWallet in user.CryptoWallets)
-                    {
-                        AccountLookup[cryptoWallet.ID] = cryptoWallet;
-                    }
-                    user.ApplyContracts();
+                    IdDict.Add(session.Id, new SessionUser(session, user));
+                }
+                foreach (var bankAccount in user.BankAccounts)
+                {
+                    AccountLookup[bankAccount.ID] = bankAccount;
                 }
 
+                foreach (var cashAccount in user.CashAccounts)
+                {
+                    AccountLookup[cashAccount.ID] = cashAccount;
+                }
+
+                foreach (var portfolioAccount in user.PortfolioAccounts)
+                {
+                    AccountLookup[portfolioAccount.ID] = portfolioAccount;
+                }
+
+                foreach (var cryptoWallet in user.CryptoWallets)
+                {
+                    AccountLookup[cryptoWallet.ID] = cryptoWallet;
+                }
+                user.ApplyContracts();
             }
         }
 
@@ -106,7 +105,7 @@ namespace FinanceUser
             {
                 // Add the new data to the list
                 // Serialize the updated list to a JSON string 
-                string updatedJson = JsonSerializer.Serialize(userList, new JsonSerializerOptions { WriteIndented = true });
+                string updatedJson = JsonSerializer.Serialize(userList, jsonSerializerOption);
 
                 // Write the updated JSON string to the specified file
                 System.IO.File.WriteAllText(filePath, updatedJson);
@@ -155,7 +154,7 @@ namespace FinanceUser
 
         public static bool EmailExists(string Email)
         {
-            Console.WriteLine("EmailExists Email: ", Email);
+            Console.WriteLine($"EmailExists Email: {Email}");
             if (userList.Any(user => user.Email == Email))
             {
                 return true;
@@ -174,9 +173,9 @@ namespace FinanceUser
         }
 
         public static WebUser? GetUserBySession(string session)
-        {
-            if (!IdDict.ContainsKey(session)) return null;
-            SessionUser sessionuser = IdDict[session];
+        {   
+            
+            if (!IdDict.TryGetValue(session, out SessionUser? sessionuser)) return null;
             if (sessionuser.Session.ExpireDate < DateTime.Now) return null;
             return sessionuser.User;
         }
@@ -184,8 +183,7 @@ namespace FinanceUser
 
         public static void DeleteSession(string session)
         {
-            if (!IdDict.ContainsKey(session)) return;
-            SessionUser sessionuser = IdDict[session];
+            if (!IdDict.TryGetValue(session, out SessionUser? sessionuser)) return;
             sessionuser.User.Sessions.Remove(sessionuser.Session);
             IdDict.Remove(session);
         }
@@ -238,20 +236,17 @@ namespace FinanceUser
 
         public void UpdateBankAccount(BankAccount? bankAccount, string? name)
         {
-            if (bankAccount != null)
-                if (!string.IsNullOrEmpty(name)) bankAccount.AccountName = name;
+            if (bankAccount != null && !string.IsNullOrEmpty(name)) bankAccount.AccountName = name;    
         }
 
         public void UpdateCashAccount(CashAccount? cashAccount, string? name)
         {
-            if (cashAccount != null)
-                if (!string.IsNullOrEmpty(name)) cashAccount.AccountName = name;
+            if (cashAccount != null && !string.IsNullOrEmpty(name)) cashAccount.AccountName = name;
         }
 
         public void UpdatePortfolioAccount(PortfolioAccount? portfolioAccount, string? name)
         {
-            if (portfolioAccount != null)
-                if (!string.IsNullOrEmpty(name)) portfolioAccount.AccountName = name;
+            if (portfolioAccount != null && !string.IsNullOrEmpty(name)) portfolioAccount.AccountName = name;
         }
 
         public void UpdateCryptoWallet(CryptoWallet? cryptoWallet, string? name)
@@ -260,11 +255,7 @@ namespace FinanceUser
             {
                 Console.WriteLine("UpdateCryptoWallet -> CryptoWallet Is emtpy");
             }
-            else
-            if (!string.IsNullOrEmpty(name)) cryptoWallet.AccountName = name;
-
-
-
+            else if (!string.IsNullOrEmpty(name)) cryptoWallet.AccountName = name;
         }
 
 
@@ -409,18 +400,15 @@ namespace FinanceUser
                     dailyBalances[dayOfWeek] = totalBalance;
                 }
 
-                if (transaction.AccountId == accID)
+                if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
-                    if (transaction.Type == "Income")
-                    {
-                        totalBalance += transaction.Amount;
-                    }
-                    else if (transaction.Type == "Expense")
-                    {
-                        totalBalance -= transaction.Amount;
-                    }
+                    totalBalance += transaction.Amount;
+                } 
+                else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
+                {
+                    totalBalance -= transaction.Amount;
                 }
-                else if (transaction.Type == "Transfer")
+                else if (transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Origin == accID)
                     {
@@ -432,9 +420,10 @@ namespace FinanceUser
                     }
                 }
             }
-            for (; dayOfWeek < 7; dayOfWeek++)
+            while (dayOfWeek < 7)
             {
                 dailyBalances[dayOfWeek] = totalBalance;
+                dayOfWeek++;
             }
 
             return dailyBalances;
@@ -463,18 +452,15 @@ namespace FinanceUser
                     dailyBalances[dayOfMonth] = totalBalance;
                 }
 
-                if (transaction.AccountId == accID)
+                if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
-                    if (transaction.Type == "Income")
-                    {
-                        totalBalance += transaction.Amount;
-                    }
-                    else if (transaction.Type == "Expense")
-                    {
-                        totalBalance -= transaction.Amount;
-                    }
+                    totalBalance += transaction.Amount;
                 }
-                else if (transaction.Type == "Transfer")
+                else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
+                {
+                    totalBalance -= transaction.Amount;
+                }       
+                else if (transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Origin == accID)
                     {
@@ -519,18 +505,15 @@ namespace FinanceUser
                     monthlyBalances[monthOfYear] = totalBalance;
                 }
 
-                if (transaction.AccountId == accID)
+                if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
-                    if (transaction.Type == "Income")
-                    {
-                        totalBalance += transaction.Amount;
-                    }
-                    else if (transaction.Type == "Expense")
-                    {
-                        totalBalance -= transaction.Amount;
-                    }
+                    totalBalance += transaction.Amount;
                 }
-                else if (transaction.Type == "Transfer")
+                else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
+                {
+                    totalBalance -= transaction.Amount;
+                }         
+                else if (transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Origin == accID)
                     {
@@ -573,39 +556,31 @@ namespace FinanceUser
             // Recalculate balances based on transactions
             foreach (var transaction in Transactions)
             {
-                if (transaction.Type == "Income" && transaction.AccountId != null)
+                if (transaction.Type == TransactionsTypes[0] && transaction.AccountId != null)
                 {
                     var account = GetAccountByID(transaction.AccountId);
-                    if (account != null)
-                    {
-                        account.Balance += transaction.Amount;
-                    }
+                    if (account == null) continue; 
+                    account.Balance += transaction.Amount;
                 }
-                else if (transaction.Type == "Expense" && transaction.AccountId != null)
+                else if (transaction.Type == TransactionsTypes[1] && transaction.AccountId != null)
                 {
                     var account = GetAccountByID(transaction.AccountId);
-                    if (account != null)
-                    {
-                        account.Balance -= transaction.Amount;
-                    }
+                    if (account == null) continue; 
+                    account.Balance -= transaction.Amount;
                 }
-                else if (transaction.Type == "Transfer")
+                else if (transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Origin != null)
                     {
                         var originAccount = GetAccountByID(transaction.Origin);
-                        if (originAccount != null)
-                        {
-                            originAccount.Balance -= transaction.Amount;
-                        }
+                        if (originAccount == null) continue;
+                        originAccount.Balance -= transaction.Amount;
                     }
                     if (transaction.Destination != null)
                     {
                         var destinationAccount = GetAccountByID(transaction.Destination);
-                        if (destinationAccount != null)
-                        {
-                            destinationAccount.Balance += transaction.Amount;
-                        }
+                        if (destinationAccount == null) continue;
+                        destinationAccount.Balance += transaction.Amount;
                     }
                 }
                 else if (transaction.Type == "Stock")
@@ -620,6 +595,7 @@ namespace FinanceUser
                         }
                         else
                         {
+                            if (transaction.Ticker == null) throw new Exception("transaction.Ticker is NULL");
                             portfolioAccount.Investments.Add(new Investment
                             {
                                 Ticker = transaction.Ticker,
@@ -631,23 +607,23 @@ namespace FinanceUser
                 }
                 else if (transaction.Type == "Crypto")
                 {
+                    if(transaction.Coin == null) throw new Exception("transaction.Coin is NULL");
                     var cryptoWallet = CryptoWallets.FirstOrDefault(a => a.ID == transaction.AccountId);
-                    if (cryptoWallet != null)
+                    if (cryptoWallet == null)
                     {
-                        var holding = cryptoWallet.CryptoHoldings.FirstOrDefault(h => h.Coin == transaction.Coin);
-                        if (holding != null)
-                        {
-                            holding.Amount += transaction.Amount;
-                        }
-                        else
-                        {
-                            cryptoWallet.CryptoHoldings.Add(new CryptoHolding
-                            {
-                                Coin = (CryptoCoin)transaction.Coin,
-                                Amount = transaction.Amount
-                            });
-                        }
+                        continue;  
                     }
+                    var holding = cryptoWallet.CryptoHoldings.FirstOrDefault(h => h.Coin == transaction.Coin);
+                    if (holding == null)
+                    {
+                        cryptoWallet.CryptoHoldings.Add(new CryptoHolding
+                        {
+                            Coin = (CryptoCoin)transaction.Coin,
+                            Amount = transaction.Amount
+                        });
+                        
+                    }
+                    else holding.Amount += transaction.Amount;                  
                 }
             }
         }
@@ -753,7 +729,7 @@ namespace FinanceUser
                         Console.WriteLine("Invalid timeframe specified.");
                         return 0;
                 }
-                if (isInTimeframe && transaction.Type == "Transfer")
+                if (isInTimeframe && transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Destination == accID)
                     {
@@ -790,7 +766,7 @@ namespace FinanceUser
                         Console.WriteLine("Invalid timeframe specified.");
                         return 0;
                 }
-                if (isInTimeframe && transaction.Type == "Transfer")
+                if (isInTimeframe && transaction.Type == TransactionsTypes[2])
                 {
                     if (transaction.Origin == accID)
                     {
@@ -840,11 +816,11 @@ namespace FinanceUser
 
                 if (dayOfWeek >= 0 && dayOfWeek < 7)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Income")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                     {
                         dailyIncome[dayOfWeek] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Destination == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
                     {
                         dailyIncome[dayOfWeek] += transaction.Amount;
                     }
@@ -870,11 +846,11 @@ namespace FinanceUser
 
                 if (dayOfWeek >= 0 && dayOfWeek < 7)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Expense")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                     {
                         dailyExpense[dayOfWeek] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Origin == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
                     {
                         dailyExpense[dayOfWeek] += transaction.Amount;
                     }
@@ -900,11 +876,11 @@ namespace FinanceUser
 
                 if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Income")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                     {
                         dailyIncome[dayOfMonth] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Destination == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
                     {
                         dailyIncome[dayOfMonth] += transaction.Amount;
                     }
@@ -929,11 +905,11 @@ namespace FinanceUser
 
                 if (dayOfMonth >= 0 && dayOfMonth < daysInMonth)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Expense")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                     {
                         dailyExpense[dayOfMonth] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Origin == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
                     {
                         dailyExpense[dayOfMonth] += transaction.Amount;
                     }
@@ -956,11 +932,11 @@ namespace FinanceUser
 
                 if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Income")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                     {
                         monthlyIncome[monthOfYear] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Destination == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Destination == accID)
                     {
                         monthlyIncome[monthOfYear] += transaction.Amount;
                     }
@@ -983,11 +959,11 @@ namespace FinanceUser
 
                 if (transaction.Date.Year == date.Year && monthOfYear >= 0 && monthOfYear < 12)
                 {
-                    if (transaction.AccountId == accID && transaction.Type == "Expense")
+                    if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                     {
                         monthlyExpense[monthOfYear] += transaction.Amount;
                     }
-                    else if (transaction.Type == "Transfer" && transaction.Origin == accID)
+                    else if (transaction.Type == TransactionsTypes[2] && transaction.Origin == accID)
                     {
                         monthlyExpense[monthOfYear] += transaction.Amount;
                     }
@@ -1134,7 +1110,7 @@ namespace FinanceUser
                 {
                     foreach (var transaction in user.Transactions)
                     {
-                        if (transaction.Type == "Income")
+                        if (transaction.Type == TransactionsTypes[0])
                         {
                             report.TotalIncome += transaction.Amount;
                             if (transaction.Category == null) continue;
@@ -1145,7 +1121,7 @@ namespace FinanceUser
                             }
                             report.IncomeByCategory[transaction.Category] += transaction.Amount;
                         }
-                        else if (transaction.Type == "Expense")
+                        else if (transaction.Type == TransactionsTypes[2])
                         {
                             report.TotalExpenses += transaction.Amount;
                             if (transaction.Category == null) continue;
@@ -1154,6 +1130,7 @@ namespace FinanceUser
                             {
                                 report.ExpensesByCategory[transaction.Category] = 0;
                             }
+                            if (transaction.Category == null) throw new Exception("transaction.Category is NULL");
                             report.ExpensesByCategory[transaction.Category] += transaction.Amount;
                         }
                     }
@@ -1192,18 +1169,15 @@ namespace FinanceUser
                             Console.WriteLine("Invalid timeframe specified.");
                             return null;
                     }
-                    if (isInTimeframe && transaction.Type == "Expense")
+                    if (isInTimeframe && transaction.Type == TransactionsTypes[2])
                     {
-                        if (transaction.Type == "Expense")
-                        {
-                            if (transaction.Category == null) continue;
+                        if (transaction.Category == null) continue;
 
-                            if (!expensesByCategory.ContainsKey(transaction.Category))
-                            {
-                                expensesByCategory[transaction.Category] = 0;
-                            }
-                            expensesByCategory[transaction.Category] += transaction.Amount;
+                        if (!expensesByCategory.ContainsKey(transaction.Category))
+                        {
+                            expensesByCategory[transaction.Category] = 0;
                         }
+                        expensesByCategory[transaction.Category] += transaction.Amount;
                     }
                 }
 
@@ -1246,7 +1220,7 @@ namespace FinanceUser
                             return null;
                     }
 
-                    if (isInTimeframe && transaction.Type == "Income")
+                    if (isInTimeframe && transaction.Type == TransactionsTypes[0])
                     {
                         if (transaction.Category == null) continue;
 

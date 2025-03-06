@@ -8,7 +8,7 @@ namespace Services
 {
     public class SharedServices
     {
-        public void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
+        public static void AddFinanceAccount(WebUser? webUser, string AccountType, CurrencyType currency, string AccountName)
         {
 
 

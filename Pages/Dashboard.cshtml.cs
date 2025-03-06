@@ -10,12 +10,11 @@ using Transactions;
 
 namespace FinanceTracker.Pages;
 
-public class DashboardModel(SharedServices sharedServices) : PageModel
+public class DashboardModel() : PageModel
 {
     public WebUser? WebUser { get; set; }
     public required WebUser.FinancialReport Report { get; set; }
 
-    private readonly SharedServices _sharedServices = sharedServices;
 
     [BindProperty]
     public required string AccountType { get; set; }
@@ -87,7 +86,7 @@ public class DashboardModel(SharedServices sharedServices) : PageModel
             WebUser = null;
             if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId))
             if (sessionId != null) WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) _sharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);  
+            if (WebUser == null) SharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);  
         }
         catch (Exception ex)
         {

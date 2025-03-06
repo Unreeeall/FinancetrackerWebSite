@@ -105,8 +105,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
         }
     });
 
-    var ctx4 = document.getElementById('incomeExpensesChart').getContext('2d');
-    var incomeExpensesChart = new Chart(ctx4, {
+    const ctx4 = document.getElementById('incomeExpensesChart').getContext('2d');
+    const incomeExpensesChart = new Chart(ctx4, {
         type: 'line',
         data: {
             labels: [],
@@ -146,10 +146,11 @@ document.addEventListener('DOMContentLoaded', (event) => {
     function generateLabels(timeframe, date) {
         let labels = [];
         const options = { month: 'short', day: 'numeric' };
-
+        let startOfWeek;
+        let daysInMonth;
         switch (timeframe) {
             case 'week':
-                const startOfWeek = new Date(date);
+                startOfWeek = new Date(date);
                 for (let i = 0; i < 7; i++) {
                     let currentDate = new Date(startOfWeek);
                     currentDate.setDate(startOfWeek.getDate() + i);
@@ -157,7 +158,7 @@ document.addEventListener('DOMContentLoaded', (event) => {
                 }
                 break;
             case 'month':
-                const daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
+                daysInMonth = new Date(date.getFullYear(), date.getMonth() + 1, 0).getDate();
                 for (let i = 1; i <= daysInMonth; i++) {
                     labels.push(new Date(date.getFullYear(), date.getMonth(), i).toLocaleDateString(undefined, options));
                 }
@@ -174,8 +175,8 @@ document.addEventListener('DOMContentLoaded', (event) => {
     // Function to update the chart based on selected timeframe.
     async function updateChartData(timeframe, date) {
         let accountBalanceData = [];
-        let expensesByCategoryData = { categories: [], expenses: [] };
-        let incomeByCategoryData = { categories: [], expenses: [] };
+        let expensesByCategoryData;
+        let incomeByCategoryData;
         let weeklyIncomeData = [];
         let weeklyExpenseData = [];
         switch (timeframe) {
@@ -237,17 +238,19 @@ document.addEventListener('DOMContentLoaded', (event) => {
     const timeframeSpan = document.getElementById('timeframe');
     const rangeTypeSelect = document.getElementById('rangeType');
     let date = new Date();
-    var day = date.getDay(),
+    let day = date.getDay(),
         diff = date.getDate() - day + (day == 0 ? -6 : 1); // adjust when day is sunday
     let currentDate = new Date(date.setDate(diff));
 
 
     function formatTimeframe(date, rangeType) {
         const options = { year: 'numeric', month: 'short', day: 'numeric' };
+        let startOfWeek;
+        let endOfWeek;
         switch (rangeType) {
             case 'week':
-                const startOfWeek = date;
-                const endOfWeek = new Date(startOfWeek);
+                startOfWeek = date;
+                endOfWeek = new Date(startOfWeek);
                 endOfWeek.setDate(startOfWeek.getDate() + 6);
                 return `${startOfWeek.toLocaleDateString(undefined, options)} - ${endOfWeek.toLocaleDateString(undefined, options)}`;
             case 'month':
@@ -519,7 +522,7 @@ function editTransactionWindow(event, button) {
         const transactionID = button.getAttribute('data-id');
         const transactionType = button.getAttribute('data-type');
         const transactionCategory = button.getAttribute('data-category');
-        var transactionAmount = button.getAttribute('data-amount');
+        const transactionAmount = button.getAttribute('data-amount');
         const transactionOrigin = button.getAttribute('data-origin');
         const transactionDestination = button.getAttribute('data-destination');
         const transactionDate = button.getAttribute('data-date');
@@ -643,7 +646,6 @@ function editContract(event, button) {
     console.log("ContractID: ", contractID);
 
 
-    //document.getElementsByClassName('.contract-ID').value = contractID;
     document.getElementById('contract-id').value = contractID;
     document.getElementById('del-contract-id').value = contractID;
     document.getElementById('contract-type-slct').value = contractType;

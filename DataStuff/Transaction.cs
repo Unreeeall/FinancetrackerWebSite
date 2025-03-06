@@ -22,38 +22,8 @@ namespace Transactions
         public CryptoCoin? Coin { get; set; }    // For crypto transactions
 
 
-        public Transaction()
-        {
-            Type = "null";
-            Date = DateTime.Now;
-            Amount = 0;
-            Origin = null;
-            Destination = null;
-            Description = null;
-            Category = "null";
-            ID = "null";
-            AccountId = "null";
-            IsContract = false;
-            Cycle = (BillingCycle)1;
-            ContractId = null;
-            Ticker = "null";
-        }
         //Constructor for everything
-        public Transaction(string type, DateTime date, decimal amount, string? origin, string? destination, string? description, string category, string id, string accountId, bool iscontract, BillingCycle? cycle, string? contractId = null)
-        {
-            Type = type;
-            Category = category;
-            Amount = amount;
-            Origin = origin;
-            Destination = destination;
-            Description = description;
-            Date = date;
-            ID = id;
-            AccountId = accountId;
-            IsContract = iscontract;
-            Cycle = cycle;
-            ContractId = contractId;
-        }
+        public Transaction()  { }
     }
 
     public class Contract
