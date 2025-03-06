@@ -3,13 +3,9 @@ using System.Globalization;
 using Database;
 using Transactions;
 using SuperUsefullOrSo;
-using System.Diagnostics;
 
 
-
-
-
-//Very Importaint Comment
+//Very Important Comment
 namespace FinanceUser
 {
     public class WebUser
