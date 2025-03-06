@@ -15,6 +15,10 @@ public class DashboardModel() : PageModel
     public WebUser? WebUser { get; set; }
     public required FinancialReport Report { get; set; }
 
+    private readonly string SessionCookieName = "SessionCookie";
+    private readonly string IndexPage = "/Index";
+    private readonly string ErrorPage = "/Error";
+
 
     [BindProperty]
     public required string AccountType { get; set; }
@@ -64,10 +68,10 @@ public class DashboardModel() : PageModel
     public IActionResult OnGet()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
         Console.WriteLine($"User: {WebUser.Name} Email: {WebUser.Email} Loaded Page: /Dashboard");
 
 
@@ -84,8 +88,7 @@ public class DashboardModel() : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId))
-            if (sessionId != null) WebUser = WebUser.GetUserBySession(sessionId);
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId) && sessionId != null) WebUser =  WebUser.GetUserBySession(sessionId);
             if (WebUser == null) SharedServices.AddFinanceAccount(WebUser, AccountType, Currency, AccountName);  
         }
         catch (Exception ex)
@@ -99,10 +102,10 @@ public class DashboardModel() : PageModel
         try
         {
             WebUser = null;
-            if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-            if (sessionId == null) return RedirectToPage("/Index");
+            if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+            if (sessionId == null) return RedirectToPage(IndexPage);
             WebUser = WebUser.GetUserBySession(sessionId);
-            if (WebUser == null) return RedirectToPage("/Index");
+            if (WebUser == null) return RedirectToPage(IndexPage);
 
 
             if (decimal.TryParse(Amount, NumberStyles.Any, CultureInfo.InvariantCulture, out decimal parsedAmount))
@@ -152,7 +155,7 @@ public class DashboardModel() : PageModel
         catch (Exception ex)
         {
             Console.WriteLine($"Error adding Transaction: {ex.Message}");
-            return RedirectToPage("/Error"); // Handle error appropriately
+            return RedirectToPage(ErrorPage); // Handle error appropriately
         }
     }
 }

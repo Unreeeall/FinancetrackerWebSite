@@ -51,9 +51,7 @@ namespace FinanceTracker.Controllers
         [Route("fetch-category-expense-data")]
         public IActionResult GetCategoryExpense([FromQuery] string userEmail, [FromQuery] DateTime firstDateOfWeek, [FromQuery] string accID, [FromQuery] string timeFrame)
         {
-            var webUser = WebUser.getUserByEmail(userEmail);
-            if (webUser == null) return NotFound(UserNotFound);
-            Dictionary<string, decimal>? weekylExpensesByCategory = webUser.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
+            Dictionary<string, decimal>? weekylExpensesByCategory = WebUser.GenerateAccountExpenseReport(userEmail, accID, firstDateOfWeek, timeFrame);
 
 
             if (weekylExpensesByCategory == null)

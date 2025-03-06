@@ -10,6 +10,9 @@ public class UserSettingsModel : PageModel
     public WebUser? WebUser { get; set; }
 
 
+    private readonly string SessionCookieName = "SessionCookie";
+    private readonly string IndexPage = "/Index";
+    private readonly string AccIsNullString = "OnPostDeleteFinacialAccount -> accToRemove is null!";
 
     [BindProperty]
     public required string ID { get; set; }
@@ -43,24 +46,25 @@ public class UserSettingsModel : PageModel
     public required string ConfirmPassword { get; set; }
 
 
-    public void OnGet()
+    public IActionResult OnGet()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return;
-        if (sessionId == null) return;
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
         Console.WriteLine($"User: {WebUser?.Name} Email: {WebUser?.Email} Loaded Page: /UserSettings");
-        if (WebUser == null) return;
+        if (WebUser == null) return RedirectToPage(IndexPage);
+        return Page();
     }
 
 
     public IActionResult OnPostEditFinancialAccount()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
 
 
         if (ID != null)
@@ -86,83 +90,95 @@ public class UserSettingsModel : PageModel
         return Page();
     }
 
+    private void DeleteBankAccount(WebUser user)
+    {
+        var accToRemove = user.GetBankAccountByID(ID);
+        if (accToRemove == null)
+        {
+            Console.WriteLine(AccIsNullString);
+        }
+        else
+            user.BankAccounts.Remove(accToRemove);
+    }
 
+    private void DeleteCashAccount(WebUser user)
+    {
+        var accToRemove = user.GetCashAccountByID(ID);
+        if (accToRemove == null)
+        {
+            Console.WriteLine(AccIsNullString);
+        }
+        else
+            user.CashAccounts.Remove(accToRemove);
+    }
+
+    private void DeletePortfolioAccount(WebUser user)
+    {
+        var accToRemove = user.GetPortfolioAccountByID(ID);
+        if (accToRemove == null)
+        {
+            Console.WriteLine(AccIsNullString);
+        }
+        else
+            user.PortfolioAccounts.Remove(accToRemove);
+    }
+
+    private void DeleteCryptoAccount(WebUser user)
+    {
+        var accToRemove = user.GetCryptoWalletByID(ID);
+        if (accToRemove == null)
+        {
+            Console.WriteLine(AccIsNullString);
+        }
+        else
+            user.CryptoWallets.Remove(accToRemove);
+    }
 
     public IActionResult OnPostDeleteFinacialAccount()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
 
         if (ID == null)
         {
             return Page();
-
         }
-        else
+        switch (AccountType)
         {
-            if (AccountType == "BankAccount")
-            {
-                var accToRemove = WebUser.GetBankAccountByID(ID);
-                if (accToRemove == null)
-                {
-                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
-                }
-                else
-                    WebUser.BankAccounts.Remove(accToRemove);
+            case "BankAccount":
+                DeleteBankAccount(WebUser);
                 return Page();
-            }
-            else if (AccountType == "Cash")
-            {
-                var accToRemove = WebUser.GetCashAccountByID(ID);
-                if (accToRemove == null)
-                {
-                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
-                }
-                else
-                    WebUser.CashAccounts.Remove(accToRemove);
+
+            case "Cash":
+                DeleteCashAccount(WebUser);
                 return Page();
-            }
-            else if (AccountType == "Portfolio")
-            {
-                var accToRemove = WebUser.GetPortfolioAccountByID(ID);
-                if (accToRemove == null)
-                {
-                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
-                }
-                else
-                    WebUser.PortfolioAccounts.Remove(accToRemove);
+
+            case "Portfolio":
+                DeletePortfolioAccount(WebUser);
                 return Page();
-            }
-            else if (AccountType == "CryptoWallet")
-            {
-                var accToRemove = WebUser.GetCryptoWalletByID(ID);
-                if (accToRemove == null)
-                {
-                    Console.WriteLine("OnPostDeleteFinacialAccount -> accToRemove is null!");
-                }
-                else
-                    WebUser.CryptoWallets.Remove(accToRemove);
+
+            case "CryptoWallet":
+                DeleteCryptoAccount(WebUser);
                 return Page();
-            }
-            else return Page();
-        }
+            
+            default:
+                return Page();
+        } 
     }
 
 
     public IActionResult OnPostChangeAccountCredentials()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
 
         WebUser.UpdateUser(Email, UserName, Phonenumber, Password);
-
-
 
         return Page();
     }
@@ -170,10 +186,10 @@ public class UserSettingsModel : PageModel
     public IActionResult OnPostChangePassword()
     {
         WebUser = null;
-        if (!Request.Cookies.TryGetValue("SessionCookie", out string? sessionId)) return RedirectToPage("/Index");
-        if (sessionId == null) return RedirectToPage("/Index");
+        if (!Request.Cookies.TryGetValue(SessionCookieName, out string? sessionId)) return RedirectToPage(IndexPage);
+        if (sessionId == null) return RedirectToPage(IndexPage);
         WebUser = WebUser.GetUserBySession(sessionId);
-        if (WebUser == null) return RedirectToPage("/Index");
+        if (WebUser == null) return RedirectToPage(IndexPage);
 
 
         if (Password != OldPassword)
