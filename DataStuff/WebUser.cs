@@ -3,6 +3,7 @@ using System.Globalization;
 using Database;
 using Transactions;
 using SuperUsefullOrSo;
+using System.Diagnostics;
 
 
 
@@ -36,7 +37,7 @@ namespace FinanceUser
 
         private static List<WebUser> userList = new List<WebUser>();
 
-        private static readonly List<string> TransactionsTypes = new List<string> { "Income", "Expense", "Transfer" };
+        private static readonly List<string> TransactionsTypes = new() { "Income", "Expense", "Transfer" };
 
 
         public WebUser() { Email = ""; Name = ""; Phonenumber = ""; Password = ""; userList.Add(this); }
@@ -442,7 +443,6 @@ namespace FinanceUser
             int dayOfMonth = 0;
             TimeSpan daySinceFirstDayOfMonth;
 
-
             foreach (var transaction in sortedTransactions)
             {
                 daySinceFirstDayOfMonth = transaction.Date.Date - firstDateOfMonth.Date;
@@ -452,29 +452,30 @@ namespace FinanceUser
                     dailyBalances[dayOfMonth] = totalBalance;
                 }
 
+                // Income
                 if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
                     totalBalance += transaction.Amount;
                 }
-                else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
+                // Expense
+                if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                 {
                     totalBalance -= transaction.Amount;
-                }       
-                else if (transaction.Type == TransactionsTypes[2])
+                }
+                // Transfer
+                if (transaction.Origin == accID)
                 {
-                    if (transaction.Origin == accID)
-                    {
-                        totalBalance -= transaction.Amount;
-                    }
-                    else if (transaction.Destination == accID)
-                    {
-                        totalBalance += transaction.Amount;
-                    }
+                    totalBalance -= transaction.Amount;
+                }
+                else if (transaction.Destination == accID)
+                {
+                    totalBalance += transaction.Amount;
                 }
             }
-            for (; dayOfMonth < daysInMonth; dayOfMonth++)
+            while (dayOfMonth < daysInMonth)
             {
                 dailyBalances[dayOfMonth] = totalBalance;
+                dayOfMonth++;
             }
 
             return dailyBalances;
@@ -504,36 +505,37 @@ namespace FinanceUser
                 {
                     monthlyBalances[monthOfYear] = totalBalance;
                 }
-
+                // Income
                 if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[0])
                 {
                     totalBalance += transaction.Amount;
                 }
+                // Expense
                 else if (transaction.AccountId == accID && transaction.Type == TransactionsTypes[1])
                 {
                     totalBalance -= transaction.Amount;
                 }         
-                else if (transaction.Type == TransactionsTypes[2])
+                // Transfer
+                else if (transaction.Origin == accID)
                 {
-                    if (transaction.Origin == accID)
-                    {
-                        totalBalance -= transaction.Amount;
-                    }
-                    else if (transaction.Destination == accID)
-                    {
-                        totalBalance += transaction.Amount;
-                    }
+                    totalBalance -= transaction.Amount;
                 }
+                else if (transaction.Destination == accID)
+                {
+                    totalBalance += transaction.Amount;
+                }
+                
             }
-            for (; monthOfYear < 12; monthOfYear++)
+            while (monthOfYear < 12)
             {
                 monthlyBalances[monthOfYear] = totalBalance;
+                monthOfYear++;
             }
 
             return monthlyBalances;
         }
 
-        public void CalculateAccountBalances()
+        public void ResetAccBalances()
         {
             // Reset balances to zero before recalculating
             foreach (var bankAccount in BankAccounts)
@@ -552,36 +554,47 @@ namespace FinanceUser
             {
                 cryptoWallet.Balance = 0;
             }
+        }
 
+        public void AddTransferForAccBlance(Transaction transaction)
+        {
+            if (transaction.Origin != null)
+            {
+                var originAccount = GetAccountByID(transaction.Origin);
+                if (originAccount == null) return;
+                originAccount.Balance -= transaction.Amount;
+            }
+            if (transaction.Destination != null)
+            {
+                var destinationAccount = GetAccountByID(transaction.Destination);
+                if (destinationAccount == null) return;
+                destinationAccount.Balance += transaction.Amount;
+            }
+        }
+
+        public void CalculateAccountBalances()
+        {
+            ResetAccBalances();
             // Recalculate balances based on transactions
             foreach (var transaction in Transactions)
             {
-                if (transaction.Type == TransactionsTypes[0] && transaction.AccountId != null)
-                {
-                    var account = GetAccountByID(transaction.AccountId);
-                    if (account == null) continue; 
+                if(transaction.AccountId == null) continue;
+                var account = GetAccountByID(transaction.AccountId);
+                if (account == null) continue; 
+                // Income
+                if (transaction.Type == TransactionsTypes[0])
+                {             
                     account.Balance += transaction.Amount;
                 }
-                else if (transaction.Type == TransactionsTypes[1] && transaction.AccountId != null)
+                // Expense
+                else if (transaction.Type == TransactionsTypes[1])
                 {
-                    var account = GetAccountByID(transaction.AccountId);
-                    if (account == null) continue; 
                     account.Balance -= transaction.Amount;
                 }
+                // Transfer
                 else if (transaction.Type == TransactionsTypes[2])
                 {
-                    if (transaction.Origin != null)
-                    {
-                        var originAccount = GetAccountByID(transaction.Origin);
-                        if (originAccount == null) continue;
-                        originAccount.Balance -= transaction.Amount;
-                    }
-                    if (transaction.Destination != null)
-                    {
-                        var destinationAccount = GetAccountByID(transaction.Destination);
-                        if (destinationAccount == null) continue;
-                        destinationAccount.Balance += transaction.Amount;
-                    }
+                    AddTransferForAccBlance(transaction);
                 }
             }
         }
