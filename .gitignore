@@ -5,3 +5,6 @@ obj/
 .*/
 *.sln
 *.csproj
+UserData.json
+UserDataG.json
+UserDataMaxedOut.json
