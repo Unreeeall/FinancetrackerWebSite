@@ -3,3 +3,5 @@ rm
 bin/
 obj/
 .*/
+*.sln
+*.csproj
